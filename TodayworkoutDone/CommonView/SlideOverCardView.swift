@@ -25,7 +25,7 @@ struct SlideOverCardView<Content: View>: View {
             .onEnded(onDragEnded)
         
         return Group {
-            RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
+            RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.5)
                 .frame(width: 40, height: CGFloat(5.0))
                 .foregroundColor(Color.secondary)
                 .padding(5)
@@ -33,7 +33,7 @@ struct SlideOverCardView<Content: View>: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("slideCardBackground"))
-        .cornerRadius(10.0)
+        .cornerRadius(40.0)
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
         .offset(y: self.position + self.dragState.translation.height)
         .transition(.move(edge: .top))

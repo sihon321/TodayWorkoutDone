@@ -9,7 +9,12 @@ import SwiftUI
 
 struct WorkingOutView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            List {
+                WorkingOutSection()
+            }
+            .navigationTitle("타이틀")
+        }
     }
 }
 
