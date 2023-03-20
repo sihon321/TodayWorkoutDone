@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct WorkingOutView: View {
+    @EnvironmentObject var modelData: ModelData
+    
     var body: some View {
         NavigationView {
             List {
-                WorkingOutSection()
+                ForEach(modelData.exercises) { excercise in
+                    WorkingOutSection()
+                }
             }
             .navigationTitle("타이틀")
         }
