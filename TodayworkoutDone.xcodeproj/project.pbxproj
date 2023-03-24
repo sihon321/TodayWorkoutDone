@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		8E4066A729B33CEC004BB7A2 /* workouts.json in Resources */ = {isa = PBXBuildFile; fileRef = 8E4066A629B33CEC004BB7A2 /* workouts.json */; };
-		8E4066AA29B33D12004BB7A2 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4066A929B33D12004BB7A2 /* ModelData.swift */; };
-		8E4066AC29B33D71004BB7A2 /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4066AB29B33D71004BB7A2 /* Workouts.swift */; };
-		8E52790929C7099B000DCD7F /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E52790829C7099B000DCD7F /* Routine.swift */; };
+		8E4066AA29B33D12004BB7A2 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4066A929B33D12004BB7A2 /* DataController.swift */; };
 		8E52790B29C7134D000DCD7F /* ExcerciseStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E52790A29C7134D000DCD7F /* ExcerciseStartView.swift */; };
+		8EC0B0E329CC4E7600C3278C /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4066AB29B33D71004BB7A2 /* Workouts.swift */; };
+		8EC0B0E629CC5D2600C3278C /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EC0B0E429CC5D2600C3278C /* ModelData.xcdatamodeld */; };
 		F2102C34292BB06D00417789 /* MainContentStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2102C31292BB06D00417789 /* MainContentStepView.swift */; };
 		F2102C35292BB06D00417789 /* MainContentSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2102C32292BB06D00417789 /* MainContentSubView.swift */; };
 		F2102C36292BB06D00417789 /* MainContentWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2102C33292BB06D00417789 /* MainContentWorkoutView.swift */; };
@@ -64,10 +64,11 @@
 
 /* Begin PBXFileReference section */
 		8E4066A629B33CEC004BB7A2 /* workouts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = workouts.json; sourceTree = "<group>"; };
-		8E4066A929B33D12004BB7A2 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		8E4066A929B33D12004BB7A2 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		8E4066AB29B33D71004BB7A2 /* Workouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workouts.swift; sourceTree = "<group>"; };
 		8E52790829C7099B000DCD7F /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		8E52790A29C7134D000DCD7F /* ExcerciseStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcerciseStartView.swift; sourceTree = "<group>"; };
+		8EC0B0E529CC5D2600C3278C /* ModelData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelData.xcdatamodel; sourceTree = "<group>"; };
 		F2102C31292BB06D00417789 /* MainContentStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentStepView.swift; sourceTree = "<group>"; };
 		F2102C32292BB06D00417789 /* MainContentSubView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentSubView.swift; sourceTree = "<group>"; };
 		F2102C33292BB06D00417789 /* MainContentWorkoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentWorkoutView.swift; sourceTree = "<group>"; };
@@ -141,9 +142,10 @@
 		8E4066A829B33D02004BB7A2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8E4066A929B33D12004BB7A2 /* ModelData.swift */,
+				8E4066A929B33D12004BB7A2 /* DataController.swift */,
 				8E4066AB29B33D71004BB7A2 /* Workouts.swift */,
 				8E52790829C7099B000DCD7F /* Routine.swift */,
+				8EC0B0E429CC5D2600C3278C /* ModelData.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -427,8 +429,9 @@
 				F2C63E202959F3C700D02F76 /* WorkoutListView.swift in Sources */,
 				F23F4E962957FB250084392B /* MyWorkoutView.swift in Sources */,
 				F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */,
-				8E4066AA29B33D12004BB7A2 /* ModelData.swift in Sources */,
+				8E4066AA29B33D12004BB7A2 /* DataController.swift in Sources */,
 				F2E2214E29994C7000B7DCCB /* WorkingOutHeader.swift in Sources */,
+				8EC0B0E629CC5D2600C3278C /* ModelData.xcdatamodeld in Sources */,
 				F23F4E9C29581F070084392B /* SearchBar.swift in Sources */,
 				F2CB39F1295DE20400CA80D6 /* SlideOverCardView.swift in Sources */,
 				8E52790B29C7134D000DCD7F /* ExcerciseStartView.swift in Sources */,
@@ -437,10 +440,8 @@
 				F2E74D29292221D500BD35F6 /* Color+SwiftUI.swift in Sources */,
 				F2CB39F3295DE25900CA80D6 /* DragState.swift in Sources */,
 				F2102C35292BB06D00417789 /* MainContentSubView.swift in Sources */,
-				8E52790929C7099B000DCD7F /* Routine.swift in Sources */,
 				F23F4EA02958271B0084392B /* WorkoutCategorySubview.swift in Sources */,
 				F239B431295761AD00781EF2 /* WorkoutView.swift in Sources */,
-				8E4066AC29B33D71004BB7A2 /* Workouts.swift in Sources */,
 				F2E74CE82921F73500BD35F6 /* ContentView.swift in Sources */,
 				F23F4E9E295826F30084392B /* WorkoutCategoryView.swift in Sources */,
 				F2102C36292BB06D00417789 /* MainContentWorkoutView.swift in Sources */,
@@ -453,6 +454,7 @@
 				F2E74D222922219000BD35F6 /* MainWelcomeView.swift in Sources */,
 				F2E74D262922219000BD35F6 /* MainContentView.swift in Sources */,
 				F2C63E222959F3D200D02F76 /* WorkoutListSubview.swift in Sources */,
+				8EC0B0E329CC4E7600C3278C /* Workouts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,6 +816,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8EC0B0E429CC5D2600C3278C /* ModelData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8EC0B0E529CC5D2600C3278C /* ModelData.xcdatamodel */,
+			);
+			currentVersion = 8EC0B0E529CC5D2600C3278C /* ModelData.xcdatamodel */;
+			path = ModelData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F2E74CDA2921F73500BD35F6 /* Project object */;
 }

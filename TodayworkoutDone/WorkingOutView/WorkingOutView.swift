@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkingOutView: View {
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var modelData: DataController
     
     var body: some View {
         NavigationView {

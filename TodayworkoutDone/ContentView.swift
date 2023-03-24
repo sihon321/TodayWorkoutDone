@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var modelData: DataController
     @State var isBarPresented: Bool = true
     @State var isPresented = false
     

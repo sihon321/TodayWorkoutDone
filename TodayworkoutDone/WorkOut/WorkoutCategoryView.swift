@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct WorkoutCategoryView: View {
-    private let gridLayout = [GridItem(.flexible())]
-    private let sampleData = (1...10).map { index in MyWorkoutSubview() }
+    @FetchRequest(sortDescriptors: []) var workouts: FetchedResults<Workouts>
     
     var body: some View {
         VStack(alignment: .leading)  {
             Text("category")
-            ForEach(sampleData.indices) { _ in
+            ForEach(workouts) { _ in
                 NavigationLink {
                     WorkoutListView()
                 } label: {
