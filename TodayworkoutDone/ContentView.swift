@@ -36,7 +36,10 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    @StateObject static var dataController = DataController()
+    
     static var previews: some View {
         ContentView()
+            .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }

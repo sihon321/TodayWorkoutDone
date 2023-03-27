@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct WorkoutListView: View {
+    var category: String
+    @FetchRequest(sortDescriptors: []) var workoutsList: FetchedResults<Workouts>
+    
     var body: some View {
-        List(0..<10) { _ in
-            WorkoutListSubview()
+        NavigationView {
+            List(workoutsList) { workouts in
+                WorkoutListSubview(workouts: workouts)
+            }
+            .listStyle(.plain)
+            .navigationTitle(category)
         }
-        .listStyle(.plain)
     }
 }
 
 struct WorkoutListView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutListView()
+        WorkoutListView(category: "category")
     }
 }

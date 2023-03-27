@@ -32,6 +32,7 @@ final class DataController: ObservableObject {
             
             let managedObjectContext = container.viewContext
             let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
             decoder.userInfo[codingUserInfoKeyManagedObjectContext] = managedObjectContext
             let workouts: [Workouts] = load("workouts.json", decoder: decoder)
             

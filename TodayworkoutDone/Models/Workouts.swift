@@ -47,6 +47,10 @@ class Excercise: NSManagedObject, Codable, Identifiable {
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
+    
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
 }
 
 
@@ -69,6 +73,8 @@ class Workouts: Excercise {
         self.init(entity: entity, insertInto: managedObjectContext)
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        category = try container.decode(String.self, forKey: .category)
         target = try container.decode(String.self, forKey: .target)
     }
 }

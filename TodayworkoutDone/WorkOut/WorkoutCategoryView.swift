@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct WorkoutCategoryView: View {
-    @FetchRequest(sortDescriptors: []) var workouts: FetchedResults<Workouts>
+    private var categories: [String] = ["웨이트"]
     
     var body: some View {
         VStack(alignment: .leading)  {
             Text("category")
-            ForEach(workouts) { _ in
+            ForEach(categories, id: \.self) { category in
                 NavigationLink {
-                    WorkoutListView()
+                    WorkoutListView(category: category)
                 } label: {
-                    WorkoutCategorySubview()
+                    WorkoutCategorySubview(category: category)
                 }
             }
         }

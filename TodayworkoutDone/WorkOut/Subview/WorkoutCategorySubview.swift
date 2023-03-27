@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct WorkoutCategorySubview: View {
+    var category: String
+    
     var body: some View {
         HStack(alignment: .center) {
             Image(uiImage: UIImage(named: "woman")!)
                 .padding(.leading, 15)
             VStack {
-                Text("벤치 프레스")
+                Text(category)
                     .font(.system(size: 18,
                                   weight: .bold,
                                   design: .default))
@@ -33,7 +35,6 @@ struct WorkoutCategorySubview: View {
 
 struct WorkoutCategorySubview_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutCategorySubview()
-            .background(Color.black)
+        WorkoutCategorySubview(category: "웨이트")
     }
 }

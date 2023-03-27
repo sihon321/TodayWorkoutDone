@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct WorkoutListSubview: View {
+    var workouts: Workouts
+    
     var body: some View {
         HStack {
             Image(uiImage: UIImage(named: "woman")!)
                 .resizable()
                 .frame(width: 50, height: 50)
                 .padding([.leading], 15)
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            Text(workouts.name ?? "")
         }
         .frame(minWidth: 0,
                maxWidth: .infinity,
@@ -24,7 +26,17 @@ struct WorkoutListSubview: View {
 }
 
 struct WorkoutListSubview_Previews: PreviewProvider {
+    @StateObject static var dataController = DataController()
+    
+    static var workouts = {
+        let workouts = Workouts(context: dataController.container.viewContext)
+        workouts.name = "name"
+        workouts.category = "category"
+        workouts.target = "target"
+        return workouts
+    }()
     static var previews: some View {
-        WorkoutListSubview()
+        WorkoutListSubview(workouts: workouts)
+            .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }

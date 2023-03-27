@@ -22,6 +22,7 @@
 		F23F4E9C29581F070084392B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23F4E9B29581F070084392B /* SearchBar.swift */; };
 		F23F4E9E295826F30084392B /* WorkoutCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23F4E9D295826F30084392B /* WorkoutCategoryView.swift */; };
 		F23F4EA02958271B0084392B /* WorkoutCategorySubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23F4E9F2958271B0084392B /* WorkoutCategorySubview.swift */; };
+		F264AC5C29D21F3A0003E70D /* category.json in Resources */ = {isa = PBXBuildFile; fileRef = F264AC5B29D21F3A0003E70D /* category.json */; };
 		F2C63E202959F3C700D02F76 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C63E1F2959F3C700D02F76 /* WorkoutListView.swift */; };
 		F2C63E222959F3D200D02F76 /* WorkoutListSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C63E212959F3D200D02F76 /* WorkoutListSubview.swift */; };
 		F2CB39F1295DE20400CA80D6 /* SlideOverCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CB39F0295DE20400CA80D6 /* SlideOverCardView.swift */; };
@@ -79,6 +80,7 @@
 		F23F4E9B29581F070084392B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		F23F4E9D295826F30084392B /* WorkoutCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCategoryView.swift; sourceTree = "<group>"; };
 		F23F4E9F2958271B0084392B /* WorkoutCategorySubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCategorySubview.swift; sourceTree = "<group>"; };
+		F264AC5B29D21F3A0003E70D /* category.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = category.json; sourceTree = "<group>"; };
 		F2C63E1F2959F3C700D02F76 /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 		F2C63E212959F3D200D02F76 /* WorkoutListSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListSubview.swift; sourceTree = "<group>"; };
 		F2CB39F0295DE20400CA80D6 /* SlideOverCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCardView.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				8E4066A629B33CEC004BB7A2 /* workouts.json */,
+				F264AC5B29D21F3A0003E70D /* category.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 			files = (
 				F2CB39F5295DE48B00CA80D6 /* ColorAsset.xcassets in Resources */,
 				F2E74CEE2921F73600BD35F6 /* Preview Assets.xcassets in Resources */,
+				F264AC5C29D21F3A0003E70D /* category.json in Resources */,
 				F2E74CEA2921F73600BD35F6 /* Assets.xcassets in Resources */,
 				8E4066A729B33CEC004BB7A2 /* workouts.json in Resources */,
 			);
