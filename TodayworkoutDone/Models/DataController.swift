@@ -29,33 +29,49 @@ final class DataController: ObservableObject {
             guard let codingUserInfoKeyManagedObjectContext = CodingUserInfoKey.managedObjectContext else {
                 fatalError("Failed to retrieve context")
             }
-
+            
             let managedObjectContext = container.viewContext
             let decoder = JSONDecoder()
             decoder.userInfo[codingUserInfoKeyManagedObjectContext] = managedObjectContext
-            let jsonData = load("workouts.json")
-            _ = try decoder.decode([Workouts].self, from: jsonData)
-            try managedObjectContext.save()
-
+            let workouts: [Workouts] = load("workouts.json", decoder: decoder)
+            
+            let fetchRequest = NSFetchRequest<Workouts>(entityName: "Workouts")
+            var result: [Workouts] = []
+            
+            do {
+                let fetchResult = try managedObjectContext.fetch(fetchRequest)
+                result = fetchResult.filter { !workouts.contains($0) }
+            } catch {
+                print(error)
+            }
+            
+            if !result.isEmpty {
+                _ = try decoder.decode([Workouts].self, from: result.jsonData())
+                try managedObjectContext.save()
+            }
         } catch let error {
             print(error)
         }
     }
-}
 
-func load(_ filename: String) -> Data {
-    let data: Data
+    func load<T: Decodable>(_ filename: String, decoder: JSONDecoder) -> T {
+        let data: Data
 
-    guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
+        guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
         else {
             fatalError("Couldn't find \(filename) in main bundle.")
-    }
+        }
 
-    do {
-        data = try Data(contentsOf: file)
-    } catch {
-        fatalError("Couldn't load \(filename) from main bundle:\n\(error)")
-    }
+        do {
+            data = try Data(contentsOf: file)
+        } catch {
+            fatalError("Couldn't load \(filename) from main bundle:\n\(error)")
+        }
 
-    return data
+        do {
+            return try decoder.decode(T.self, from: data)
+        } catch {
+            fatalError("Couldn't parse \(filename) as \(T.self):\n\(error)")
+        }
+    }
 }

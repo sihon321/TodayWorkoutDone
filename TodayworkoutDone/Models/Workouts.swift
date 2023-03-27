@@ -49,6 +49,7 @@ class Excercise: NSManagedObject, Codable, Identifiable {
     }
 }
 
+
 @objc(Workouts)
 class Workouts: Excercise {
     @NSManaged var target: String?
@@ -69,5 +70,13 @@ class Workouts: Excercise {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         target = try container.decode(String.self, forKey: .target)
+    }
+}
+
+typealias WorkoutsArray = [Workouts]
+
+extension WorkoutsArray {
+    func jsonData() throws -> Data {
+        return try JSONEncoder().encode(self)
     }
 }
