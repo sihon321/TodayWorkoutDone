@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct WorkoutListView: View {
-    var category: String
     @FetchRequest(sortDescriptors: []) var workoutsList: FetchedResults<Workouts>
+    var category: String
+    @State private var selectionList: [Int] = []
     
     var body: some View {
-        NavigationView {
-            List(workoutsList) { workouts in
-                WorkoutListSubview(workouts: workouts)
+        List(Array(zip(workoutsList.indices, workoutsList)), id: \.0) { index, workouts in
+            WorkoutListSubview(workouts: workouts,
+                               index: index,
+                               selectionList: $selectionList)
+        }
+        .listStyle(.plain)
+        .navigationTitle(category)
+        .toolbar {
+            if !selectionList.isEmpty {
+                Text("Done(\(selectionList.count))")
             }
-            .listStyle(.plain)
-            .navigationTitle(category)
         }
     }
 }

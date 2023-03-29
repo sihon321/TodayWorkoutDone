@@ -9,14 +9,30 @@ import SwiftUI
 
 struct WorkoutListSubview: View {
     var workouts: Workouts
+    var index: Int
+    @Binding var selectionList: [Int]
     
     var body: some View {
         HStack {
-            Image(uiImage: UIImage(named: "woman")!)
-                .resizable()
-                .frame(width: 50, height: 50)
-                .padding([.leading], 15)
-            Text(workouts.name ?? "")
+            Button(action: {
+                if selectionList.contains(index) {
+                    selectionList.removeAll(where: { $0 == index })
+                } else {
+                    selectionList.append(index)
+                }
+            }) {
+                HStack {
+                    Image(uiImage: UIImage(named: "woman")!)
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .padding([.leading], 15)
+                    Text(workouts.name ?? "")
+                    Spacer()
+                    if selectionList.contains(index) {
+                        Image(systemName:"checkmark")
+                    }
+                }
+            }
         }
         .frame(minWidth: 0,
                maxWidth: .infinity,
@@ -36,7 +52,9 @@ struct WorkoutListSubview_Previews: PreviewProvider {
         return workouts
     }()
     static var previews: some View {
-        WorkoutListSubview(workouts: workouts)
+        WorkoutListSubview(workouts: workouts,
+                           index: 0,
+                           selectionList: .constant([0]))
             .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }

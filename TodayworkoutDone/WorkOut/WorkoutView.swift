@@ -10,8 +10,7 @@ import SwiftUI
 struct WorkoutView: View {
     @EnvironmentObject var dataController: DataController
     @Environment(\.presentationMode) var presentationmode
-        
-    @State var text: String = ""
+    @State private var text: String = ""
     
     var body: some View {
         NavigationView {
