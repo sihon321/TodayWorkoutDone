@@ -10,7 +10,9 @@ import SwiftUI
 struct WorkingOutSection: View {
     var body: some View {
         Section {
-            WorkingOutRow()
+            ForEach(0..<3) { _ in
+                WorkingOutRow()
+            }
         } header: {
             WorkingOutHeader()
         }

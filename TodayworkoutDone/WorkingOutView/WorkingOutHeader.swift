@@ -8,9 +8,24 @@
 import SwiftUI
 
 struct WorkingOutHeader: View {
-    @State var title: String = ""
+    @State private var title: String = "title"
+    @State private var showingOptions = false
+    
     var body: some View {
-        Text(title)
+        HStack {
+            Text(title)
+            Spacer()
+            Button(action: {
+                showingOptions = true
+            }, label: {
+                Image(systemName: "ellipsis")
+            })
+            .confirmationDialog("select", isPresented: $showingOptions) {
+                Button("취소") {
+
+                }
+            }
+        }
     }
 }
 

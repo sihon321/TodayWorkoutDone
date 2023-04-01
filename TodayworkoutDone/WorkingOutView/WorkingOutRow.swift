@@ -9,16 +9,16 @@ import SwiftUI
 
 struct WorkingOutRow: View {
     @State private var isChecked: Bool = false
-    @State var prevWeight: String = ""
-    @State var count: String = ""
-    @State var wight: String = ""
+    @State var prevWeight: String = "prevWeight"
+    @State var count: String = "count"
+    @State var weight: String = "weight"
     
     var body: some View {
         HStack {
             Toggle(prevWeight, isOn: $isChecked)
                 .toggleStyle(CheckboxToggleStyle(style: .square))
             Text(count)
-            Text(wight)
+            Text(weight)
         }
     }
 }

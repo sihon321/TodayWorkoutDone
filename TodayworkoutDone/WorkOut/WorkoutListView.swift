@@ -10,7 +10,7 @@ import SwiftUI
 struct WorkoutListView: View {
     @FetchRequest(sortDescriptors: []) var workoutsList: FetchedResults<Workouts>
     var category: String
-    @State private var selectionList: [Int] = []
+    @Binding var selectionList: [Int]
     
     var body: some View {
         List(Array(zip(workoutsList.indices, workoutsList)), id: \.0) { index, workouts in
@@ -22,7 +22,11 @@ struct WorkoutListView: View {
         .navigationTitle(category)
         .toolbar {
             if !selectionList.isEmpty {
-                Text("Done(\(selectionList.count))")
+                Button(action: {
+                    
+                }) {
+                    Text("Done(\(selectionList.count))")
+                }
             }
         }
     }
@@ -30,6 +34,7 @@ struct WorkoutListView: View {
 
 struct WorkoutListView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutListView(category: "category")
+        WorkoutListView(category: "category",
+                        selectionList: .constant([]))
     }
 }

@@ -8,21 +8,33 @@
 import SwiftUI
 
 struct WorkingOutView: View {
-    @EnvironmentObject var modelData: DataController
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(modelData.exercises) { excercise in
-                    WorkingOutSection()
+            VStack {
+                List {
+                    ForEach(0..<3) { _ in
+                        WorkingOutSection()
+                    }
+                    .onDelete(perform: delete)
                 }
+                .toolbar {
+                    EditButton()
+                }
+                .navigationTitle("타이틀")
+                .listStyle(.grouped)
             }
-            .navigationTitle("타이틀")
         }
+    }
+    
+    func delete(at offsets: IndexSet) {
+        
     }
 }
 
 struct WorkingOutView_Previews: PreviewProvider {
+    @StateObject static var dataController = DataController()
+    
     static var previews: some View {
         WorkingOutView()
     }
