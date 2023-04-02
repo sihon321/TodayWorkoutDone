@@ -17,7 +17,9 @@ struct WorkingOutRow: View {
         HStack {
             Toggle(prevWeight, isOn: $isChecked)
                 .toggleStyle(CheckboxToggleStyle(style: .square))
+            Spacer()
             Text(count)
+            Spacer()
             Text(weight)
         }
     }

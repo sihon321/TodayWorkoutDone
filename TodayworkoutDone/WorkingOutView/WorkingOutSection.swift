@@ -9,12 +9,14 @@ import SwiftUI
 
 struct WorkingOutSection: View {
     var body: some View {
-        Section {
-            ForEach(0..<3) { _ in
-                WorkingOutRow()
+        VStack {
+            Section {
+                ForEach(0..<3) { _ in
+                    WorkingOutRow()
+                }
+            } header: {
+                WorkingOutHeader()
             }
-        } header: {
-            WorkingOutHeader()
         }
     }
 }

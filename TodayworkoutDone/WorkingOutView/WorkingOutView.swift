@@ -33,7 +33,6 @@ struct WorkingOutView: View {
 }
 
 struct WorkingOutView_Previews: PreviewProvider {
-    @StateObject static var dataController = DataController()
     
     static var previews: some View {
         WorkingOutView()

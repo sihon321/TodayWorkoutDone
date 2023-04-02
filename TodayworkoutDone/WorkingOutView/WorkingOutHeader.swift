@@ -12,18 +12,29 @@ struct WorkingOutHeader: View {
     @State private var showingOptions = false
     
     var body: some View {
-        HStack {
-            Text(title)
-            Spacer()
-            Button(action: {
-                showingOptions = true
-            }, label: {
-                Image(systemName: "ellipsis")
-            })
-            .confirmationDialog("select", isPresented: $showingOptions) {
-                Button("취소") {
-
+        VStack {
+            HStack {
+                Text(title)
+                Spacer()
+                Button(action: {
+                    showingOptions = true
+                }, label: {
+                    Image(systemName: "ellipsis")
+                })
+                .confirmationDialog("select", isPresented: $showingOptions) {
+                    Button("취소") {
+                        
+                    }
                 }
+            }
+            HStack {
+                Text("이전무게")
+                    .padding(.leading, 30)
+                Spacer()
+                Text("횟수")
+                Spacer()
+                Text("무게")
+                    .padding(.trailing, 25)
             }
         }
     }
