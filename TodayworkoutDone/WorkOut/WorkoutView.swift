@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct WorkoutView: View {
-    @EnvironmentObject var dataController: DataController
     @Environment(\.presentationMode) var presentationmode
     @State private var text: String = ""
     

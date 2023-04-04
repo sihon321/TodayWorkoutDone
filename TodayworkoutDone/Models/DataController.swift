@@ -34,8 +34,22 @@ final class DataController: ObservableObject {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
             decoder.userInfo[codingUserInfoKeyManagedObjectContext] = managedObjectContext
-            let workouts: [Workouts] = load("workouts.json", decoder: decoder)
             
+            let categories: [Category] = load("category.json", decoder: decoder)
+            let categoryFetchRequest = NSFetchRequest<Category>(entityName: "Category")
+            var categoryResult: [Category] = []
+            do {
+                let fetchResult = try managedObjectContext.fetch(categoryFetchRequest)
+                categoryResult = fetchResult.filter { !categories.contains($0) }
+            } catch {
+                print(error)
+            }
+            if !categoryResult.isEmpty {
+                _ = try decoder.decode([Category].self, from: categoryResult.jsonData())
+                try managedObjectContext.save()
+            }
+            
+            let workouts: [Workouts] = load("workouts.json", decoder: decoder)
             let fetchRequest = NSFetchRequest<Workouts>(entityName: "Workouts")
             var result: [Workouts] = []
             
@@ -55,7 +69,7 @@ final class DataController: ObservableObject {
         }
     }
 
-    func load<T: Decodable>(_ filename: String, decoder: JSONDecoder) -> T {
+    func load<T: Decodable>(_ filename: String, decoder: JSONDecoder = JSONDecoder()) -> T {
         let data: Data
 
         guard let file = Bundle.main.url(forResource: filename, withExtension: nil)

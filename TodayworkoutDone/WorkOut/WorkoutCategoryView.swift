@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct WorkoutCategoryView: View {
+    @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
     @State private var isPresentWorkingOutView = false
     @State private var selectionList: [Int] = []
-    private var categories: [String] = ["웨이트"]
     
     var body: some View {
         VStack(alignment: .leading)  {
             Text("category")
             ForEach(categories, id: \.self) { category in
                 NavigationLink {
-                    WorkoutListView(category: category,
+                    WorkoutListView(category: category.kor ?? "",
                                     selectionList: $selectionList)
                 } label: {
-                    WorkoutCategorySubview(category: category)
+                    WorkoutCategorySubview(category: category.kor ?? "")
                 }
             }
         }
@@ -32,7 +32,8 @@ struct WorkoutCategoryView: View {
                 }) {
                     Text("Done(\(selectionList.count))")
                 }
-                .fullScreenCover(isPresented: .constant(isPresentWorkingOutView), content: WorkingOutView.init)
+                .fullScreenCover(isPresented: .constant(isPresentWorkingOutView),
+                                 content: WorkingOutView.init)
             }
         }
     }
