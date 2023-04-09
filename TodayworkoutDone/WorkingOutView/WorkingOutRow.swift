@@ -8,25 +8,42 @@
 import SwiftUI
 
 struct WorkingOutRow: View {
+    @Binding var workouts: Excercise
+    @Binding var editMode: EditMode
     @State private var isChecked: Bool = false
-    @State var prevWeight: String = "prevWeight"
-    @State var count: String = "count"
-    @State var weight: String = "weight"
+    @State private var prevWeight: String = "prevWeight"
+    @State private var count: String = "count"
+    @State private var weight: String = "weight"
     
     var body: some View {
         HStack {
             Toggle(prevWeight, isOn: $isChecked)
                 .toggleStyle(CheckboxToggleStyle(style: .square))
             Spacer()
-            Text(count)
+            if editMode == .active {
+                TextField("prevWeight", text: $prevWeight)
+            } else {
+                Text(prevWeight)
+            }
             Spacer()
-            Text(weight)
+            if editMode == .active {
+                TextField("count", text: $count)
+            } else {
+                Text(count)
+            }
+            Spacer()
+            if editMode == .active {
+                TextField("weight", text: $weight)
+            } else {
+                Text(weight)
+            }
         }
     }
 }
 
 struct WorkingOutRow_Previews: PreviewProvider {
     static var previews: some View {
-        WorkingOutRow()
+        WorkingOutRow(workouts: .constant(Excercise()),
+                      editMode: .constant(.active))
     }
 }

@@ -8,19 +8,23 @@
 import SwiftUI
 
 struct WorkingOutView: View {
+    @State private var editMode: EditMode = .active
+    @Binding var selectionWorkouts: [Excercise]
     
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(0..<3) { _ in
-                        WorkingOutSection()
+                    ForEach($selectionWorkouts) { excercise in
+                        WorkingOutSection(workouts: excercise,
+                                          editMode: $editMode)
                     }
                     .onDelete(perform: delete)
                 }
                 .toolbar {
                     EditButton()
                 }
+                .environment(\.editMode, $editMode)
                 .navigationTitle("타이틀")
                 .listStyle(.grouped)
             }
@@ -35,6 +39,6 @@ struct WorkingOutView: View {
 struct WorkingOutView_Previews: PreviewProvider {
     
     static var previews: some View {
-        WorkingOutView()
+        WorkingOutView(selectionWorkouts: .constant([]))
     }
 }

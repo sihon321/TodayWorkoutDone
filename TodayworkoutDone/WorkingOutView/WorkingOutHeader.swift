@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct WorkingOutHeader: View {
-    @State private var title: String = "title"
+    @Binding var workouts: Excercise
     @State private var showingOptions = false
     
     var body: some View {
         VStack {
             HStack {
-                Text(title)
+                Text(workouts.name!).font(.title)
                 Spacer()
                 Button(action: {
                     showingOptions = true
@@ -42,6 +42,6 @@ struct WorkingOutHeader: View {
 
 struct WorkingOutHeader_Previews: PreviewProvider {
     static var previews: some View {
-        WorkingOutHeader()
+        WorkingOutHeader(workouts: .constant(Excercise()))
     }
 }

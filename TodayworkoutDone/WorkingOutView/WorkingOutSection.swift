@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct WorkingOutSection: View {
+    @Binding var workouts: Excercise
+    @Binding var editMode: EditMode
+    
     var body: some View {
         VStack {
             Section {
-                ForEach(0..<3) { _ in
-                    WorkingOutRow()
+                ForEach(0..<1) { _ in
+                    WorkingOutRow(workouts: $workouts, editMode: $editMode)
+                        .padding(.bottom, 2)
                 }
             } header: {
-                WorkingOutHeader()
+                WorkingOutHeader(workouts: $workouts)
             }
         }
     }
@@ -23,6 +27,7 @@ struct WorkingOutSection: View {
 
 struct WorkingOutSection_Previews: PreviewProvider {
     static var previews: some View {
-        WorkingOutSection()
+        WorkingOutSection(workouts: .constant(Excercise()),
+                          editMode: .constant(.active))
     }
 }

@@ -11,14 +11,17 @@ struct WorkoutListSubview: View {
     var workouts: Workouts
     var index: Int
     @Binding var selectionList: [Int]
+    @Binding var selectionWorkouts: [Excercise]
     
     var body: some View {
         HStack {
             Button(action: {
                 if selectionList.contains(index) {
                     selectionList.removeAll(where: { $0 == index })
+                    selectionWorkouts.removeAll(where: { $0.id == workouts.id })
                 } else {
                     selectionList.append(index)
+                    selectionWorkouts.append(workouts)
                 }
             }) {
                 HStack {
@@ -54,7 +57,8 @@ struct WorkoutListSubview_Previews: PreviewProvider {
     static var previews: some View {
         WorkoutListSubview(workouts: workouts,
                            index: 0,
-                           selectionList: .constant([0]))
+                           selectionList: .constant([0]),
+                           selectionWorkouts: .constant([]))
             .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }

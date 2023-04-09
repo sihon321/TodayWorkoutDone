@@ -11,6 +11,7 @@ struct WorkoutCategoryView: View {
     @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
     @State private var isPresentWorkingOutView = false
     @State private var selectionList: [Int] = []
+    @State private var selectionWorkouts: [Excercise] = []
     
     var body: some View {
         VStack(alignment: .leading)  {
@@ -18,7 +19,8 @@ struct WorkoutCategoryView: View {
             ForEach(categories, id: \.self) { category in
                 NavigationLink {
                     WorkoutListView(category: category.kor ?? "",
-                                    selectionList: $selectionList)
+                                    selectionList: $selectionList,
+                                    selectionWorkouts: $selectionWorkouts)
                 } label: {
                     WorkoutCategorySubview(category: category.kor ?? "")
                 }
@@ -33,7 +35,9 @@ struct WorkoutCategoryView: View {
                     Text("Done(\(selectionList.count))")
                 }
                 .fullScreenCover(isPresented: .constant(isPresentWorkingOutView),
-                                 content: WorkingOutView.init)
+                                 content: {
+                    WorkingOutView(selectionWorkouts: $selectionWorkouts)
+                })
             }
         }
     }
