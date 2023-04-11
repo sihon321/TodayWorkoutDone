@@ -10,16 +10,21 @@ import SwiftUI
 struct WorkingOutSection: View {
     @Binding var workouts: Excercise
     @Binding var editMode: EditMode
-    
+    @State var list: [Int] = [1]
     var body: some View {
         VStack {
             Section {
-                ForEach(0..<1) { _ in
+                ForEach(list, id: \.self) { _ in
                     WorkingOutRow(workouts: $workouts, editMode: $editMode)
                         .padding(.bottom, 2)
                 }
             } header: {
                 WorkingOutHeader(workouts: $workouts)
+            } footer: {
+                WorkingOutFooter()
+                    .onTapGesture {
+                        list.append(1)
+                    }
             }
         }
     }

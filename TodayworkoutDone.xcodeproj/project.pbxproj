@@ -29,6 +29,7 @@
 		F2CB39F1295DE20400CA80D6 /* SlideOverCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CB39F0295DE20400CA80D6 /* SlideOverCardView.swift */; };
 		F2CB39F3295DE25900CA80D6 /* DragState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CB39F2295DE25900CA80D6 /* DragState.swift */; };
 		F2CB39F5295DE48B00CA80D6 /* ColorAsset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2CB39F4295DE48B00CA80D6 /* ColorAsset.xcassets */; };
+		F2DAA76829E59DB70039CF07 /* WorkingOutFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DAA76729E59DB60039CF07 /* WorkingOutFooter.swift */; };
 		F2E2214A29994BB500B7DCCB /* WorkingOutSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E2214929994BB500B7DCCB /* WorkingOutSection.swift */; };
 		F2E2214C29994C3B00B7DCCB /* WorkingOutRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E2214B29994C3B00B7DCCB /* WorkingOutRow.swift */; };
 		F2E2214E29994C7000B7DCCB /* WorkingOutHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E2214D29994C7000B7DCCB /* WorkingOutHeader.swift */; };
@@ -88,6 +89,7 @@
 		F2CB39F0295DE20400CA80D6 /* SlideOverCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCardView.swift; sourceTree = "<group>"; };
 		F2CB39F2295DE25900CA80D6 /* DragState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragState.swift; sourceTree = "<group>"; };
 		F2CB39F4295DE48B00CA80D6 /* ColorAsset.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ColorAsset.xcassets; sourceTree = "<group>"; };
+		F2DAA76729E59DB60039CF07 /* WorkingOutFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingOutFooter.swift; sourceTree = "<group>"; };
 		F2E2214929994BB500B7DCCB /* WorkingOutSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingOutSection.swift; sourceTree = "<group>"; };
 		F2E2214B29994C3B00B7DCCB /* WorkingOutRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingOutRow.swift; sourceTree = "<group>"; };
 		F2E2214D29994C7000B7DCCB /* WorkingOutHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingOutHeader.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				F2E2214929994BB500B7DCCB /* WorkingOutSection.swift */,
 				F2E2214B29994C3B00B7DCCB /* WorkingOutRow.swift */,
 				F2E2214D29994C7000B7DCCB /* WorkingOutHeader.swift */,
+				F2DAA76729E59DB60039CF07 /* WorkingOutFooter.swift */,
 			);
 			path = WorkingOutView;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				F2E74CE82921F73500BD35F6 /* ContentView.swift in Sources */,
 				F23F4E9E295826F30084392B /* WorkoutCategoryView.swift in Sources */,
 				F2102C36292BB06D00417789 /* MainContentWorkoutView.swift in Sources */,
+				F2DAA76829E59DB70039CF07 /* WorkingOutFooter.swift in Sources */,
 				F2E74D242922219000BD35F6 /* MainView.swift in Sources */,
 				F23F4E9A295815140084392B /* MyWorkoutSubview.swift in Sources */,
 				F2E2214C29994C3B00B7DCCB /* WorkingOutRow.swift in Sources */,

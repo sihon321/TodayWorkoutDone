@@ -41,7 +41,16 @@ struct WorkingOutHeader: View {
 }
 
 struct WorkingOutHeader_Previews: PreviewProvider {
+    @StateObject static var dataController = DataController()
+    
+    static var excercises = {
+        let excercises = Excercise(context: dataController.container.viewContext)
+        excercises.name = "name"
+        excercises.category = "category"
+        return excercises
+    }()
     static var previews: some View {
-        WorkingOutHeader(workouts: .constant(Excercise()))
+        WorkingOutHeader(workouts: .constant(excercises))
+            .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }
