@@ -16,16 +16,15 @@ struct WorkingOutHeader: View {
             HStack {
                 Text(workouts.name!).font(.title)
                 Spacer()
-                Button(action: {
-                    showingOptions = true
-                }, label: {
-                    Image(systemName: "ellipsis")
-                })
-                .confirmationDialog("select", isPresented: $showingOptions) {
-                    Button("취소") {
-                        
+                Image(systemName: "ellipsis")
+                    .onTapGesture {
+                        showingOptions = true
                     }
-                }
+                    .confirmationDialog("select", isPresented: $showingOptions) {
+                        Button("취소") {
+                            
+                        }
+                    }
             }
             HStack {
                 Text("이전무게")

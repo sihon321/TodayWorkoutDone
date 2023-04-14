@@ -11,9 +11,9 @@ struct WorkingOutRow: View {
     @Binding var workouts: Excercise
     @Binding var editMode: EditMode
     @State private var isChecked: Bool = false
-    @State private var prevWeight: String = "Weight"
-    @State private var count: String = "count"
-    @State private var weight: String = "weight"
+    @State private var prevWeight: String = ""
+    @State private var count: String = ""
+    @State private var weight: String = ""
     
     var body: some View {
         HStack {
@@ -23,18 +23,24 @@ struct WorkingOutRow: View {
             
             if editMode == .active {
                 TextField("prevWeight", text: $prevWeight)
+                    .background(Color.gray)
+                    .cornerRadius(5)
             } else {
                 Text(prevWeight)
             }
             Spacer()
             if editMode == .active {
                 TextField("count", text: $count)
+                    .background(Color.gray)
+                    .cornerRadius(5)
             } else {
                 Text(count)
             }
             Spacer()
             if editMode == .active {
                 TextField("weight", text: $weight)
+                    .background(Color.gray)
+                    .cornerRadius(5)
             } else {
                 Text(weight)
             }

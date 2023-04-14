@@ -19,7 +19,6 @@ struct WorkingOutView: View {
                         WorkingOutSection(workouts: excercise,
                                           editMode: $editMode)
                     }
-                    .onDelete(perform: delete)
                 }
                 .toolbar {
                     EditButton()
@@ -29,10 +28,6 @@ struct WorkingOutView: View {
                 .listStyle(.grouped)
             }
         }
-    }
-    
-    func delete(at offsets: IndexSet) {
-        
     }
 }
 

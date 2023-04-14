@@ -31,8 +31,18 @@ struct WorkingOutSection: View {
 }
 
 struct WorkingOutSection_Previews: PreviewProvider {
+    @StateObject static var dataController = DataController()
+    
+    static var excercises = {
+        let excercises = Excercise(context: dataController.container.viewContext)
+        excercises.name = "name"
+        excercises.category = "category"
+        return excercises
+    }()
+    
     static var previews: some View {
-        WorkingOutSection(workouts: .constant(Excercise()),
+        WorkingOutSection(workouts: .constant(excercises),
                           editMode: .constant(.active))
+        .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }
