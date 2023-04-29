@@ -8,32 +8,45 @@
 import SwiftUI
 
 struct WorkingOutView: View {
+    private let gridLayout: [GridItem] = [GridItem(.flexible())]
+    
     @State private var editMode: EditMode = .active
+    @Binding var isPresentWorkingOutView: Bool
+    @Binding var isPresentWorkoutView: PresentationMode
     @Binding var selectionWorkouts: [Excercise]
     
     var body: some View {
         NavigationView {
-            VStack {
-                List {
-                    ForEach($selectionWorkouts) { excercise in
-                        WorkingOutSection(workouts: excercise,
-                                          editMode: $editMode)
+            ScrollView {
+                ForEach($selectionWorkouts) { excercise in
+                    WorkingOutSection(workouts: excercise,
+                                      editMode: $editMode)
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        isPresentWorkingOutView = false
                     }
                 }
-                .toolbar {
-                    EditButton()
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        isPresentWorkingOutView = false
+                        isPresentWorkoutView.dismiss()
+                    }
                 }
-                .environment(\.editMode, $editMode)
-                .navigationTitle("타이틀")
-                .listStyle(.grouped)
             }
+            .navigationTitle("타이틀")
+            .listStyle(.grouped)
         }
     }
 }
 
 struct WorkingOutView_Previews: PreviewProvider {
-    
+    @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkingOutView(selectionWorkouts: .constant([]))
+        WorkingOutView(isPresentWorkingOutView: .constant(true),
+                       isPresentWorkoutView: presentationmode,
+                       selectionWorkouts: .constant([]))
     }
 }

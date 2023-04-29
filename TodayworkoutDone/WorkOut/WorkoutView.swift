@@ -19,7 +19,9 @@ struct WorkoutView: View {
                         .padding(.top, 10)
                     MyWorkoutView()
                         .padding(.top, 10)
-                    WorkoutCategoryView()
+                    WorkoutCategoryView(
+                        isPresentWorkoutView: presentationmode
+                    )
                         .padding(.top, 10)
                 }
             }

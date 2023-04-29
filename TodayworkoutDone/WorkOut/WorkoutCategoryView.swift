@@ -12,6 +12,7 @@ struct WorkoutCategoryView: View {
     @State private var isPresentWorkingOutView = false
     @State private var selectionList: [Int] = []
     @State private var selectionWorkouts: [Excercise] = []
+    @Binding var isPresentWorkoutView: PresentationMode
     
     var body: some View {
         VStack(alignment: .leading)  {
@@ -20,7 +21,8 @@ struct WorkoutCategoryView: View {
                 NavigationLink {
                     WorkoutListView(category: category.kor ?? "",
                                     selectionList: $selectionList,
-                                    selectionWorkouts: $selectionWorkouts)
+                                    selectionWorkouts: $selectionWorkouts,
+                                    isPresentWorkoutView: $isPresentWorkoutView)
                 } label: {
                     WorkoutCategorySubview(category: category.kor ?? "")
                 }
@@ -36,7 +38,11 @@ struct WorkoutCategoryView: View {
                 }
                 .fullScreenCover(isPresented: .constant(isPresentWorkingOutView),
                                  content: {
-                    WorkingOutView(selectionWorkouts: $selectionWorkouts)
+                    WorkingOutView(
+                        isPresentWorkingOutView: $isPresentWorkingOutView,
+                        isPresentWorkoutView: $isPresentWorkoutView,
+                        selectionWorkouts: $selectionWorkouts
+                    )
                 })
             }
         }
@@ -44,7 +50,8 @@ struct WorkoutCategoryView: View {
 }
 
 struct WorkoutCategoryView_Previews: PreviewProvider {
+    @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkoutCategoryView()
+        WorkoutCategoryView(isPresentWorkoutView: presentationmode)
     }
 }

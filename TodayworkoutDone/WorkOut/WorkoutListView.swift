@@ -13,6 +13,7 @@ struct WorkoutListView: View {
     var category: String
     @Binding var selectionList: [Int]
     @Binding var selectionWorkouts: [Excercise]
+    @Binding var isPresentWorkoutView: PresentationMode
     
     var body: some View {
         List(Array(zip(workoutsList.indices, workoutsList)), id: \.0) { index, workouts in
@@ -32,7 +33,10 @@ struct WorkoutListView: View {
                 }
                 .fullScreenCover(isPresented: .constant(isPresentWorkingOutView),
                                  content: {
-                    WorkingOutView(selectionWorkouts: $selectionWorkouts)
+                    WorkingOutView(
+                        isPresentWorkingOutView: $isPresentWorkingOutView, isPresentWorkoutView: $isPresentWorkoutView,
+                        selectionWorkouts: $selectionWorkouts
+                    )
                 })
             }
         }
@@ -40,9 +44,11 @@ struct WorkoutListView: View {
 }
 
 struct WorkoutListView_Previews: PreviewProvider {
+    @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
         WorkoutListView(category: "category",
                         selectionList: .constant([]),
-                        selectionWorkouts: .constant([]))
+                        selectionWorkouts: .constant([]),
+                        isPresentWorkoutView: presentationmode)
     }
 }

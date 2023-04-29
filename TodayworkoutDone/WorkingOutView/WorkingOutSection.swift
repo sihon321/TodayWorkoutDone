@@ -11,22 +11,34 @@ struct WorkingOutSection: View {
     @Binding var workouts: Excercise
     @Binding var editMode: EditMode
     @State var list: [Int] = [1]
+    @Environment(\.defaultMinListRowHeight) var minRowHeight
+    
     var body: some View {
         VStack {
             Section {
-                ForEach(list, id: \.self) { _ in
-                    WorkingOutRow(workouts: $workouts, editMode: $editMode)
-                        .padding(.bottom, 2)
+                List {
+                    ForEach(list, id: \.self) { item in
+                        WorkingOutRow(workouts: $workouts, editMode: $editMode)
+                            .padding(.bottom, 2)
+                    }
                 }
+                .frame(minHeight: minRowHeight * CGFloat(list.count))
+                .listStyle(PlainListStyle())
             } header: {
                 WorkingOutHeader(workouts: $workouts)
             } footer: {
                 WorkingOutFooter()
                     .onTapGesture {
-                        list.append(1)
+                        if let lastNumber = list.last {
+                            list.append(lastNumber + 1)
+                        }
                     }
             }
         }
+    }
+    
+    func deleteItems(at index: Int) {
+        list.remove(at: index)
     }
 }
 

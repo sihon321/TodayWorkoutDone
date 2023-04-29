@@ -21,7 +21,7 @@ struct WorkingOutHeader: View {
                         showingOptions = true
                     }
                     .confirmationDialog("select", isPresented: $showingOptions) {
-                        Button("취소") {
+                        Button("삭제") {
                             
                         }
                     }
