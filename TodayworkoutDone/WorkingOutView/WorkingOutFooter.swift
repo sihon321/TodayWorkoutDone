@@ -11,7 +11,7 @@ struct WorkingOutFooter: View {
     var body: some View {
         HStack {
             Image(systemName: "plus.circle")
-            Text("Add Excercise")
+            Text("Add Execercise")
         }
     }
 }

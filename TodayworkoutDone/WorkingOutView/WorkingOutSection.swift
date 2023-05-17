@@ -21,6 +21,9 @@ struct WorkingOutSection: View {
                         WorkingOutRow(workouts: $workouts, editMode: $editMode)
                             .padding(.bottom, 2)
                     }
+                    .onDelete { indexSet in
+                        deleteItems(atOffsets: indexSet)
+                    }
                 }
                 .frame(minHeight: minRowHeight * CGFloat(list.count))
                 .listStyle(PlainListStyle())
@@ -31,14 +34,16 @@ struct WorkingOutSection: View {
                     .onTapGesture {
                         if let lastNumber = list.last {
                             list.append(lastNumber + 1)
+                        } else {
+                            list.append(1)
                         }
                     }
             }
         }
     }
     
-    func deleteItems(at index: Int) {
-        list.remove(at: index)
+    func deleteItems(atOffsets offset: IndexSet) {
+        list.remove(atOffsets: offset)
     }
 }
 

@@ -11,6 +11,9 @@ struct ContentView: View {
     @EnvironmentObject var dataController: DataController
     @State var isBarPresented: Bool = true
     @State var isPresented = false
+    @State private var isPresentWorkingOutView = false
+    @State private var selectionWorkouts: [Excercise] = []
+    @Binding var isPresentWorkoutView: PresentationMode
     
     var body: some View {
         ZStack {
@@ -19,17 +22,18 @@ struct ContentView: View {
                     MainView()
                     ExcerciseStartView(isBarPresented: $isBarPresented,
                                        isPresented: $isPresented)
+//                    SlideOverCardView(content: {
+//                        WorkingOutView(makeWorkingOutView: false,
+//                                       isPresentWorkingOutView: $isPresentWorkingOutView,
+//                                       isPresentWorkoutView: $isPresentWorkoutView,
+//                                       selectionWorkouts: $selectionWorkouts)
+//                    })
                 }
                 .tabItem({
                     Image(systemName: "play.fill")
                     Text("Main")
                 })
             }
-
-//            SlideOverCardView(content: {
-//                WorkingOutView()
-//                    .environmentObject(modelData)
-//            })
             Spacer()
         }
     }
@@ -37,9 +41,10 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     @StateObject static var dataController = DataController()
+    @Environment(\.presentationMode) static var presentationmode
     
     static var previews: some View {
-        ContentView()
+        ContentView(isPresentWorkoutView: presentationmode)
             .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }

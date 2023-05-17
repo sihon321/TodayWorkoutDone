@@ -39,6 +39,7 @@ struct WorkoutCategoryView: View {
                 .fullScreenCover(isPresented: .constant(isPresentWorkingOutView),
                                  content: {
                     WorkingOutView(
+                        makeWorkingOutView: true,
                         isPresentWorkingOutView: $isPresentWorkingOutView,
                         isPresentWorkoutView: $isPresentWorkoutView,
                         selectionWorkouts: $selectionWorkouts
