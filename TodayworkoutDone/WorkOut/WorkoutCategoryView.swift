@@ -9,9 +9,11 @@ import SwiftUI
 
 struct WorkoutCategoryView: View {
     @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
+    
     @State private var isPresentWorkingOutView = false
     @State private var selectionList: [Int] = []
     @State private var selectionWorkouts: [Excercise] = []
+    
     @Binding var isPresentWorkoutView: PresentationMode
     
     var body: some View {
@@ -38,8 +40,7 @@ struct WorkoutCategoryView: View {
                 }
                 .fullScreenCover(isPresented: .constant(isPresentWorkingOutView),
                                  content: {
-                    WorkingOutView(
-                        makeWorkingOutView: true,
+                    MakeWorkoutView(
                         isPresentWorkingOutView: $isPresentWorkingOutView,
                         isPresentWorkoutView: $isPresentWorkoutView,
                         selectionWorkouts: $selectionWorkouts

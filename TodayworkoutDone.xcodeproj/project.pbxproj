@@ -12,6 +12,8 @@
 		8E52790B29C7134D000DCD7F /* ExcerciseStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E52790A29C7134D000DCD7F /* ExcerciseStartView.swift */; };
 		8EC0B0E329CC4E7600C3278C /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4066AB29B33D71004BB7A2 /* Workouts.swift */; };
 		8EC0B0E629CC5D2600C3278C /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EC0B0E429CC5D2600C3278C /* ModelData.xcdatamodeld */; };
+		8EECCF422A14EA9300BD99DB /* MyObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECCF412A14EA9300BD99DB /* MyObservableObject.swift */; };
+		8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */; };
 		F2102C34292BB06D00417789 /* MainContentStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2102C31292BB06D00417789 /* MainContentStepView.swift */; };
 		F2102C35292BB06D00417789 /* MainContentSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2102C32292BB06D00417789 /* MainContentSubView.swift */; };
 		F2102C36292BB06D00417789 /* MainContentWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2102C33292BB06D00417789 /* MainContentWorkoutView.swift */; };
@@ -72,6 +74,8 @@
 		8E52790829C7099B000DCD7F /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		8E52790A29C7134D000DCD7F /* ExcerciseStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcerciseStartView.swift; sourceTree = "<group>"; };
 		8EC0B0E529CC5D2600C3278C /* ModelData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelData.xcdatamodel; sourceTree = "<group>"; };
+		8EECCF412A14EA9300BD99DB /* MyObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyObservableObject.swift; sourceTree = "<group>"; };
+		8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWorkoutView.swift; sourceTree = "<group>"; };
 		F2102C31292BB06D00417789 /* MainContentStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentStepView.swift; sourceTree = "<group>"; };
 		F2102C32292BB06D00417789 /* MainContentSubView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentSubView.swift; sourceTree = "<group>"; };
 		F2102C33292BB06D00417789 /* MainContentWorkoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentWorkoutView.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				8E4066AB29B33D71004BB7A2 /* Workouts.swift */,
 				8E52790829C7099B000DCD7F /* Routine.swift */,
 				F23264A129DC6A58008649FE /* Category.swift */,
+				8EECCF412A14EA9300BD99DB /* MyObservableObject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 		F2E221462999089300B7DCCB /* WorkingOutView */ = {
 			isa = PBXGroup;
 			children = (
+				8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */,
 				F2335416295B4BF9006E12CB /* WorkingOutView.swift */,
 				F2E2214929994BB500B7DCCB /* WorkingOutSection.swift */,
 				F2E2214B29994C3B00B7DCCB /* WorkingOutRow.swift */,
@@ -464,7 +470,9 @@
 				F2E74CE62921F73500BD35F6 /* TodayworkoutDoneApp.swift in Sources */,
 				F2E2214A29994BB500B7DCCB /* WorkingOutSection.swift in Sources */,
 				F2E74D222922219000BD35F6 /* MainWelcomeView.swift in Sources */,
+				8EECCF422A14EA9300BD99DB /* MyObservableObject.swift in Sources */,
 				F2E74D262922219000BD35F6 /* MainContentView.swift in Sources */,
+				8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */,
 				F2C63E222959F3D200D02F76 /* WorkoutListSubview.swift in Sources */,
 				8EC0B0E329CC4E7600C3278C /* Workouts.swift in Sources */,
 			);

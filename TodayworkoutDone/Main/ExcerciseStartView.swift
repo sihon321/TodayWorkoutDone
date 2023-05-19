@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ExcerciseStartView: View {
-    @Binding var isBarPresented: Bool
     @Binding var isPresented: Bool
     
     var body: some View {
@@ -32,8 +31,7 @@ struct ExcerciseStartView: View {
 
 struct ExcerciseStartView_Previews: PreviewProvider {
     static var previews: some View {
-        ExcerciseStartView(isBarPresented: .constant(true),
-                           isPresented: .constant(false))
+        ExcerciseStartView(isPresented: .constant(false))
     }
 }
 

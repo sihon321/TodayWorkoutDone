@@ -9,25 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var dataController: DataController
-    @State var isBarPresented: Bool = true
-    @State var isPresented = false
+    @State private var isPresented = false
     @State private var isPresentWorkingOutView = false
-    @State private var selectionWorkouts: [Excercise] = []
     @Binding var isPresentWorkoutView: PresentationMode
+    @EnvironmentObject var myObject: MyObservableObject
     
     var body: some View {
         ZStack {
             TabView {
                 ZStack {
                     MainView()
-                    ExcerciseStartView(isBarPresented: $isBarPresented,
-                                       isPresented: $isPresented)
-//                    SlideOverCardView(content: {
-//                        WorkingOutView(makeWorkingOutView: false,
-//                                       isPresentWorkingOutView: $isPresentWorkingOutView,
-//                                       isPresentWorkoutView: $isPresentWorkoutView,
-//                                       selectionWorkouts: $selectionWorkouts)
-//                    })
+                    if myObject.isWorkingOutView {
+                        SlideOverCardView(content: {
+                            WorkingOutView(isPresentWorkingOutView: $isPresentWorkingOutView,
+                                           isPresentWorkoutView: $isPresentWorkoutView)
+                        })
+                    } else {
+                        ExcerciseStartView(isPresented: $isPresented)
+                    }
                 }
                 .tabItem({
                     Image(systemName: "play.fill")
