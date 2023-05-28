@@ -13,7 +13,9 @@ struct ExcerciseStartView: View {
     var body: some View {
         VStack {
             Spacer()
-            Button(action: { self.isPresented.toggle() }) {
+            Button(action: {
+                self.isPresented.toggle()
+            }) {
                 Text("워크아웃 시작")
                     .frame(minWidth: 0, maxWidth: .infinity - 30)
                     .padding([.top, .bottom], 5)
@@ -25,6 +27,7 @@ struct ExcerciseStartView: View {
             .padding(.horizontal, 30)
             .fullScreenCover(isPresented: $isPresented,
                              content: WorkoutView.init)
+            .offset(y: -15)
         }
     }
 }

@@ -8,42 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var dataController: DataController
-    @State private var isPresented = false
-    @State private var isPresentWorkingOutView = false
-    @Binding var isPresentWorkoutView: PresentationMode
-    @EnvironmentObject var myObject: MyObservableObject
+    @Environment(\.presentationMode) var presentationmode
+    @StateObject private var dataController = DataController()
+    @StateObject var myObject = MyObservableObject()
+    
     
     var body: some View {
-        ZStack {
-            TabView {
-                ZStack {
-                    MainView()
-                    if myObject.isWorkingOutView {
-                        SlideOverCardView(content: {
-                            WorkingOutView(isPresentWorkingOutView: $isPresentWorkingOutView,
-                                           isPresentWorkoutView: $isPresentWorkoutView)
-                        })
-                    } else {
-                        ExcerciseStartView(isPresented: $isPresented)
-                    }
-                }
-                .tabItem({
-                    Image(systemName: "play.fill")
-                    Text("Main")
-                })
-            }
-            Spacer()
+        GeometryReader { proxy in
+            let bottomEdge = proxy.safeAreaInsets.bottom
+            
+            HomeView(presentMode:  presentationmode,
+                     bottomEdge: (bottomEdge == 0 ? 15 : bottomEdge))
+                .environment(\.managedObjectContext, dataController.container.viewContext)
+                .environmentObject(myObject)
+                .ignoresSafeArea(.all, edges: .bottom)
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
-    @StateObject static var dataController = DataController()
-    @Environment(\.presentationMode) static var presentationmode
-    
+
     static var previews: some View {
-        ContentView(isPresentWorkoutView: presentationmode)
-            .environment(\.managedObjectContext, dataController.container.viewContext)
+        ContentView()
     }
 }

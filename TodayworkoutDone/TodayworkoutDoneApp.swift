@@ -9,15 +9,10 @@ import SwiftUI
 
 @main
 struct TodayworkoutDoneApp: App {
-    @Environment(\.presentationMode) var presentationmode
-    @StateObject private var dataController = DataController()
-    @StateObject var myObject = MyObservableObject()
-    
+
     var body: some Scene {
         WindowGroup {
-            ContentView(isPresentWorkoutView: presentationmode)
-                .environment(\.managedObjectContext, dataController.container.viewContext)
-                .environmentObject(myObject)
+            ContentView()
         }
     }
 }
