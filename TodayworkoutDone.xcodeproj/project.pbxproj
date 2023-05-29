@@ -10,6 +10,7 @@
 		8E4066A729B33CEC004BB7A2 /* workouts.json in Resources */ = {isa = PBXBuildFile; fileRef = 8E4066A629B33CEC004BB7A2 /* workouts.json */; };
 		8E4066AA29B33D12004BB7A2 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4066A929B33D12004BB7A2 /* DataController.swift */; };
 		8E52790B29C7134D000DCD7F /* ExcerciseStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E52790A29C7134D000DCD7F /* ExcerciseStartView.swift */; };
+		8E5E8A1B2A24A594004A4F33 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5E8A1A2A24A594004A4F33 /* AppState.swift */; };
 		8EC0B0E329CC4E7600C3278C /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4066AB29B33D71004BB7A2 /* Workouts.swift */; };
 		8EC0B0E629CC5D2600C3278C /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EC0B0E429CC5D2600C3278C /* ModelData.xcdatamodeld */; };
 		8EECCF422A14EA9300BD99DB /* MyObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECCF412A14EA9300BD99DB /* MyObservableObject.swift */; };
@@ -75,6 +76,7 @@
 		8E4066AB29B33D71004BB7A2 /* Workouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workouts.swift; sourceTree = "<group>"; };
 		8E52790829C7099B000DCD7F /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		8E52790A29C7134D000DCD7F /* ExcerciseStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcerciseStartView.swift; sourceTree = "<group>"; };
+		8E5E8A1A2A24A594004A4F33 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		8EC0B0E529CC5D2600C3278C /* ModelData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelData.xcdatamodel; sourceTree = "<group>"; };
 		8EECCF412A14EA9300BD99DB /* MyObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyObservableObject.swift; sourceTree = "<group>"; };
 		8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWorkoutView.swift; sourceTree = "<group>"; };
@@ -148,6 +150,9 @@
 		8E4066A529B33C90004BB7A2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F2E74CE92921F73600BD35F6 /* Assets.xcassets */,
+				F2E74CEB2921F73600BD35F6 /* TodayworkoutDone.entitlements */,
+				F2CB39F4295DE48B00CA80D6 /* ColorAsset.xcassets */,
 				8E4066A629B33CEC004BB7A2 /* workouts.json */,
 				F264AC5B29D21F3A0003E70D /* category.json */,
 			);
@@ -165,6 +170,26 @@
 				8EECCF412A14EA9300BD99DB /* MyObservableObject.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		8E5E8A192A24A578004A4F33 /* Injected */ = {
+			isa = PBXGroup;
+			children = (
+				8E5E8A1A2A24A594004A4F33 /* AppState.swift */,
+			);
+			path = Injected;
+			sourceTree = "<group>";
+		};
+		8E5E8A1C2A24AED3004A4F33 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F2CB39EF295DE1B000CA80D6 /* CommonView */,
+				F2E74D27292221C400BD35F6 /* Extension */,
+				F23F4E972958002B0084392B /* WorkOut */,
+				F2E221462999089300B7DCCB /* WorkingOutView */,
+				F2E74D1C2922217500BD35F6 /* Main */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		F2102C30292BB05200417789 /* Subviews */ = {
@@ -247,20 +272,12 @@
 		F2E74CE42921F73500BD35F6 /* TodayworkoutDone */ = {
 			isa = PBXGroup;
 			children = (
+				8E5E8A192A24A578004A4F33 /* Injected */,
 				8E4066A829B33D02004BB7A2 /* Models */,
+				8E5E8A1C2A24AED3004A4F33 /* UI */,
 				8E4066A529B33C90004BB7A2 /* Resources */,
-				F2CB39EF295DE1B000CA80D6 /* CommonView */,
-				F2E74D27292221C400BD35F6 /* Extension */,
-				F23F4E972958002B0084392B /* WorkOut */,
-				F2E221462999089300B7DCCB /* WorkingOutView */,
-				F2E74D1C2922217500BD35F6 /* Main */,
 				F2E74CE52921F73500BD35F6 /* TodayworkoutDoneApp.swift */,
-				F29285342A17D25400C3A055 /* HomeView.swift */,
-				F2E74CE72921F73500BD35F6 /* ContentView.swift */,
-				F2E74CE92921F73600BD35F6 /* Assets.xcassets */,
-				F2E74CEB2921F73600BD35F6 /* TodayworkoutDone.entitlements */,
 				F2E74CEC2921F73600BD35F6 /* Preview Content */,
-				F2CB39F4295DE48B00CA80D6 /* ColorAsset.xcassets */,
 			);
 			path = TodayworkoutDone;
 			sourceTree = "<group>";
@@ -295,6 +312,8 @@
 			children = (
 				F2102C30292BB05200417789 /* Subviews */,
 				F2E74D212922219000BD35F6 /* MainContentView.swift */,
+				F29285342A17D25400C3A055 /* HomeView.swift */,
+				F2E74CE72921F73500BD35F6 /* ContentView.swift */,
 				F2E74D1F2922219000BD35F6 /* MainView.swift */,
 				F2E74D1D2922219000BD35F6 /* MainWelcomeView.swift */,
 				F2E74D202922219000BD35F6 /* WeeklyChartView.swift */,
@@ -451,6 +470,7 @@
 				F2C63E202959F3C700D02F76 /* WorkoutListView.swift in Sources */,
 				F23F4E962957FB250084392B /* MyWorkoutView.swift in Sources */,
 				F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */,
+				8E5E8A1B2A24A594004A4F33 /* AppState.swift in Sources */,
 				8E4066AA29B33D12004BB7A2 /* DataController.swift in Sources */,
 				F2E2214E29994C7000B7DCCB /* WorkingOutHeader.swift in Sources */,
 				8EC0B0E629CC5D2600C3278C /* ModelData.xcdatamodeld in Sources */,
@@ -635,7 +655,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = TodayworkoutDone/TodayworkoutDone.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TodayworkoutDone/Resources/TodayworkoutDone.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -675,7 +695,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = TodayworkoutDone/TodayworkoutDone.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TodayworkoutDone/Resources/TodayworkoutDone.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

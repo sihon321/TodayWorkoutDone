@@ -12,3 +12,4 @@ class MyObservableObject: ObservableObject {
     @Published var isWorkingOutView = false
     @Published var selectionWorkouts: [Excercise] = []
 }
+
