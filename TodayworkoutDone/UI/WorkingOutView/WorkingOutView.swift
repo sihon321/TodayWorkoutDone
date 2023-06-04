@@ -10,8 +10,6 @@ import SwiftUI
 struct WorkingOutView: View {
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     @State private var editMode: EditMode = .active
-    @Binding var isPresentWorkingOutView: Bool
-    @Binding var isPresentWorkoutView: PresentationMode
     @Environment(\.injected) private var injected: DIContainer
     
     var body: some View {
@@ -38,7 +36,6 @@ struct WorkingOutView: View {
 struct WorkingOutView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkingOutView(isPresentWorkingOutView: .constant(true),
-                       isPresentWorkoutView: presentationmode)
+        WorkingOutView()
     }
 }

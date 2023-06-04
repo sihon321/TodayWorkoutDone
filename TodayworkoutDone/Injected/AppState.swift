@@ -18,6 +18,12 @@ extension AppState {
     }
 }
 
+extension AppState {
+    struct ViewRouting: Equatable {
+        
+    }
+}
+
 #if DEBUG
 extension AppState {
     static var preview: AppState {

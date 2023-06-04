@@ -10,11 +10,9 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var dataController: DataController
     @State private var isPresented = false
-    @State private var isPresentWorkingOutView = false
     @Binding var isPresentWorkoutView: PresentationMode
     @State var currentTab = "play.fill"
     @Environment(\.injected) private var injected: DIContainer
-    private var excerciseStartView: ExcerciseStartView?
     
     var bottomEdge: CGFloat
     @State var hideBar = false
@@ -33,8 +31,7 @@ struct HomeView: View {
                     
                     if injected.appState[\.userData.isWorkingOutView] {
                         SlideOverCardView(hideTab: $hideBar, content: {
-                            WorkingOutView(isPresentWorkingOutView: $isPresentWorkingOutView,
-                                           isPresentWorkoutView: $isPresentWorkoutView)
+                            WorkingOutView()
                         })
                         .onAppear {
                             hideBar = true
