@@ -10,17 +10,20 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.presentationMode) var presentationmode
     @StateObject private var dataController = DataController()
-    @StateObject var myObject = MyObservableObject()
+    private let container: DIContainer 
     
+    init(container: DIContainer) {
+        self.container = container
+    }
     
     var body: some View {
         GeometryReader { proxy in
             let bottomEdge = proxy.safeAreaInsets.bottom
             
-            HomeView(presentMode:  presentationmode,
+            HomeView(presentMode: presentationmode,
                      bottomEdge: (bottomEdge == 0 ? 15 : bottomEdge))
                 .environment(\.managedObjectContext, dataController.container.viewContext)
-                .environmentObject(myObject)
+                .inject(container)
                 .ignoresSafeArea(.all, edges: .bottom)
         }
     }
@@ -29,6 +32,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
 
     static var previews: some View {
-        ContentView()
+        ContentView(container: .preview)
     }
 }

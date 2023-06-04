@@ -17,3 +17,12 @@ extension AppState {
         var selectionWorkouts: [Excercise] = []
     }
 }
+
+#if DEBUG
+extension AppState {
+    static var preview: AppState {
+        let state = AppState()
+        return state
+    }
+}
+#endif

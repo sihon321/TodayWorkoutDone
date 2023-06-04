@@ -13,7 +13,7 @@ struct MakeWorkoutView: View {
     @Binding var isPresentWorkingOutView: Bool
     @Binding var isPresentWorkoutView: PresentationMode
     @Binding var selectionWorkouts: [Excercise]
-    @EnvironmentObject var myObject: MyObservableObject
+    @Environment(\.injected) private var injected: DIContainer
     
     var body: some View {
         NavigationView {
@@ -31,9 +31,9 @@ struct MakeWorkoutView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
-                        myObject.selectionWorkouts = selectionWorkouts
+                        injected.appState[\.userData.selectionWorkouts] = selectionWorkouts
                         isPresentWorkingOutView = false
-                        myObject.isWorkingOutView.toggle()
+                        injected.appState[\.userData.isWorkingOutView].toggle()
                         isPresentWorkoutView.dismiss()
                     }
                 }

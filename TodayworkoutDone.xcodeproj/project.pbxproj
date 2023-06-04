@@ -27,7 +27,11 @@
 		F23F4E9C29581F070084392B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23F4E9B29581F070084392B /* SearchBar.swift */; };
 		F23F4E9E295826F30084392B /* WorkoutCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23F4E9D295826F30084392B /* WorkoutCategoryView.swift */; };
 		F23F4EA02958271B0084392B /* WorkoutCategorySubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23F4E9F2958271B0084392B /* WorkoutCategorySubview.swift */; };
+		F25098692A24FACF005390D5 /* InteractorsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25098682A24FACF005390D5 /* InteractorsContainer.swift */; };
+		F250986B2A24FBA7005390D5 /* WorkoutInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F250986A2A24FBA7005390D5 /* WorkoutInteractor.swift */; };
+		F250986E2A25152D005390D5 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F250986D2A25152D005390D5 /* AppEnvironment.swift */; };
 		F264AC5C29D21F3A0003E70D /* category.json in Resources */ = {isa = PBXBuildFile; fileRef = F264AC5B29D21F3A0003E70D /* category.json */; };
+		F27AD1882A2BA409002C44DD /* SystemEventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AD1872A2BA409002C44DD /* SystemEventsHandler.swift */; };
 		F29285332A17CEE000C3A055 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29285322A17CEE000C3A055 /* CustomTabBar.swift */; };
 		F29285352A17D25400C3A055 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29285342A17D25400C3A055 /* HomeView.swift */; };
 		F2C63E202959F3C700D02F76 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C63E1F2959F3C700D02F76 /* WorkoutListView.swift */; };
@@ -93,7 +97,11 @@
 		F23F4E9B29581F070084392B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		F23F4E9D295826F30084392B /* WorkoutCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCategoryView.swift; sourceTree = "<group>"; };
 		F23F4E9F2958271B0084392B /* WorkoutCategorySubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCategorySubview.swift; sourceTree = "<group>"; };
+		F25098682A24FACF005390D5 /* InteractorsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractorsContainer.swift; sourceTree = "<group>"; };
+		F250986A2A24FBA7005390D5 /* WorkoutInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutInteractor.swift; sourceTree = "<group>"; };
+		F250986D2A25152D005390D5 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		F264AC5B29D21F3A0003E70D /* category.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = category.json; sourceTree = "<group>"; };
+		F27AD1872A2BA409002C44DD /* SystemEventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEventsHandler.swift; sourceTree = "<group>"; };
 		F29285322A17CEE000C3A055 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		F29285342A17D25400C3A055 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F2C63E1F2959F3C700D02F76 /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
@@ -177,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				8E5E8A1A2A24A594004A4F33 /* AppState.swift */,
+				F25098682A24FACF005390D5 /* InteractorsContainer.swift */,
 				8E5E8A212A24B945004A4F33 /* DependencyInjector.swift */,
 			);
 			path = Injected;
@@ -205,6 +214,7 @@
 		8E5E8A202A24B869004A4F33 /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
+				F250986A2A24FBA7005390D5 /* WorkoutInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -239,6 +249,15 @@
 				F2C63E212959F3D200D02F76 /* WorkoutListSubview.swift */,
 			);
 			path = Subview;
+			sourceTree = "<group>";
+		};
+		F250986C2A25151F005390D5 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				F250986D2A25152D005390D5 /* AppEnvironment.swift */,
+				F27AD1872A2BA409002C44DD /* SystemEventsHandler.swift */,
+			);
+			path = System;
 			sourceTree = "<group>";
 		};
 		F2CB39EF295DE1B000CA80D6 /* CommonView */ = {
@@ -289,6 +308,7 @@
 		F2E74CE42921F73500BD35F6 /* TodayworkoutDone */ = {
 			isa = PBXGroup;
 			children = (
+				F250986C2A25151F005390D5 /* System */,
 				8E5E8A1D2A24B415004A4F33 /* Utilities */,
 				8E5E8A192A24A578004A4F33 /* Injected */,
 				8E4066A829B33D02004BB7A2 /* Models */,
@@ -489,8 +509,10 @@
 				F2C63E202959F3C700D02F76 /* WorkoutListView.swift in Sources */,
 				F23F4E962957FB250084392B /* MyWorkoutView.swift in Sources */,
 				F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */,
+				F27AD1882A2BA409002C44DD /* SystemEventsHandler.swift in Sources */,
 				8E5E8A1F2A24B42D004A4F33 /* Store.swift in Sources */,
 				8E5E8A1B2A24A594004A4F33 /* AppState.swift in Sources */,
+				F250986E2A25152D005390D5 /* AppEnvironment.swift in Sources */,
 				8E4066AA29B33D12004BB7A2 /* DataController.swift in Sources */,
 				F2E2214E29994C7000B7DCCB /* WorkingOutHeader.swift in Sources */,
 				8EC0B0E629CC5D2600C3278C /* ModelData.xcdatamodeld in Sources */,
@@ -504,6 +526,7 @@
 				F2335417295B4BF9006E12CB /* WorkingOutView.swift in Sources */,
 				F23264A229DC6A58008649FE /* Category.swift in Sources */,
 				F2E74D29292221D500BD35F6 /* Color+SwiftUI.swift in Sources */,
+				F250986B2A24FBA7005390D5 /* WorkoutInteractor.swift in Sources */,
 				F2CB39F3295DE25900CA80D6 /* DragState.swift in Sources */,
 				F2102C35292BB06D00417789 /* MainContentSubView.swift in Sources */,
 				F23F4EA02958271B0084392B /* WorkoutCategorySubview.swift in Sources */,
@@ -518,6 +541,7 @@
 				F2102C34292BB06D00417789 /* MainContentStepView.swift in Sources */,
 				F2E74CE62921F73500BD35F6 /* TodayworkoutDoneApp.swift in Sources */,
 				F2E2214A29994BB500B7DCCB /* WorkingOutSection.swift in Sources */,
+				F25098692A24FACF005390D5 /* InteractorsContainer.swift in Sources */,
 				F2E74D222922219000BD35F6 /* MainWelcomeView.swift in Sources */,
 				F2E74D262922219000BD35F6 /* MainContentView.swift in Sources */,
 				8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */,

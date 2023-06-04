@@ -12,8 +12,8 @@ struct HomeView: View {
     @State private var isPresented = false
     @State private var isPresentWorkingOutView = false
     @Binding var isPresentWorkoutView: PresentationMode
-    @EnvironmentObject var myObject: MyObservableObject
     @State var currentTab = "play.fill"
+    @Environment(\.injected) private var injected: DIContainer
     private var excerciseStartView: ExcerciseStartView?
     
     var bottomEdge: CGFloat
@@ -30,7 +30,8 @@ struct HomeView: View {
             TabView {
                 ZStack {
                     MainView(bottomEdge: bottomEdge)
-                    if myObject.isWorkingOutView {
+                    
+                    if injected.appState[\.userData.isWorkingOutView] {
                         SlideOverCardView(hideTab: $hideBar, content: {
                             WorkingOutView(isPresentWorkingOutView: $isPresentWorkingOutView,
                                            isPresentWorkoutView: $isPresentWorkoutView)
@@ -48,7 +49,7 @@ struct HomeView: View {
             }
             .overlay (
                 VStack {
-                    if !myObject.isWorkingOutView {
+                    if !injected.appState[\.userData.isWorkingOutView] {
                         ExcerciseStartView(isPresented: $isPresented)
                     }
                     CustomTabBar(currentTab: $currentTab, bottomEdge: bottomEdge)

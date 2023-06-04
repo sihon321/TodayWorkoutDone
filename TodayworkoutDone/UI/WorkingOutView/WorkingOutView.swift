@@ -12,13 +12,13 @@ struct WorkingOutView: View {
     @State private var editMode: EditMode = .active
     @Binding var isPresentWorkingOutView: Bool
     @Binding var isPresentWorkoutView: PresentationMode
-    @EnvironmentObject var myObject: MyObservableObject
+    @Environment(\.injected) private var injected: DIContainer
     
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach($myObject.selectionWorkouts) { excercise in
-                    WorkingOutSection(workouts: excercise,
+                ForEach(injected.appState[\.userData.selectionWorkouts]) { excercise in
+                    WorkingOutSection(workouts: .constant(excercise),
                                       editMode: $editMode)
                 }
             }

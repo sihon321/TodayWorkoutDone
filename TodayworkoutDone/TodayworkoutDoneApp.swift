@@ -9,10 +9,11 @@ import SwiftUI
 
 @main
 struct TodayworkoutDoneApp: App {
-
+    let environment = AppEnvironment.bootstrap()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(container: environment.container)
         }
     }
 }
