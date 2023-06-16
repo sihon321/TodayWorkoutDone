@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkoutView: View {
-    @Environment(\.presentationMode) var presentationmode
+    @Binding var isPresented: Bool
     @State private var text: String = ""
     
     var body: some View {
@@ -20,7 +20,7 @@ struct WorkoutView: View {
                     MyWorkoutView()
                         .padding(.top, 10)
                     WorkoutCategoryView(
-                        isPresentWorkoutView: presentationmode
+                        isPresented: $isPresented
                     )
                         .padding(.top, 10)
                 }
@@ -30,7 +30,7 @@ struct WorkoutView: View {
             .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        presentationmode.wrappedValue.dismiss()
+                        isPresented.toggle()
                     }, label: {
                         Image(systemName: "xmark")
                             .foregroundColor(.black)
@@ -44,7 +44,7 @@ struct WorkoutView: View {
 
 struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutView()
+        WorkoutView(isPresented: .constant(true))
             .background(Color.gray)
     }
 }

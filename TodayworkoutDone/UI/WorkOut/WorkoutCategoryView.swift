@@ -14,7 +14,7 @@ struct WorkoutCategoryView: View {
     @State private var selectionList: [Int] = []
     @State private var selectionWorkouts: [Excercise] = []
     
-    @Binding var isPresentWorkoutView: PresentationMode
+    @Binding var isPresented: Bool
     
     var body: some View {
         VStack(alignment: .leading)  {
@@ -24,7 +24,7 @@ struct WorkoutCategoryView: View {
                     WorkoutListView(category: category.kor ?? "",
                                     selectionList: $selectionList,
                                     selectionWorkouts: $selectionWorkouts,
-                                    isPresentWorkoutView: $isPresentWorkoutView)
+                                    isPresented: $isPresented)
                 } label: {
                     WorkoutCategorySubview(category: category.kor ?? "")
                 }
@@ -42,7 +42,7 @@ struct WorkoutCategoryView: View {
                                  content: {
                     MakeWorkoutView(
                         isPresentWorkingOutView: $isPresentWorkingOutView,
-                        isPresentWorkoutView: $isPresentWorkoutView,
+                        isPresented: $isPresented,
                         selectionWorkouts: $selectionWorkouts
                     )
                 })
@@ -54,6 +54,6 @@ struct WorkoutCategoryView: View {
 struct WorkoutCategoryView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkoutCategoryView(isPresentWorkoutView: presentationmode)
+        WorkoutCategoryView(isPresented: .constant(true))
     }
 }

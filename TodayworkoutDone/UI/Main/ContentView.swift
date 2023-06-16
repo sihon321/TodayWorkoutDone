@@ -20,8 +20,7 @@ struct ContentView: View {
         GeometryReader { proxy in
             let bottomEdge = proxy.safeAreaInsets.bottom
             
-            HomeView(presentMode: presentationmode,
-                     bottomEdge: (bottomEdge == 0 ? 15 : bottomEdge))
+            HomeView(bottomEdge: (bottomEdge == 0 ? 15 : bottomEdge))
                 .environment(\.managedObjectContext, dataController.container.viewContext)
                 .inject(container)
                 .ignoresSafeArea(.all, edges: .bottom)

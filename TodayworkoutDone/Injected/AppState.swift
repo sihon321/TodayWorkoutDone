@@ -9,6 +9,7 @@ import Foundation
 
 struct AppState: Equatable {
     var userData = UserData()
+    var routing = ViewRouting()
 }
 
 extension AppState {
@@ -20,7 +21,7 @@ extension AppState {
 
 extension AppState {
     struct ViewRouting: Equatable {
-        
+        var excerciseStartView = ExcerciseStartView.Routing()
     }
 }
 

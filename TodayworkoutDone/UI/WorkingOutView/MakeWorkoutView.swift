@@ -11,7 +11,7 @@ struct MakeWorkoutView: View {
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     @State private var editMode: EditMode = .active
     @Binding var isPresentWorkingOutView: Bool
-    @Binding var isPresentWorkoutView: PresentationMode
+    @Binding var isPresented: Bool
     @Binding var selectionWorkouts: [Excercise]
     @Environment(\.injected) private var injected: DIContainer
     
@@ -34,7 +34,7 @@ struct MakeWorkoutView: View {
                         injected.appState[\.userData.selectionWorkouts] = selectionWorkouts
                         isPresentWorkingOutView = false
                         injected.appState[\.userData.isWorkingOutView].toggle()
-                        isPresentWorkoutView.dismiss()
+                        isPresented.toggle()
                     }
                 }
             }
@@ -47,7 +47,7 @@ struct MakeWorkoutView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
         MakeWorkoutView(isPresentWorkingOutView: .constant(true),
-                       isPresentWorkoutView: presentationmode,
-                       selectionWorkouts: .constant([]))
+                        isPresented: .constant(true),
+                        selectionWorkouts: .constant([]))
     }
 }

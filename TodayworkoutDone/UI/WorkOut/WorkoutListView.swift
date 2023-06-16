@@ -13,7 +13,7 @@ struct WorkoutListView: View {
     var category: String
     @Binding var selectionList: [Int]
     @Binding var selectionWorkouts: [Excercise]
-    @Binding var isPresentWorkoutView: PresentationMode
+    @Binding var isPresented: Bool
     
     var body: some View {
         List(Array(zip(workoutsList.indices, workoutsList)), id: \.0) { index, workouts in
@@ -35,7 +35,7 @@ struct WorkoutListView: View {
                                  content: {
                     MakeWorkoutView(
                         isPresentWorkingOutView: $isPresentWorkingOutView,
-                        isPresentWorkoutView: $isPresentWorkoutView,
+                        isPresented: $isPresented,
                         selectionWorkouts: $selectionWorkouts
                     )
                 })
@@ -50,6 +50,6 @@ struct WorkoutListView_Previews: PreviewProvider {
         WorkoutListView(category: "category",
                         selectionList: .constant([]),
                         selectionWorkouts: .constant([]),
-                        isPresentWorkoutView: presentationmode)
+                        isPresented: .constant(true))
     }
 }

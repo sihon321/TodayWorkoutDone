@@ -8,18 +8,21 @@
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject var dataController: DataController
-    @State private var isPresented = false
-    @Binding var isPresentWorkoutView: PresentationMode
-    @State var currentTab = "play.fill"
     @Environment(\.injected) private var injected: DIContainer
-    
-    var bottomEdge: CGFloat
+    @EnvironmentObject var dataController: DataController
+
+    @State private var isPresented = false
+    @State private var isWorkingOut = false
+    @State var currentTab = "play.fill"
+    @State private var routingState: Routing = .init()
     @State var hideBar = false
-    
-    init(presentMode: Binding<PresentationMode>, bottomEdge: CGFloat) {
+    var bottomEdge: CGFloat
+//    private var routingBinding: Binding<Routing> {
+//        $routingState.dispatched(to: injected.appState, \.routing.homeView)
+//    }
+
+    init(bottomEdge: CGFloat) {
         UITabBar.appearance().isHidden = true
-        self._isPresentWorkoutView = presentMode
         self.bottomEdge = bottomEdge
     }
     
@@ -29,7 +32,7 @@ struct HomeView: View {
                 ZStack {
                     MainView(bottomEdge: bottomEdge)
                     
-                    if injected.appState[\.userData.isWorkingOutView] {
+                    if isWorkingOut {
                         SlideOverCardView(hideTab: $hideBar, content: {
                             WorkingOutView()
                         })
@@ -47,7 +50,8 @@ struct HomeView: View {
             .overlay (
                 VStack {
                     if !injected.appState[\.userData.isWorkingOutView] {
-                        ExcerciseStartView(isPresented: $isPresented)
+                        ExcerciseStartView(isPresented: $isPresented,
+                                           isWorkingOut: $isWorkingOut)
                     }
                     CustomTabBar(currentTab: $currentTab, bottomEdge: bottomEdge)
                 }
@@ -59,13 +63,17 @@ struct HomeView: View {
     }
 }
 
+extension HomeView {
+    struct Routing: Equatable {
+        var workoutView: Bool = false
+    }
+}
+
 struct HomeView_Previews: PreviewProvider {
     @StateObject static var dataController = DataController()
-    @Environment(\.presentationMode) static var presentationmode
     
     static var previews: some View {
-        HomeView(presentMode: presentationmode,
-                 bottomEdge: 0)
+        HomeView(bottomEdge: 0)
             .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }
