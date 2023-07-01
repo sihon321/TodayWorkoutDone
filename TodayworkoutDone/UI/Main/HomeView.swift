@@ -11,7 +11,6 @@ struct HomeView: View {
     @Environment(\.injected) private var injected: DIContainer
     @EnvironmentObject var dataController: DataController
 
-    @State private var isPresented = false
     @State private var isWorkingOut = false
     @State var currentTab = "play.fill"
     @State private var routingState: Routing = .init()
@@ -50,8 +49,7 @@ struct HomeView: View {
             .overlay (
                 VStack {
                     if !injected.appState[\.userData.isWorkingOutView] {
-                        ExcerciseStartView(isPresented: $isPresented,
-                                           isWorkingOut: $isWorkingOut)
+                        ExcerciseStartView()
                     }
                     CustomTabBar(currentTab: $currentTab, bottomEdge: bottomEdge)
                 }

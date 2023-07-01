@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WorkoutView: View {
+    @Environment(\.injected) private var injected: DIContainer
     @Binding var isPresented: Bool
     @State private var text: String = ""
     
@@ -30,7 +31,7 @@ struct WorkoutView: View {
             .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        isPresented.toggle()
+                        isPresented = true
                     }, label: {
                         Image(systemName: "xmark")
                             .foregroundColor(.black)

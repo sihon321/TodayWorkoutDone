@@ -6,11 +6,10 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ExcerciseStartView: View {
     @Environment(\.injected) private var injected: DIContainer
-    @Binding var isPresented: Bool
-    @Binding var isWorkingOut: Bool
     @State private var routingState: Routing = .init()
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.excerciseStartView)
@@ -20,7 +19,7 @@ struct ExcerciseStartView: View {
         VStack {
             Spacer()
             Button(action: {
-                injected.appState[\.routing.excerciseStartView.workoutView].toggle()
+                injected.appState[\.routing.excerciseStartView.workoutView] = true
             }) {
                 Text("워크아웃 시작")
                     .frame(minWidth: 0, maxWidth: .infinity - 30)
@@ -31,13 +30,13 @@ struct ExcerciseStartView: View {
                                                 style: .continuous))
             }
             .padding(.horizontal, 30)
-            .fullScreenCover(isPresented: routingBinding.workoutView, onDismiss: {
-                isWorkingOut = injected.appState[\.routing.excerciseStartView.workoutView]
-            }) {
+            .fullScreenCover(isPresented: routingBinding.workoutView) {
                 WorkoutView(isPresented: routingBinding.workoutView)
+                    .inject(injected)
             }
             .offset(y: -15)
         }
+        .onReceive(routingUpdate) { self.routingState = $0 }
     }
 }
 
@@ -47,10 +46,16 @@ extension ExcerciseStartView {
     }
 }
 
+private extension ExcerciseStartView {
+    
+    var routingUpdate: AnyPublisher<Routing, Never> {
+        injected.appState.updates(for: \.routing.excerciseStartView)
+    }
+}
+
 struct ExcerciseStartView_Previews: PreviewProvider {
     static var previews: some View {
-        ExcerciseStartView(isPresented: .constant(false),
-                           isWorkingOut: .constant(false))
+        ExcerciseStartView()
     }
 }
 
