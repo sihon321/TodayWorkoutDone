@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import Combine
 
 struct WorkoutView: View {
     @Environment(\.injected) private var injected: DIContainer
-    @Binding var isPresented: Bool
+    @State private var routingState: Routing = .init()
     @State private var text: String = ""
     
     var body: some View {
@@ -20,9 +21,8 @@ struct WorkoutView: View {
                         .padding(.top, 10)
                     MyWorkoutView()
                         .padding(.top, 10)
-                    WorkoutCategoryView(
-                        isPresented: $isPresented
-                    )
+                    WorkoutCategoryView()
+                        .inject(injected)
                         .padding(.top, 10)
                 }
             }
@@ -31,7 +31,7 @@ struct WorkoutView: View {
             .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        isPresented = true
+                        injected.appState[\.routing.excerciseStartView.workoutView] = false
                     }, label: {
                         Image(systemName: "xmark")
                             .foregroundColor(.black)
@@ -39,13 +39,26 @@ struct WorkoutView: View {
                 }
             })
         }
-        
+        .onReceive(routingUpdate) { self.routingState = $0 }
     }
 }
 
+extension WorkoutView {
+    struct Routing: Equatable {
+        var workoutCategoryView: Bool = false
+    }
+}
+
+private extension WorkoutView {
+    var routingUpdate: AnyPublisher<Routing, Never> {
+        injected.appState.updates(for: \.routing.workoutView)
+    }
+}
+
+
 struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutView(isPresented: .constant(true))
+        WorkoutView()
             .background(Color.gray)
     }
 }

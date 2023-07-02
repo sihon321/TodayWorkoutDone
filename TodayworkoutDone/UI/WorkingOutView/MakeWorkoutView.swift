@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct MakeWorkoutView: View {
+    @Environment(\.injected) private var injected: DIContainer
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     @State private var editMode: EditMode = .active
-    @Binding var isPresentWorkingOutView: Bool
-    @Binding var isPresented: Bool
     @Binding var selectionWorkouts: [Excercise]
-    @Environment(\.injected) private var injected: DIContainer
     
     var body: some View {
         NavigationView {
@@ -26,28 +24,36 @@ struct MakeWorkoutView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        isPresentWorkingOutView = false
+                        injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
+                        injected.appState[\.routing.workoutListView.makeWorkoutView] = false
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
                         injected.appState[\.userData.selectionWorkouts] = selectionWorkouts
-                        isPresentWorkingOutView = false
-                        injected.appState[\.userData.isWorkingOutView].toggle()
-                        isPresented.toggle()
+                        injected.appState[\.routing.homeView.workingOutView] = true
+                        injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
+                        injected.appState[\.routing.workoutListView.makeWorkoutView] = false
+                        injected.appState[\.routing.workoutCategoryView.workoutListView] = false
+                        injected.appState[\.routing.excerciseStartView.workoutView] = false
                     }
                 }
             }
             .navigationTitle("타이틀")
             .listStyle(.grouped)
         }
-    }}
+    }
+}
+
+extension MakeWorkoutView_Previews {
+    struct Routing: Equatable {
+        
+    }
+}
 
 struct MakeWorkoutView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        MakeWorkoutView(isPresentWorkingOutView: .constant(true),
-                        isPresented: .constant(true),
-                        selectionWorkouts: .constant([]))
+        MakeWorkoutView(selectionWorkouts: .constant([]))
     }
 }

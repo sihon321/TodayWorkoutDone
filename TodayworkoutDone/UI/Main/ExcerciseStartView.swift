@@ -31,7 +31,7 @@ struct ExcerciseStartView: View {
             }
             .padding(.horizontal, 30)
             .fullScreenCover(isPresented: routingBinding.workoutView) {
-                WorkoutView(isPresented: routingBinding.workoutView)
+                WorkoutView()
                     .inject(injected)
             }
             .offset(y: -15)
@@ -47,7 +47,6 @@ extension ExcerciseStartView {
 }
 
 private extension ExcerciseStartView {
-    
     var routingUpdate: AnyPublisher<Routing, Never> {
         injected.appState.updates(for: \.routing.excerciseStartView)
     }

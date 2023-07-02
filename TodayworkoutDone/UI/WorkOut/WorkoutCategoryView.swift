@@ -6,15 +6,17 @@
 //
 
 import SwiftUI
+import Combine
 
 struct WorkoutCategoryView: View {
     @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
-    
-    @State private var isPresentWorkingOutView = false
+    @Environment(\.injected) private var injected: DIContainer
+    private var routingBinding: Binding<Routing> {
+        $routingState.dispatched(to: injected.appState, \.routing.workoutCategoryView)
+    }
+    @State private var routingState: Routing = .init()
     @State private var selectionList: [Int] = []
     @State private var selectionWorkouts: [Excercise] = []
-    
-    @Binding var isPresented: Bool
     
     var body: some View {
         VStack(alignment: .leading)  {
@@ -23,8 +25,8 @@ struct WorkoutCategoryView: View {
                 NavigationLink {
                     WorkoutListView(category: category.kor ?? "",
                                     selectionList: $selectionList,
-                                    selectionWorkouts: $selectionWorkouts,
-                                    isPresented: $isPresented)
+                                    selectionWorkouts: $selectionWorkouts)
+                    .inject(injected)
                 } label: {
                     WorkoutCategorySubview(category: category.kor ?? "")
                 }
@@ -34,26 +36,36 @@ struct WorkoutCategoryView: View {
         .toolbar {
             if !selectionList.isEmpty {
                 Button(action: {
-                    isPresentWorkingOutView = true
+                    injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = true
                 }) {
                     Text("Done(\(selectionList.count))")
                 }
-                .fullScreenCover(isPresented: .constant(isPresentWorkingOutView),
+                .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                  content: {
-                    MakeWorkoutView(
-                        isPresentWorkingOutView: $isPresentWorkingOutView,
-                        isPresented: $isPresented,
-                        selectionWorkouts: $selectionWorkouts
-                    )
+                    MakeWorkoutView(selectionWorkouts: $selectionWorkouts)
                 })
             }
         }
+        .onReceive(routingUpdate) { self.routingState = $0 }
+    }
+}
+
+extension WorkoutCategoryView {
+    struct Routing: Equatable {
+        var makeWorkoutView: Bool = false
+        var workoutListView: Bool = false
+    }
+}
+
+private extension WorkoutCategoryView {
+    var routingUpdate: AnyPublisher<Routing, Never> {
+        injected.appState.updates(for: \.routing.workoutCategoryView)
     }
 }
 
 struct WorkoutCategoryView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkoutCategoryView(isPresented: .constant(true))
+        WorkoutCategoryView()
     }
 }

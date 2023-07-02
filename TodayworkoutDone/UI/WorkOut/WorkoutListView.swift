@@ -6,14 +6,19 @@
 //
 
 import SwiftUI
+import Combine
 
 struct WorkoutListView: View {
+    @Environment(\.injected) private var injected: DIContainer
     @FetchRequest(sortDescriptors: []) var workoutsList: FetchedResults<Workouts>
-    @State private var isPresentWorkingOutView = false
+    private var routingBinding: Binding<Routing> {
+        $routingState.dispatched(to: injected.appState, \.routing.workoutListView)
+    }
+    @State private var routingState: Routing = .init()
+    
     var category: String
     @Binding var selectionList: [Int]
     @Binding var selectionWorkouts: [Excercise]
-    @Binding var isPresented: Bool
     
     var body: some View {
         List(Array(zip(workoutsList.indices, workoutsList)), id: \.0) { index, workouts in
@@ -27,20 +32,29 @@ struct WorkoutListView: View {
         .toolbar {
             if !selectionList.isEmpty {
                 Button(action: {
-                    isPresentWorkingOutView = true
+                    injected.appState[\.routing.workoutListView.makeWorkoutView] = true
                 }) {
                     Text("Done(\(selectionList.count))")
                 }
-                .fullScreenCover(isPresented: .constant(isPresentWorkingOutView),
+                .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                  content: {
-                    MakeWorkoutView(
-                        isPresentWorkingOutView: $isPresentWorkingOutView,
-                        isPresented: $isPresented,
-                        selectionWorkouts: $selectionWorkouts
-                    )
+                    MakeWorkoutView(selectionWorkouts: $selectionWorkouts)
                 })
             }
         }
+        .onReceive(routingUpdate) { self.routingState = $0 }
+    }
+}
+
+extension WorkoutListView {
+    struct Routing: Equatable {
+        var makeWorkoutView: Bool = false
+    }
+}
+
+private extension WorkoutListView {
+    var routingUpdate: AnyPublisher<Routing, Never> {
+        injected.appState.updates(for: \.routing.workoutListView)
     }
 }
 
@@ -49,7 +63,6 @@ struct WorkoutListView_Previews: PreviewProvider {
     static var previews: some View {
         WorkoutListView(category: "category",
                         selectionList: .constant([]),
-                        selectionWorkouts: .constant([]),
-                        isPresented: .constant(true))
+                        selectionWorkouts: .constant([]))
     }
 }

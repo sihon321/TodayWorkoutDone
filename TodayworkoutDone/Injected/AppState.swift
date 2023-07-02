@@ -15,14 +15,17 @@ struct AppState: Equatable {
 
 extension AppState {
     struct UserData: Equatable {
-        var isWorkingOutView = false
         var selectionWorkouts: [Excercise] = []
     }
 }
 
 extension AppState {
     struct ViewRouting: Equatable {
+        var homeView = HomeView.Routing()
         var excerciseStartView = ExcerciseStartView.Routing()
+        var workoutView = WorkoutView.Routing()
+        var workoutCategoryView = WorkoutCategoryView.Routing()
+        var workoutListView = WorkoutListView.Routing()
     }
 }
 

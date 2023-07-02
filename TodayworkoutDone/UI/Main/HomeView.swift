@@ -6,20 +6,20 @@
 //
 
 import SwiftUI
+import Combine
 
 struct HomeView: View {
     @Environment(\.injected) private var injected: DIContainer
     @EnvironmentObject var dataController: DataController
 
-    @State private var isWorkingOut = false
     @State var currentTab = "play.fill"
-    @State private var routingState: Routing = .init()
     @State var hideBar = false
     var bottomEdge: CGFloat
-//    private var routingBinding: Binding<Routing> {
-//        $routingState.dispatched(to: injected.appState, \.routing.homeView)
-//    }
-
+    private var routingBinding: Binding<Routing> {
+        $routingState.dispatched(to: injected.appState, \.routing.homeView)
+    }
+    @State private var routingState: Routing = .init()
+    
     init(bottomEdge: CGFloat) {
         UITabBar.appearance().isHidden = true
         self.bottomEdge = bottomEdge
@@ -31,7 +31,7 @@ struct HomeView: View {
                 ZStack {
                     MainView(bottomEdge: bottomEdge)
                     
-                    if isWorkingOut {
+                    if routingBinding.workingOutView.wrappedValue {
                         SlideOverCardView(hideTab: $hideBar, content: {
                             WorkingOutView()
                         })
@@ -48,7 +48,7 @@ struct HomeView: View {
             }
             .overlay (
                 VStack {
-                    if !injected.appState[\.userData.isWorkingOutView] {
+                    if !routingBinding.workingOutView.wrappedValue {
                         ExcerciseStartView()
                     }
                     CustomTabBar(currentTab: $currentTab, bottomEdge: bottomEdge)
@@ -58,12 +58,19 @@ struct HomeView: View {
             )
             Spacer()
         }
+        .onReceive(routingUpdate) { self.routingState = $0 }
     }
 }
 
 extension HomeView {
     struct Routing: Equatable {
-        var workoutView: Bool = false
+        var workingOutView: Bool = false
+    }
+}
+
+private extension HomeView {
+    var routingUpdate: AnyPublisher<Routing, Never> {
+        injected.appState.updates(for: \.routing.homeView)
     }
 }
 
