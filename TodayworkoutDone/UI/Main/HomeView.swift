@@ -12,13 +12,14 @@ struct HomeView: View {
     @Environment(\.injected) private var injected: DIContainer
     @EnvironmentObject var dataController: DataController
 
-    @State var currentTab = "play.fill"
-    @State var hideBar = false
-    var bottomEdge: CGFloat
+    @State private var routingState: Routing = .init()
+    @State private var currentTab = "play.fill"
+    @State private var hideBar = false
+    
+    private var bottomEdge: CGFloat
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.homeView)
     }
-    @State private var routingState: Routing = .init()
     
     init(bottomEdge: CGFloat) {
         UITabBar.appearance().isHidden = true

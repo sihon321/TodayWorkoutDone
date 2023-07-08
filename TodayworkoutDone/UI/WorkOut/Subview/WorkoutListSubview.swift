@@ -6,22 +6,19 @@
 //
 
 import SwiftUI
+import Combine
 
 struct WorkoutListSubview: View {
-    var workouts: Workouts
-    var index: Int
-    @Binding var selectionList: [Int]
-    @Binding var selectionWorkouts: [Excercise]
+    @Environment(\.injected) private var injected: DIContainer
+    @Binding var workouts: Workouts
     
     var body: some View {
         HStack {
             Button(action: {
-                if selectionList.contains(index) {
-                    selectionList.removeAll(where: { $0 == index })
-                    selectionWorkouts.removeAll(where: { $0.id == workouts.id })
+                if injected.interactors.workoutInteractor.contains(workouts) {
+                    injected.interactors.workoutInteractor.remove(workouts)
                 } else {
-                    selectionList.append(index)
-                    selectionWorkouts.append(workouts)
+                    injected.interactors.workoutInteractor.append(workouts)
                 }
             }) {
                 HStack {
@@ -31,7 +28,7 @@ struct WorkoutListSubview: View {
                         .padding([.leading], 15)
                     Text(workouts.name ?? "")
                     Spacer()
-                    if selectionList.contains(index) {
+                    if injected.interactors.workoutInteractor.contains(workouts) {
                         Image(systemName:"checkmark")
                     }
                 }
@@ -55,10 +52,7 @@ struct WorkoutListSubview_Previews: PreviewProvider {
         return workouts
     }()
     static var previews: some View {
-        WorkoutListSubview(workouts: workouts,
-                           index: 0,
-                           selectionList: .constant([0]),
-                           selectionWorkouts: .constant([]))
+        WorkoutListSubview(workouts: .constant(workouts))
             .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }

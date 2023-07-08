@@ -24,8 +24,8 @@ extension AppEnvironment {
     }
     
     private static func configuredInteractors(appState: Store<AppState>) -> DIContainer.Interactors {
-        let currentWorkoutInteractor = CurrentWorkoutInteractor()
-        
+        let currentWorkoutInteractor = CurrentWorkoutInteractor(appState: appState)
+            
         return .init(workoutInteractor: currentWorkoutInteractor)
     }
 }

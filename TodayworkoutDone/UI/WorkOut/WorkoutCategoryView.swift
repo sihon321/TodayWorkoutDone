@@ -11,12 +11,13 @@ import Combine
 struct WorkoutCategoryView: View {
     @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
     @Environment(\.injected) private var injected: DIContainer
+
+    @State private var routingState: Routing = .init()
+    @State private var selectionWorkouts: [Excercise] = []
+    
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.workoutCategoryView)
     }
-    @State private var routingState: Routing = .init()
-    @State private var selectionList: [Int] = []
-    @State private var selectionWorkouts: [Excercise] = []
     
     var body: some View {
         VStack(alignment: .leading)  {
@@ -24,7 +25,6 @@ struct WorkoutCategoryView: View {
             ForEach(categories, id: \.self) { category in
                 NavigationLink {
                     WorkoutListView(category: category.kor ?? "",
-                                    selectionList: $selectionList,
                                     selectionWorkouts: $selectionWorkouts)
                     .inject(injected)
                 } label: {
@@ -34,11 +34,11 @@ struct WorkoutCategoryView: View {
         }
         .padding([.leading, .trailing], 15)
         .toolbar {
-            if !selectionList.isEmpty {
+            if !selectionWorkouts.isEmpty {
                 Button(action: {
                     injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = true
                 }) {
-                    Text("Done(\(selectionList.count))")
+                    Text("Done(\(selectionWorkouts.count))")
                 }
                 .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                  content: {

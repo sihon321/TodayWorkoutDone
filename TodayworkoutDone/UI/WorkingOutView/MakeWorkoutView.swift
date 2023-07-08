@@ -45,12 +45,6 @@ struct MakeWorkoutView: View {
     }
 }
 
-extension MakeWorkoutView_Previews {
-    struct Routing: Equatable {
-        
-    }
-}
-
 struct MakeWorkoutView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
