@@ -8,9 +8,9 @@
 import Foundation
 
 protocol WorkoutInteractor {
-    func append(_ excercise: Excercise)
-    func remove(_ excercise: Excercise)
-    func contains(_ excercise: Excercise) -> Bool
+    func append(_ excercise: Workouts)
+    func remove(_ excercise: Workouts)
+    func contains(_ excercise: Workouts) -> Bool
 }
 
 struct CurrentWorkoutInteractor: WorkoutInteractor {
@@ -20,21 +20,21 @@ struct CurrentWorkoutInteractor: WorkoutInteractor {
         self.appState = appState
     }
     
-    func append(_ excercise: Excercise) {
+    func append(_ excercise: Workouts) {
         appState[\.userData.selectionWorkouts].append(excercise)
     }
     
-    func remove(_ excercise: Excercise) {
+    func remove(_ excercise: Workouts) {
         appState[\.userData.selectionWorkouts].removeAll(where: {$0.id == excercise.id })
     }
     
-    func contains(_ excercise: Excercise) -> Bool {
+    func contains(_ excercise: Workouts) -> Bool {
         return appState[\.userData.selectionWorkouts].contains(excercise)
     }
 }
 
 struct StubWorkoutInteractor: WorkoutInteractor {
-    func append(_ excercise: Excercise) { }
-    func remove(_ excercise: Excercise) { }
-    func contains(_ excercise: Excercise) -> Bool { return true }
+    func append(_ excercise: Workouts) { }
+    func remove(_ excercise: Workouts) { }
+    func contains(_ excercise: Workouts) -> Bool { return true }
 }

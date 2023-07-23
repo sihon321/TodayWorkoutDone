@@ -13,76 +13,27 @@ public extension CodingUserInfoKey {
     static let managedObjectContext = CodingUserInfoKey(rawValue: "managedObjectContext")
 }
 
-@objc(Excercise)
-class Excercise: NSManagedObject, Codable, Identifiable {
+struct Workouts: Codable, Equatable, Identifiable {
     var id: UUID = UUID()
-    @NSManaged var name: String?
-    @NSManaged var category: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case name, category
-    }
-
-    required convenience init(from decoder: Decoder) throws {
-        guard let codingUserInfoKeyManagedObjectContext = CodingUserInfoKey.managedObjectContext,
-            let managedObjectContext = decoder.userInfo[codingUserInfoKeyManagedObjectContext] as? NSManagedObjectContext,
-            let entity = NSEntityDescription.entity(forEntityName: "Excercise",
-                                                    in: managedObjectContext) else {
-            fatalError("Failed to decode Excercise")
-        }
-        
-        self.init(entity: entity, insertInto: managedObjectContext)
-        
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.decode(String.self, forKey: .name)
-        category = try container.decode(String.self, forKey: .category)
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(name, forKey: .name)
-        try container.encode(category, forKey: .category)
-    }
-
-    func jsonData() throws -> Data {
-        return try JSONEncoder().encode(self)
-    }
-    
-    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
-        return String(data: try self.jsonData(), encoding: encoding)
-    }
-}
-
-
-@objc(Workouts)
-class Workouts: Excercise {
-    @NSManaged var target: String?
+    var name: String?
+    var category: String?
+    var target: String?
     
     enum CodingKeys: String, CodingKey {
         case name, category, target
     }
+    
+    init(name: String, category: String, target: String) {
+        self.name = name
+        self.category = category
+        self.target = target
+    }
 
-    required convenience init(from decoder: Decoder) throws {
-        guard let codingUserInfoKeyManagedObjectContext = CodingUserInfoKey.managedObjectContext,
-            let managedObjectContext = decoder.userInfo[codingUserInfoKeyManagedObjectContext] as? NSManagedObjectContext,
-            let entity = NSEntityDescription.entity(forEntityName: "Workouts",
-                                                    in: managedObjectContext) else {
-            fatalError("Failed to decode Workouts")
-        }
-        
-        self.init(entity: entity, insertInto: managedObjectContext)
+    init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
         category = try container.decode(String.self, forKey: .category)
         target = try container.decode(String.self, forKey: .target)
-    }
-}
-
-typealias WorkoutsArray = [Workouts]
-
-extension WorkoutsArray {
-    func jsonData() throws -> Data {
-        return try JSONEncoder().encode(self)
     }
 }

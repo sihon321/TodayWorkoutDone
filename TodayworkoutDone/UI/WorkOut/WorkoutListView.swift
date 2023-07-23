@@ -10,7 +10,7 @@ import Combine
 
 struct WorkoutListView: View {
     @Environment(\.injected) private var injected: DIContainer
-    @FetchRequest(sortDescriptors: []) var workoutsList: FetchedResults<Workouts>
+//    @FetchRequest(sortDescriptors: []) var workoutsList: FetchedResults<Workouts>
 
     @State private var routingState: Routing = .init()
     
@@ -19,7 +19,7 @@ struct WorkoutListView: View {
     }
     
     var category: String
-    @Binding var selectionWorkouts: [Excercise]
+    @Binding var selectionWorkouts: [Workouts]
     
     var body: some View {
         List(workoutsList) { workouts in
@@ -57,7 +57,7 @@ private extension WorkoutListView {
         injected.appState.updates(for: \.routing.workoutListView)
     }
     
-    var workoutsUpdate: AnyPublisher<[Excercise], Never> {
+    var workoutsUpdate: AnyPublisher<[Workouts], Never> {
         injected.appState.updates(for: \.userData.selectionWorkouts)
     }
 }

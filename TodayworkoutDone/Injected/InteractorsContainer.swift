@@ -8,13 +8,16 @@
 extension DIContainer {
     struct Interactors {
         let workoutInteractor: WorkoutInteractor
+        let categoryInteractor: CategoryInteractor
         
-        init(workoutInteractor: WorkoutInteractor) {
+        init(workoutInteractor: WorkoutInteractor, categoryInteractor: CategoryInteractor) {
             self.workoutInteractor = workoutInteractor
+            self.categoryInteractor = categoryInteractor
         }
         
         static var stub: Self {
-            .init(workoutInteractor: StubWorkoutInteractor())
+            .init(workoutInteractor: StubWorkoutInteractor(),
+                  categoryInteractor: StubCategoryInteractor())
         }
     }
 }

@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
     @Environment(\.presentationMode) var presentationmode
-    @StateObject private var dataController = DataController()
-    private let container: DIContainer 
+    private let container: DIContainer
     
     init(container: DIContainer) {
         self.container = container
@@ -21,7 +21,6 @@ struct ContentView: View {
             let bottomEdge = proxy.safeAreaInsets.bottom
             
             HomeView(bottomEdge: (bottomEdge == 0 ? 15 : bottomEdge))
-                .environment(\.managedObjectContext, dataController.container.viewContext)
                 .inject(container)
                 .ignoresSafeArea(.all, edges: .bottom)
         }

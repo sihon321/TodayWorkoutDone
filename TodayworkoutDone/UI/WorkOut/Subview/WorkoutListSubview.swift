@@ -42,17 +42,11 @@ struct WorkoutListSubview: View {
 }
 
 struct WorkoutListSubview_Previews: PreviewProvider {
-    @StateObject static var dataController = DataController()
-    
-    static var workouts = {
-        let workouts = Workouts(context: dataController.container.viewContext)
-        workouts.name = "name"
-        workouts.category = "category"
-        workouts.target = "target"
-        return workouts
+    static var excercises = {
+        let excercises = Workouts(name: "test", category: "test_category", target: "test_target")
+        return excercises
     }()
     static var previews: some View {
         WorkoutListSubview(workouts: .constant(workouts))
-            .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }

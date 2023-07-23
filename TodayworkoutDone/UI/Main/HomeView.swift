@@ -10,7 +10,6 @@ import Combine
 
 struct HomeView: View {
     @Environment(\.injected) private var injected: DIContainer
-    @EnvironmentObject var dataController: DataController
 
     @State private var routingState: Routing = .init()
     @State private var currentTab = "play.fill"
@@ -76,10 +75,10 @@ private extension HomeView {
 }
 
 struct HomeView_Previews: PreviewProvider {
-    @StateObject static var dataController = DataController()
+    static var dataController = StubWorkoutDataInteractor()
     
     static var previews: some View {
         HomeView(bottomEdge: 0)
-            .environment(\.managedObjectContext, dataController.container.viewContext)
+            .inject(.preview)
     }
 }

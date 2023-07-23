@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkingOutSection: View {
-    @Binding var workouts: Excercise
+    @Binding var workouts: Workouts
     @Binding var editMode: EditMode
     @State var list: [Int] = [1]
     @Environment(\.defaultMinListRowHeight) var minRowHeight
@@ -48,18 +48,13 @@ struct WorkingOutSection: View {
 }
 
 struct WorkingOutSection_Previews: PreviewProvider {
-    @StateObject static var dataController = DataController()
-    
     static var excercises = {
-        let excercises = Excercise(context: dataController.container.viewContext)
-        excercises.name = "name"
-        excercises.category = "category"
+        let excercises = Workouts(name: "test", category: "test_category", target: "test_target")
         return excercises
     }()
     
     static var previews: some View {
         WorkingOutSection(workouts: .constant(excercises),
                           editMode: .constant(.active))
-        .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }

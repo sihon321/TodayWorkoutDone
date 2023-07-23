@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkingOutHeader: View {
-    @Binding var workouts: Excercise
+    @Binding var workouts: Workouts
     @State private var showingOptions = false
     
     var body: some View {
@@ -40,16 +40,11 @@ struct WorkingOutHeader: View {
 }
 
 struct WorkingOutHeader_Previews: PreviewProvider {
-    @StateObject static var dataController = DataController()
-    
     static var excercises = {
-        let excercises = Excercise(context: dataController.container.viewContext)
-        excercises.name = "name"
-        excercises.category = "category"
+        let excercises = Workouts(name: "test", category: "test_category", target: "test_target")
         return excercises
     }()
     static var previews: some View {
         WorkingOutHeader(workouts: .constant(excercises))
-            .environment(\.managedObjectContext, dataController.container.viewContext)
     }
 }

@@ -11,13 +11,13 @@ struct MakeWorkoutView: View {
     @Environment(\.injected) private var injected: DIContainer
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     @State private var editMode: EditMode = .active
-    @Binding var selectionWorkouts: [Excercise]
+    @Binding var selectionWorkouts: [Workouts]
     
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach($selectionWorkouts) { excercise in
-                    WorkingOutSection(workouts: excercise,
+                ForEach($selectionWorkouts) { workouts in
+                    WorkingOutSection(workouts: workouts,
                                       editMode: $editMode)
                 }
             }

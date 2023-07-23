@@ -9,20 +9,72 @@ import SwiftUI
 import Combine
 
 struct WorkoutCategoryView: View {
-    @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
     @Environment(\.injected) private var injected: DIContainer
 
     @State private var routingState: Routing = .init()
-    @State private var selectionWorkouts: [Excercise] = []
-    
+    @State private var selectionWorkouts: [Workouts] = []
+    @State private var categories: Loadable<LazyList<Category>>
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.workoutCategoryView)
     }
     
     var body: some View {
+        self.content
+            .onReceive(routingUpdate) { self.routingState = $0 }
+    }
+    
+    @ViewBuilder private var content: some View {
+        switch categories {
+        case .notRequested:
+            notRequestedView
+        case .isLoading(let last, let cancelBag):
+            loadingView(last)
+        case .loaded(let t):
+            <#code#>
+        case .failed(let error):
+            <#code#>
+        }
+    }
+}
+
+// MARK: - Side Effects
+
+private extension WorkoutCategoryView {
+    func reloadCategory() {
+        injected.interactors.categoryInteractor
+            .load(countries: $categories)
+    }
+}
+
+// MARK: - Loading Content
+
+private extension WorkoutCategoryView {
+    var notRequestedView: some View {
+        Text("")
+    }
+    
+    func loadingView(_ previouslyLoaded: LazyList<Category>?) -> some View {
+        if let countries = previouslyLoaded {
+            return AnyView(loadedView(countries))
+        } else {
+            return AnyView(ActivityIndicatorView().padding())
+        }
+    }
+    
+    func failedView(_ error: Error) -> some View {
+        ErrorView(error: error, retryAction: {
+            self.reloadCategory()
+        })
+    }
+}
+
+// MARK: - Displaying Conent
+
+private extension WorkoutCategoryView {
+    func loadedView(_ categories: LazyList<Category>) -> some View {
         VStack(alignment: .leading)  {
             Text("category")
-            ForEach(categories, id: \.self) { category in
+            List(categories) { category in
                 NavigationLink {
                     WorkoutListView(category: category.kor ?? "",
                                     selectionWorkouts: $selectionWorkouts)
@@ -46,7 +98,6 @@ struct WorkoutCategoryView: View {
                 })
             }
         }
-        .onReceive(routingUpdate) { self.routingState = $0 }
     }
 }
 
