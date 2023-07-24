@@ -42,7 +42,7 @@ struct WorkoutListSubview: View {
 }
 
 struct WorkoutListSubview_Previews: PreviewProvider {
-    static var excercises = {
+    static var workouts = {
         let excercises = Workouts(name: "test", category: "test_category", target: "test_target")
         return excercises
     }()

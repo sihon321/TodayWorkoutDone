@@ -11,13 +11,13 @@ struct MakeWorkoutView: View {
     @Environment(\.injected) private var injected: DIContainer
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     @State private var editMode: EditMode = .active
-    @Binding var selectionWorkouts: [Workouts]
+    @Binding var selectionWorkouts: LazyList<Workouts>
     
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach($selectionWorkouts) { workouts in
-                    WorkingOutSection(workouts: workouts,
+                ForEach(selectionWorkouts.array()) { workouts in
+                    WorkingOutSection(workouts: .constant(workouts),
                                       editMode: $editMode)
                 }
             }
@@ -30,7 +30,7 @@ struct MakeWorkoutView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
-                        injected.appState[\.userData.selectionWorkouts] = selectionWorkouts
+                        injected.appState[\.userData.selectionWorkouts] = selectionWorkouts.array()
                         injected.appState[\.routing.homeView.workingOutView] = true
                         injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
                         injected.appState[\.routing.workoutListView.makeWorkoutView] = false
@@ -48,6 +48,6 @@ struct MakeWorkoutView: View {
 struct MakeWorkoutView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        MakeWorkoutView(selectionWorkouts: .constant([]))
+        MakeWorkoutView(selectionWorkouts: .constant(Workouts.mockedData.lazyList))
     }
 }

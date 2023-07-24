@@ -12,10 +12,14 @@ struct WorkoutCategoryView: View {
     @Environment(\.injected) private var injected: DIContainer
 
     @State private var routingState: Routing = .init()
-    @State private var selectionWorkouts: [Workouts] = []
-    @State private var categories: Loadable<LazyList<Category>>
+    @State private var selectionWorkouts: LazyList<Workouts> = .empty
+    @State private(set) var categories: Loadable<LazyList<Category>>
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.workoutCategoryView)
+    }
+    
+    init(categories: Loadable<LazyList<Category>> = .notRequested) {
+        self._categories = .init(initialValue: categories)
     }
     
     var body: some View {
@@ -27,12 +31,12 @@ struct WorkoutCategoryView: View {
         switch categories {
         case .notRequested:
             notRequestedView
-        case .isLoading(let last, let cancelBag):
+        case let .isLoading(last, _):
             loadingView(last)
-        case .loaded(let t):
-            <#code#>
-        case .failed(let error):
-            <#code#>
+        case let .loaded(categories):
+            loadedView(categories)
+        case let .failed(error):
+            failedView(error)
         }
     }
 }
@@ -42,7 +46,7 @@ struct WorkoutCategoryView: View {
 private extension WorkoutCategoryView {
     func reloadCategory() {
         injected.interactors.categoryInteractor
-            .load(countries: $categories)
+            .load(categories: $categories)
     }
 }
 
@@ -50,7 +54,7 @@ private extension WorkoutCategoryView {
 
 private extension WorkoutCategoryView {
     var notRequestedView: some View {
-        Text("")
+        Text("").onAppear(perform: reloadCategory)
     }
     
     func loadingView(_ previouslyLoaded: LazyList<Category>?) -> some View {
@@ -74,10 +78,10 @@ private extension WorkoutCategoryView {
     func loadedView(_ categories: LazyList<Category>) -> some View {
         VStack(alignment: .leading)  {
             Text("category")
-            List(categories) { category in
+            ForEach(categories.array()) { category in
                 NavigationLink {
-                    WorkoutListView(category: category.kor ?? "",
-                                    selectionWorkouts: $selectionWorkouts)
+                    WorkoutListView(workoutsList: .loaded(selectionWorkouts),
+                                    category: category.kor ?? "")
                     .inject(injected)
                 } label: {
                     WorkoutCategorySubview(category: category.kor ?? "")
@@ -117,6 +121,7 @@ private extension WorkoutCategoryView {
 struct WorkoutCategoryView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkoutCategoryView()
+        WorkoutCategoryView(categories: .loaded(Category.mockedData.lazyList))
+            .inject(.preview)
     }
 }

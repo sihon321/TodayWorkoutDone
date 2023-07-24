@@ -13,6 +13,9 @@
 		8E5E8A1F2A24B42D004A4F33 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5E8A1E2A24B42D004A4F33 /* Store.swift */; };
 		8E5E8A222A24B945004A4F33 /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5E8A212A24B945004A4F33 /* DependencyInjector.swift */; };
 		8EC0B0E329CC4E7600C3278C /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4066AB29B33D71004BB7A2 /* Workouts.swift */; };
+		8EC563652A6D206600A8DCD5 /* MockedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC563642A6D206600A8DCD5 /* MockedData.swift */; };
+		8EC563672A6D2C6E00A8DCD5 /* CategoryWebRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC563662A6D2C6E00A8DCD5 /* CategoryWebRepository.swift */; };
+		8EC563692A6DFDB600A8DCD5 /* WorkoutWebRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC563682A6DFDB600A8DCD5 /* WorkoutWebRepository.swift */; };
 		8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */; };
 		F2102C34292BB06D00417789 /* MainContentStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2102C31292BB06D00417789 /* MainContentStepView.swift */; };
 		F2102C35292BB06D00417789 /* MainContentSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2102C32292BB06D00417789 /* MainContentSubView.swift */; };
@@ -32,7 +35,7 @@
 		F250986E2A25152D005390D5 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F250986D2A25152D005390D5 /* AppEnvironment.swift */; };
 		F25C89C92A65166D007D920A /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25C89C82A65166D007D920A /* CoreDataHelpers.swift */; };
 		F25C89CC2A652AD3007D920A /* db_model_v1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F25C89CA2A652AD3007D920A /* db_model_v1.xcdatamodeld */; };
-		F25C89CF2A652B52007D920A /* WorkouttDBRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25C89CE2A652B52007D920A /* WorkouttDBRepository.swift */; };
+		F25C89CF2A652B52007D920A /* WorkoutDBRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25C89CE2A652B52007D920A /* WorkoutDBRepository.swift */; };
 		F25C89D12A654E47007D920A /* Models+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25C89D02A654E47007D920A /* Models+CoreData.swift */; };
 		F26494912A6BC9A300B0A31C /* CategoryDBRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26494902A6BC9A300B0A31C /* CategoryDBRepository.swift */; };
 		F26494932A6BD95700B0A31C /* CategoryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26494922A6BD95700B0A31C /* CategoryInteractor.swift */; };
@@ -96,6 +99,9 @@
 		8E5E8A1A2A24A594004A4F33 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		8E5E8A1E2A24B42D004A4F33 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		8E5E8A212A24B945004A4F33 /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
+		8EC563642A6D206600A8DCD5 /* MockedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedData.swift; sourceTree = "<group>"; };
+		8EC563662A6D2C6E00A8DCD5 /* CategoryWebRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryWebRepository.swift; sourceTree = "<group>"; };
+		8EC563682A6DFDB600A8DCD5 /* WorkoutWebRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutWebRepository.swift; sourceTree = "<group>"; };
 		8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWorkoutView.swift; sourceTree = "<group>"; };
 		F2102C31292BB06D00417789 /* MainContentStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentStepView.swift; sourceTree = "<group>"; };
 		F2102C32292BB06D00417789 /* MainContentSubView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentSubView.swift; sourceTree = "<group>"; };
@@ -115,7 +121,7 @@
 		F250986D2A25152D005390D5 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		F25C89C82A65166D007D920A /* CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
 		F25C89CB2A652AD3007D920A /* db_model_v1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = db_model_v1.xcdatamodel; sourceTree = "<group>"; };
-		F25C89CE2A652B52007D920A /* WorkouttDBRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkouttDBRepository.swift; sourceTree = "<group>"; };
+		F25C89CE2A652B52007D920A /* WorkoutDBRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDBRepository.swift; sourceTree = "<group>"; };
 		F25C89D02A654E47007D920A /* Models+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models+CoreData.swift"; sourceTree = "<group>"; };
 		F26494902A6BC9A300B0A31C /* CategoryDBRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDBRepository.swift; sourceTree = "<group>"; };
 		F26494922A6BD95700B0A31C /* CategoryInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryInteractor.swift; sourceTree = "<group>"; };
@@ -202,6 +208,7 @@
 				8E52790829C7099B000DCD7F /* Routine.swift */,
 				F23264A129DC6A58008649FE /* Category.swift */,
 				F25C89D02A654E47007D920A /* Models+CoreData.swift */,
+				8EC563642A6D206600A8DCD5 /* MockedData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -304,8 +311,10 @@
 		F25C89CD2A652B3F007D920A /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				F25C89CE2A652B52007D920A /* WorkouttDBRepository.swift */,
 				F26494902A6BC9A300B0A31C /* CategoryDBRepository.swift */,
+				8EC563662A6D2C6E00A8DCD5 /* CategoryWebRepository.swift */,
+				F25C89CE2A652B52007D920A /* WorkoutDBRepository.swift */,
+				8EC563682A6DFDB600A8DCD5 /* WorkoutWebRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -566,7 +575,7 @@
 				F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */,
 				F27AD1882A2BA409002C44DD /* SystemEventsHandler.swift in Sources */,
 				8E5E8A1F2A24B42D004A4F33 /* Store.swift in Sources */,
-				F25C89CF2A652B52007D920A /* WorkouttDBRepository.swift in Sources */,
+				F25C89CF2A652B52007D920A /* WorkoutDBRepository.swift in Sources */,
 				F276E2952A6C48B50046EBA4 /* ErrorView.swift in Sources */,
 				8E5E8A1B2A24A594004A4F33 /* AppState.swift in Sources */,
 				F26494982A6C03AD00B0A31C /* CancelBag.swift in Sources */,
@@ -591,6 +600,7 @@
 				F250986B2A24FBA7005390D5 /* WorkoutInteractor.swift in Sources */,
 				F222FFEC2A645B70002FCCDA /* CoreDataStack.swift in Sources */,
 				F2CB39F3295DE25900CA80D6 /* DragState.swift in Sources */,
+				8EC563672A6D2C6E00A8DCD5 /* CategoryWebRepository.swift in Sources */,
 				F2102C35292BB06D00417789 /* MainContentSubView.swift in Sources */,
 				F23F4EA02958271B0084392B /* WorkoutCategorySubview.swift in Sources */,
 				F239B431295761AD00781EF2 /* WorkoutView.swift in Sources */,
@@ -605,11 +615,13 @@
 				F2102C34292BB06D00417789 /* MainContentStepView.swift in Sources */,
 				F2E74CE62921F73500BD35F6 /* TodayworkoutDoneApp.swift in Sources */,
 				F2E2214A29994BB500B7DCCB /* WorkingOutSection.swift in Sources */,
+				8EC563692A6DFDB600A8DCD5 /* WorkoutWebRepository.swift in Sources */,
 				F26494912A6BC9A300B0A31C /* CategoryDBRepository.swift in Sources */,
 				F25098692A24FACF005390D5 /* InteractorsContainer.swift in Sources */,
 				F2E74D222922219000BD35F6 /* MainWelcomeView.swift in Sources */,
 				F2E74D262922219000BD35F6 /* MainContentView.swift in Sources */,
 				8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */,
+				8EC563652A6D206600A8DCD5 /* MockedData.swift in Sources */,
 				F264949A2A6C066700B0A31C /* NetworkingHelpers.swift in Sources */,
 				F2C63E222959F3D200D02F76 /* WorkoutListSubview.swift in Sources */,
 				8EC0B0E329CC4E7600C3278C /* Workouts.swift in Sources */,

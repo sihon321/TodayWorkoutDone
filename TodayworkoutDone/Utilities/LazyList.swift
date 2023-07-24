@@ -48,6 +48,8 @@ struct LazyList<T> {
             throw Error.elementIsNil(index: index)
         }
     }
+    
+    func array() -> [T] { Array(self) }
 }
 
 private extension LazyList {
