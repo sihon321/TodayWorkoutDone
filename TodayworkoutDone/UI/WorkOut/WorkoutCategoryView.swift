@@ -80,9 +80,9 @@ private extension WorkoutCategoryView {
             Text("category")
             ForEach(categories.array()) { category in
                 NavigationLink {
-                    WorkoutListView(workoutsList: .loaded(selectionWorkouts),
+                    WorkoutListView(selectWorkouts: injected.appState[\.userData.selectionWorkouts],
                                     category: category.kor ?? "")
-                    .inject(injected)
+                        .inject(injected)
                 } label: {
                     WorkoutCategorySubview(category: category.kor ?? "")
                 }

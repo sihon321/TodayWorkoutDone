@@ -13,11 +13,10 @@ public extension CodingUserInfoKey {
     static let managedObjectContext = CodingUserInfoKey(rawValue: "managedObjectContext")
 }
 
-struct Workouts: Codable, Equatable, Identifiable {
-    var id: UUID = UUID()
-    var name: String?
-    var category: String?
-    var target: String?
+struct Workouts: Codable, Equatable {
+    var name: String
+    var category: String
+    var target: String
     
     enum CodingKeys: String, CodingKey {
         case name, category, target
@@ -36,4 +35,8 @@ struct Workouts: Codable, Equatable, Identifiable {
         category = try container.decode(String.self, forKey: .category)
         target = try container.decode(String.self, forKey: .target)
     }
+}
+
+extension Workouts: Identifiable {
+    var id: String { name }
 }

@@ -11,11 +11,12 @@ import Combine
 struct WorkoutListSubview: View {
     @Environment(\.injected) private var injected: DIContainer
     @Binding var workouts: Workouts
+    @Binding var selectWorkouts: [Workouts]
     
     var body: some View {
-        HStack {
+        VStack {
             Button(action: {
-                if injected.interactors.workoutInteractor.contains(workouts) {
+                if selectWorkouts.contains(workouts) {
                     injected.interactors.workoutInteractor.remove(workouts)
                 } else {
                     injected.interactors.workoutInteractor.append(workouts)
@@ -26,9 +27,9 @@ struct WorkoutListSubview: View {
                         .resizable()
                         .frame(width: 50, height: 50)
                         .padding([.leading], 15)
-                    Text(workouts.name ?? "")
+                    Text(workouts.name)
                     Spacer()
-                    if injected.interactors.workoutInteractor.contains(workouts) {
+                    if selectWorkouts.contains(workouts) {
                         Image(systemName:"checkmark")
                     }
                 }
@@ -47,6 +48,6 @@ struct WorkoutListSubview_Previews: PreviewProvider {
         return excercises
     }()
     static var previews: some View {
-        WorkoutListSubview(workouts: .constant(workouts))
+        WorkoutListSubview(workouts: .constant(workouts), selectWorkouts: .constant([]))
     }
 }

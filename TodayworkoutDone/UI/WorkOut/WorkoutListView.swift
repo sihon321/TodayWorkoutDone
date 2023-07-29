@@ -13,19 +13,26 @@ struct WorkoutListView: View {
 
     @State private var routingState: Routing = .init()
     @State private var workoutsList: Loadable<LazyList<Workouts>>
+    @State private var selectWorkouts: [Workouts]
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.workoutListView)
     }
     
     var category: String
     
-    init(workoutsList: Loadable<LazyList<Workouts>>, category: String) {
+    init(workoutsList: Loadable<LazyList<Workouts>> = .notRequested,
+         selectWorkouts: [Workouts],
+         category: String) {
         self._workoutsList = .init(initialValue: workoutsList)
+        self._selectWorkouts = .init(initialValue: selectWorkouts)
         self.category = category
     }
     
     var body: some View {
         self.content
+            .navigationTitle(category)
+            .onReceive(routingUpdate) { self.routingState = $0 }
+            .onReceive(workoutsUpdate) { selectWorkouts = $0 }
     }
     
     @ViewBuilder private var content: some View {
@@ -78,17 +85,17 @@ private extension WorkoutListView {
 private extension WorkoutListView {
     func loadedView(_ workoutsList: LazyList<Workouts>) -> some View {
         List(workoutsList) { workouts in
-            WorkoutListSubview(workouts: .constant(workouts))
+            WorkoutListSubview(workouts: .constant(workouts),
+                               selectWorkouts: $selectWorkouts)
                 .inject(injected)
         }
         .listStyle(.plain)
-        .navigationTitle(category)
         .toolbar {
             if !workoutsList.isEmpty {
                 Button(action: {
                     injected.appState[\.routing.workoutListView.makeWorkoutView] = true
                 }) {
-                    Text("Done(\(workoutsList.count))")
+                    Text("Done(\(selectWorkouts.count))")
                 }
                 .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                  content: {
@@ -96,8 +103,6 @@ private extension WorkoutListView {
                 })
             }
         }
-        .onReceive(routingUpdate) { self.routingState = $0 }
-        .onReceive(workoutsUpdate) { self.workoutsList = .loaded($0.lazyList) }
     }
 }
 
@@ -121,6 +126,7 @@ struct WorkoutListView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
         WorkoutListView(workoutsList: .loaded(Workouts.mockedData.lazyList),
+                        selectWorkouts: [],
                         category: "")
             .inject(.preview)
     }

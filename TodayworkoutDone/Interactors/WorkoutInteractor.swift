@@ -17,7 +17,7 @@ protocol WorkoutInteractor {
     func load(workouts: LoadableSubject<LazyList<Workouts>>)
 }
 
-struct CurrentWorkoutInteractor: WorkoutInteractor {
+struct RealWorkoutInteractor: WorkoutInteractor {
     let webRepository: WorkoutWebRepository
     let dbRepository: WorkoutDBRepository
     let appState: Store<AppState>
@@ -64,7 +64,7 @@ struct CurrentWorkoutInteractor: WorkoutInteractor {
             .store(in: cancelBag)
     }
     
-    func refreshWorkoutsList() -> AnyPublisher<Void, Error> {
+    private func refreshWorkoutsList() -> AnyPublisher<Void, Error> {
         return webRepository
             .loadWorkouts()
             .flatMap { [dbRepository] in

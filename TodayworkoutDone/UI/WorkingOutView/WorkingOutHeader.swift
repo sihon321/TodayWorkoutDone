@@ -14,7 +14,7 @@ struct WorkingOutHeader: View {
     var body: some View {
         VStack {
             HStack {
-                Text(workouts.name!).font(.title)
+                Text(workouts.name).font(.title)
                 Spacer()
                 Image(systemName: "ellipsis")
                     .onTapGesture {

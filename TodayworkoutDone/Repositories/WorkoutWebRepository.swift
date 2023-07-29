@@ -14,8 +14,8 @@ protocol WorkoutWebRepository {
 
 class RealWorkoutWebRepository: WorkoutWebRepository {
     func loadWorkouts() -> AnyPublisher<[Workouts], Error> {
-        let categories: [Workouts] = load("workouts.json")
-        return Just<[Workouts]>(categories)
+        let workouts: [Workouts] = load("workouts.json")
+        return Just<[Workouts]>(workouts)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }

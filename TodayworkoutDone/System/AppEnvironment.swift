@@ -48,7 +48,7 @@ extension AppEnvironment {
                                               dbRepositories: DIContainer.DBRepositories,
                                               webRepositories: DIContainer.WebRepositories
     ) -> DIContainer.Interactors {
-        let workoutInteractor = CurrentWorkoutInteractor(
+        let workoutInteractor = RealWorkoutInteractor(
             webRepository: webRepositories.workoutsRepository,
             dbRepository: dbRepositories.workoutsRepository,
             appState: appState
