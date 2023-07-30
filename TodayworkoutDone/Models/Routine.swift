@@ -39,8 +39,9 @@ struct Sets: Codable, Equatable, Identifiable {
     }
 }
 
-struct Routine: Codable, Identifiable {
+struct Routine: Codable, Equatable, Identifiable {
     var id: UUID = UUID()
+    
     var workouts: Workouts
     var sets: [Sets]
     var date: Date?

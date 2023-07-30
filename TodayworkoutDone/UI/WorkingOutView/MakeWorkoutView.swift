@@ -37,7 +37,7 @@ struct MakeWorkoutView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
-//                        injected.appState[\.userData.selectionWorkouts] = selectionWorkouts
+                        injected.appState[\.userData.routines] = routines
                         injected.appState[\.routing.homeView.workingOutView] = true
                         injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
                         injected.appState[\.routing.workoutListView.makeWorkoutView] = false

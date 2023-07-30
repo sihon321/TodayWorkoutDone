@@ -12,16 +12,16 @@ struct WorkingOutView: View {
     @State private var editMode: EditMode = .active
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
-    private var selectWorkouts: [Workouts] {
-        injected.appState[\.userData.selectionWorkouts]
+    private var routines: [Routine] {
+        injected.appState[\.userData.routines]
     }
     
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach(selectWorkouts) { workouts in
+                ForEach(routines) { routine in
                     WorkingOutSection(
-                        routine: .constant(Routine(workouts: workouts)),
+                        routine: .constant(routine),
                         editMode: $editMode
                     )
                 }
