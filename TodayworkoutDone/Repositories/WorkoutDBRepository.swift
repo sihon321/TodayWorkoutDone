@@ -46,7 +46,6 @@ struct RealWorkoutDBRepository: WorkoutDBRepository {
 extension WorkoutsMO {
     static func workouts() -> NSFetchRequest<WorkoutsMO> {
         let request = newFetchRequest()
-//        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         request.fetchBatchSize = 10
         return request
     }

@@ -9,15 +9,22 @@ import SwiftUI
 
 struct MakeWorkoutView: View {
     @Environment(\.injected) private var injected: DIContainer
+    
+    @State private var routines: [Routine]
+    @State private var editMode: EditMode
+    
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
-    @State private var editMode: EditMode = .active
-    @Binding var selectionWorkouts: LazyList<Workouts>
+    
+    init(selectionWorkouts: Binding<[Workouts]>, editMode: EditMode = .active) {
+        self._routines = .init(initialValue: selectionWorkouts.compactMap({ Routine(workouts: $0.wrappedValue) }))
+        self._editMode = .init(initialValue: editMode)
+    }
     
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach(selectionWorkouts.array()) { workouts in
-                    WorkingOutSection(workouts: .constant(workouts),
+                ForEach($routines) { routine in
+                    WorkingOutSection(routine: routine,
                                       editMode: $editMode)
                 }
             }
@@ -30,7 +37,7 @@ struct MakeWorkoutView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
-                        injected.appState[\.userData.selectionWorkouts] = selectionWorkouts.array()
+//                        injected.appState[\.userData.selectionWorkouts] = selectionWorkouts
                         injected.appState[\.routing.homeView.workingOutView] = true
                         injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
                         injected.appState[\.routing.workoutListView.makeWorkoutView] = false
@@ -48,6 +55,7 @@ struct MakeWorkoutView: View {
 struct MakeWorkoutView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        MakeWorkoutView(selectionWorkouts: .constant(Workouts.mockedData.lazyList))
+        MakeWorkoutView(selectionWorkouts: .constant(Workouts.mockedData),
+                        editMode: .active)
     }
 }

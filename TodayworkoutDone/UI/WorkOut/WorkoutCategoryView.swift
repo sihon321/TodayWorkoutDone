@@ -12,19 +12,22 @@ struct WorkoutCategoryView: View {
     @Environment(\.injected) private var injected: DIContainer
 
     @State private var routingState: Routing = .init()
-    @State private var selectionWorkouts: LazyList<Workouts> = .empty
+    @State private var selectWorkouts: [Workouts]
     @State private(set) var categories: Loadable<LazyList<Category>>
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.workoutCategoryView)
     }
     
-    init(categories: Loadable<LazyList<Category>> = .notRequested) {
+    init(categories: Loadable<LazyList<Category>> = .notRequested,
+         selectWorkouts: [Workouts]) {
         self._categories = .init(initialValue: categories)
+        self._selectWorkouts = .init(initialValue: selectWorkouts)
     }
     
     var body: some View {
         self.content
             .onReceive(routingUpdate) { self.routingState = $0 }
+            .onReceive(workoutsUpdate) { self.selectWorkouts = $0 }
     }
     
     @ViewBuilder private var content: some View {
@@ -80,7 +83,7 @@ private extension WorkoutCategoryView {
             Text("category")
             ForEach(categories.array()) { category in
                 NavigationLink {
-                    WorkoutListView(selectWorkouts: injected.appState[\.userData.selectionWorkouts],
+                    WorkoutListView(selectWorkouts: selectWorkouts,
                                     category: category.kor ?? "")
                         .inject(injected)
                 } label: {
@@ -90,15 +93,15 @@ private extension WorkoutCategoryView {
         }
         .padding([.leading, .trailing], 15)
         .toolbar {
-            if !selectionWorkouts.isEmpty {
+            if !selectWorkouts.isEmpty {
                 Button(action: {
                     injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = true
                 }) {
-                    Text("Done(\(selectionWorkouts.count))")
+                    Text("Done(\(selectWorkouts.count))")
                 }
                 .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                  content: {
-                    MakeWorkoutView(selectionWorkouts: $selectionWorkouts)
+                    MakeWorkoutView(selectionWorkouts: $selectWorkouts)
                 })
             }
         }
@@ -116,12 +119,17 @@ private extension WorkoutCategoryView {
     var routingUpdate: AnyPublisher<Routing, Never> {
         injected.appState.updates(for: \.routing.workoutCategoryView)
     }
+    
+    var workoutsUpdate: AnyPublisher<[Workouts], Never> {
+        injected.appState.updates(for: \.userData.selectionWorkouts)
+    }
 }
 
 struct WorkoutCategoryView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkoutCategoryView(categories: .loaded(Category.mockedData.lazyList))
+        WorkoutCategoryView(categories: .loaded(Category.mockedData.lazyList),
+                            selectWorkouts: [])
             .inject(.preview)
     }
 }

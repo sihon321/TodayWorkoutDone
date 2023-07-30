@@ -8,7 +8,9 @@
 import Foundation
 import CoreData
 
-struct Sets: Codable {
+struct Sets: Codable, Equatable, Identifiable {
+    var id: UUID = UUID()
+    
     var prevWeight: Double?
     var weight: Double?
     var lap: Int?
@@ -18,7 +20,10 @@ struct Sets: Codable {
         case prevWeight, weight, lap, isChecked
     }
     
-    init(prevWeight: Double, weight: Double, lap: Int, isChecked: Bool) {
+    init(prevWeight: Double = .zero,
+         weight: Double = .zero,
+         lap: Int = .zero,
+         isChecked: Bool = false) {
         self.prevWeight = prevWeight
         self.weight = weight
         self.lap = lap
@@ -36,16 +41,19 @@ struct Sets: Codable {
 
 struct Routine: Codable, Identifiable {
     var id: UUID = UUID()
-    var workouts: Workouts?
-    var sets: [Sets]?
+    var workouts: Workouts
+    var sets: [Sets]
     var date: Date?
-    var stopwatch: Date?
+    var stopwatch: Double?
     
     enum CodingKeys: String, CodingKey {
         case workouts, sets, date, stopwatch
     }
     
-    init(workouts: Workouts, sets: [Sets], date: Date, stopwatch: Date) {
+    init(workouts: Workouts,
+         sets: [Sets] = [Sets()],
+         date: Date = .now,
+         stopwatch: Double = .zero) {
         self.workouts = workouts
         self.sets = sets
         self.date = date
@@ -57,6 +65,6 @@ struct Routine: Codable, Identifiable {
         workouts = try container.decode(Workouts.self, forKey: .workouts)
         sets = try container.decode([Sets].self, forKey: .sets)
         date = try container.decode(Date.self, forKey: .date)
-        stopwatch = try container.decode(Date.self, forKey: .stopwatch)
+        stopwatch = try container.decode(Double.self, forKey: .stopwatch)
     }
 }

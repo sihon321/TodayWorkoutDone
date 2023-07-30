@@ -19,7 +19,7 @@ extension Workouts {
               let category = managedObject.category,
               let target = managedObject.target
             else { return nil }
-        
+
         self.init(name: name, category: category, target: target)
     }
     
@@ -61,6 +61,23 @@ extension Sets {
                   weight: managedObject.weight,
                   lap: Int(managedObject.lap),
                   isChecked: managedObject.isChecked)
+    }
+}
+
+extension Routine {
+    init?(managedObject: RoutineMO) {
+        guard let workoutsMO = managedObject.workouts,
+              let workouts = Workouts(managedObject: workoutsMO),
+              let nsSet = managedObject.sets,
+              let sets = nsSet.allObjects as? [Sets],
+              let date = managedObject.date else {
+            return nil
+        }
+        
+        self.init(workouts: workouts,
+                  sets: sets,
+                  date: date,
+                  stopwatch: managedObject.stopwatch)
     }
 }
 

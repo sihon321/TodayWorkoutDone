@@ -32,7 +32,7 @@ struct WorkoutListView: View {
         self.content
             .navigationTitle(category)
             .onReceive(routingUpdate) { self.routingState = $0 }
-            .onReceive(workoutsUpdate) { selectWorkouts = $0 }
+            .onReceive(workoutsUpdate) { self.selectWorkouts = $0 }
     }
     
     @ViewBuilder private var content: some View {
@@ -91,7 +91,7 @@ private extension WorkoutListView {
         }
         .listStyle(.plain)
         .toolbar {
-            if !workoutsList.isEmpty {
+            if !selectWorkouts.isEmpty {
                 Button(action: {
                     injected.appState[\.routing.workoutListView.makeWorkoutView] = true
                 }) {
@@ -99,7 +99,7 @@ private extension WorkoutListView {
                 }
                 .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                  content: {
-                    MakeWorkoutView(selectionWorkouts: .constant(workoutsList))
+                    MakeWorkoutView(selectionWorkouts: $selectWorkouts)
                 })
             }
         }

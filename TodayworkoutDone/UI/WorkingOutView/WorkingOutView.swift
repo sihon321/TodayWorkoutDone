@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct WorkingOutView: View {
-    private let gridLayout: [GridItem] = [GridItem(.flexible())]
-    @State private var editMode: EditMode = .active
     @Environment(\.injected) private var injected: DIContainer
+    @State private var editMode: EditMode = .active
+    
+    private let gridLayout: [GridItem] = [GridItem(.flexible())]
+    private var selectWorkouts: [Workouts] {
+        injected.appState[\.userData.selectionWorkouts]
+    }
     
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach(injected.appState[\.userData.selectionWorkouts]) { excercise in
-                    WorkingOutSection(workouts: .constant(excercise),
-                                      editMode: $editMode)
+                ForEach(selectWorkouts) { workouts in
+                    WorkingOutSection(
+                        routine: .constant(Routine(workouts: workouts)),
+                        editMode: $editMode
+                    )
                 }
             }
             .toolbar {

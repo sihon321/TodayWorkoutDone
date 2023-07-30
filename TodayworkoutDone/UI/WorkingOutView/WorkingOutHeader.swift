@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct WorkingOutHeader: View {
-    @Binding var workouts: Workouts
+    @Binding var routine: Routine
     @State private var showingOptions = false
     
     var body: some View {
         VStack {
             HStack {
-                Text(workouts.name).font(.title)
+                Text(routine.workouts.name)
+                    .font(.title)
                 Spacer()
                 Image(systemName: "ellipsis")
                     .onTapGesture {
@@ -26,6 +27,7 @@ struct WorkingOutHeader: View {
                         }
                     }
             }
+            .padding()
             HStack {
                 Text("이전무게")
                     .padding(.leading, 30)
@@ -40,11 +42,12 @@ struct WorkingOutHeader: View {
 }
 
 struct WorkingOutHeader_Previews: PreviewProvider {
-    static var excercises = {
-        let excercises = Workouts(name: "test", category: "test_category", target: "test_target")
-        return excercises
+    static var routine = {
+        return Routine(workouts: Workouts(name: "test",
+                                          category: "test_category",
+                                          target: "test_target"))
     }()
     static var previews: some View {
-        WorkingOutHeader(workouts: .constant(excercises))
+        WorkingOutHeader(routine: .constant(routine))
     }
 }

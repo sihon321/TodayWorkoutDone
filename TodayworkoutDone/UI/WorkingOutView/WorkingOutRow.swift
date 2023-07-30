@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkingOutRow: View {
-    @Binding var workouts: Workouts
+    @Binding var sets: Sets
     @Binding var editMode: EditMode
     @State private var isChecked: Bool = false
     @State private var prevWeight: String = ""
@@ -49,12 +49,11 @@ struct WorkingOutRow: View {
 }
 
 struct WorkingOutRow_Previews: PreviewProvider {
-    static var excercises = {
-        let excercises = Workouts(name: "test", category: "test_category", target: "test_target")
-        return excercises
+    static var sets = {
+        return Sets()
     }()
     static var previews: some View {
-        WorkingOutRow(workouts: .constant(excercises),
+        WorkingOutRow(sets: .constant(sets),
                       editMode: .constant(.active))
     }
 }

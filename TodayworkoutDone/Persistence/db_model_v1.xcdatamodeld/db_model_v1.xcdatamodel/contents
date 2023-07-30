@@ -6,8 +6,9 @@
     </entity>
     <entity name="Routine" representedClassName="RoutineMO" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="sets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Sets" inverseName="routine" inverseEntity="Sets"/>
-        <relationship name="workouts" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Workouts" inverseName="routine" inverseEntity="Workouts"/>
+        <attribute name="stopwatch" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="sets" toMany="YES" deletionRule="Nullify" destinationEntity="Sets" inverseName="routine" inverseEntity="Sets"/>
+        <relationship name="workouts" maxCount="1" deletionRule="Nullify" destinationEntity="Workouts" inverseName="routine" inverseEntity="Workouts"/>
     </entity>
     <entity name="Sets" representedClassName="SetsMO" syncable="YES" codeGenerationType="class">
         <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>

@@ -8,53 +8,51 @@
 import SwiftUI
 
 struct WorkingOutSection: View {
-    @Binding var workouts: Workouts
-    @Binding var editMode: EditMode
-    @State var list: [Int] = [1]
     @Environment(\.defaultMinListRowHeight) var minRowHeight
+    
+    @Binding var routine: Routine
+    @Binding var editMode: EditMode
     
     var body: some View {
         VStack {
             Section {
                 List {
-                    ForEach(list, id: \.self) { item in
-                        WorkingOutRow(workouts: $workouts, editMode: $editMode)
+                    ForEach(routine.sets) { sets in
+                        WorkingOutRow(sets: .constant(sets),
+                                      editMode: $editMode)
                             .padding(.bottom, 2)
                     }
                     .onDelete { indexSet in
                         deleteItems(atOffsets: indexSet)
                     }
                 }
-                .frame(minHeight: minRowHeight * CGFloat(list.count))
+                .frame(minHeight: minRowHeight * CGFloat(routine.sets.count))
                 .listStyle(PlainListStyle())
             } header: {
-                WorkingOutHeader(workouts: $workouts)
+                WorkingOutHeader(routine: $routine)
             } footer: {
                 WorkingOutFooter()
                     .onTapGesture {
-                        if let lastNumber = list.last {
-                            list.append(lastNumber + 1)
-                        } else {
-                            list.append(1)
-                        }
+                        routine.sets.append(Sets())
                     }
             }
         }
     }
     
     func deleteItems(atOffsets offset: IndexSet) {
-        list.remove(atOffsets: offset)
+        routine.sets.remove(atOffsets: offset)
     }
 }
 
 struct WorkingOutSection_Previews: PreviewProvider {
-    static var excercises = {
-        let excercises = Workouts(name: "test", category: "test_category", target: "test_target")
-        return excercises
+    static var routine = {
+        return Routine(workouts: Workouts(name: "test",
+                                          category: "test_category",
+                                          target: "test_target"))
     }()
     
     static var previews: some View {
-        WorkingOutSection(workouts: .constant(excercises),
+        WorkingOutSection(routine: .constant(routine),
                           editMode: .constant(.active))
     }
 }
