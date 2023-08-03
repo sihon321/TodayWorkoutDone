@@ -59,7 +59,8 @@ extension Sets {
     init?(managedObject: SetsMO) {
         self.init(prevWeight: managedObject.prevWeight,
                   weight: managedObject.weight,
-                  lap: Int(managedObject.lap),
+                  prevLab: Int(managedObject.prevLab),
+                  lab: Int(managedObject.lab),
                   isChecked: managedObject.isChecked)
     }
 }

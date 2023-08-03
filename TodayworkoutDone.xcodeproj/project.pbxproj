@@ -92,7 +92,6 @@
 
 /* Begin PBXFileReference section */
 		8E4066A629B33CEC004BB7A2 /* workouts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = workouts.json; sourceTree = "<group>"; };
-		8E4066A929B33D12004BB7A2 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		8E4066AB29B33D71004BB7A2 /* Workouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workouts.swift; sourceTree = "<group>"; };
 		8E52790829C7099B000DCD7F /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		8E52790A29C7134D000DCD7F /* ExcerciseStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcerciseStartView.swift; sourceTree = "<group>"; };
@@ -203,7 +202,6 @@
 		8E4066A829B33D02004BB7A2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8E4066A929B33D12004BB7A2 /* DataController.swift */,
 				8E4066AB29B33D71004BB7A2 /* Workouts.swift */,
 				8E52790829C7099B000DCD7F /* Routine.swift */,
 				F23264A129DC6A58008649FE /* Category.swift */,

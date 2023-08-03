@@ -33,7 +33,7 @@ struct HomeView: View {
                     
                     if routingBinding.workingOutView.wrappedValue {
                         SlideOverCardView(hideTab: $hideBar, content: {
-                            WorkingOutView()
+                            WorkingOutView(hideTab: $hideBar)
                         })
                         .onAppear {
                             hideBar = true

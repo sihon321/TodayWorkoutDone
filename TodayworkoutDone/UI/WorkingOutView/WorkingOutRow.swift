@@ -20,30 +20,31 @@ struct WorkingOutRow: View {
             Toggle("", isOn: $isChecked)
                 .toggleStyle(CheckboxToggleStyle(style: .square))
             Spacer()
-            
-            if editMode == .active {
-                TextField("prevWeight", text: $prevWeight)
-                    .background(Color.gray)
-                    .cornerRadius(5)
-            } else {
-                Text(prevWeight)
-            }
-            Spacer()
             if editMode == .active {
                 TextField("count", text: $count)
-                    .background(Color.gray)
+                    .background(Color(uiColor: .secondarySystemBackground))
                     .cornerRadius(5)
             } else {
                 Text(count)
             }
             Spacer()
+            Text("\(sets.prevLab ?? 0)")
+                .frame(minWidth: 40)
+                .background(Color(uiColor: .secondarySystemFill))
+                .cornerRadius(5)
+            Spacer()
             if editMode == .active {
                 TextField("weight", text: $weight)
-                    .background(Color.gray)
+                    .background(Color(uiColor: .secondarySystemBackground))
                     .cornerRadius(5)
             } else {
                 Text(weight)
             }
+            Spacer()
+            Text(String(format: "%.1f", sets.prevWeight ?? 0.0))
+                .frame(minWidth: 40)
+                .background(Color(uiColor: .secondarySystemFill))
+                .cornerRadius(5)
         }
     }
 }

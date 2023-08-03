@@ -12,7 +12,8 @@
     </entity>
     <entity name="Sets" representedClassName="SetsMO" syncable="YES" codeGenerationType="class">
         <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="lap" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lab" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="prevLab" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="prevWeight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="routine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="sets" inverseEntity="Routine"/>

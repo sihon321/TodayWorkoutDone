@@ -36,6 +36,10 @@ struct ExcerciseStartView: View {
             }
             .offset(y: -15)
         }
+        .onAppear {
+            injected.appState[\.userData.selectionWorkouts].removeAll()
+            injected.appState[\.userData.routines].removeAll()
+        }
         .onReceive(routingUpdate) { self.routingState = $0 }
     }
 }

@@ -12,7 +12,7 @@ struct WorkingOutHeader: View {
     @State private var showingOptions = false
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 Text(routine.workouts.name)
                     .font(.title)
@@ -29,13 +29,10 @@ struct WorkingOutHeader: View {
             }
             .padding()
             HStack {
-                Text("이전무게")
-                    .padding(.leading, 30)
-                Spacer()
                 Text("횟수")
-                Spacer()
+                    .padding(.leading, 50)
                 Text("무게")
-                    .padding(.trailing, 25)
+                    .padding(.leading, 60)
             }
         }
     }

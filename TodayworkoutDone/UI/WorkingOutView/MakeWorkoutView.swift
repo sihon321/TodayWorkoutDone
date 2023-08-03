@@ -16,7 +16,10 @@ struct MakeWorkoutView: View {
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
     init(selectionWorkouts: Binding<[Workouts]>, editMode: EditMode = .active) {
-        self._routines = .init(initialValue: selectionWorkouts.compactMap({ Routine(workouts: $0.wrappedValue) }))
+        self._routines = .init(
+            initialValue: selectionWorkouts
+                .compactMap({ Routine(workouts: $0.wrappedValue) })
+        )
         self._editMode = .init(initialValue: editMode)
     }
     
@@ -53,7 +56,6 @@ struct MakeWorkoutView: View {
 }
 
 struct MakeWorkoutView_Previews: PreviewProvider {
-    @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
         MakeWorkoutView(selectionWorkouts: .constant(Workouts.mockedData),
                         editMode: .active)

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct WorkingOutView: View {
     @Environment(\.injected) private var injected: DIContainer
-    @State private var editMode: EditMode = .active
+    @State private var editMode: EditMode = .inactive
+    @Binding var hideTab: Bool
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     private var routines: [Routine] {
@@ -27,9 +28,15 @@ struct WorkingOutView: View {
                 }
             }
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Close") {
+                        injected.appState[\.routing.homeView.workingOutView] = false
+                        hideTab = false
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Edit") {
-
+                        editMode = editMode == .active ? .inactive : .active
                     }
                 }
             }
@@ -42,6 +49,6 @@ struct WorkingOutView: View {
 struct WorkingOutView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkingOutView()
+        WorkingOutView(hideTab: .constant(false))
     }
 }

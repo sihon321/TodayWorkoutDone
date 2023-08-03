@@ -13,20 +13,22 @@ struct Sets: Codable, Equatable, Identifiable {
     
     var prevWeight: Double?
     var weight: Double?
-    var lap: Int?
+    var prevLab: Int?
+    var lab: Int?
     var isChecked: Bool?
     
     enum CodingKeys: String, CodingKey {
-        case prevWeight, weight, lap, isChecked
+        case prevWeight, weight, prevLab, lab, isChecked
     }
     
     init(prevWeight: Double = .zero,
          weight: Double = .zero,
-         lap: Int = .zero,
+         prevLab: Int = .zero,
+         lab: Int = .zero,
          isChecked: Bool = false) {
         self.prevWeight = prevWeight
         self.weight = weight
-        self.lap = lap
+        self.lab = lab
         self.isChecked = isChecked
     }
     
@@ -34,7 +36,8 @@ struct Sets: Codable, Equatable, Identifiable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         prevWeight = try container.decode(Double.self, forKey: .prevWeight)
         weight = try container.decode(Double.self, forKey: .weight)
-        lap = try container.decode(Int.self, forKey: .lap)
+        prevLab = try container.decode(Int.self, forKey: .prevLab)
+        lab = try container.decode(Int.self, forKey: .lab)
         isChecked = try container.decode(Bool.self, forKey: .isChecked)
     }
 }
