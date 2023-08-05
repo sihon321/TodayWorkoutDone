@@ -47,8 +47,8 @@ struct Routine: Codable, Equatable, Identifiable {
     
     var workouts: Workouts
     var sets: [Sets]
-    var date: Date?
-    var stopwatch: Double?
+    var date: Date
+    var stopwatch: Double
     
     enum CodingKeys: String, CodingKey {
         case workouts, sets, date, stopwatch
@@ -70,5 +70,17 @@ struct Routine: Codable, Equatable, Identifiable {
         sets = try container.decode([Sets].self, forKey: .sets)
         date = try container.decode(Date.self, forKey: .date)
         stopwatch = try container.decode(Double.self, forKey: .stopwatch)
+    }
+}
+
+typealias Routines = [Routine]
+
+struct MyRoutine: Codable, Equatable, Identifiable {
+    var id: UUID = UUID()
+    
+    var routines: [Routine]
+    
+    init(routines: [Routine]) {
+        self.routines = routines
     }
 }

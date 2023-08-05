@@ -11,6 +11,7 @@ struct WorkingOutView: View {
     @Environment(\.injected) private var injected: DIContainer
     @State private var editMode: EditMode = .inactive
     @Binding var hideTab: Bool
+    @Binding var isSavedAlert: Bool
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     private var routines: [Routine] {
@@ -32,6 +33,7 @@ struct WorkingOutView: View {
                     Button("Close") {
                         injected.appState[\.routing.homeView.workingOutView] = false
                         hideTab = false
+                        isSavedAlert = true
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -49,6 +51,6 @@ struct WorkingOutView: View {
 struct WorkingOutView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkingOutView(hideTab: .constant(false))
+        WorkingOutView(hideTab: .constant(false), isSavedAlert: .constant(false))
     }
 }

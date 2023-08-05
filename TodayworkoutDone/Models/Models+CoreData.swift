@@ -12,6 +12,7 @@ extension WorkoutsMO: ManagedEntity { }
 extension CategoryMO: ManagedEntity { }
 extension SetsMO: ManagedEntity { }
 extension RoutineMO: ManagedEntity { }
+extension MyRoutineMO: ManagedEntity { }
 
 extension Workouts {
     init?(managedObject: WorkoutsMO) {
@@ -69,8 +70,8 @@ extension Routine {
     init?(managedObject: RoutineMO) {
         guard let workoutsMO = managedObject.workouts,
               let workouts = Workouts(managedObject: workoutsMO),
-              let nsSet = managedObject.sets,
-              let sets = nsSet.allObjects as? [Sets],
+              let set = managedObject.sets,
+              let sets = set.allObjects as? [Sets],
               let date = managedObject.date else {
             return nil
         }
@@ -79,6 +80,46 @@ extension Routine {
                   sets: sets,
                   date: date,
                   stopwatch: managedObject.stopwatch)
+    }
+    
+    @discardableResult
+    func store(in context: NSManagedObjectContext) -> RoutineMO? {
+        guard let routine = RoutineMO.insertNew(in: context) else {
+            return nil
+        }
+        let object = WorkoutsMO(context: context)
+        object.category = workouts.category
+        object.name = workouts.name
+        object.category = workouts.category
+        
+        routine.workouts = object
+        routine.sets = NSSet(array: sets)
+        routine.date = date
+        routine.stopwatch = stopwatch
+        
+        return routine
+    }
+}
+
+extension MyRoutine {
+    init?(managedObject: MyRoutineMO) {
+        guard let set = managedObject.routines,
+              let routines = set.allObjects as? Routines else {
+            return nil
+        }
+        
+        self.init(routines: routines)
+    }
+    
+    @discardableResult
+    func store(in context: NSManagedObjectContext) -> MyRoutineMO? {
+        guard let myRoutine = MyRoutineMO.insertNew(in: context) else {
+            return nil
+        }
+        
+        myRoutine.routines = NSSet(array: routines)
+        
+        return myRoutine
     }
 }
 

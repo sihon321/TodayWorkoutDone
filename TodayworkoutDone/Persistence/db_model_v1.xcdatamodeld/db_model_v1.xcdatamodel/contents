@@ -4,11 +4,14 @@
         <attribute name="en" optional="YES" attributeType="String"/>
         <attribute name="kor" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="MyRoutine" representedClassName="MyRoutineMO" syncable="YES" codeGenerationType="class">
+        <relationship name="routines" toMany="YES" deletionRule="Nullify" destinationEntity="Routine"/>
+    </entity>
     <entity name="Routine" representedClassName="RoutineMO" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="stopwatch" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="stopwatch" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="sets" toMany="YES" deletionRule="Nullify" destinationEntity="Sets" inverseName="routine" inverseEntity="Sets"/>
-        <relationship name="workouts" maxCount="1" deletionRule="Nullify" destinationEntity="Workouts" inverseName="routine" inverseEntity="Workouts"/>
+        <relationship name="workouts" maxCount="1" deletionRule="Nullify" destinationEntity="Workouts"/>
     </entity>
     <entity name="Sets" representedClassName="SetsMO" syncable="YES" codeGenerationType="class">
         <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -22,6 +25,5 @@
         <attribute name="category" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="target" attributeType="String"/>
-        <relationship name="routine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="workouts" inverseEntity="Routine"/>
     </entity>
 </model>

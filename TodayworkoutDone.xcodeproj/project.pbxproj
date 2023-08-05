@@ -44,6 +44,8 @@
 		F264949A2A6C066700B0A31C /* NetworkingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26494992A6C066700B0A31C /* NetworkingHelpers.swift */; };
 		F264949C2A6C11E000B0A31C /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F264949B2A6C11E000B0A31C /* ActivityIndicatorView.swift */; };
 		F264AC5C29D21F3A0003E70D /* category.json in Resources */ = {isa = PBXBuildFile; fileRef = F264AC5B29D21F3A0003E70D /* category.json */; };
+		F27631B22A7D0B0A008ACD2F /* RoutineDBRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27631B12A7D0B0A008ACD2F /* RoutineDBRepository.swift */; };
+		F27631B42A7D2374008ACD2F /* RoutinesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27631B32A7D2374008ACD2F /* RoutinesInteractor.swift */; };
 		F276E2952A6C48B50046EBA4 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F276E2942A6C48B50046EBA4 /* ErrorView.swift */; };
 		F27AD1882A2BA409002C44DD /* SystemEventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AD1872A2BA409002C44DD /* SystemEventsHandler.swift */; };
 		F29285332A17CEE000C3A055 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29285322A17CEE000C3A055 /* CustomTabBar.swift */; };
@@ -129,6 +131,8 @@
 		F26494992A6C066700B0A31C /* NetworkingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingHelpers.swift; sourceTree = "<group>"; };
 		F264949B2A6C11E000B0A31C /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		F264AC5B29D21F3A0003E70D /* category.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = category.json; sourceTree = "<group>"; };
+		F27631B12A7D0B0A008ACD2F /* RoutineDBRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDBRepository.swift; sourceTree = "<group>"; };
+		F27631B32A7D2374008ACD2F /* RoutinesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutinesInteractor.swift; sourceTree = "<group>"; };
 		F276E2942A6C48B50046EBA4 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		F27AD1872A2BA409002C44DD /* SystemEventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEventsHandler.swift; sourceTree = "<group>"; };
 		F29285322A17CEE000C3A055 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
@@ -251,6 +255,7 @@
 				F2DAFEF02A5C670A004BECE0 /* DataInteractor.swift */,
 				F250986A2A24FBA7005390D5 /* WorkoutInteractor.swift */,
 				F26494922A6BD95700B0A31C /* CategoryInteractor.swift */,
+				F27631B32A7D2374008ACD2F /* RoutinesInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 				8EC563662A6D2C6E00A8DCD5 /* CategoryWebRepository.swift */,
 				F25C89CE2A652B52007D920A /* WorkoutDBRepository.swift */,
 				8EC563682A6DFDB600A8DCD5 /* WorkoutWebRepository.swift */,
+				F27631B12A7D0B0A008ACD2F /* RoutineDBRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -568,6 +574,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2C63E202959F3C700D02F76 /* WorkoutListView.swift in Sources */,
+				F27631B42A7D2374008ACD2F /* RoutinesInteractor.swift in Sources */,
 				F222FFEE2A645EE3002FCCDA /* LazyList.swift in Sources */,
 				F23F4E962957FB250084392B /* MyWorkoutView.swift in Sources */,
 				F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */,
@@ -582,6 +589,7 @@
 				F23F4E9C29581F070084392B /* SearchBar.swift in Sources */,
 				F264949C2A6C11E000B0A31C /* ActivityIndicatorView.swift in Sources */,
 				F2CB39F1295DE20400CA80D6 /* SlideOverCardView.swift in Sources */,
+				F27631B22A7D0B0A008ACD2F /* RoutineDBRepository.swift in Sources */,
 				F29285352A17D25400C3A055 /* HomeView.swift in Sources */,
 				8E5E8A222A24B945004A4F33 /* DependencyInjector.swift in Sources */,
 				F25C89C92A65166D007D920A /* CoreDataHelpers.swift in Sources */,

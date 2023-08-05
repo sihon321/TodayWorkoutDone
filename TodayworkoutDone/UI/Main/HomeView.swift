@@ -14,6 +14,7 @@ struct HomeView: View {
     @State private var routingState: Routing = .init()
     @State private var currentTab = "play.fill"
     @State private var hideBar = false
+    @State private var isSavedAlert = false
     
     private var bottomEdge: CGFloat
     private var routingBinding: Binding<Routing> {
@@ -33,7 +34,7 @@ struct HomeView: View {
                     
                     if routingBinding.workingOutView.wrappedValue {
                         SlideOverCardView(hideTab: $hideBar, content: {
-                            WorkingOutView(hideTab: $hideBar)
+                            WorkingOutView(hideTab: $hideBar, isSavedAlert: $isSavedAlert)
                         })
                         .onAppear {
                             hideBar = true
@@ -59,6 +60,14 @@ struct HomeView: View {
             Spacer()
         }
         .onReceive(routingUpdate) { self.routingState = $0 }
+        .alert("저장하겠습니까?", isPresented: $isSavedAlert) {
+            Button("Cancel") { }
+            Button("OK") {
+                
+            }
+        } message: {
+            Text("새로운 루틴을 저장하시겟습니까")
+        }
     }
 }
 

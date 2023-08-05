@@ -47,7 +47,6 @@ struct RealCategoryDBRepository: CategoryDBRepository {
 extension CategoryMO {
     static func categories() -> NSFetchRequest<CategoryMO> {
         let request = newFetchRequest()
-//        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         request.fetchBatchSize = 10
         return request
     }
