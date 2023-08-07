@@ -10,7 +10,7 @@ import Combine
 
 struct WorkoutListSubview: View {
     @Environment(\.injected) private var injected: DIContainer
-    @Binding var workouts: Workouts
+    var workouts: Workouts
     @Binding var selectWorkouts: [Workouts]
     
     var body: some View {
@@ -48,6 +48,6 @@ struct WorkoutListSubview_Previews: PreviewProvider {
         return excercises
     }()
     static var previews: some View {
-        WorkoutListSubview(workouts: .constant(workouts), selectWorkouts: .constant([]))
+        WorkoutListSubview(workouts: workouts, selectWorkouts: .constant([]))
     }
 }

@@ -9,14 +9,23 @@ import CoreData
 import Combine
 
 protocol RoutineDBRepository {
-    func routines() -> AnyPublisher<LazyList<Routines>, Error>
-    func store(routines: Routines) -> AnyPublisher<Void, Error>
+    func hasLoadedRoutines() -> AnyPublisher<Bool, Error>
+    func routines() -> AnyPublisher<LazyList<MyRoutine>, Error>
+    func store(routine: MyRoutine) -> AnyPublisher<Void, Error>
 }
 
 struct RealRoutineDBRepository: RoutineDBRepository {
     let persistentStore: PersistentStore
     
-    func routines() -> AnyPublisher<LazyList<Routines>, Error> {
+    func hasLoadedRoutines() -> AnyPublisher<Bool, Error> {
+        let fetchRequest = MyRoutineMO.routines()
+        return persistentStore
+            .count(fetchRequest)
+            .map { $0 > 0 }
+            .eraseToAnyPublisher()
+    }
+    
+    func routines() -> AnyPublisher<LazyList<MyRoutine>, Error> {
         let fetchRequest = MyRoutineMO.routines()
         return persistentStore
             .fetch(fetchRequest) {
@@ -24,16 +33,39 @@ struct RealRoutineDBRepository: RoutineDBRepository {
             }
     }
     
-    func store(routines: Routines) -> AnyPublisher<Void, Error> {
+    func store(routine: MyRoutine) -> AnyPublisher<Void, Error> {
         return persistentStore
             .update { context in
-                routines.forEach {
-                    $0.store(in: context)
+                let workoutName = routine.routines.compactMap { $0.workouts.name }
+                let workoutFetchRequest = WorkoutsMO.workouts(name: workoutName)
+                guard let workouts = try? context.fetch(workoutFetchRequest) else {
+                    return
                 }
+                let id = routine.routines.compactMap {
+                    $0.sets.compactMap { $0.id }
+                }
+                let sets = id.compactMap { ids -> [SetsMO] in
+                    let setsFetchRequest = SetsMO.sets(id: ids)
+                    guard let sets = try? context.fetch(setsFetchRequest) else {
+                        return []
+                    }
+                    return sets
+                }
+
+                routine.store(in: context, workouts: workouts, sets: sets)
             }
     }
-    
-    
+}
+
+extension SetsMO {
+    static func sets(id: [UUID] = []) -> NSFetchRequest<SetsMO> {
+        let request = newFetchRequest()
+        if !id.isEmpty {
+            request.predicate = NSPredicate(format: "id in %@", id)
+        }
+        request.fetchBatchSize = 10
+        return request
+    }
 }
 
 extension MyRoutineMO {

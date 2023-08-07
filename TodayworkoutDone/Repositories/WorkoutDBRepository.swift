@@ -44,8 +44,11 @@ struct RealWorkoutDBRepository: WorkoutDBRepository {
 }
 
 extension WorkoutsMO {
-    static func workouts() -> NSFetchRequest<WorkoutsMO> {
+    static func workouts(name: [String] = []) -> NSFetchRequest<WorkoutsMO> {
         let request = newFetchRequest()
+        if !name.isEmpty {
+            request.predicate = NSPredicate(format: "name in %@", name)
+        }
         request.fetchBatchSize = 10
         return request
     }

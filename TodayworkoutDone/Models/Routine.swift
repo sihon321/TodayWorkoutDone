@@ -11,11 +11,11 @@ import CoreData
 struct Sets: Codable, Equatable, Identifiable {
     var id: UUID = UUID()
     
-    var prevWeight: Double?
-    var weight: Double?
-    var prevLab: Int?
-    var lab: Int?
-    var isChecked: Bool?
+    var prevWeight: Double
+    var weight: Double
+    var prevLab: Int
+    var lab: Int
+    var isChecked: Bool
     
     enum CodingKeys: String, CodingKey {
         case prevWeight, weight, prevLab, lab, isChecked
@@ -28,6 +28,7 @@ struct Sets: Codable, Equatable, Identifiable {
          isChecked: Bool = false) {
         self.prevWeight = prevWeight
         self.weight = weight
+        self.prevLab = prevLab
         self.lab = lab
         self.isChecked = isChecked
     }
@@ -42,9 +43,7 @@ struct Sets: Codable, Equatable, Identifiable {
     }
 }
 
-struct Routine: Codable, Equatable, Identifiable {
-    var id: UUID = UUID()
-    
+struct Routine: Codable, Equatable {
     var workouts: Workouts
     var sets: [Sets]
     var date: Date
@@ -71,6 +70,10 @@ struct Routine: Codable, Equatable, Identifiable {
         date = try container.decode(Date.self, forKey: .date)
         stopwatch = try container.decode(Double.self, forKey: .stopwatch)
     }
+}
+
+extension Routine: Identifiable {
+    var id: String { workouts.id }
 }
 
 typealias Routines = [Routine]

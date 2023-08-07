@@ -64,6 +64,21 @@ extension Sets {
                   lab: Int(managedObject.lab),
                   isChecked: managedObject.isChecked)
     }
+    
+    @discardableResult
+    func store(in context: NSManagedObjectContext) -> SetsMO? {
+        guard let set = SetsMO.insertNew(in: context) else {
+            return nil
+        }
+        set.id = id
+        set.isChecked = isChecked
+        set.lab = Int16(lab)
+        set.prevLab = Int16(prevLab)
+        set.weight = weight
+        set.prevWeight = prevWeight
+        
+        return set
+    }
 }
 
 extension Routine {
@@ -87,13 +102,23 @@ extension Routine {
         guard let routine = RoutineMO.insertNew(in: context) else {
             return nil
         }
-        let object = WorkoutsMO(context: context)
-        object.category = workouts.category
-        object.name = workouts.name
-        object.category = workouts.category
+        let workoutsMO = WorkoutsMO(context: context)
+        workoutsMO.category = workouts.category
+        workoutsMO.name = workouts.name
+        workoutsMO.category = workouts.category
         
-        routine.workouts = object
-        routine.sets = NSSet(array: sets)
+        routine.workouts = workoutsMO
+        let setsMO = sets.compactMap {
+            let setsMO = SetsMO(context: context)
+            setsMO.id = $0.id
+            setsMO.isChecked = $0.isChecked
+            setsMO.lab = Int16($0.lab)
+            setsMO.prevLab = Int16($0.prevLab)
+            setsMO.weight = $0.weight
+            setsMO.prevWeight = $0.prevWeight
+            return setsMO
+        }
+        routine.sets = NSSet(array: setsMO)
         routine.date = date
         routine.stopwatch = stopwatch
         
@@ -104,17 +129,29 @@ extension Routine {
 extension MyRoutine {
     init?(managedObject: MyRoutineMO) {
         guard let set = managedObject.routines,
-              let routines = set.allObjects as? Routines else {
+              let routinesMO = set.allObjects as? [RoutineMO] else {
             return nil
         }
-        
+        let routines = routinesMO.compactMap {
+            Routine(managedObject: $0)
+        }
         self.init(routines: routines)
     }
     
     @discardableResult
-    func store(in context: NSManagedObjectContext) -> MyRoutineMO? {
+    func store(in context: NSManagedObjectContext, workouts: [WorkoutsMO], sets: [[SetsMO]]) -> MyRoutineMO? {
         guard let myRoutine = MyRoutineMO.insertNew(in: context) else {
             return nil
+        }
+        
+        var routines: [RoutineMO] = []
+        for (index, routine) in self.routines.enumerated() {
+            let routineMO = RoutineMO(context: context)
+            routineMO.workouts = workouts[index]
+            routineMO.sets = NSSet(array: sets[index])
+            routineMO.date = routine.date
+            routineMO.stopwatch = routine.stopwatch
+            routines.append(routineMO)
         }
         
         myRoutine.routines = NSSet(array: routines)

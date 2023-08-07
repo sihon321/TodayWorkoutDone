@@ -63,11 +63,17 @@ struct HomeView: View {
         .alert("저장하겠습니까?", isPresented: $isSavedAlert) {
             Button("Cancel") { }
             Button("OK") {
-                
+                savedRoutine()
             }
         } message: {
             Text("새로운 루틴을 저장하시겟습니까")
         }
+    }
+    
+    func savedRoutine() {
+        injected.interactors.routineInteractor.store(
+            myRoutine: MyRoutine(routines: injected.appState[\.userData.routines])
+        )
     }
 }
 

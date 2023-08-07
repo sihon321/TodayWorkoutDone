@@ -8,10 +8,9 @@
 import Foundation
 import CoreData
 
-struct Category: Codable, Identifiable {
-    var id: UUID = UUID()
-    var kor: String?
-    var en: String?
+struct Category: Codable {
+    var kor: String
+    var en: String
     
     enum CodingKeys: String, CodingKey {
         case kor, en
@@ -27,6 +26,10 @@ struct Category: Codable, Identifiable {
         try container.encode(kor, forKey: .kor)
         try container.encode(en, forKey: .en)
     }
+}
+
+extension Category: Identifiable {
+    var id: String { return kor }
 }
 
 typealias Categories = [Category]

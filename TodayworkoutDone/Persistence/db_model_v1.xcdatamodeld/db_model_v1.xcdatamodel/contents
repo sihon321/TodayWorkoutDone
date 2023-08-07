@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Category" representedClassName="CategoryMO" syncable="YES" codeGenerationType="class">
-        <attribute name="en" optional="YES" attributeType="String"/>
-        <attribute name="kor" optional="YES" attributeType="String"/>
+        <attribute name="en" attributeType="String"/>
+        <attribute name="kor" attributeType="String"/>
     </entity>
     <entity name="MyRoutine" representedClassName="MyRoutineMO" syncable="YES" codeGenerationType="class">
-        <relationship name="routines" toMany="YES" deletionRule="Nullify" destinationEntity="Routine"/>
+        <relationship name="routines" toMany="YES" deletionRule="Nullify" destinationEntity="Routine" inverseName="myRoutine" inverseEntity="Routine"/>
     </entity>
     <entity name="Routine" representedClassName="RoutineMO" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="stopwatch" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="myRoutine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MyRoutine" inverseName="routines" inverseEntity="MyRoutine"/>
         <relationship name="sets" toMany="YES" deletionRule="Nullify" destinationEntity="Sets" inverseName="routine" inverseEntity="Sets"/>
         <relationship name="workouts" maxCount="1" deletionRule="Nullify" destinationEntity="Workouts"/>
     </entity>
     <entity name="Sets" representedClassName="SetsMO" syncable="YES" codeGenerationType="class">
-        <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="lab" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="prevLab" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="prevWeight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isChecked" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="lab" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="prevLab" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="prevWeight" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="weight" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="routine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="sets" inverseEntity="Routine"/>
     </entity>
     <entity name="Workouts" representedClassName="WorkoutsMO" syncable="YES" codeGenerationType="class">

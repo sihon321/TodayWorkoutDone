@@ -85,7 +85,7 @@ private extension WorkoutListView {
 private extension WorkoutListView {
     func loadedView(_ workoutsList: LazyList<Workouts>) -> some View {
         List(workoutsList) { workouts in
-            WorkoutListSubview(workouts: .constant(workouts),
+            WorkoutListSubview(workouts: workouts,
                                selectWorkouts: $selectWorkouts)
                 .inject(injected)
         }

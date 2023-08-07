@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct MyWorkoutSubview: View {
+    
+    var myRoutine: MyRoutine
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("스쿼트")
@@ -16,27 +19,14 @@ struct MyWorkoutSubview: View {
                               design: .default))
                 .padding(.leading, 15)
             VStack(alignment: .leading) {
-                Text("밴치프레스")
-                    .font(.system(size: 12,
-                                  weight: .light,
-                                  design: .default))
-                    .padding(.leading, 15)
-                    .foregroundColor(Color(0x939393))
-                Text("스쿼트")
-                    .padding(.top, 1)
-                    .font(.system(size: 12,
-                                  weight: .light,
-                                  design: .default))
-                    .padding(.leading, 15)
-                    .foregroundColor(Color(0x939393))
-                Text("데드리프트")
-                    .padding(.top, 1)
-                    .font(.system(size: 12,
-                                  weight: .light,
-                                  design: .default))
-                    .padding(.leading, 15)
-                    .foregroundColor(Color(0x939393))
-                    .padding(.bottom, 1)
+                ForEach(myRoutine.routines) { routine in
+                    Text(routine.workouts.name)
+                        .font(.system(size: 12,
+                                      weight: .light,
+                                      design: .default))
+                        .padding(.leading, 15)
+                        .foregroundColor(Color(0x939393))
+                }
             }
             .padding(.top, 1)
         }
@@ -50,7 +40,7 @@ struct MyWorkoutSubview: View {
 
 struct MyWorkoutSubview_Previews: PreviewProvider {
     static var previews: some View {
-        MyWorkoutSubview()
+        MyWorkoutSubview(myRoutine: MyRoutine(routines: []))
             .background(Color.black)
     }
 }

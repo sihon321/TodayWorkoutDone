@@ -40,8 +40,11 @@ extension AppEnvironment {
         let persistentStore = CoreDataStack(version: CoreDataStack.Version.actual)
         let categoryRepository = RealCategoryDBRepository(persistentStore: persistentStore)
         let workgoutsRepository = RealWorkoutDBRepository(persistentStore: persistentStore)
+        let routineRepository = RealRoutineDBRepository(persistentStore: persistentStore)
         
-        return .init(workoutsRepository: workgoutsRepository, categoryRepository: categoryRepository)
+        return .init(workoutsRepository: workgoutsRepository,
+                     categoryRepository: categoryRepository,
+                     routineRepository: routineRepository)
     }
     
     private static func configuredInteractors(appState: Store<AppState>,
@@ -57,8 +60,11 @@ extension AppEnvironment {
             webRepository: webRepositories.categoryRepository,
             dbRepository: dbRepositories.categoryRepository,
             appState: appState)
+        let routineInteractor = RealRoutinesInteractor(dbRepository: dbRepositories.routineRepository)
         
-        return .init(workoutInteractor: workoutInteractor, categoryInteractor: categoryInteractor)
+        return .init(workoutInteractor: workoutInteractor,
+                     categoryInteractor: categoryInteractor,
+                     routineInteractor: routineInteractor)
     }
 }
 
@@ -71,5 +77,6 @@ extension DIContainer {
     struct DBRepositories {
         let workoutsRepository: WorkoutDBRepository
         let categoryRepository: CategoryDBRepository
+        let routineRepository: RoutineDBRepository
     }
 }
