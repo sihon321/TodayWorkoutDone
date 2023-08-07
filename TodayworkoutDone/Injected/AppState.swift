@@ -27,6 +27,7 @@ extension AppState {
         var workoutView = WorkoutView.Routing()
         var workoutCategoryView = WorkoutCategoryView.Routing()
         var workoutListView = WorkoutListView.Routing()
+        var myWorkoutView = MyWorkoutView.Routing()
     }
 }
 

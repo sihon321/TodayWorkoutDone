@@ -22,3 +22,7 @@ extension Workouts {
         Workouts(name: "스쿼시", category: "gym", target: "하체")
     ]
 }
+
+extension Routine {
+    static let mockedData: [Routine] = Workouts.mockedData.compactMap { Routine(workouts: $0) }
+}

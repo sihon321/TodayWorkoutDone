@@ -41,18 +41,13 @@ struct RealRoutineDBRepository: RoutineDBRepository {
                 guard let workouts = try? context.fetch(workoutFetchRequest) else {
                     return
                 }
-                let id = routine.routines.compactMap {
-                    $0.sets.compactMap { $0.id }
-                }
-                let sets = id.compactMap { ids -> [SetsMO] in
-                    let setsFetchRequest = SetsMO.sets(id: ids)
-                    guard let sets = try? context.fetch(setsFetchRequest) else {
-                        return []
+                let setsMO = routine.routines.compactMap {
+                    $0.sets.compactMap {
+                        $0.store(in: context)
                     }
-                    return sets
                 }
 
-                routine.store(in: context, workouts: workouts, sets: sets)
+                routine.store(in: context, workouts: workouts, sets: setsMO)
             }
     }
 }

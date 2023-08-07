@@ -45,6 +45,7 @@ struct RealWorkoutInteractor: WorkoutInteractor {
     func load(workouts: LoadableSubject<LazyList<Workouts>>) {
         let cancelBag = CancelBag()
         
+        workouts.wrappedValue.setIsLoading(cancelBag: cancelBag)
         Just<Void>
             .withErrorType(Error.self)
             .flatMap { [dbRepository] _ -> AnyPublisher<Bool, Error> in

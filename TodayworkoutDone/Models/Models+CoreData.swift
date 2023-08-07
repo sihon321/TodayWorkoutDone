@@ -86,10 +86,12 @@ extension Routine {
         guard let workoutsMO = managedObject.workouts,
               let workouts = Workouts(managedObject: workoutsMO),
               let set = managedObject.sets,
-              let sets = set.allObjects as? [Sets],
+              let setsMO = set.allObjects as? [SetsMO],
               let date = managedObject.date else {
             return nil
         }
+        
+        let sets = setsMO.compactMap({ Sets(managedObject: $0) })
         
         self.init(workouts: workouts,
                   sets: sets,

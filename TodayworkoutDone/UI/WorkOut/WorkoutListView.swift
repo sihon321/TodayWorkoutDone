@@ -99,7 +99,9 @@ private extension WorkoutListView {
                 }
                 .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                  content: {
-                    MakeWorkoutView(selectionWorkouts: $selectWorkouts)
+                    MakeWorkoutView(
+                        routines: .constant(selectWorkouts.compactMap({ Routine(workouts: $0) }))
+                    )
                 })
             }
         }

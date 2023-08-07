@@ -11,7 +11,12 @@ import Combine
 struct MyWorkoutView: View {
     @Environment(\.injected) private var injected: DIContainer
     
+    @State private var routingState: Routing = .init()
     @State private(set) var myRoutines: Loadable<LazyList<MyRoutine>>
+    
+    private var routingBinding: Binding<Routing> {
+        $routingState.dispatched(to: injected.appState, \.routing.myWorkoutView)
+    }
     
     init(myRoutines: Loadable<LazyList<MyRoutine>> = .notRequested) {
         self._myRoutines = .init(initialValue: myRoutines)
@@ -19,6 +24,7 @@ struct MyWorkoutView: View {
     
     var body: some View {
         self.content
+            .onReceive(routingUpdate) { self.routingState = $0 }
     }
     
     @ViewBuilder private var content: some View {
@@ -75,12 +81,32 @@ private extension MyWorkoutView {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(myRoutines.array()) { myRoutine in
-                        MyWorkoutSubview(myRoutine: myRoutine)
+                        Button(action: {
+                            injected.appState[\.routing.myWorkoutView.makeWorkoutView] = true
+                        }) {
+                            MyWorkoutSubview(myRoutine: myRoutine)
+                        }
+                        .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
+                                         content: {
+                            MakeWorkoutView(routines: .constant(myRoutine.routines))
+                        })
                     }
                 }
             }
         }
         .padding([.leading, .trailing], 15)
+    }
+}
+
+extension MyWorkoutView {
+    struct Routing: Equatable {
+        var makeWorkoutView: Bool = false
+    }
+}
+
+private extension MyWorkoutView {
+    var routingUpdate: AnyPublisher<Routing, Never> {
+        injected.appState.updates(for: \.routing.myWorkoutView)
     }
 }
 

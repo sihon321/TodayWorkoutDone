@@ -15,11 +15,8 @@ struct MakeWorkoutView: View {
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
-    init(selectionWorkouts: Binding<[Workouts]>, editMode: EditMode = .active) {
-        self._routines = .init(
-            initialValue: selectionWorkouts
-                .compactMap({ Routine(workouts: $0.wrappedValue) })
-        )
+    init(routines: Binding<[Routine]>, editMode: EditMode = .active) {
+        self._routines = .init(initialValue: routines.wrappedValue)
         self._editMode = .init(initialValue: editMode)
     }
     
@@ -36,6 +33,7 @@ struct MakeWorkoutView: View {
                     Button("Cancel") {
                         injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
                         injected.appState[\.routing.workoutListView.makeWorkoutView] = false
+                        injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -46,6 +44,7 @@ struct MakeWorkoutView: View {
                         injected.appState[\.routing.workoutListView.makeWorkoutView] = false
                         injected.appState[\.routing.workoutCategoryView.workoutListView] = false
                         injected.appState[\.routing.excerciseStartView.workoutView] = false
+                        injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
                     }
                 }
             }
@@ -57,7 +56,7 @@ struct MakeWorkoutView: View {
 
 struct MakeWorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        MakeWorkoutView(selectionWorkouts: .constant(Workouts.mockedData),
+        MakeWorkoutView(routines: .constant(Routine.mockedData),
                         editMode: .active)
     }
 }
