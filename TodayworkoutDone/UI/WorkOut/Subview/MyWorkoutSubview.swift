@@ -13,7 +13,7 @@ struct MyWorkoutSubview: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("스쿼트")
+            Text(myRoutine.name)
                 .font(.system(size: 18,
                               weight: .semibold,
                               design: .default))
@@ -40,7 +40,7 @@ struct MyWorkoutSubview: View {
 
 struct MyWorkoutSubview_Previews: PreviewProvider {
     static var previews: some View {
-        MyWorkoutSubview(myRoutine: MyRoutine(routines: []))
+        MyWorkoutSubview(myRoutine: MyRoutine(name: "test", routines: []))
             .background(Color.black)
     }
 }

@@ -47,7 +47,7 @@ struct RealRoutineDBRepository: RoutineDBRepository {
                     }
                 }
 
-                routine.store(in: context, workouts: workouts, sets: setsMO)
+                routine.store(in: context, name: routine.name, workouts: workouts, sets: setsMO)
             }
     }
 }

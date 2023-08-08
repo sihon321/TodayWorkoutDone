@@ -80,10 +80,11 @@ typealias Routines = [Routine]
 
 struct MyRoutine: Codable, Equatable, Identifiable {
     var id: UUID = UUID()
-    
+    var name: String
     var routines: [Routine]
     
-    init(routines: [Routine]) {
+    init(name: String, routines: [Routine]) {
+        self.name = name
         self.routines = routines
     }
 }

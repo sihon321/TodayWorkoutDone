@@ -15,6 +15,7 @@ struct HomeView: View {
     @State private var currentTab = "play.fill"
     @State private var hideBar = false
     @State private var isSavedAlert = false
+    @State private var routineName = ""
     
     private var bottomEdge: CGFloat
     private var routingBinding: Binding<Routing> {
@@ -61,18 +62,21 @@ struct HomeView: View {
         }
         .onReceive(routingUpdate) { self.routingState = $0 }
         .alert("저장하겠습니까?", isPresented: $isSavedAlert) {
+            
+            TextField("루틴 이름을 정해주세요", text: $routineName)
             Button("Cancel") { }
             Button("OK") {
-                savedRoutine()
+                saveMyRoutine()
             }
         } message: {
             Text("새로운 루틴을 저장하시겟습니까")
         }
     }
     
-    func savedRoutine() {
+    private func saveMyRoutine() {
         injected.interactors.routineInteractor.store(
-            myRoutine: MyRoutine(routines: injected.appState[\.userData.routines])
+            myRoutine: MyRoutine(name: $routineName.wrappedValue,
+                                 routines: injected.appState[\.userData.routines])
         )
     }
 }

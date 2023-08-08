@@ -44,6 +44,7 @@ struct WorkingOutView: View {
             }
             .navigationTitle("타이틀")
             .listStyle(.grouped)
+            .padding([.bottom], 60)
         }
     }
 }

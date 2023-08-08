@@ -130,18 +130,19 @@ extension Routine {
 
 extension MyRoutine {
     init?(managedObject: MyRoutineMO) {
-        guard let set = managedObject.routines,
-              let routinesMO = set.allObjects as? [RoutineMO] else {
+        guard let name = managedObject.name,
+              let routinesObject = managedObject.routines,
+              let routinesMO = routinesObject.allObjects as? [RoutineMO] else {
             return nil
         }
         let routines = routinesMO.compactMap {
             Routine(managedObject: $0)
         }
-        self.init(routines: routines)
+        self.init(name: name, routines: routines)
     }
     
     @discardableResult
-    func store(in context: NSManagedObjectContext, workouts: [WorkoutsMO], sets: [[SetsMO]]) -> MyRoutineMO? {
+    func store(in context: NSManagedObjectContext, name: String, workouts: [WorkoutsMO], sets: [[SetsMO]]) -> MyRoutineMO? {
         guard let myRoutine = MyRoutineMO.insertNew(in: context) else {
             return nil
         }
@@ -155,7 +156,7 @@ extension MyRoutine {
             routineMO.stopwatch = routine.stopwatch
             routines.append(routineMO)
         }
-        
+        myRoutine.name = name
         myRoutine.routines = NSSet(array: routines)
         
         return myRoutine
