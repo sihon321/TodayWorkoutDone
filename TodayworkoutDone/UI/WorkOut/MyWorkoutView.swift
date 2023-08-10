@@ -88,7 +88,7 @@ private extension MyWorkoutView {
                         }
                         .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                          content: {
-                            MakeWorkoutView(routines: .constant(myRoutine.routines))
+                            MakeWorkoutView(routines: .constant(myRoutine.routines), name: myRoutine.name)
                         })
                     }
                 }

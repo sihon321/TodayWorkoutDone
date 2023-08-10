@@ -13,16 +13,25 @@ struct MakeWorkoutView: View {
     @State private var routines: [Routine]
     @State private var editMode: EditMode
     
+    @State private var title: String = ""
+    @State private var titleSmall: Bool = false
+    
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
-    init(routines: Binding<[Routine]>, editMode: EditMode = .active) {
+    init(routines: Binding<[Routine]>, name: String = "", editMode: EditMode = .active) {
         self._routines = .init(initialValue: routines.wrappedValue)
         self._editMode = .init(initialValue: editMode)
+        self._title = .init(initialValue: name)
     }
     
     var body: some View {
         NavigationView {
             ScrollView {
+                TextField("타이틀을 입력하세요", text: $title)
+                    .multilineTextAlignment(.leading)
+                    .font(.title)
+                    .accessibilityAddTraits(.isHeader)
+                    .padding([.leading], 15)
                 ForEach($routines) { routine in
                     WorkingOutSection(routine: routine,
                                       editMode: $editMode)
@@ -48,7 +57,6 @@ struct MakeWorkoutView: View {
                     }
                 }
             }
-            .navigationTitle("타이틀")
             .listStyle(.grouped)
         }
     }
