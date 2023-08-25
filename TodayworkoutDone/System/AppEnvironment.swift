@@ -61,10 +61,12 @@ extension AppEnvironment {
             dbRepository: dbRepositories.categoryRepository,
             appState: appState)
         let routineInteractor = RealRoutinesInteractor(dbRepository: dbRepositories.routineRepository)
+        let healthkitInteractor = RealHealthKitInteractor()
         
         return .init(workoutInteractor: workoutInteractor,
                      categoryInteractor: categoryInteractor,
-                     routineInteractor: routineInteractor)
+                     routineInteractor: routineInteractor,
+                     healthkitInteractor: healthkitInteractor)
     }
 }
 

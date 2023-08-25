@@ -10,19 +10,23 @@ extension DIContainer {
         let workoutInteractor: WorkoutInteractor
         let categoryInteractor: CategoryInteractor
         let routineInteractor: RoutinesInteractor
+        let healthkitInteractor: HealthKitInteractor
         
         init(workoutInteractor: WorkoutInteractor,
              categoryInteractor: CategoryInteractor,
-             routineInteractor: RoutinesInteractor) {
+             routineInteractor: RoutinesInteractor,
+             healthkitInteractor: HealthKitInteractor) {
             self.workoutInteractor = workoutInteractor
             self.categoryInteractor = categoryInteractor
             self.routineInteractor = routineInteractor
+            self.healthkitInteractor = healthkitInteractor
         }
         
         static var stub: Self {
             .init(workoutInteractor: StubWorkoutInteractor(),
                   categoryInteractor: StubCategoryInteractor(),
-                  routineInteractor: StubRoutineInteractor())
+                  routineInteractor: StubRoutineInteractor(),
+                  healthkitInteractor: StubHealthKitInteractor())
         }
     }
 }

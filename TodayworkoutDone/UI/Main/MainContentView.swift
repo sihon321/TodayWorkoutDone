@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainContentView: View {
+    @Environment(\.injected) private var injected: DIContainer
+    
     private let gridLayout = Array(repeating: GridItem(.flexible()),
                                    count: 2)
     private let samepleData = (1...20).map { index in MainContentSubView(type: index / 2 == 0 ? .step : .workoutTime) }
@@ -17,9 +19,7 @@ struct MainContentView: View {
             WeeklyChartView()
             Spacer(minLength: 15)
             LazyVGrid(columns: gridLayout, spacing: 10) {
-                ForEach(samepleData.indices) { index in
-                    MainContentSubView(type: index / 2 == 0 ? .step : .workoutTime)
-                }
+                MainContentSubView(type: .step)
             }
         }
         .padding([.leading, .trailing], 15)
