@@ -81,8 +81,8 @@ extension HKHealthStore {
         intervalComponents: DateComponents,
         startDate: Date,
         endDate: Date
-    ) -> AnyPublisher<[HKStatistics], Error> {
-        let subject = PassthroughSubject<[HKStatistics], Error>()
+    ) -> AnyPublisher<HKStatisticsCollection, Error> {
+        let subject = PassthroughSubject<HKStatisticsCollection, Error>()
         
         let query = HKStatisticsCollectionQuery(
             quantityType: quantityType,
@@ -91,18 +91,12 @@ extension HKHealthStore {
             intervalComponents: intervalComponents
         )
         query.initialResultsHandler = { query, results, error in
-            if let myResults = results{
-                myResults.enumerateStatistics(from: startDate, to: endDate) { statistics, stop in
-                    if let quantity = statistics.sumQuantity() {
-                        let date = statistics.startDate
-                        let steps = quantity.doubleValue(for: HKUnit.count())
-                        print("START DATE :: \(statistics.startDate)")
-                        print("STEP COUNT :: \(steps)")
-                    }
-                }
-            } else {
-                print("STEP COUNT DATA NIL")
+            if let error = error {
+                subject.send(completion: .failure(error))
+            } else if let results = results {
+                subject.send(results)
             }
+            subject.send(completion: .finished)
         }
         
         execute(query)

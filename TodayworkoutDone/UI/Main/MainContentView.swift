@@ -12,7 +12,6 @@ struct MainContentView: View {
     
     private let gridLayout = Array(repeating: GridItem(.flexible()),
                                    count: 2)
-    private let samepleData = (1...20).map { index in MainContentSubView(type: index / 2 == 0 ? .step : .workoutTime) }
     
     var body: some View {
         VStack {
@@ -20,6 +19,7 @@ struct MainContentView: View {
             Spacer(minLength: 15)
             LazyVGrid(columns: gridLayout, spacing: 10) {
                 MainContentSubView(type: .step)
+                MainContentSubView(type: .workoutTime)
             }
         }
         .padding([.leading, .trailing], 15)

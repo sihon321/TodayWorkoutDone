@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import Combine
 
 struct MainContentWorkoutView: View {
+    @Environment(\.injected) private var injected: DIContainer
+    @State private var exerciseTime: Int = 0
+    
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("1")
+            Text("\(exerciseTime)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
@@ -32,6 +36,17 @@ struct MainContentWorkoutView: View {
                 .foregroundColor(Color(0x7d7d7d))
                 .padding(.leading, -5)
         }
+        .onReceive(appleExerciseTime) { appleExerciseTime in
+            self.exerciseTime = appleExerciseTime
+        }
+    }
+}
+
+extension MainContentWorkoutView {
+    private var appleExerciseTime: AnyPublisher<Int, Never> {
+        injected.interactors.healthkitInteractor.appleExerciseTime()
+            .replaceError(with: 0)
+            .eraseToAnyPublisher()
     }
 }
 

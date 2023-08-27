@@ -13,6 +13,7 @@ protocol HealthKitInteractor {
     func authorizeHealthKit(typesToShare: Set<HKQuantityType>,
                             typesToRead: Set<HKQuantityType>) -> Deferred<Future<Bool, Error>>
     func stepCount() -> Future<Int, Error>
+    func appleExerciseTime() -> Future<Int, Error>
 }
 
 class RealHealthKitInteractor: HealthKitInteractor {
@@ -99,6 +100,47 @@ class RealHealthKitInteractor: HealthKitInteractor {
                 .store(in: &cancellables)
         }
     }
+    
+    func appleExerciseTime() -> Future<Int, Error> {
+        Future { [unowned self] promise in
+            self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .appleExerciseTime)!])
+                .sink(receiveCompletion: { completion in
+                    print("\(completion)")
+                }, receiveValue: { [self] _ in
+                    let calendar = NSCalendar.current
+                    let now = Date()
+                    let components = calendar.dateComponents([.year, .month, .day], from: now)
+                    guard let startDate = calendar.date(from: components) else {
+                        promise(.failure(HealthDataError.unavailableOnDevice))
+                        return
+                    }
+                     
+                    guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else {
+                        promise(.failure(HealthDataError.unavailableOnDevice))
+                        return
+                    }
+
+
+                    let today = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+                    
+                    self.healthStore.subject(quantityType: .quantityType(forIdentifier: .appleExerciseTime)!,
+                                             quantitySamplePredicate: today,
+                                             options: .cumulativeSum)
+                    .receive(on: RunLoop.main)
+                    .sink(receiveCompletion: { completion in
+                        print("\(completion)")
+                    }, receiveValue: { statistics in
+                        if let sumQuantity = statistics.sumQuantity() {
+                            promise(.success(Int(sumQuantity.doubleValue(for: .minute()))))
+                        } else {
+                            promise(.success(0))
+                        }
+                    })
+                    .store(in: &cancellables)
+                })
+                .store(in: &cancellables)
+        }
+    }
 }
 
 enum HealthDataError: Error {
@@ -107,6 +149,13 @@ enum HealthDataError: Error {
 }
 
 struct StubHealthKitInteractor: HealthKitInteractor {
+    
+    func appleExerciseTime() -> Future<Int, Error> {
+        Future { promise in
+            promise(.success(0))
+        }
+    }
+    
     func authorizeHealthKit(typesToShare: Set<HKQuantityType>,
                             typesToRead: Set<HKQuantityType>) -> Deferred<Future<Bool, Error>> {
         return Deferred {
