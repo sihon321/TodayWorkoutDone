@@ -10,12 +10,14 @@ import SwiftUI
 struct CustomTabBar: View {
     
     @Binding var currentTab: String
+    @Binding var currentIndex: Int
     var bottomEdge: CGFloat
+    let tab: [String] = ["play.fill", "calendar"]
     
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(["play.fill"], id: \.self) { image in
-                TabButton(image: image, currentTab: $currentTab)
+            ForEach(tab.indices, id: \.self) { index in
+                TabButton(image: tab[index], currentTab: $currentTab, currentIndex: $currentIndex, index: index)
             }
         }
         .padding(.top, 15)
@@ -26,17 +28,20 @@ struct CustomTabBar: View {
 
 struct CustomTabBar_Previews: PreviewProvider {
     static var previews: some View {
-        CustomTabBar(currentTab: .constant("play.fill"), bottomEdge: 15)
+        CustomTabBar(currentTab: .constant("play.fill"), currentIndex: .constant(0), bottomEdge: 15)
     }
 }
 
 struct TabButton: View {
     var image: String
     @Binding var currentTab: String
+    @Binding var currentIndex: Int
+    var index: Int
     
     var body: some View {
         Button {
             withAnimation{ currentTab = image }
+            currentIndex = index
         } label: {
             Image(systemName: image)
                 .renderingMode(.template)

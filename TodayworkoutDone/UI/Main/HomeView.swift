@@ -13,6 +13,7 @@ struct HomeView: View {
 
     @State private var routingState: Routing = .init()
     @State private var currentTab = "play.fill"
+    @State private var currentIndex = 0
     @State private var hideBar = false
     @State private var isSavedAlert = false
     @State private var routineName = ""
@@ -29,7 +30,7 @@ struct HomeView: View {
     
     var body: some View {
         ZStack {
-            TabView {
+            TabView(selection: $currentIndex) {
                 ZStack {
                     MainView(bottomEdge: bottomEdge)
                     
@@ -44,8 +45,14 @@ struct HomeView: View {
                         
                     }
                 }
+                .tag(0)
                 .tabItem({
                     Text("play.fill")
+                })
+                CalendarView(calendar: .current)
+                    .tag(1)
+                .tabItem({
+                    Text("calendar")
                 })
             }
             .overlay (
@@ -53,7 +60,9 @@ struct HomeView: View {
                     if !routingBinding.workingOutView.wrappedValue {
                         ExcerciseStartView()
                     }
-                    CustomTabBar(currentTab: $currentTab, bottomEdge: bottomEdge)
+                    CustomTabBar(currentTab: $currentTab,
+                                 currentIndex: $currentIndex,
+                                 bottomEdge: bottomEdge)
                 }
                     .offset(y: hideBar ? (15 + 35 + bottomEdge) : 0)
                 ,alignment: .bottom

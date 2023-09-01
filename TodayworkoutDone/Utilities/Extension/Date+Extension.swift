@@ -12,4 +12,10 @@ extension Date {
         let beginningOfDay = Calendar.current.startOfDay(for: self)
         return beginningOfDay
     }
+    
+    func startOfMonth(using calendar: Calendar) -> Date {
+        calendar.date(
+            from: calendar.dateComponents([.year, .month], from: self)
+        ) ?? self
+    }
 }

@@ -10,7 +10,6 @@ import Combine
 
 struct MainView: View {
     var bottomEdge: CGFloat
-    let interactor = RealHealthKitInteractor()
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -21,9 +20,6 @@ struct MainView: View {
             }
         }
         .background(Color(0xf4f4f4))
-        .onAppear {
-            interactor.stepCount()
-        }
     }
 }
 
