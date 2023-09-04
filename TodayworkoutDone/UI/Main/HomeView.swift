@@ -12,9 +12,10 @@ struct HomeView: View {
     @Environment(\.injected) private var injected: DIContainer
 
     @State private var routingState: Routing = .init()
-    @State private var currentTab = "play.fill"
+    @State private var currentTab = "dumbbell.fill"
     @State private var currentIndex = 0
-    @State private var hideBar = false
+    @State private var hideTabValue: CGFloat = 0
+    @State private var isCloseWorking: Bool = false
     @State private var isSavedAlert = false
     @State private var routineName = ""
     
@@ -35,25 +36,18 @@ struct HomeView: View {
                     MainView(bottomEdge: bottomEdge)
                     
                     if routingBinding.workingOutView.wrappedValue {
-                        SlideOverCardView(hideTab: $hideBar, content: {
-                            WorkingOutView(hideTab: $hideBar, isSavedAlert: $isSavedAlert)
+                        SlideOverCardView(hideTabValue: $hideTabValue, content: {
+                            WorkingOutView(isCloseWorking: $isCloseWorking,
+                                           hideTabValue: $hideTabValue,
+                                           isSavedAlert: $isSavedAlert)
                         })
-                        .onAppear {
-                            hideBar = true
-                        }
                     } else {
                         
                     }
                 }
                 .tag(0)
-                .tabItem({
-                    Text("play.fill")
-                })
                 CalendarView(calendar: .current)
                     .tag(1)
-                .tabItem({
-                    Text("calendar")
-                })
             }
             .overlay (
                 VStack {
@@ -64,14 +58,13 @@ struct HomeView: View {
                                  currentIndex: $currentIndex,
                                  bottomEdge: bottomEdge)
                 }
-                    .offset(y: hideBar ? (15 + 35 + bottomEdge) : 0)
+                    .offset(y: isCloseWorking ? 0.0 : hideTabValue)
                 ,alignment: .bottom
             )
             Spacer()
         }
         .onReceive(routingUpdate) { self.routingState = $0 }
         .alert("저장하겠습니까?", isPresented: $isSavedAlert) {
-            
             TextField("루틴 이름을 정해주세요", text: $routineName)
             Button("Cancel") { }
             Button("OK") {

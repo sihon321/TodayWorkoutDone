@@ -10,7 +10,7 @@ import SwiftUI
 struct SlideOverCardView<Content: View>: View {
     @GestureState private var dragState = DragState.inactive
     @State private var position: CGFloat = 100
-    @Binding var hideTab: Bool
+    @Binding var hideTabValue: CGFloat
     @State var offset: CGFloat = 0
     @State var lastOffset: CGFloat = 0
     
@@ -32,6 +32,22 @@ struct SlideOverCardView<Content: View>: View {
                 .frame(width: 40, height: CGFloat(5.0))
                 .foregroundColor(Color.secondary)
             self.content()
+                .background(
+                    GeometryReader { proxy in
+                        Color.clear.preference(
+                            key: ViewOffsetKey.self,
+                            value: -1 * proxy.frame(in: .global).origin.y
+                        )
+                    }
+                )
+                .onPreferenceChange(ViewOffsetKey.self, perform: { value in
+                    if value < 0 {
+                        hideTabValue = 627 + value > 0.0 ? 627 + value : 0.0
+                    } else {
+                        hideTabValue = 327 - value
+                    }
+                    print(value)
+                })
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("slideCardBackground"))
@@ -50,23 +66,11 @@ struct SlideOverCardView<Content: View>: View {
                 let durationOffset: CGFloat = 25
                 DispatchQueue.main.async {
                     if self.dragState.translation.height < 0 && minY > (lastOffset + durationOffset) {
-                        withAnimation(.easeOut.speed(1.5)) {
-                            hideTab = true
-                        }
                         lastOffset = -self.dragState.translation.height
                     }
                     
                     if 0 < self.dragState.translation.height && -minY < (lastOffset - durationOffset) {
-                        withAnimation(.easeOut.speed(1.5)) {
-                            hideTab = false
-                        }
                         lastOffset = -self.dragState.translation.height
-                    }
-                    
-                    if self.dragState.translation == .zero && minY > CardPosition.top.rawValue {
-                        withAnimation(.easeOut.speed(1.5)) {
-                            hideTab = false
-                        }
                     }
                 }
                 return Color.clear
@@ -78,17 +82,9 @@ struct SlideOverCardView<Content: View>: View {
         let verticalDirection = drag.predictedEndLocation.y - drag.location.y
         let cardTopEdgeLocation = self.position + drag.translation.height
         let positionAbove: CGFloat = UIScreen.main.bounds.size.height / 10
-        let positionBelow: CGFloat = UIScreen.main.bounds.size.height / 1.3
+        let positionBelow: CGFloat = UIScreen.main.bounds.size.height / 1.5
         let closestPosition: CGFloat
-        
-//        if cardTopEdgeLocation <= CardPosition.middle.rawValue {
-//            positionAbove = UIScreen.main.bounds.size.height / 10
-//            positionBelow = UIScreen.main.bounds.size.height / 3
-//        } else {
-//            positionAbove = UIScreen.main.bounds.size.height / 2
-//            positionBelow = UIScreen.main.bounds.size.height / 1.3
-//        }
-        
+
         if (cardTopEdgeLocation - positionAbove) < (positionBelow - cardTopEdgeLocation) {
             closestPosition = positionAbove
         } else {

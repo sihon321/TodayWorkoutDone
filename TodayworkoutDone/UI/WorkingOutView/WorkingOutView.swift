@@ -10,7 +10,8 @@ import SwiftUI
 struct WorkingOutView: View {
     @Environment(\.injected) private var injected: DIContainer
     @State private var editMode: EditMode = .inactive
-    @Binding var hideTab: Bool
+    @Binding var isCloseWorking: Bool
+    @Binding var hideTabValue: CGFloat
     @Binding var isSavedAlert: Bool
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
@@ -32,7 +33,8 @@ struct WorkingOutView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Close") {
                         injected.appState[\.routing.homeView.workingOutView] = false
-                        hideTab = false
+                        isCloseWorking = true
+                        hideTabValue = 0.0
                         isSavedAlert = true
                     }
                 }
@@ -52,6 +54,6 @@ struct WorkingOutView: View {
 struct WorkingOutView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkingOutView(hideTab: .constant(false), isSavedAlert: .constant(false))
+        WorkingOutView(isCloseWorking: .constant(false), hideTabValue: .constant(0.0), isSavedAlert: .constant(false))
     }
 }

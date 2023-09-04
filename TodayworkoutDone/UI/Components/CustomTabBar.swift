@@ -12,12 +12,15 @@ struct CustomTabBar: View {
     @Binding var currentTab: String
     @Binding var currentIndex: Int
     var bottomEdge: CGFloat
-    let tab: [String] = ["play.fill", "calendar"]
+    let tab: [String] = ["dumbbell.fill", "calendar"]
     
     var body: some View {
         HStack(spacing: 0) {
             ForEach(tab.indices, id: \.self) { index in
-                TabButton(image: tab[index], currentTab: $currentTab, currentIndex: $currentIndex, index: index)
+                TabButton(image: tab[index],
+                          currentTab: $currentTab,
+                          currentIndex: $currentIndex,
+                          index: index)
             }
         }
         .padding(.top, 15)
@@ -28,7 +31,7 @@ struct CustomTabBar: View {
 
 struct CustomTabBar_Previews: PreviewProvider {
     static var previews: some View {
-        CustomTabBar(currentTab: .constant("play.fill"), currentIndex: .constant(0), bottomEdge: 15)
+        CustomTabBar(currentTab: .constant("dumbbell.fill"), currentIndex: .constant(0), bottomEdge: 15)
     }
 }
 
