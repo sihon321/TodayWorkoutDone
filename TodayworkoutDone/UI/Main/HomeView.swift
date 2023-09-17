@@ -34,7 +34,10 @@ struct HomeView: View {
             TabView(selection: $currentIndex) {
                 ZStack {
                     MainView(bottomEdge: bottomEdge)
-                    
+                    if !routingBinding.workingOutView.wrappedValue {
+                        ExcerciseStartView()
+                            .padding([.bottom], 40)
+                    }
                     if routingBinding.workingOutView.wrappedValue {
                         SlideOverCardView(hideTabValue: $hideTabValue, content: {
                             WorkingOutView(isCloseWorking: $isCloseWorking,
@@ -51,9 +54,6 @@ struct HomeView: View {
             }
             .overlay (
                 VStack {
-                    if !routingBinding.workingOutView.wrappedValue {
-                        ExcerciseStartView()
-                    }
                     CustomTabBar(currentTab: $currentTab,
                                  currentIndex: $currentIndex,
                                  bottomEdge: bottomEdge)

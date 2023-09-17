@@ -50,6 +50,24 @@ struct RealRoutineDBRepository: RoutineDBRepository {
                 routine.store(in: context, name: routine.name, workouts: workouts, sets: setsMO)
             }
     }
+    
+    func store(routine: WorkoutRoutine) -> AnyPublisher<Void, Error> {
+        return persistentStore
+            .update { context in
+                let workoutName = routine.routines.compactMap { $0.workouts.name }
+                let workoutFetchRequest = WorkoutsMO.workouts(name: workoutName)
+                guard let workouts = try? context.fetch(workoutFetchRequest) else {
+                    return
+                }
+                let setsMO = routine.routines.compactMap {
+                    $0.sets.compactMap {
+                        $0.store(in: context)
+                    }
+                }
+
+                routine.store(in: context, date: routine.date, workouts: workouts, sets: setsMO)
+            }
+    }
 }
 
 extension SetsMO {

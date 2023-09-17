@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G90" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Category" representedClassName="CategoryMO" syncable="YES" codeGenerationType="class">
         <attribute name="en" attributeType="String"/>
         <attribute name="kor" attributeType="String"/>
@@ -13,6 +13,7 @@
         <attribute name="stopwatch" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="myRoutine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MyRoutine" inverseName="routines" inverseEntity="MyRoutine"/>
         <relationship name="sets" toMany="YES" deletionRule="Nullify" destinationEntity="Sets" inverseName="routine" inverseEntity="Sets"/>
+        <relationship name="workoutRoutine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutRoutine" inverseName="routines" inverseEntity="WorkoutRoutine"/>
         <relationship name="workouts" maxCount="1" deletionRule="Nullify" destinationEntity="Workouts"/>
     </entity>
     <entity name="Sets" representedClassName="SetsMO" syncable="YES" codeGenerationType="class">
@@ -23,6 +24,10 @@
         <attribute name="prevWeight" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="weight" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="routine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="sets" inverseEntity="Routine"/>
+    </entity>
+    <entity name="WorkoutRoutine" representedClassName="WorkoutRoutineMO" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="routines" toMany="YES" deletionRule="Nullify" destinationEntity="Routine" inverseName="workoutRoutine" inverseEntity="Routine"/>
     </entity>
     <entity name="Workouts" representedClassName="WorkoutsMO" syncable="YES" codeGenerationType="class">
         <attribute name="category" attributeType="String"/>

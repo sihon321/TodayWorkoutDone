@@ -13,6 +13,7 @@ extension CategoryMO: ManagedEntity { }
 extension SetsMO: ManagedEntity { }
 extension RoutineMO: ManagedEntity { }
 extension MyRoutineMO: ManagedEntity { }
+extension WorkoutRoutineMO: ManagedEntity { }
 
 extension Workouts {
     init?(managedObject: WorkoutsMO) {
@@ -160,6 +161,41 @@ extension MyRoutine {
         myRoutine.routines = NSSet(array: routines)
         
         return myRoutine
+    }
+}
+
+extension WorkoutRoutine {
+    init?(managedObject: WorkoutRoutineMO) {
+        guard let date = managedObject.date,
+              let routinesObject = managedObject.routines,
+              let routinesMO = routinesObject.allObjects as? [RoutineMO] else {
+            return nil
+        }
+        let routines = routinesMO.compactMap {
+            Routine(managedObject: $0)
+        }
+        self.init(date: date, routines: routines)
+    }
+    
+    @discardableResult
+    func store(in context: NSManagedObjectContext, date: Date, workouts: [WorkoutsMO], sets: [[SetsMO]]) -> WorkoutRoutineMO? {
+        guard let workoutRoutne = WorkoutRoutineMO.insertNew(in: context) else {
+            return nil
+        }
+        
+        var routines: [RoutineMO] = []
+        for (index, routine) in self.routines.enumerated() {
+            let routineMO = RoutineMO(context: context)
+            routineMO.workouts = workouts[index]
+            routineMO.sets = NSSet(array: sets[index])
+            routineMO.date = routine.date
+            routineMO.stopwatch = routine.stopwatch
+            routines.append(routineMO)
+        }
+        workoutRoutne.date = date
+        workoutRoutne.routines = NSSet(array: routines)
+        
+        return workoutRoutne
     }
 }
 

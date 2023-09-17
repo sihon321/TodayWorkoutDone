@@ -46,7 +46,7 @@ struct SlideOverCardView<Content: View>: View {
                     } else {
                         hideTabValue = 327 - value
                     }
-                    print(value)
+                    print(hideTabValue)
                 })
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

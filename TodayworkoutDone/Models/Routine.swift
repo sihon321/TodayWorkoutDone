@@ -88,3 +88,17 @@ struct MyRoutine: Codable, Equatable, Identifiable {
         self.routines = routines
     }
 }
+
+struct WorkoutRoutine: Codable, Equatable, Identifiable {
+    var date: Date
+    var routines: [Routine]
+    
+    init(date: Date, routines: [Routine]) {
+        self.date = date
+        self.routines = routines
+    }
+}
+
+extension WorkoutRoutine {
+    var id: String { date.description }
+}
