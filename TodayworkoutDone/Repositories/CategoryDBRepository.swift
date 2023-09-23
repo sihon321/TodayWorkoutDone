@@ -10,7 +10,7 @@ import Combine
 
 protocol CategoryDBRepository {
     func hasLoadedCategory() -> AnyPublisher<Bool, Error>
-    func categories() ->  AnyPublisher<LazyList<Category>, Error>
+    func categories() -> AnyPublisher<LazyList<Category>, Error>
     func store(categories: [Category]) -> AnyPublisher<Void, Error>
 }
 
@@ -25,7 +25,7 @@ struct RealCategoryDBRepository: CategoryDBRepository {
             .eraseToAnyPublisher()  
     }
     
-    func categories() ->  AnyPublisher<LazyList<Category>, Error> {
+    func categories() -> AnyPublisher<LazyList<Category>, Error> {
         let fetchRequest = CategoryMO.categories()
         return persistentStore
             .fetch(fetchRequest) {

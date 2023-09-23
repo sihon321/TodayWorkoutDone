@@ -42,7 +42,7 @@ struct WorkoutView: View {
         .onReceive(routingUpdate) { self.routingState = $0 }
         .onAppear {
             injected.appState[\.userData.selectionWorkouts].removeAll()
-            injected.appState[\.userData.routines].removeAll()
+//            injected.appState[\.userData.routines].removeAll()
         }
     }
 }

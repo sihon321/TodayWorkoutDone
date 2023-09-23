@@ -16,7 +16,8 @@ struct AppState: Equatable {
 extension AppState {
     struct UserData: Equatable {
         var selectionWorkouts: [Workouts] = []
-        var routines: [Routine] = []
+        var myRoutine: MyRoutine = MyRoutine(name: "", routines: [])
+//        var routines: [Routine] = []
     }
 }
 

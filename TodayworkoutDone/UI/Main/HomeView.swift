@@ -18,6 +18,9 @@ struct HomeView: View {
     @State private var isCloseWorking: Bool = false
     @State private var isSavedAlert = false
     @State private var routineName = ""
+    private var myRoutine: MyRoutine {
+        injected.appState[\.userData.myRoutine]
+    }
     
     private var bottomEdge: CGFloat
     private var routingBinding: Binding<Routing> {
@@ -77,8 +80,7 @@ struct HomeView: View {
     
     private func saveMyRoutine() {
         injected.interactors.routineInteractor.store(
-            myRoutine: MyRoutine(name: $routineName.wrappedValue,
-                                 routines: injected.appState[\.userData.routines])
+            myRoutine: MyRoutine(myRoutine: myRoutine)
         )
     }
 }

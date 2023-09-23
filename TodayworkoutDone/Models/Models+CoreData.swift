@@ -131,7 +131,8 @@ extension Routine {
 
 extension MyRoutine {
     init?(managedObject: MyRoutineMO) {
-        guard let name = managedObject.name,
+        guard let id = managedObject.id,
+              let name = managedObject.name,
               let routinesObject = managedObject.routines,
               let routinesMO = routinesObject.allObjects as? [RoutineMO] else {
             return nil
@@ -139,7 +140,7 @@ extension MyRoutine {
         let routines = routinesMO.compactMap {
             Routine(managedObject: $0)
         }
-        self.init(name: name, routines: routines)
+        self.init(id: id, name: name, routines: routines)
     }
     
     @discardableResult
@@ -157,6 +158,7 @@ extension MyRoutine {
             routineMO.stopwatch = routine.stopwatch
             routines.append(routineMO)
         }
+        myRoutine.id = self.id
         myRoutine.name = name
         myRoutine.routines = NSSet(array: routines)
         

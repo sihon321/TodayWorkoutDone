@@ -12,6 +12,10 @@ import SwiftUI
 protocol RoutinesInteractor {
     func load(myRoutines: LoadableSubject<LazyList<MyRoutine>>)
     func store(myRoutine: MyRoutine)
+    
+    func find(myRoutine: MyRoutine) -> Bool
+    func load(workoutRoutines: LoadableSubject<LazyList<WorkoutRoutine>>)
+    func store(workoutRoutine: WorkoutRoutine)
 }
 
 struct RealRoutinesInteractor: RoutinesInteractor {
@@ -42,9 +46,40 @@ struct RealRoutinesInteractor: RoutinesInteractor {
             })
             .store(in: cancelBag)
     }
+    
+    func find(myRoutine: MyRoutine) -> Bool {
+        let cancelBag = CancelBag()
+        
+        var isFinded = false
+        let semaphore = DispatchSemaphore(value: 0)
+        dbRepository.find(routine: myRoutine)
+            .sink(receiveCompletion: { _ in },
+                  receiveValue: {
+                defer { semaphore.signal() }
+                isFinded = $0
+            })
+            .store(in: cancelBag)
+        
+        semaphore.wait()
+        
+        return isFinded
+    }
+    
+    func load(workoutRoutines: LoadableSubject<LazyList<WorkoutRoutine>>) {
+        
+    }
+    
+    func store(workoutRoutine: WorkoutRoutine) {
+        
+    }
 }
 
 struct StubRoutineInteractor: RoutinesInteractor {
     func load(myRoutines: LoadableSubject<LazyList<MyRoutine>>) { }
     func store(myRoutine: MyRoutine) { }
+    func find(myRoutine: MyRoutine) -> Bool {
+        return false
+    }
+    func load(workoutRoutines: LoadableSubject<LazyList<WorkoutRoutine>>) { }
+    func store(workoutRoutine: WorkoutRoutine) { }
 }

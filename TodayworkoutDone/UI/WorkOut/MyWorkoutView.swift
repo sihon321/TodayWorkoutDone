@@ -13,6 +13,7 @@ struct MyWorkoutView: View {
     
     @State private var routingState: Routing = .init()
     @State private(set) var myRoutines: Loadable<LazyList<MyRoutine>>
+    @State private var selectedRoutine: MyRoutine?
     
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.myWorkoutView)
@@ -83,14 +84,17 @@ private extension MyWorkoutView {
                     ForEach(myRoutines.array()) { myRoutine in
                         Button(action: {
                             injected.appState[\.routing.myWorkoutView.makeWorkoutView] = true
+                            selectedRoutine = .init(myRoutine: myRoutine)
                         }) {
                             MyWorkoutSubview(myRoutine: myRoutine)
                         }
-                        .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
-                                         content: {
-                            MakeWorkoutView(routines: .constant(myRoutine.routines), name: myRoutine.name)
-                        })
                     }
+                    .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
+                                     content: {
+                        if let selectedRoutine = selectedRoutine {
+                            MakeWorkoutView(myRoutine: .constant(selectedRoutine))
+                        }
+                    })
                 }
             }
         }

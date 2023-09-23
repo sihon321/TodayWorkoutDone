@@ -102,7 +102,7 @@ private extension WorkoutCategoryView {
                 .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                  content: {
                     MakeWorkoutView(
-                        routines: .constant(selectWorkouts.compactMap({ Routine(workouts: $0) }))
+                        myRoutine: .constant(MyRoutine(name: "", routines: selectWorkouts.compactMap({ Routine(workouts: $0) })))
                     )
                 })
             }

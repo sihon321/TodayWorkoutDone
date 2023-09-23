@@ -79,11 +79,18 @@ extension Routine: Identifiable {
 typealias Routines = [Routine]
 
 struct MyRoutine: Codable, Equatable, Identifiable {
-    var id: UUID = UUID()
+    var id: UUID
     var name: String
     var routines: [Routine]
     
-    init(name: String, routines: [Routine]) {
+    init(myRoutine: MyRoutine) {
+        self.id = myRoutine.id
+        self.name = myRoutine.name
+        self.routines = myRoutine.routines
+    }
+    
+    init(id: UUID = UUID(), name: String, routines: [Routine]) {
+        self.id = id
         self.name = name
         self.routines = routines
     }

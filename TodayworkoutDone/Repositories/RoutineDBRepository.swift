@@ -10,6 +10,7 @@ import Combine
 
 protocol RoutineDBRepository {
     func hasLoadedRoutines() -> AnyPublisher<Bool, Error>
+    func find(routine: MyRoutine) -> AnyPublisher<Bool, Error>
     func routines() -> AnyPublisher<LazyList<MyRoutine>, Error>
     func store(routine: MyRoutine) -> AnyPublisher<Void, Error>
 }
@@ -23,6 +24,13 @@ struct RealRoutineDBRepository: RoutineDBRepository {
             .count(fetchRequest)
             .map { $0 > 0 }
             .eraseToAnyPublisher()
+    }
+    
+    // MARK: - MyRoutine
+    
+    func find(routine: MyRoutine) -> AnyPublisher<Bool, Error> {
+        let fetchRequest = MyRoutineMO.routine(id: routine.id)
+        return persistentStore.count(fetchRequest)
     }
     
     func routines() -> AnyPublisher<LazyList<MyRoutine>, Error> {
@@ -48,6 +56,16 @@ struct RealRoutineDBRepository: RoutineDBRepository {
                 }
 
                 routine.store(in: context, name: routine.name, workouts: workouts, sets: setsMO)
+            }
+    }
+    
+    // MARK: - WorkoutRoutine
+    
+    func routines() -> AnyPublisher<LazyList<WorkoutRoutine>, Error> {
+        let fetchRequest = WorkoutRoutineMO.routines()
+        return persistentStore
+            .fetch(fetchRequest) {
+                WorkoutRoutine(managedObject: $0)
             }
     }
     
@@ -83,6 +101,20 @@ extension SetsMO {
 
 extension MyRoutineMO {
     static func routines() -> NSFetchRequest<MyRoutineMO> {
+        let request = newFetchRequest()
+        request.fetchBatchSize = 10
+        return request
+    }
+    
+    static func routine(id: UUID) -> NSFetchRequest<MyRoutineMO> {
+        let request = newFetchRequest()
+        request.predicate = NSPredicate(format: "%K == %@", "id", id as CVarArg)
+        return request
+    }
+}
+
+extension WorkoutRoutineMO {
+    static func routines() -> NSFetchRequest<WorkoutRoutineMO> {
         let request = newFetchRequest()
         request.fetchBatchSize = 10
         return request

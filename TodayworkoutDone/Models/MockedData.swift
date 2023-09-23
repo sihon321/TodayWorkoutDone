@@ -26,3 +26,7 @@ extension Workouts {
 extension Routine {
     static let mockedData: [Routine] = Workouts.mockedData.compactMap { Routine(workouts: $0) }
 }
+
+extension MyRoutine {
+    static let mockedData: MyRoutine = MyRoutine(name: "test", routines: Routine.mockedData)
+}
