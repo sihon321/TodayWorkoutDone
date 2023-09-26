@@ -28,6 +28,7 @@
     </entity>
     <entity name="WorkoutRoutine" representedClassName="WorkoutRoutineMO" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="routines" toMany="YES" deletionRule="Nullify" destinationEntity="Routine" inverseName="workoutRoutine" inverseEntity="Routine"/>
     </entity>
     <entity name="Workouts" representedClassName="WorkoutsMO" syncable="YES" codeGenerationType="class">

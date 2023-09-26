@@ -35,7 +35,11 @@ struct MyWorkoutView: View {
         case .isLoading(let last, _):
             loadingView(last)
         case .loaded(let routines):
-            loadedView(routines)
+            if routines.count > 0 {
+                loadedView(routines)
+            } else {
+                EmptyView()
+            }
         case .failed(let error):
             failedView(error)
         }
@@ -84,7 +88,7 @@ private extension MyWorkoutView {
                     ForEach(myRoutines.array()) { myRoutine in
                         Button(action: {
                             injected.appState[\.routing.myWorkoutView.makeWorkoutView] = true
-                            selectedRoutine = .init(myRoutine: myRoutine)
+                            selectedRoutine = myRoutine
                         }) {
                             MyWorkoutSubview(myRoutine: myRoutine)
                         }

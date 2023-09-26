@@ -18,7 +18,6 @@ struct MakeWorkoutView: View {
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
     init(myRoutine: Binding<MyRoutine>, editMode: EditMode = .active) {
-        print("sihoon init \(myRoutine.name.wrappedValue)")
         self._myRoutine = .init(initialValue: myRoutine.wrappedValue)
         self._editMode = .init(initialValue: editMode)
     }

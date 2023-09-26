@@ -16,7 +16,7 @@ struct CalendarViewCell: View {
     var body: some View {
         VStack {
             Text(dayFormatter.string(from: date))
-                .padding(8)
+                .padding(2)
                 .foregroundColor(calendar.isDateInToday(date) ? Color.white : .primary)
                 .background(
                     calendar.isDateInToday(date) ? Color.green
@@ -29,23 +29,21 @@ struct CalendarViewCell: View {
             
             if (isFasting(on: date)) {
                 Circle()
-                    .size(CGSize(width: 5, height: 5))
-                    .foregroundColor(Color.green)
-                    .offset(x: CGFloat(23),
-                            y: CGFloat(35))
+                    .foregroundColor(.red)
+                    .frame(width: 6, height: 6)
             }
         }
     }
     
     func isFasting(on: Date) -> Bool {
-        return false
+        return true
     }
 }
 
 struct CalendarViewCell_Previews: PreviewProvider {
     static var previews: some View {
         CalendarViewCell(calendar: Calendar(identifier: .iso8601),
-                         dayFormatter: DateFormatter(),
+                         dayFormatter: DateFormatter(dateFormat: "d", calendar: .current),
                          selectedDate: .constant(Date()),
                          date: Date())
     }

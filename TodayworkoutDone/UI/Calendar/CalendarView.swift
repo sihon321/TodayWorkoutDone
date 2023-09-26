@@ -10,9 +10,12 @@ import Combine
 
 struct CalendarView: View {
     @Environment(\.injected) private var injected: DIContainer
+    @State private(set) var workoutRoutines: Loadable<LazyList<WorkoutRoutine>> = .notRequested
+    
     @State private var isPresented = false
     
-    private let calendar: Calendar
+    private let startCalendar: Calendar
+    private let endCalendar: Calendar
     private let monthFormatter: DateFormatter
     private let dayFormatter: DateFormatter
     private let weekDayFormatter: DateFormatter
@@ -21,24 +24,74 @@ struct CalendarView: View {
     @State private var selectedDate = Self.now
     private static var now = Date()
 
-    init(calendar: Calendar) {
-        self.calendar = calendar
-        self.monthFormatter = DateFormatter(dateFormat: "MMMM YYYY", calendar: calendar)
-        self.dayFormatter = DateFormatter(dateFormat: "d", calendar: calendar)
-        self.weekDayFormatter = DateFormatter(dateFormat: "EEEEE", calendar: calendar)
-        self.fullFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy", calendar: calendar)
+    init(startCalendar: Calendar, endCalendar: Calendar) {
+        self.startCalendar = startCalendar
+        self.endCalendar = endCalendar
+        self.monthFormatter = DateFormatter(dateFormat: "MMMM YYYY", calendar: startCalendar)
+        self.dayFormatter = DateFormatter(dateFormat: "d", calendar: startCalendar)
+        self.weekDayFormatter = DateFormatter(dateFormat: "EEEEE", calendar: startCalendar)
+        self.fullFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy", calendar: startCalendar)
     }
 
     var body: some View {
+        self.content
+    }
+    
+    @ViewBuilder private var content: some View {
+        switch workoutRoutines {
+        case .notRequested:
+            notRequestedView
+        case .isLoading(let last, _):
+            loadingView(last)
+        case .loaded(let routines):
+            loadedView(routines)
+        case .failed(let error):
+            failedView(error)
+        }
+    }
+}
+
+private extension CalendarView {
+    func loadWorkoutRoutines() {
+        injected.interactors.routineInteractor
+            .load(workoutRoutines: $workoutRoutines)
+    }
+}
+
+// MARK: - Loading Content
+
+private extension CalendarView {
+    var notRequestedView: some View {
+        Text("").onAppear(perform: loadWorkoutRoutines)
+    }
+    
+    func loadingView(_ previouslyLoaded: LazyList<WorkoutRoutine>?) -> some View {
+        if let workoutRoutines = previouslyLoaded {
+            return AnyView(loadedView(workoutRoutines))
+        } else {
+            return AnyView(ActivityIndicatorView().padding())
+        }
+    }
+    
+    func failedView(_ error: Error) -> some View {
+        ErrorView(error: error, retryAction: {
+            self.loadWorkoutRoutines()
+        })
+    }
+}
+
+private extension CalendarView {
+    func loadedView(_ workoutRoutines: LazyList<WorkoutRoutine>) -> some View {
         NavigationView {
             CalendarViewComponent(
-                calendar: calendar,
+                startCalendar: startCalendar,
+                endCalendar: endCalendar,
                 date: $selectedDate,
                 content: { date in
                     Button(action: {
                         isPresented = true
                     }) {
-                        CalendarViewCell(calendar: calendar,
+                        CalendarViewCell(calendar: startCalendar,
                                          dayFormatter: dayFormatter,
                                          selectedDate: $selectedDate,
                                          date: date)
@@ -62,12 +115,12 @@ struct CalendarView: View {
             )
             .equatable()
         }
-        .padding()
+        .padding([.leading, .trailing], 10)
         .background(Color(0xf4f4f4))
     }
 }
 
-private extension DateFormatter {
+extension DateFormatter {
     convenience init(dateFormat: String, calendar: Calendar) {
         self.init()
         self.dateFormat = dateFormat
@@ -80,7 +133,7 @@ private extension DateFormatter {
 #if DEBUG
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView(calendar: .current)
+        CalendarView(startCalendar: .current, endCalendar: .current)
         //            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

@@ -82,13 +82,7 @@ struct MyRoutine: Codable, Equatable, Identifiable {
     var id: UUID
     var name: String
     var routines: [Routine]
-    
-    init(myRoutine: MyRoutine) {
-        self.id = myRoutine.id
-        self.name = myRoutine.name
-        self.routines = myRoutine.routines
-    }
-    
+
     init(id: UUID = UUID(), name: String, routines: [Routine]) {
         self.id = id
         self.name = name
@@ -98,11 +92,13 @@ struct MyRoutine: Codable, Equatable, Identifiable {
 
 struct WorkoutRoutine: Codable, Equatable, Identifiable {
     var date: Date
+    var uuid: UUID
     var routines: [Routine]
     
-    init(date: Date, routines: [Routine]) {
+    init(date: Date, myRoutine: MyRoutine) {
         self.date = date
-        self.routines = routines
+        self.uuid = myRoutine.id
+        self.routines = myRoutine.routines
     }
 }
 

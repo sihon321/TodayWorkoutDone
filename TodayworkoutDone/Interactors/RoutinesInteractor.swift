@@ -66,11 +66,29 @@ struct RealRoutinesInteractor: RoutinesInteractor {
     }
     
     func load(workoutRoutines: LoadableSubject<LazyList<WorkoutRoutine>>) {
+        let cancelBag = CancelBag()
         
+        workoutRoutines.wrappedValue.setIsLoading(cancelBag: cancelBag)
+        
+        dbRepository.workoutRoutines()
+            .sinkToLoadable {
+                workoutRoutines.wrappedValue = $0
+            }
+            .store(in: cancelBag)
     }
     
     func store(workoutRoutine: WorkoutRoutine) {
+        let cancelBag = CancelBag()
         
+        dbRepository.store(workoutRoutine: workoutRoutine)
+            .sink(receiveCompletion: { completion in
+                if let error = completion.error {
+                    print("\(error)")
+                }
+            }, receiveValue: {
+                print("value: \($0)")
+            })
+            .store(in: cancelBag)
     }
 }
 

@@ -10,6 +10,7 @@ import SwiftUI
 struct WorkingOutView: View {
     @Environment(\.injected) private var injected: DIContainer
     @State private var editMode: EditMode = .inactive
+    @State private var isSavedWorkout: Bool = false
     @Binding var isCloseWorking: Bool
     @Binding var hideTabValue: CGFloat
     @Binding var isSavedAlert: Bool
@@ -32,12 +33,7 @@ struct WorkingOutView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Close") {
-                        injected.appState[\.routing.homeView.workingOutView] = false
-                        isCloseWorking = true
-                        hideTabValue = 0.0
-                        if !injected.interactors.routineInteractor.find(myRoutine: myRoutine) {
-                            isSavedAlert = true
-                        }
+                        isSavedWorkout.toggle()
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -50,6 +46,28 @@ struct WorkingOutView: View {
             .listStyle(.grouped)
             .padding([.bottom], 60)
         }
+        .alert("워크아웃을 저장하겠습니까?", isPresented: $isSavedWorkout) {
+            Button("Cancel") { }
+            Button("OK") {
+                injected.appState[\.routing.homeView.workingOutView] = false
+                isCloseWorking = true
+                hideTabValue = 0.0
+                if !injected.interactors.routineInteractor.find(myRoutine: myRoutine) {
+                    isSavedAlert = true
+                }
+                saveWorkoutRoutine()
+            }
+        } message: {
+            Text("새로운 워크아웃을 저장하시겟습니까")
+        }
+    }
+}
+
+private extension WorkingOutView {
+    func saveWorkoutRoutine() {
+        injected.interactors.routineInteractor.store(
+            workoutRoutine: WorkoutRoutine(date: Date(), myRoutine: myRoutine)
+        )
     }
 }
 

@@ -169,6 +169,7 @@ extension MyRoutine {
 extension WorkoutRoutine {
     init?(managedObject: WorkoutRoutineMO) {
         guard let date = managedObject.date,
+              let uuid = managedObject.uuid,
               let routinesObject = managedObject.routines,
               let routinesMO = routinesObject.allObjects as? [RoutineMO] else {
             return nil
@@ -176,12 +177,13 @@ extension WorkoutRoutine {
         let routines = routinesMO.compactMap {
             Routine(managedObject: $0)
         }
-        self.init(date: date, routines: routines)
+        let myRoutine = MyRoutine(id: uuid, name: "", routines: routines)
+        self.init(date: date, myRoutine: myRoutine)
     }
     
     @discardableResult
-    func store(in context: NSManagedObjectContext, date: Date, workouts: [WorkoutsMO], sets: [[SetsMO]]) -> WorkoutRoutineMO? {
-        guard let workoutRoutne = WorkoutRoutineMO.insertNew(in: context) else {
+    func store(in context: NSManagedObjectContext, date: Date, id: UUID, workouts: [WorkoutsMO], sets: [[SetsMO]]) -> WorkoutRoutineMO? {
+        guard let workoutRoutine = WorkoutRoutineMO.insertNew(in: context) else {
             return nil
         }
         
@@ -194,10 +196,11 @@ extension WorkoutRoutine {
             routineMO.stopwatch = routine.stopwatch
             routines.append(routineMO)
         }
-        workoutRoutne.date = date
-        workoutRoutne.routines = NSSet(array: routines)
+        workoutRoutine.uuid = id
+        workoutRoutine.date = date
+        workoutRoutine.routines = NSSet(array: routines)
         
-        return workoutRoutne
+        return workoutRoutine
     }
 }
 

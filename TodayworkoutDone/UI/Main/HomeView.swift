@@ -18,6 +18,7 @@ struct HomeView: View {
     @State private var isCloseWorking: Bool = false
     @State private var isSavedAlert = false
     @State private var routineName = ""
+    
     private var myRoutine: MyRoutine {
         injected.appState[\.userData.myRoutine]
     }
@@ -52,7 +53,7 @@ struct HomeView: View {
                     }
                 }
                 .tag(0)
-                CalendarView(calendar: .current)
+                CalendarView(startCalendar: .current, endCalendar: .current)
                     .tag(1)
             }
             .overlay (
@@ -67,7 +68,7 @@ struct HomeView: View {
             Spacer()
         }
         .onReceive(routingUpdate) { self.routingState = $0 }
-        .alert("저장하겠습니까?", isPresented: $isSavedAlert) {
+        .alert("루틴은 저장하겠습니까?", isPresented: $isSavedAlert) {
             TextField("루틴 이름을 정해주세요", text: $routineName)
             Button("Cancel") { }
             Button("OK") {
@@ -77,12 +78,20 @@ struct HomeView: View {
             Text("새로운 루틴을 저장하시겟습니까")
         }
     }
-    
-    private func saveMyRoutine() {
+}
+
+private extension HomeView {
+    func saveMyRoutine() {
         injected.interactors.routineInteractor.store(
-            myRoutine: MyRoutine(myRoutine: myRoutine)
+            myRoutine: MyRoutine(id: myRoutine.id,
+                                 name: routineName,
+                                 routines: myRoutine.routines)
         )
     }
+}
+
+private extension HomeView {
+    
 }
 
 extension HomeView {
