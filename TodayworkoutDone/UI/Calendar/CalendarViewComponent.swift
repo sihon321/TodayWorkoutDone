@@ -10,8 +10,8 @@ import SwiftUI
 public struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: View>: View {
 
     // Injected dependencies
-    private var startCalendar: Calendar
-    private var endCalendar: Calendar
+    private var startDate: Date
+    private var endDate: Date
     private var months: [Date] = []
     @Binding private var date: Date
     private let content: (Date) -> Day
@@ -26,23 +26,23 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
     private let daysInWeek = 7
     
     public init(
-        startCalendar: Calendar,
-        endCalendar: Calendar,
+        startDate: Date,
+        endDate: Date,
         date: Binding<Date>,
         @ViewBuilder content: @escaping (Date) -> Day,
         @ViewBuilder trailing: @escaping (Date) -> Trailing,
         @ViewBuilder header: @escaping (Date) -> Header,
         @ViewBuilder title: @escaping (Date) -> Title
     ) {
-        self.startCalendar = startCalendar
-        self.endCalendar = endCalendar
+        self.startDate = startDate
+        self.endDate = endDate
         self._date = date
         self.content = content
         self.trailing = trailing
         self.header = header
         self.title = title
 
-        months = makeMonths()
+        months = makeMonths(to: startDate, from: endDate)
     }
 
     public var body: some View {
@@ -54,7 +54,6 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
                         ForEach(months, id: \.self) { month in
                             // Switched from Lazy to VStack to avoid layout glitches
                             VStack(alignment: .leading) {
-                                let month = month.startOfMonth(using: startCalendar)
                                 let days = makeDays(from: month)
                                 
                                 Section(header: title(month)) { }
@@ -65,7 +64,7 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
                                     Divider()
                                     LazyVGrid(columns: Array(repeating: GridItem(), count: daysInWeek)) {
                                         ForEach(days, id: \.self) { date in
-                                            if startCalendar.isDate(date, equalTo: month, toGranularity: .month) {
+                                            if Calendar.current.isDate(date, equalTo: month, toGranularity: .month) {
                                                 content(date)
                                             } else {
                                                 trailing(date)
@@ -98,7 +97,7 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
                             } else if value >= scrollViewSize.height - wholeSize.height {
                                 
                                 guard let firstMonth = months.first,
-                                      let newDate = startCalendar.date(
+                                      let newDate = Calendar.current.date(
                                         byAdding: .month,
                                         value: 1,
                                         to: firstMonth
@@ -123,36 +122,39 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
 
 extension CalendarViewComponent: Equatable {
     public static func == (lhs: CalendarViewComponent<Day, Header, Title, Trailing>, rhs: CalendarViewComponent<Day, Header, Title, Trailing>) -> Bool {
-        lhs.startCalendar == rhs.startCalendar && lhs.date == rhs.date
+        lhs.date == rhs.date
     }
 }
 
 // MARK: - Helpers
 
 private extension CalendarViewComponent {
-    func makeMonths() -> [Date] {
-        guard let yearInterval = startCalendar.dateInterval(of: .year, for: date),
-              let yearFirstMonth = startCalendar.dateInterval(of: .month, for: yearInterval.start),
-              let yearLastMonth = endCalendar.dateInterval(of: .month, for: yearInterval.end - 1)
-        else {
-            return []
-        }
+    func makeMonths(to startDate: Date, from endDate: Date) -> [Date] {
+        let calendar = Calendar.current
 
-        let dateInterval = DateInterval(start: yearFirstMonth.start, end: yearLastMonth.end)
-        return startCalendar.generateDates(for: dateInterval,
-                                      matching: startCalendar.dateComponents([.day], from: dateInterval.start))
+        var dates: [Date] = []
+
+        var currentDate = startDate
+        while currentDate.month! <= endDate.month! {
+            dates.append(currentDate)
+            
+            currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate)!
+        }
+        
+        return dates
     }
 
     func makeDays(from date: Date) -> [Date] {
-        guard let monthInterval = startCalendar.dateInterval(of: .month, for: date),
-              let monthFirstWeek = startCalendar.dateInterval(of: .weekOfMonth, for: monthInterval.start),
-              let monthLastWeek = endCalendar.dateInterval(of: .weekOfMonth, for: monthInterval.end - 1)
+        let calendar = Calendar.current
+        guard let monthInterval = calendar.dateInterval(of: .month, for: date),
+              let monthFirstWeek = calendar.dateInterval(of: .weekOfMonth, for: monthInterval.start),
+              let monthLastWeek = calendar.dateInterval(of: .weekOfMonth, for: monthInterval.end - 1)
         else {
             return []
         }
 
         let dateInterval = DateInterval(start: monthFirstWeek.start, end: monthLastWeek.end)
-        return startCalendar.generateDays(for: dateInterval)
+        return calendar.generateDays(for: dateInterval)
     }
 }
 

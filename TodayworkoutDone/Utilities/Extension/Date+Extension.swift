@@ -8,14 +8,16 @@
 import Foundation
 
 extension Date {
-    func beginningOfDay() -> Date {
-        let beginningOfDay = Calendar.current.startOfDay(for: self)
-        return beginningOfDay
+    var year: Int? {
+        let dateComponents = Calendar.current.dateComponents([.year], from: self)
+        return dateComponents.year
     }
-    
-    func startOfMonth(using calendar: Calendar) -> Date {
-        calendar.date(
-            from: calendar.dateComponents([.year, .month], from: self)
-        ) ?? self
+    var month: Int? {
+        let dateComponents = Calendar.current.dateComponents([.month], from: self)
+        return dateComponents.month
+    }
+    var day: Int? {
+        let dateComponents = Calendar.current.dateComponents([.day], from: self)
+        return dateComponents.day
     }
 }

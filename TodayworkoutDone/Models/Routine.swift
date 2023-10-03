@@ -8,41 +8,6 @@
 import Foundation
 import CoreData
 
-struct Sets: Codable, Equatable, Identifiable {
-    var id: UUID = UUID()
-    
-    var prevWeight: Double
-    var weight: Double
-    var prevLab: Int
-    var lab: Int
-    var isChecked: Bool
-    
-    enum CodingKeys: String, CodingKey {
-        case prevWeight, weight, prevLab, lab, isChecked
-    }
-    
-    init(prevWeight: Double = .zero,
-         weight: Double = .zero,
-         prevLab: Int = .zero,
-         lab: Int = .zero,
-         isChecked: Bool = false) {
-        self.prevWeight = prevWeight
-        self.weight = weight
-        self.prevLab = prevLab
-        self.lab = lab
-        self.isChecked = isChecked
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        prevWeight = try container.decode(Double.self, forKey: .prevWeight)
-        weight = try container.decode(Double.self, forKey: .weight)
-        prevLab = try container.decode(Int.self, forKey: .prevLab)
-        lab = try container.decode(Int.self, forKey: .lab)
-        isChecked = try container.decode(Bool.self, forKey: .isChecked)
-    }
-}
-
 struct Routine: Codable, Equatable {
     var workouts: Workouts
     var sets: [Sets]
@@ -77,31 +42,3 @@ extension Routine: Identifiable {
 }
 
 typealias Routines = [Routine]
-
-struct MyRoutine: Codable, Equatable, Identifiable {
-    var id: UUID
-    var name: String
-    var routines: [Routine]
-
-    init(id: UUID = UUID(), name: String, routines: [Routine]) {
-        self.id = id
-        self.name = name
-        self.routines = routines
-    }
-}
-
-struct WorkoutRoutine: Codable, Equatable, Identifiable {
-    var date: Date
-    var uuid: UUID
-    var routines: [Routine]
-    
-    init(date: Date, myRoutine: MyRoutine) {
-        self.date = date
-        self.uuid = myRoutine.id
-        self.routines = myRoutine.routines
-    }
-}
-
-extension WorkoutRoutine {
-    var id: String { date.description }
-}

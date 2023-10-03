@@ -53,7 +53,7 @@ struct HomeView: View {
                     }
                 }
                 .tag(0)
-                CalendarView(startCalendar: .current, endCalendar: .current)
+                CalendarView()
                     .tag(1)
             }
             .overlay (

@@ -16,6 +16,9 @@
 		8EC563652A6D206600A8DCD5 /* MockedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC563642A6D206600A8DCD5 /* MockedData.swift */; };
 		8EC563672A6D2C6E00A8DCD5 /* CategoryWebRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC563662A6D2C6E00A8DCD5 /* CategoryWebRepository.swift */; };
 		8EC563692A6DFDB600A8DCD5 /* WorkoutWebRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC563682A6DFDB600A8DCD5 /* WorkoutWebRepository.swift */; };
+		8ED37AF32AC87E0700B4F206 /* MyRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED37AF22AC87E0700B4F206 /* MyRoutine.swift */; };
+		8ED37AF52AC87E2200B4F206 /* Sets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED37AF42AC87E2200B4F206 /* Sets.swift */; };
+		8EE36B162AC9547300E7F00F /* CalendarDetailSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE36B152AC9547300E7F00F /* CalendarDetailSubview.swift */; };
 		8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */; };
 		F2007DA72A8A8AC300833AF0 /* HealthKitInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA62A8A8AC300833AF0 /* HealthKitInteractor.swift */; };
 		F2007DAA2A8AA27E00833AF0 /* HealthKit+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */; };
@@ -110,6 +113,9 @@
 		8EC563642A6D206600A8DCD5 /* MockedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedData.swift; sourceTree = "<group>"; };
 		8EC563662A6D2C6E00A8DCD5 /* CategoryWebRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryWebRepository.swift; sourceTree = "<group>"; };
 		8EC563682A6DFDB600A8DCD5 /* WorkoutWebRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutWebRepository.swift; sourceTree = "<group>"; };
+		8ED37AF22AC87E0700B4F206 /* MyRoutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutine.swift; sourceTree = "<group>"; };
+		8ED37AF42AC87E2200B4F206 /* Sets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sets.swift; sourceTree = "<group>"; };
+		8EE36B152AC9547300E7F00F /* CalendarDetailSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDetailSubview.swift; sourceTree = "<group>"; };
 		8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWorkoutView.swift; sourceTree = "<group>"; };
 		F2007DA62A8A8AC300833AF0 /* HealthKitInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitInteractor.swift; sourceTree = "<group>"; };
 		F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthKit+Combine.swift"; sourceTree = "<group>"; };
@@ -225,6 +231,8 @@
 				F23264A129DC6A58008649FE /* Category.swift */,
 				F25C89D02A654E47007D920A /* Models+CoreData.swift */,
 				8EC563642A6D206600A8DCD5 /* MockedData.swift */,
+				8ED37AF22AC87E0700B4F206 /* MyRoutine.swift */,
+				8ED37AF42AC87E2200B4F206 /* Sets.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -354,6 +362,7 @@
 				F273486A2AAB037600C04347 /* CalendarViewCell.swift */,
 				F296FD712AB5EDF000BCF890 /* CalendarViewComponent.swift */,
 				F286ACA52AB7250D00D74F75 /* CalendarDetailView.swift */,
+				8EE36B152AC9547300E7F00F /* CalendarDetailSubview.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -644,6 +653,7 @@
 				F296FD722AB5EDF000BCF890 /* CalendarViewComponent.swift in Sources */,
 				F2AEA40F2A66E31E0023871D /* Routine.swift in Sources */,
 				F25C89CC2A652AD3007D920A /* db_model_v1.xcdatamodeld in Sources */,
+				8ED37AF32AC87E0700B4F206 /* MyRoutine.swift in Sources */,
 				F2E74D29292221D500BD35F6 /* Color+SwiftUI.swift in Sources */,
 				F250986B2A24FBA7005390D5 /* WorkoutInteractor.swift in Sources */,
 				F222FFEC2A645B70002FCCDA /* CoreDataStack.swift in Sources */,
@@ -653,6 +663,8 @@
 				F2C474E62A9006C200291AE4 /* Date+Extension.swift in Sources */,
 				F23F4EA02958271B0084392B /* WorkoutCategorySubview.swift in Sources */,
 				F239B431295761AD00781EF2 /* WorkoutView.swift in Sources */,
+				8EE36B162AC9547300E7F00F /* CalendarDetailSubview.swift in Sources */,
+				8ED37AF52AC87E2200B4F206 /* Sets.swift in Sources */,
 				F2E74CE82921F73500BD35F6 /* ContentView.swift in Sources */,
 				F23F4E9E295826F30084392B /* WorkoutCategoryView.swift in Sources */,
 				F2102C36292BB06D00417789 /* MainContentWorkoutView.swift in Sources */,

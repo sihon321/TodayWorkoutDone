@@ -14,8 +14,8 @@ struct CalendarView: View {
     
     @State private var isPresented = false
     
-    private let startCalendar: Calendar
-    private let endCalendar: Calendar
+    private let startCalendar: Calendar? = nil
+    private let endCalendar: Calendar? = nil
     private let monthFormatter: DateFormatter
     private let dayFormatter: DateFormatter
     private let weekDayFormatter: DateFormatter
@@ -24,17 +24,16 @@ struct CalendarView: View {
     @State private var selectedDate = Self.now
     private static var now = Date()
 
-    init(startCalendar: Calendar, endCalendar: Calendar) {
-        self.startCalendar = startCalendar
-        self.endCalendar = endCalendar
-        self.monthFormatter = DateFormatter(dateFormat: "MMMM YYYY", calendar: startCalendar)
-        self.dayFormatter = DateFormatter(dateFormat: "d", calendar: startCalendar)
-        self.weekDayFormatter = DateFormatter(dateFormat: "EEEEE", calendar: startCalendar)
-        self.fullFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy", calendar: startCalendar)
+    init() {
+        self.monthFormatter = DateFormatter(dateFormat: "MMMM YYYY", calendar: .current)
+        self.dayFormatter = DateFormatter(dateFormat: "d", calendar: .current)
+        self.weekDayFormatter = DateFormatter(dateFormat: "EEEEE", calendar: .current)
+        self.fullFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy", calendar: .current)
     }
 
     var body: some View {
         self.content
+            .onAppear(perform: loadWorkoutRoutines)
     }
     
     @ViewBuilder private var content: some View {
@@ -62,7 +61,7 @@ private extension CalendarView {
 
 private extension CalendarView {
     var notRequestedView: some View {
-        Text("").onAppear(perform: loadWorkoutRoutines)
+        Text("")
     }
     
     func loadingView(_ previouslyLoaded: LazyList<WorkoutRoutine>?) -> some View {
@@ -84,20 +83,27 @@ private extension CalendarView {
     func loadedView(_ workoutRoutines: LazyList<WorkoutRoutine>) -> some View {
         NavigationView {
             CalendarViewComponent(
-                startCalendar: startCalendar,
-                endCalendar: endCalendar,
+                startDate: startDate(workoutRoutines),
+                endDate: endDate(workoutRoutines),
                 date: $selectedDate,
                 content: { date in
                     Button(action: {
                         isPresented = true
                     }) {
-                        CalendarViewCell(calendar: startCalendar,
-                                         dayFormatter: dayFormatter,
-                                         selectedDate: $selectedDate,
-                                         date: date)
+                        CalendarViewCell(
+                            dayFormatter: dayFormatter,
+                            selectedDate: $selectedDate,
+                            date: date,
+                            workoutRoutines: filterWorkout(date: date,
+                                                           workoutRoutines.array())
+                        )
                     }
                     .sheet(isPresented: $isPresented) {
-                        CalendarDetailView(isPresented: $isPresented)
+                        CalendarDetailView(
+                            isPresented: $isPresented,
+                            workoutRoutines: filterWorkout(date: date,
+                                                           workoutRoutines.array())
+                        )
                     }
                 },
                 trailing: { date in
@@ -113,10 +119,31 @@ private extension CalendarView {
                         .padding(.vertical, 8)
                 }
             )
-            .equatable()
+            .padding([.leading, .trailing], 15)
+            .background(Color(0xf4f4f4))
+            .navigationTitle("Calendar")
         }
-        .padding([.leading, .trailing], 10)
-        .background(Color(0xf4f4f4))
+        
+    }
+    
+    func startDate(_ workoutRoutines: LazyList<WorkoutRoutine>) -> Date {
+        let dates = workoutRoutines.array().compactMap({ $0.date })
+        let sortedDates = dates.sorted(by: <)
+        return sortedDates.first ?? Date()
+    }
+    
+    func endDate(_ workoutRoutines: LazyList<WorkoutRoutine>) -> Date {
+        let dates = workoutRoutines.array().compactMap({ $0.date })
+        let sortedDates = dates.sorted(by: >)
+        return sortedDates.first ?? Date()
+    }
+    
+    func filterWorkout(date: Date, _ workoutRoutines: [WorkoutRoutine]) -> [WorkoutRoutine] {
+        return workoutRoutines.filter({
+            $0.date.year == date.year
+            && $0.date.month == date.month
+            && $0.date.day == date.day
+        })
     }
 }
 
@@ -133,7 +160,7 @@ extension DateFormatter {
 #if DEBUG
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView(startCalendar: .current, endCalendar: .current)
+        CalendarView()
         //            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
