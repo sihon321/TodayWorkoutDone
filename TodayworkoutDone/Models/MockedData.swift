@@ -30,3 +30,7 @@ extension Routine {
 extension MyRoutine {
     static let mockedData: MyRoutine = MyRoutine(name: "test", routines: Routine.mockedData)
 }
+
+extension WorkoutRoutine {
+    static let mockedData: WorkoutRoutine = WorkoutRoutine(date: Date(), myRoutine: MyRoutine.mockedData)
+}

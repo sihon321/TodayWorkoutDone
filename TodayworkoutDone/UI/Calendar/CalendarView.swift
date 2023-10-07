@@ -14,14 +14,13 @@ struct CalendarView: View {
     
     @State private var isPresented = false
     
-    private let startCalendar: Calendar? = nil
-    private let endCalendar: Calendar? = nil
     private let monthFormatter: DateFormatter
     private let dayFormatter: DateFormatter
     private let weekDayFormatter: DateFormatter
     private let fullFormatter: DateFormatter
 
-    @State private var selectedDate = Self.now
+    @State private var todayDate = Self.now
+    @State private var selectedDate: Date? = nil
     private static var now = Date()
 
     init() {
@@ -84,25 +83,27 @@ private extension CalendarView {
         NavigationView {
             CalendarViewComponent(
                 startDate: startDate(workoutRoutines),
-                endDate: endDate(workoutRoutines),
-                date: $selectedDate,
+                date: $todayDate,
                 content: { date in
+                    let filteredWorkout = filterWorkout(date: date, workoutRoutines.array())
                     Button(action: {
+                        if !filteredWorkout.isEmpty {
+                            selectedDate = date
+                        }
                         isPresented = true
                     }) {
                         CalendarViewCell(
                             dayFormatter: dayFormatter,
-                            selectedDate: $selectedDate,
+                            selectedDate: $todayDate,
                             date: date,
-                            workoutRoutines: filterWorkout(date: date,
-                                                           workoutRoutines.array())
+                            workoutRoutines: filteredWorkout
                         )
                     }
-                    .sheet(isPresented: $isPresented) {
+                    .sheet(item: $selectedDate) { selectedDate in
                         CalendarDetailView(
                             isPresented: $isPresented,
-                            workoutRoutines: filterWorkout(date: date,
-                                                           workoutRoutines.array())
+                            date: selectedDate,
+                            workoutRoutines: workoutRoutines.array()
                         )
                     }
                 },
@@ -138,7 +139,8 @@ private extension CalendarView {
         return sortedDates.first ?? Date()
     }
     
-    func filterWorkout(date: Date, _ workoutRoutines: [WorkoutRoutine]) -> [WorkoutRoutine] {
+    func filterWorkout(date: Date?, _ workoutRoutines: [WorkoutRoutine]) -> [WorkoutRoutine] {
+        guard let date = date else { return [] }
         return workoutRoutines.filter({
             $0.date.year == date.year
             && $0.date.month == date.month
@@ -165,3 +167,7 @@ struct CalendarView_Previews: PreviewProvider {
     }
 }
 #endif
+
+extension Date: Identifiable {
+    public var id: Date { return self }
+}

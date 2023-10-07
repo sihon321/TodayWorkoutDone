@@ -24,8 +24,9 @@ class RealHealthKitInteractor: HealthKitInteractor {
     func authorizeHealthKit(typesToShare: Set<HKQuantityType>,
                             typesToRead: Set<HKQuantityType>) -> Deferred<Future<Bool, Error>> {
         Deferred {
-            Future { [unowned self] promise in
-                guard HKHealthStore.isHealthDataAvailable() else {
+            Future { [weak self] promise in
+                guard let `self` = self,
+                    HKHealthStore.isHealthDataAvailable() else {
                     promise(.failure(HealthDataError.unavailableOnDevice))
                     return
                 }
@@ -61,7 +62,8 @@ class RealHealthKitInteractor: HealthKitInteractor {
     }
     
     func stepCount() -> Future<Int, Error> {
-        Future { [unowned self] promise in
+        Future { [weak self] promise in
+            guard let `self` = self else { return }
             self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .stepCount)!])
                 .sink(receiveCompletion: { completion in
                     print("\(completion)")
@@ -95,14 +97,15 @@ class RealHealthKitInteractor: HealthKitInteractor {
                             promise(.success(0))
                         }
                     })
-                    .store(in: &cancellables)
+                    .store(in: &self.cancellables)
                 })
                 .store(in: &cancellables)
         }
     }
     
     func appleExerciseTime() -> Future<Int, Error> {
-        Future { [unowned self] promise in
+        Future { [weak self] promise in
+            guard let `self` = self else { return }
             self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .appleExerciseTime)!])
                 .sink(receiveCompletion: { completion in
                     print("\(completion)")
@@ -136,7 +139,7 @@ class RealHealthKitInteractor: HealthKitInteractor {
                             promise(.success(0))
                         }
                     })
-                    .store(in: &cancellables)
+                    .store(in: &self.cancellables)
                 })
                 .store(in: &cancellables)
         }

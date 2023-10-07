@@ -9,32 +9,37 @@ import SwiftUI
 
 struct CalendarDetailView: View {
     @Binding var isPresented: Bool
+    var date: Date
     var workoutRoutines: [WorkoutRoutine]
     
     var body: some View {
         NavigationStack {
             VStack {
-
-            }
-            .toolbar(content: {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(action: {
-                        isPresented = false
-                    }, label: {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.black)
-                    })
+                List(filterWorkout(date: date, workoutRoutines), id: \.date) { workoutRoutine in
+                    Section(header: Text("\(workoutRoutine.date)")) {
+                        CalendarDetailSubView(workoutRoutine: workoutRoutine)
+                    }
                 }
-            })
+            }
+            .padding([.top], 30)
+            .padding([.leading, .bottom, .trailing], 15)
         }
     }
     
-    
+    func filterWorkout(date: Date?, _ workoutRoutines: [WorkoutRoutine]) -> [WorkoutRoutine] {
+        guard let date = date else { return [] }
+        return workoutRoutines.filter({
+            $0.date.year == date.year
+            && $0.date.month == date.month
+            && $0.date.day == date.day
+        })
+    }
 }
 
 struct CalendarDetailView_Previews: PreviewProvider {
     static var previews: some View {
         CalendarDetailView(isPresented: .constant(false),
-                           workoutRoutines: [])
+                           date: Date(),
+                           workoutRoutines: [WorkoutRoutine.mockedData])
     }
 }

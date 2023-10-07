@@ -11,7 +11,6 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
 
     // Injected dependencies
     private var startDate: Date
-    private var endDate: Date
     private var months: [Date] = []
     @Binding private var date: Date
     private let content: (Date) -> Day
@@ -27,7 +26,6 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
     
     public init(
         startDate: Date,
-        endDate: Date,
         date: Binding<Date>,
         @ViewBuilder content: @escaping (Date) -> Day,
         @ViewBuilder trailing: @escaping (Date) -> Trailing,
@@ -35,14 +33,13 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
         @ViewBuilder title: @escaping (Date) -> Title
     ) {
         self.startDate = startDate
-        self.endDate = endDate
         self._date = date
         self.content = content
         self.trailing = trailing
         self.header = header
         self.title = title
 
-        months = makeMonths(to: startDate, from: endDate)
+        months = makeMonths(to: startDate, from: Date())
     }
 
     public var body: some View {
