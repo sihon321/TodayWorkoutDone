@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct WorkingOutView: View {
     @Environment(\.injected) private var injected: DIContainer
@@ -14,6 +15,10 @@ struct WorkingOutView: View {
     @Binding var isCloseWorking: Bool
     @Binding var hideTabValue: CGFloat
     @Binding var isSavedAlert: Bool
+    
+    @State var secondsElapsed = 0
+    @State var timer: Timer.TimerPublisher = Timer.publish(every: 1, on: .main, in: .common)
+    @State var connectedTimer: Cancellable? = nil
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     private var myRoutine: MyRoutine {
@@ -30,10 +35,23 @@ struct WorkingOutView: View {
                     )
                 }
             }
+            .onAppear {
+                self.instantiateTimer()
+            }.onDisappear {
+                self.cancelTimer()
+            }.onReceive(timer) { _ in
+                self.secondsElapsed += 1
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Close") {
                         isSavedWorkout.toggle()
+                        cancelTimer()
+                    }
+                }
+                ToolbarItem(placement: .principal) {
+                    VStack {
+                        Text(secondsElapsed.secondToHMS)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -47,7 +65,9 @@ struct WorkingOutView: View {
             .padding([.bottom], 60)
         }
         .alert("워크아웃을 저장하겠습니까?", isPresented: $isSavedWorkout) {
-            Button("Cancel") { }
+            Button("Cancel") { 
+                restartTimer()
+            }
             Button("OK") {
                 injected.appState[\.routing.homeView.workingOutView] = false
                 isCloseWorking = true
@@ -55,18 +75,42 @@ struct WorkingOutView: View {
                 if !injected.interactors.routineInteractor.find(myRoutine: myRoutine) {
                     isSavedAlert = true
                 }
-                saveWorkoutRoutine()
+                saveWorkoutRoutine(secondsElapsed)
             }
         } message: {
             Text("새로운 워크아웃을 저장하시겟습니까")
         }
     }
+    
+    func instantiateTimer() {
+        self.timer = Timer.publish(every: 1, on: .main, in: .common)
+        self.connectedTimer = self.timer.connect()
+        return
+    }
+    
+    func cancelTimer() {
+        self.connectedTimer?.cancel()
+        return
+    }
+    
+    func resetCounter() {
+        self.secondsElapsed = 0
+        return
+    }
+    
+    func restartTimer() {
+        self.cancelTimer()
+        self.instantiateTimer()
+        return
+    }
 }
 
 private extension WorkingOutView {
-    func saveWorkoutRoutine() {
+    func saveWorkoutRoutine(_ routineTime: Int) {
         injected.interactors.routineInteractor.store(
-            workoutRoutine: WorkoutRoutine(date: Date(), myRoutine: myRoutine)
+            workoutRoutine: WorkoutRoutine(date: Date(),
+                                           routineTime: routineTime,
+                                           myRoutine: myRoutine)
         )
     }
 }

@@ -22,13 +22,15 @@ struct MyRoutine: Codable, Equatable, Identifiable {
 
 struct WorkoutRoutine: Codable, Equatable, Identifiable {
     var date: Date
+    var routineTime: Int
     var uuid: UUID
     var routines: [Routine]
     
-    init(date: Date, myRoutine: MyRoutine) {
+    init(date: Date, routineTime: Int, myRoutine: MyRoutine) {
         self.date = date
         self.uuid = myRoutine.id
         self.routines = myRoutine.routines
+        self.routineTime = routineTime
     }
 }
 

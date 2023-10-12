@@ -56,6 +56,7 @@
 		F27AD1882A2BA409002C44DD /* SystemEventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AD1872A2BA409002C44DD /* SystemEventsHandler.swift */; };
 		F285400A2ACD961A00CF2BBC /* CalendarDetailSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28540092ACD961A00CF2BBC /* CalendarDetailSubView.swift */; };
 		F286ACA62AB7250D00D74F75 /* CalendarDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F286ACA52AB7250D00D74F75 /* CalendarDetailView.swift */; };
+		F2903B002AD81FDF008B1916 /* Integer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2903AFF2AD81FDF008B1916 /* Integer+Extension.swift */; };
 		F29285332A17CEE000C3A055 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29285322A17CEE000C3A055 /* CustomTabBar.swift */; };
 		F29285352A17D25400C3A055 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29285342A17D25400C3A055 /* HomeView.swift */; };
 		F296FD722AB5EDF000BCF890 /* CalendarViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F296FD712AB5EDF000BCF890 /* CalendarViewComponent.swift */; };
@@ -153,6 +154,7 @@
 		F27AD1872A2BA409002C44DD /* SystemEventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEventsHandler.swift; sourceTree = "<group>"; };
 		F28540092ACD961A00CF2BBC /* CalendarDetailSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDetailSubView.swift; sourceTree = "<group>"; };
 		F286ACA52AB7250D00D74F75 /* CalendarDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDetailView.swift; sourceTree = "<group>"; };
+		F2903AFF2AD81FDF008B1916 /* Integer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Integer+Extension.swift"; sourceTree = "<group>"; };
 		F29285322A17CEE000C3A055 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		F29285342A17D25400C3A055 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F296FD712AB5EDF000BCF890 /* CalendarViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewComponent.swift; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 			children = (
 				F2E74D28292221D500BD35F6 /* Color+SwiftUI.swift */,
 				F2C474E52A9006C200291AE4 /* Date+Extension.swift */,
+				F2903AFF2AD81FDF008B1916 /* Integer+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -620,6 +623,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2C63E202959F3C700D02F76 /* WorkoutListView.swift in Sources */,
+				F2903B002AD81FDF008B1916 /* Integer+Extension.swift in Sources */,
 				F27631B42A7D2374008ACD2F /* RoutinesInteractor.swift in Sources */,
 				F222FFEE2A645EE3002FCCDA /* LazyList.swift in Sources */,
 				F23F4E962957FB250084392B /* MyWorkoutView.swift in Sources */,

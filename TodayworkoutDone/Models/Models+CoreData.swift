@@ -178,7 +178,7 @@ extension WorkoutRoutine {
             Routine(managedObject: $0)
         }
         let myRoutine = MyRoutine(id: uuid, name: "", routines: routines)
-        self.init(date: date, myRoutine: myRoutine)
+        self.init(date: date, routineTime: Int(managedObject.routineTime), myRoutine: myRoutine)
     }
     
     @discardableResult
