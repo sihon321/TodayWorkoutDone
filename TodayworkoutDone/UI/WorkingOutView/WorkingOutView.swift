@@ -63,6 +63,7 @@ struct WorkingOutView: View {
             .navigationTitle(myRoutine.name)
             .listStyle(.grouped)
             .padding([.bottom], 60)
+            .ignoresSafeArea(.container, edges: .bottom)
         }
         .alert("워크아웃을 저장하겠습니까?", isPresented: $isSavedWorkout) {
             Button("Cancel") { 

@@ -9,18 +9,20 @@ import SwiftUI
 
 struct SlideOverCardView<Content: View>: View {
     @GestureState private var dragState = DragState.inactive
-    @State private var position: CGFloat = 100
     @Binding var hideTabValue: CGFloat
     @State var offset: CGFloat = 0
     @State var lastOffset: CGFloat = 0
+    
+    @State private var position: CGFloat = 10
+    var abovePosition: CGFloat = 10
     
     var content: () -> Content
     var body: some View {
         let drag = DragGesture()
             .updating($dragState) { drag, state, transaction in
-                if self.position > UIScreen.main.bounds.size.height / 10 {
+                if self.position > abovePosition {
                     state = .dragging(translation: drag.translation)
-                } else if self.position == UIScreen.main.bounds.size.height / 10
+                } else if self.position == abovePosition
                             && drag.predictedEndLocation.y - drag.location.y > 0 {
                     state = .dragging(translation: drag.translation)
                 }
@@ -29,7 +31,7 @@ struct SlideOverCardView<Content: View>: View {
         
         return Group {
             RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.5)
-                .frame(width: 40, height: CGFloat(5.0))
+                .frame(width: 40, height: UIScreen.main.bounds.size.height - 50)
                 .foregroundColor(Color.secondary)
             self.content()
                 .background(
@@ -81,7 +83,7 @@ struct SlideOverCardView<Content: View>: View {
     private func onDragEnded(drag: DragGesture.Value) {
         let verticalDirection = drag.predictedEndLocation.y - drag.location.y
         let cardTopEdgeLocation = self.position + drag.translation.height
-        let positionAbove: CGFloat = UIScreen.main.bounds.size.height / 10
+        let positionAbove: CGFloat = abovePosition
         let positionBelow: CGFloat = UIScreen.main.bounds.size.height / 1.5
         let closestPosition: CGFloat
 
