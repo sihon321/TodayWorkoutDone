@@ -34,6 +34,7 @@ struct WorkingOutView: View {
                         editMode: $editMode
                     )
                 }
+                Spacer().frame(height: 100)
             }
             .onAppear {
                 self.instantiateTimer()
@@ -62,11 +63,15 @@ struct WorkingOutView: View {
             }
             .navigationTitle(myRoutine.name)
             .listStyle(.grouped)
-            .padding([.bottom], 60)
             .ignoresSafeArea(.container, edges: .bottom)
         }
         .alert("워크아웃을 저장하겠습니까?", isPresented: $isSavedWorkout) {
-            Button("Cancel") { 
+            Button("Close") {
+                injected.appState[\.routing.homeView.workingOutView] = false
+                isCloseWorking = true
+                hideTabValue = 0.0
+            }
+            Button("Cancel") {
                 restartTimer()
             }
             Button("OK") {

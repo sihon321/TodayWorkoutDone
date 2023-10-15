@@ -18,11 +18,11 @@ struct WorkoutListView: View {
         $routingState.dispatched(to: injected.appState, \.routing.workoutListView)
     }
     
-    var category: String
+    var category: Category
     
     init(workoutsList: Loadable<LazyList<Workouts>> = .notRequested,
          selectWorkouts: [Workouts],
-         category: String) {
+         category: Category) {
         self._workoutsList = .init(initialValue: workoutsList)
         self._selectWorkouts = .init(initialValue: selectWorkouts)
         self.category = category
@@ -30,7 +30,7 @@ struct WorkoutListView: View {
     
     var body: some View {
         self.content
-            .navigationTitle(category)
+            .navigationTitle(category.kor)
             .onReceive(routingUpdate) { self.routingState = $0 }
             .onReceive(workoutsUpdate) { self.selectWorkouts = $0 }
     }
@@ -84,7 +84,7 @@ private extension WorkoutListView {
 
 private extension WorkoutListView {
     func loadedView(_ workoutsList: LazyList<Workouts>) -> some View {
-        List(workoutsList) { workouts in
+        List(workoutsList.array().filter({ category.kor == $0.category || category.en == $0.category })) { workouts in
             WorkoutListSubview(workouts: workouts,
                                selectWorkouts: $selectWorkouts)
                 .inject(injected)
@@ -132,7 +132,7 @@ struct WorkoutListView_Previews: PreviewProvider {
     static var previews: some View {
         WorkoutListView(workoutsList: .loaded(Workouts.mockedData.lazyList),
                         selectWorkouts: [],
-                        category: "")
+                        category: Category(kor: "", en: ""))
             .inject(.preview)
     }
 }

@@ -14,14 +14,18 @@ struct WorkoutCategoryView: View {
     @State private var routingState: Routing = .init()
     @State private var selectWorkouts: [Workouts]
     @State private(set) var categories: Loadable<LazyList<Category>>
+    @State private var workoutsList:  Loadable<LazyList<Workouts>> = .notRequested
+    @Binding var text: String
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.workoutCategoryView)
     }
     
     init(categories: Loadable<LazyList<Category>> = .notRequested,
-         selectWorkouts: [Workouts]) {
+         selectWorkouts: [Workouts],
+         search text: Binding<String>) {
         self._categories = .init(initialValue: categories)
         self._selectWorkouts = .init(initialValue: selectWorkouts)
+        self._text = .init(projectedValue: text)
     }
     
     var body: some View {
@@ -51,13 +55,20 @@ private extension WorkoutCategoryView {
         injected.interactors.categoryInteractor
             .load(categories: $categories)
     }
+    
+    func reloadWorkouts() {
+        injected.interactors.workoutInteractor
+            .load(workouts: $workoutsList)
+    }
 }
 
 // MARK: - Loading Content
 
 private extension WorkoutCategoryView {
     var notRequestedView: some View {
-        Text("").onAppear(perform: reloadCategory)
+        Text("")
+            .onAppear(perform: reloadCategory)
+            .onAppear(perform: reloadWorkouts)
     }
     
     func loadingView(_ previouslyLoaded: LazyList<Category>?) -> some View {
@@ -71,6 +82,7 @@ private extension WorkoutCategoryView {
     func failedView(_ error: Error) -> some View {
         ErrorView(error: error, retryAction: {
             self.reloadCategory()
+            self.reloadWorkouts()
         })
     }
 }
@@ -81,11 +93,25 @@ private extension WorkoutCategoryView {
     func loadedView(_ categories: LazyList<Category>) -> some View {
         VStack(alignment: .leading)  {
             Text("category")
-            ForEach(categories.array()) { category in
+            let filteredCategory = workoutsList.value?.array()
+                .filter({ $0.name.hasPrefix(text) })
+                .compactMap({ $0.category })
+                .uniqued() ?? []
+            let categories = categories.array().filter {
+                if filteredCategory.isEmpty {
+                    return true
+                } else if filteredCategory.contains($0.kor) || filteredCategory.contains($0.en) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            ForEach(categories) { category in
                 NavigationLink {
-                    WorkoutListView(selectWorkouts: selectWorkouts,
-                                    category: category.kor)
-                        .inject(injected)
+                    WorkoutListView(workoutsList: workoutsList,
+                                    selectWorkouts: selectWorkouts,
+                                    category: category)
+                    .inject(injected)
                 } label: {
                     WorkoutCategorySubview(category: category.kor)
                 }
@@ -131,7 +157,8 @@ struct WorkoutCategoryView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
         WorkoutCategoryView(categories: .loaded(Category.mockedData.lazyList),
-                            selectWorkouts: [])
+                            selectWorkouts: [],
+                            search: .constant(""))
             .inject(.preview)
     }
 }

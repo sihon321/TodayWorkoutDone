@@ -21,7 +21,8 @@ struct WorkoutView: View {
                         .padding(.top, 10)
                     MyWorkoutView()
                         .padding(.top, 10)
-                    WorkoutCategoryView(selectWorkouts: injected.appState[\.userData].selectionWorkouts)
+                    WorkoutCategoryView(selectWorkouts: injected.appState[\.userData].selectionWorkouts,
+                                        search: $text)
                         .inject(injected)
                         .padding(.top, 10)
                 }

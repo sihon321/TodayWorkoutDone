@@ -106,7 +106,6 @@ extension Routine {
             return nil
         }
         let workoutsMO = WorkoutsMO(context: context)
-        workoutsMO.category = workouts.category
         workoutsMO.name = workouts.name
         workoutsMO.category = workouts.category
         

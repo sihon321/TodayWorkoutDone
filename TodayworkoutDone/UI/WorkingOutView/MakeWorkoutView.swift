@@ -34,6 +34,7 @@ struct MakeWorkoutView: View {
                     WorkingOutSection(routine: routine,
                                       editMode: $editMode)
                 }
+                Spacer().frame(height: 100)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

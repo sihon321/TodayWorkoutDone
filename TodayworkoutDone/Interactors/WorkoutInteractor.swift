@@ -15,6 +15,7 @@ protocol WorkoutInteractor {
     func contains(_ excercise: Workouts) -> Bool
     
     func load(workouts: LoadableSubject<LazyList<Workouts>>)
+    func load(workouts: Binding<LazyList<Workouts>>)
 }
 
 struct RealWorkoutInteractor: WorkoutInteractor {
@@ -65,6 +66,28 @@ struct RealWorkoutInteractor: WorkoutInteractor {
             .store(in: cancelBag)
     }
     
+    func load(workouts: Binding<LazyList<Workouts>>) {
+        let cancelBag = CancelBag()
+        
+        Just<Void>
+            .withErrorType(Error.self)
+            .flatMap { [dbRepository] _ -> AnyPublisher<Bool, Error> in
+                dbRepository.hasLoadedWorkouts()
+            }
+            .flatMap { hasLoaded -> AnyPublisher<Void, Error> in
+                if hasLoaded {
+                    return Just<Void>.withErrorType(Error.self)
+                } else {
+                    return self.refreshWorkoutsList()
+                }
+            }
+            .flatMap { [dbRepository] in
+                dbRepository.workouts()
+            }
+            .sinkToLoadable { workouts.wrappedValue = $0.value ?? .empty }
+            .store(in: cancelBag)
+    }
+    
     private func refreshWorkoutsList() -> AnyPublisher<Void, Error> {
         return webRepository
             .loadWorkouts()
@@ -80,4 +103,5 @@ struct StubWorkoutInteractor: WorkoutInteractor {
     func remove(_ excercise: Workouts) { }
     func contains(_ excercise: Workouts) -> Bool { return true }
     func load(workouts: LoadableSubject<LazyList<Workouts>>) { }
+    func load(workouts: Binding<LazyList<Workouts>>) { }
 }

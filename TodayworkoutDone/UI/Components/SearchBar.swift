@@ -27,7 +27,11 @@ struct SearchBar: View {
                         
                         if isEditing {
                             Button(action: {
+                                self.isEditing = false
                                 self.text = ""
+                                
+                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), 
+                                                                to: nil, from: nil, for: nil)
                             }) {
                                 Image(systemName: "multiply.circle.fill")
                                     .foregroundColor(.gray)
@@ -40,20 +44,6 @@ struct SearchBar: View {
                 .onTapGesture {
                     self.isEditing = true
                 }
-            
-            if isEditing {
-                Button(action: {
-                    self.isEditing = false
-                    self.text = ""
-                    
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                }) {
-                    Text("취소")
-                }
-                .padding(.trailing, 10)
-                .transition(.move(edge: .trailing))
-                .animation(.none, value: 1.0)
-            }
         }
     }
 }
