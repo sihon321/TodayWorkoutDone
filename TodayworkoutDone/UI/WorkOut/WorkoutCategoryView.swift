@@ -14,18 +14,20 @@ struct WorkoutCategoryView: View {
     @State private var routingState: Routing = .init()
     @State private var selectWorkouts: [Workouts]
     @State private(set) var categories: Loadable<LazyList<Category>>
-    @State private var workoutsList:  Loadable<LazyList<Workouts>> = .notRequested
+    @Binding var workoutsList: Loadable<LazyList<Workouts>>
     @Binding var text: String
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.workoutCategoryView)
     }
     
     init(categories: Loadable<LazyList<Category>> = .notRequested,
+         workoutsList: Loadable<LazyList<Workouts>>,
          selectWorkouts: [Workouts],
          search text: Binding<String>) {
         self._categories = .init(initialValue: categories)
         self._selectWorkouts = .init(initialValue: selectWorkouts)
         self._text = .init(projectedValue: text)
+        self._workoutsList = .init(projectedValue: .constant(workoutsList))
     }
     
     var body: some View {
@@ -55,11 +57,6 @@ private extension WorkoutCategoryView {
         injected.interactors.categoryInteractor
             .load(categories: $categories)
     }
-    
-    func reloadWorkouts() {
-        injected.interactors.workoutInteractor
-            .load(workouts: $workoutsList)
-    }
 }
 
 // MARK: - Loading Content
@@ -68,12 +65,11 @@ private extension WorkoutCategoryView {
     var notRequestedView: some View {
         Text("")
             .onAppear(perform: reloadCategory)
-            .onAppear(perform: reloadWorkouts)
     }
     
     func loadingView(_ previouslyLoaded: LazyList<Category>?) -> some View {
-        if let countries = previouslyLoaded {
-            return AnyView(loadedView(countries))
+        if let categories = previouslyLoaded {
+            return AnyView(loadedView(categories))
         } else {
             return AnyView(ActivityIndicatorView().padding())
         }
@@ -82,7 +78,6 @@ private extension WorkoutCategoryView {
     func failedView(_ error: Error) -> some View {
         ErrorView(error: error, retryAction: {
             self.reloadCategory()
-            self.reloadWorkouts()
         })
     }
 }
@@ -128,7 +123,8 @@ private extension WorkoutCategoryView {
                 .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                  content: {
                     MakeWorkoutView(
-                        myRoutine: .constant(MyRoutine(name: "", routines: selectWorkouts.compactMap({ Routine(workouts: $0) })))
+                        myRoutine: .constant(MyRoutine(name: "", 
+                                                       routines: selectWorkouts.compactMap({ Routine(workouts: $0) })))
                     )
                 })
             }
@@ -156,7 +152,8 @@ private extension WorkoutCategoryView {
 struct WorkoutCategoryView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkoutCategoryView(categories: .loaded(Category.mockedData.lazyList),
+        WorkoutCategoryView(categories: .loaded(Category.mockedData.lazyList), 
+                            workoutsList: .loaded(Workouts.mockedData.lazyList),
                             selectWorkouts: [],
                             search: .constant(""))
             .inject(.preview)

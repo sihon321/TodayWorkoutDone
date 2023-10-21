@@ -14,13 +14,16 @@ struct MyWorkoutView: View {
     @State private var routingState: Routing = .init()
     @State private(set) var myRoutines: Loadable<LazyList<MyRoutine>>
     @State private var selectedRoutine: MyRoutine?
+    @Binding var text: String
     
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.myWorkoutView)
     }
     
-    init(myRoutines: Loadable<LazyList<MyRoutine>> = .notRequested) {
+    init(myRoutines: Loadable<LazyList<MyRoutine>> = .notRequested,
+         search text: Binding<String>) {
         self._myRoutines = .init(initialValue: myRoutines)
+        self._text = .init(projectedValue: text)
     }
     
     var body: some View {
@@ -120,7 +123,7 @@ private extension MyWorkoutView {
 
 struct MyWorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        MyWorkoutView()
+        MyWorkoutView(search: .constant(""))
             .background(Color.gray)
     }
 }

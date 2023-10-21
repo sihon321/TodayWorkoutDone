@@ -10,18 +10,75 @@ import Combine
 
 struct WorkoutView: View {
     @Environment(\.injected) private var injected: DIContainer
+    @State private var workoutsList: Loadable<LazyList<Workouts>> = .notRequested
     @State private var routingState: Routing = .init()
     @State private var text: String = ""
     
     var body: some View {
+        content
+        .onReceive(routingUpdate) { self.routingState = $0 }
+        .onAppear {
+            injected.appState[\.userData.selectionWorkouts].removeAll()
+        }
+    }
+    
+    @ViewBuilder private var content: some View {
+        switch workoutsList {
+        case .notRequested:
+            notRequestedView
+        case let .isLoading(last, _):
+            loadingView(last)
+        case let .loaded(workoutsList):
+            loadedView(workoutsList)
+        case let .failed(error):
+            failedView(error)
+        }
+    }
+}
+
+extension WorkoutView {
+    func reloadWorkouts() {
+        injected.interactors.workoutInteractor
+            .load(workouts: $workoutsList)
+    }
+}
+
+// MARK: - Loading Content
+
+private extension WorkoutView {
+    var notRequestedView: some View {
+        Text("")
+            .onAppear(perform: reloadWorkouts)
+    }
+    
+    func loadingView(_ previouslyLoaded: LazyList<Workouts>?) -> some View {
+        if let workouts = previouslyLoaded {
+            return AnyView(loadedView(workouts))
+        } else {
+            return AnyView(ActivityIndicatorView().padding())
+        }
+    }
+    
+    func failedView(_ error: Error) -> some View {
+        ErrorView(error: error, retryAction: {
+            self.reloadWorkouts()
+        })
+    }
+}
+
+// MARK: - Displaying Conent
+
+private extension WorkoutView {
+    func loadedView(_ workouts: LazyList<Workouts>) -> some View {
         NavigationView {
             ScrollView {
                 VStack {
                     SearchBar(text: $text)
                         .padding(.top, 10)
-                    MyWorkoutView()
+                    MyWorkoutView(search: $text)
                         .padding(.top, 10)
-                    WorkoutCategoryView(selectWorkouts: injected.appState[\.userData].selectionWorkouts,
+                    WorkoutCategoryView(workoutsList: workoutsList,
+                                        selectWorkouts: injected.appState[\.userData].selectionWorkouts,
                                         search: $text)
                         .inject(injected)
                         .padding(.top, 10)
@@ -39,11 +96,6 @@ struct WorkoutView: View {
                     })
                 }
             })
-        }
-        .onReceive(routingUpdate) { self.routingState = $0 }
-        .onAppear {
-            injected.appState[\.userData.selectionWorkouts].removeAll()
-//            injected.appState[\.userData.routines].removeAll()
         }
     }
 }
