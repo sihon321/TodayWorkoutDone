@@ -90,10 +90,29 @@ private extension MyWorkoutView {
                 HStack {
                     ForEach(myRoutines.array()) { myRoutine in
                         Button(action: {
-                            injected.appState[\.routing.myWorkoutView.makeWorkoutView] = true
+                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = true
                             selectedRoutine = myRoutine
                         }) {
-                            MyWorkoutSubview(myRoutine: myRoutine)
+                            MyWorkoutSubview(myRoutine: myRoutine, routingState: routingBinding)
+                        }
+                    }
+                    .alert("루틴을 시작하겠습니까?", isPresented: routingBinding.alertMyWorkout) {
+                        Button("Cancel") { 
+                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
+                        }
+                        Button("OK") {
+                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
+                            injected.appState[\.routing.homeView.workingOutView] = true
+                            if let selectedRoutine = selectedRoutine {
+                                injected.appState[\.userData.myRoutine] = selectedRoutine
+                            }
+                        }
+                    } message: {
+                        if let selectedRoutine = selectedRoutine {
+                            let message = selectedRoutine.routines
+                                .map({ "\($0.workouts.name)" })
+                                .joined(separator: "\n")
+                            Text(message)
                         }
                     }
                     .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
@@ -112,6 +131,7 @@ private extension MyWorkoutView {
 extension MyWorkoutView {
     struct Routing: Equatable {
         var makeWorkoutView: Bool = false
+        var alertMyWorkout: Bool = false
     }
 }
 

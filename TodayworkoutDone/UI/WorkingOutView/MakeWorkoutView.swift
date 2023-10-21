@@ -42,6 +42,7 @@ struct MakeWorkoutView: View {
                         injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
                         injected.appState[\.routing.workoutListView.makeWorkoutView] = false
                         injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
+                        injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -53,6 +54,7 @@ struct MakeWorkoutView: View {
                         injected.appState[\.routing.workoutCategoryView.workoutListView] = false
                         injected.appState[\.routing.excerciseStartView.workoutView] = false
                         injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
+                        injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
                     }
                 }
             }
