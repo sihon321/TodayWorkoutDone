@@ -12,7 +12,7 @@ import SwiftUI
 protocol RoutinesInteractor {
     func load(myRoutines: LoadableSubject<LazyList<MyRoutine>>)
     func store(myRoutine: MyRoutine)
-    
+    func update(myRoutine: MyRoutine)
     func find(myRoutine: MyRoutine) -> Bool
     func load(workoutRoutines: LoadableSubject<LazyList<WorkoutRoutine>>)
     func store(workoutRoutine: WorkoutRoutine)
@@ -20,10 +20,9 @@ protocol RoutinesInteractor {
 
 struct RealRoutinesInteractor: RoutinesInteractor {
     let dbRepository: RoutineDBRepository
+    let cancelBag = CancelBag()
     
     func load(myRoutines: LoadableSubject<LazyList<MyRoutine>>) {
-        let cancelBag = CancelBag()
-        
         myRoutines.wrappedValue.setIsLoading(cancelBag: cancelBag)
         
         dbRepository.routines()
@@ -34,8 +33,6 @@ struct RealRoutinesInteractor: RoutinesInteractor {
     }
     
     func store(myRoutine: MyRoutine) {
-        let cancelBag = CancelBag()
-        
         dbRepository.store(routine: myRoutine)
             .sink(receiveCompletion: { completion in
                 if let error = completion.error {
@@ -47,9 +44,19 @@ struct RealRoutinesInteractor: RoutinesInteractor {
             .store(in: cancelBag)
     }
     
+    func update(myRoutine: MyRoutine) {
+        dbRepository.update(myRoutine: myRoutine)
+            .sink(receiveCompletion: { completion in
+                if let error = completion.error {
+                    print("\(error)")
+                }
+            }, receiveValue: {
+                print("value: \($0)")
+            })
+            .store(in: cancelBag)
+    }
+    
     func find(myRoutine: MyRoutine) -> Bool {
-        let cancelBag = CancelBag()
-        
         var isFinded = false
         let semaphore = DispatchSemaphore(value: 0)
         dbRepository.find(routine: myRoutine)
@@ -66,8 +73,6 @@ struct RealRoutinesInteractor: RoutinesInteractor {
     }
     
     func load(workoutRoutines: LoadableSubject<LazyList<WorkoutRoutine>>) {
-        let cancelBag = CancelBag()
-        
         workoutRoutines.wrappedValue.setIsLoading(cancelBag: cancelBag)
         
         dbRepository.workoutRoutines()
@@ -78,8 +83,6 @@ struct RealRoutinesInteractor: RoutinesInteractor {
     }
     
     func store(workoutRoutine: WorkoutRoutine) {
-        let cancelBag = CancelBag()
-        
         dbRepository.store(workoutRoutine: workoutRoutine)
             .sink(receiveCompletion: { completion in
                 if let error = completion.error {
@@ -95,6 +98,7 @@ struct RealRoutinesInteractor: RoutinesInteractor {
 struct StubRoutineInteractor: RoutinesInteractor {
     func load(myRoutines: LoadableSubject<LazyList<MyRoutine>>) { }
     func store(myRoutine: MyRoutine) { }
+    func update(myRoutine: MyRoutine) { }
     func find(myRoutine: MyRoutine) -> Bool {
         return false
     }

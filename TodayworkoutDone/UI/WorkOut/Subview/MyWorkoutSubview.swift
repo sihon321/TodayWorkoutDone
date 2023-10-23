@@ -11,8 +11,7 @@ import Combine
 struct MyWorkoutSubview: View {
     @Environment(\.injected) private var injected: DIContainer
     var myRoutine: MyRoutine
-    @Binding var routingState: MyWorkoutView.Routing
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -22,16 +21,20 @@ struct MyWorkoutSubview: View {
                                   design: .default))
                     .padding(.leading, 15)
                 Spacer()
-                Menu {
-                    Button(action: {
-                        injected.appState[\.routing.myWorkoutView.makeWorkoutView] = true
-                    }) {
-                        Label("편집", systemImage: "pencil")
+                Button(action: {}) {
+                    Menu {
+                        Button(action: {
+                            injected.appState[\.userData.myRoutine] = myRoutine
+                            injected.appState[\.routing.myWorkoutView.makeWorkoutView] = true
+                        }) {
+                            Label("편집", systemImage: "pencil")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .contentShape(Rectangle())
+                            .frame(minHeight: 20)
+                            .padding(.trailing, 15)
                     }
-                } label: {
-                    Image(systemName: "ellipsis")
-                        .contentShape(Rectangle())
-                        .padding(.trailing, 15)
                 }
             }
             VStack(alignment: .leading) {
@@ -56,8 +59,7 @@ struct MyWorkoutSubview: View {
 
 struct MyWorkoutSubview_Previews: PreviewProvider {
     static var previews: some View {
-        MyWorkoutSubview(myRoutine: MyRoutine(name: "test", routines: []),
-                         routingState: .constant(MyWorkoutView.Routing()))
+        MyWorkoutSubview(myRoutine: MyRoutine(name: "test", routines: []))
             .background(Color.black)
     }
 }

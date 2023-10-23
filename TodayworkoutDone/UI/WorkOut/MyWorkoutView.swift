@@ -93,7 +93,7 @@ private extension MyWorkoutView {
                             injected.appState[\.routing.myWorkoutView.alertMyWorkout] = true
                             selectedRoutine = myRoutine
                         }) {
-                            MyWorkoutSubview(myRoutine: myRoutine, routingState: routingBinding)
+                            MyWorkoutSubview(myRoutine: myRoutine)
                         }
                     }
                     .alert("루틴을 시작하겠습니까?", isPresented: routingBinding.alertMyWorkout) {
@@ -117,9 +117,7 @@ private extension MyWorkoutView {
                     }
                     .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                      content: {
-                        if let selectedRoutine = selectedRoutine {
-                            MakeWorkoutView(myRoutine: .constant(selectedRoutine))
-                        }
+                        MakeWorkoutView(myRoutine: .constant(injected.appState[\.userData.myRoutine]), isEdit: true)
                     })
                 }
             }

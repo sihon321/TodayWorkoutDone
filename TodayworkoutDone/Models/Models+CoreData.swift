@@ -59,7 +59,8 @@ extension Category {
 
 extension Sets {
     init?(managedObject: SetsMO) {
-        self.init(prevWeight: managedObject.prevWeight,
+        self.init(id: managedObject.id ?? UUID(),
+                  prevWeight: managedObject.prevWeight,
                   weight: managedObject.weight,
                   prevLab: Int(managedObject.prevLab),
                   lab: Int(managedObject.lab),
@@ -105,22 +106,9 @@ extension Routine {
         guard let routine = RoutineMO.insertNew(in: context) else {
             return nil
         }
-        let workoutsMO = WorkoutsMO(context: context)
-        workoutsMO.name = workouts.name
-        workoutsMO.category = workouts.category
-        
-        routine.workouts = workoutsMO
-        let setsMO = sets.compactMap {
-            let setsMO = SetsMO(context: context)
-            setsMO.id = $0.id
-            setsMO.isChecked = $0.isChecked
-            setsMO.lab = Int16($0.lab)
-            setsMO.prevLab = Int16($0.prevLab)
-            setsMO.weight = $0.weight
-            setsMO.prevWeight = $0.prevWeight
-            return setsMO
-        }
-        routine.sets = NSSet(array: setsMO)
+
+        routine.workouts = workouts.store(in: context)
+        routine.sets = NSSet(array: sets.compactMap({ $0.store(in: context) }))
         routine.date = date
         routine.stopwatch = stopwatch
         
@@ -143,25 +131,27 @@ extension MyRoutine {
     }
     
     @discardableResult
-    func store(in context: NSManagedObjectContext, name: String, workouts: [WorkoutsMO], sets: [[SetsMO]]) -> MyRoutineMO? {
+    func store(in context: NSManagedObjectContext, id: UUID, name: String, workouts: [WorkoutsMO], sets: [[SetsMO]]) -> MyRoutineMO? {
         guard let myRoutine = MyRoutineMO.insertNew(in: context) else {
             return nil
         }
-        
-        var routines: [RoutineMO] = []
-        for (index, routine) in self.routines.enumerated() {
-            let routineMO = RoutineMO(context: context)
-            routineMO.workouts = workouts[index]
-            routineMO.sets = NSSet(array: sets[index])
-            routineMO.date = routine.date
-            routineMO.stopwatch = routine.stopwatch
-            routines.append(routineMO)
-        }
-        myRoutine.id = self.id
+
+        myRoutine.id = id
         myRoutine.name = name
-        myRoutine.routines = NSSet(array: routines)
+        myRoutine.routines = NSSet(array: routines.compactMap({ $0.store(in: context) }))
         
         return myRoutine
+    }
+    
+    @discardableResult
+    func store(in context: NSManagedObjectContext, myRoutineMO: MyRoutineMO) -> MyRoutineMO? {
+        var myRoutineMO = myRoutineMO
+        
+        myRoutineMO.id = id
+        myRoutineMO.name = name
+        myRoutineMO.routines = NSSet(array: routines.compactMap({ $0.store(in: context) }))
+        
+        return myRoutineMO
     }
 }
 
@@ -185,19 +175,10 @@ extension WorkoutRoutine {
         guard let workoutRoutine = WorkoutRoutineMO.insertNew(in: context) else {
             return nil
         }
-        
-        var routines: [RoutineMO] = []
-        for (index, routine) in self.routines.enumerated() {
-            let routineMO = RoutineMO(context: context)
-            routineMO.workouts = workouts[index]
-            routineMO.sets = NSSet(array: sets[index])
-            routineMO.date = routine.date
-            routineMO.stopwatch = routine.stopwatch
-            routines.append(routineMO)
-        }
+
         workoutRoutine.uuid = id
         workoutRoutine.date = date
-        workoutRoutine.routines = NSSet(array: routines)
+        workoutRoutine.routines = NSSet(array: routines.compactMap({ $0.store(in: context) }))
         
         return workoutRoutine
     }
