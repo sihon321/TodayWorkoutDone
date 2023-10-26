@@ -35,7 +35,7 @@ struct RealWorkoutDBRepository: WorkoutDBRepository {
     
     func store(workouts: [Workouts]) -> AnyPublisher<Void, Error> {
         return persistentStore
-            .update { context in
+            .store { context in
                 workouts.forEach {
                     $0.store(in: context)
                 }

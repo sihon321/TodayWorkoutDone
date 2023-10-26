@@ -15,6 +15,7 @@ protocol PersistentStore {
     func count<T>(_ fetchRequest: NSFetchRequest<T>) -> AnyPublisher<Bool, Error>
     func fetch<T, V>(_ fetchRequest: NSFetchRequest<T>,
                      map: @escaping (T) throws -> V?) -> AnyPublisher<LazyList<V>, Error>
+    func store<Result>(_ operation: @escaping DBOperation<Result>) -> AnyPublisher<Result, Error>
     func update<Result>(_ operation: @escaping DBOperation<Result>) -> AnyPublisher<Result, Error>
 }
 
@@ -105,7 +106,7 @@ struct CoreDataStack: PersistentStore {
             .eraseToAnyPublisher()
     }
     
-    func update<Result>(_ operation: @escaping DBOperation<Result>) -> AnyPublisher<Result, Error> {
+    func store<Result>(_ operation: @escaping DBOperation<Result>) -> AnyPublisher<Result, Error> {
         let update = Future<Result, Error> { [weak bgQueue, weak container] promise in
             bgQueue?.async {
                 guard let context = container?.newBackgroundContext() else { return }
@@ -127,7 +128,6 @@ struct CoreDataStack: PersistentStore {
         }
         return onStoreIsReady
             .flatMap { update }
-//          .subscribe(on: bgQueue) // Does not work as stated in the docs. Using `bgQueue.async`
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
@@ -136,6 +136,30 @@ struct CoreDataStack: PersistentStore {
         return isStoreLoaded
             .filter { $0 }
             .map { _ in }
+            .eraseToAnyPublisher()
+    }
+    
+    func update<Result>(_ operation: @escaping DBOperation<Result>) -> AnyPublisher<Result, Error> {
+        let update = Future<Result, Error> { [weak bgQueue, weak container] promise in
+            bgQueue?.async {
+                guard let context = container?.viewContext else { return }
+                context.performAndWait {
+                    do {
+                        let result = try operation(context)
+                        if context.hasChanges {
+                            try context.save()
+                        }
+                        promise(.success(result))
+                    } catch {
+                        context.reset()
+                        promise(.failure(error))
+                    }
+                }
+            }
+        }
+        return onStoreIsReady
+            .flatMap { update }
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 }

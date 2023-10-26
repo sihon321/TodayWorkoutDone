@@ -46,7 +46,7 @@ struct RealRoutineDBRepository: RoutineDBRepository {
     
     func store(routine: MyRoutine) -> AnyPublisher<Void, Error> {
         return persistentStore
-            .update { context in
+            .store { context in
                 let workoutName = routine.routines.compactMap { $0.workouts.name }
                 let workoutFetchRequest = WorkoutsMO.workouts(name: workoutName)
                 guard let workouts = try? context.fetch(workoutFetchRequest) else {
@@ -70,7 +70,7 @@ struct RealRoutineDBRepository: RoutineDBRepository {
                     return
                 }
                 
-                myRoutine.store(in: context, myRoutineMO: result)
+                myRoutine.update(in: context, myRoutineMO: result)
             }
     }
     
@@ -86,7 +86,7 @@ struct RealRoutineDBRepository: RoutineDBRepository {
     
     func store(workoutRoutine: WorkoutRoutine) -> AnyPublisher<Void, Error> {
         return persistentStore
-            .update { context in
+            .store { context in
                 let workoutName = workoutRoutine.routines.compactMap { $0.workouts.name }
                 let workoutFetchRequest = WorkoutsMO.workouts(name: workoutName)
                 guard let workouts = try? context.fetch(workoutFetchRequest) else {

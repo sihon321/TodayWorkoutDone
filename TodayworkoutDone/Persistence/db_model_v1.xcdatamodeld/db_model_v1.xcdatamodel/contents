@@ -7,14 +7,14 @@
     <entity name="MyRoutine" representedClassName="MyRoutineMO" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="routines" toMany="YES" deletionRule="Nullify" destinationEntity="Routine" inverseName="myRoutine" inverseEntity="Routine"/>
+        <relationship name="routines" toMany="YES" deletionRule="Nullify" destinationEntity="Routine"/>
     </entity>
     <entity name="Routine" representedClassName="RoutineMO" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="stopwatch" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="myRoutine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MyRoutine" inverseName="routines" inverseEntity="MyRoutine"/>
-        <relationship name="sets" toMany="YES" deletionRule="Nullify" destinationEntity="Sets" inverseName="routine" inverseEntity="Sets"/>
-        <relationship name="workoutRoutine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutRoutine" inverseName="routines" inverseEntity="WorkoutRoutine"/>
+        <relationship name="myRoutine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MyRoutine"/>
+        <relationship name="sets" toMany="YES" deletionRule="Nullify" destinationEntity="Sets"/>
+        <relationship name="workoutRoutine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutRoutine"/>
         <relationship name="workouts" maxCount="1" deletionRule="Nullify" destinationEntity="Workouts"/>
     </entity>
     <entity name="Sets" representedClassName="SetsMO" syncable="YES" codeGenerationType="class">
@@ -24,13 +24,13 @@
         <attribute name="prevLab" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="prevWeight" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="weight" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="routine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="sets" inverseEntity="Routine"/>
+        <relationship name="routine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routine"/>
     </entity>
     <entity name="WorkoutRoutine" representedClassName="WorkoutRoutineMO" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="routineTime" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="routines" toMany="YES" deletionRule="Nullify" destinationEntity="Routine" inverseName="workoutRoutine" inverseEntity="Routine"/>
+        <relationship name="routines" toMany="YES" deletionRule="Nullify" destinationEntity="Routine"/>
     </entity>
     <entity name="Workouts" representedClassName="WorkoutsMO" syncable="YES" codeGenerationType="class">
         <attribute name="category" attributeType="String"/>

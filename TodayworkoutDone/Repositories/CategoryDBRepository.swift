@@ -36,7 +36,7 @@ struct RealCategoryDBRepository: CategoryDBRepository {
     
     func store(categories: [Category]) -> AnyPublisher<Void, Error> {
         return persistentStore
-            .update { context in
+            .store { context in
                 categories.forEach {
                     $0.store(in: context)
                 }

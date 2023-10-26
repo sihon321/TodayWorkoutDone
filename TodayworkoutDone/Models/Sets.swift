@@ -10,7 +10,6 @@ import CoreData
 
 struct Sets: Codable, Equatable, Identifiable {
     var id: UUID
-    
     var prevWeight: Double
     var weight: Double
     var prevLab: Int
