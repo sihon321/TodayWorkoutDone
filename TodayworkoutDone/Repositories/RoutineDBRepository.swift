@@ -16,6 +16,7 @@ protocol RoutineDBRepository {
     func workoutRoutines() -> AnyPublisher<LazyList<WorkoutRoutine>, Error>
     func store(workoutRoutine: WorkoutRoutine) -> AnyPublisher<Void, Error>
     func update(myRoutine: MyRoutine) -> AnyPublisher<Void, Error>
+    func delete(myRoutine: MyRoutine) -> AnyPublisher<Bool, Error>
 }
 
 struct RealRoutineDBRepository: RoutineDBRepository {
@@ -72,6 +73,11 @@ struct RealRoutineDBRepository: RoutineDBRepository {
                 
                 myRoutine.update(in: context, myRoutineMO: result)
             }
+    }
+    
+    func delete(myRoutine: MyRoutine) -> AnyPublisher<Bool, Error> {
+        let fetchRequest = MyRoutineMO.routine(id: myRoutine.id)
+        return persistentStore.delete(fetchRequest)
     }
     
     // MARK: - WorkoutRoutine

@@ -16,6 +16,7 @@ protocol RoutinesInteractor {
     func find(myRoutine: MyRoutine) -> Bool
     func load(workoutRoutines: LoadableSubject<LazyList<WorkoutRoutine>>)
     func store(workoutRoutine: WorkoutRoutine)
+    func delete(myRoutine: MyRoutine)
 }
 
 struct RealRoutinesInteractor: RoutinesInteractor {
@@ -53,6 +54,18 @@ struct RealRoutinesInteractor: RoutinesInteractor {
             }, receiveValue: {
                 print("value: \($0)")
                 completion()
+            })
+            .store(in: cancelBag)
+    }
+    
+    func delete(myRoutine: MyRoutine) {
+        dbRepository.delete(myRoutine: myRoutine)
+            .sink(receiveCompletion: { completion in
+                if let error = completion.error {
+                    print("\(error)")
+                }
+            }, receiveValue: {
+                print("value: \($0)")
             })
             .store(in: cancelBag)
     }
@@ -107,4 +120,5 @@ struct StubRoutineInteractor: RoutinesInteractor {
     }
     func load(workoutRoutines: LoadableSubject<LazyList<WorkoutRoutine>>) { }
     func store(workoutRoutine: WorkoutRoutine) { }
+    func delete(myRoutine: MyRoutine) { }
 }

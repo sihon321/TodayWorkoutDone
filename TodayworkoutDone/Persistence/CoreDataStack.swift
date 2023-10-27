@@ -17,6 +17,7 @@ protocol PersistentStore {
                      map: @escaping (T) throws -> V?) -> AnyPublisher<LazyList<V>, Error>
     func store<Result>(_ operation: @escaping DBOperation<Result>) -> AnyPublisher<Result, Error>
     func update<Result>(_ operation: @escaping DBOperation<Result>) -> AnyPublisher<Result, Error>
+    func delete<T>(_ fetchRequest: NSFetchRequest<T>) -> AnyPublisher<Bool, Error>
 }
 
 struct CoreDataStack: PersistentStore {
@@ -160,6 +161,29 @@ struct CoreDataStack: PersistentStore {
         return onStoreIsReady
             .flatMap { update }
             .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func delete<T>(_ fetchRequest: NSFetchRequest<T>) -> AnyPublisher<Bool, Error> where T: NSFetchRequestResult {
+        let fetch = Future<Bool, Error> { [weak container] promise in
+            guard let context = container?.viewContext else { return }
+            context.performAndWait {
+                do {
+                    let managedObjects = try context.fetch(fetchRequest)
+                    if let object = managedObjects.first as? NSManagedObject {
+                        context.delete(object)
+                        promise(.success(true))
+                    } else {
+                        promise(.success(false))
+                    }
+                } catch {
+                    promise(.failure(error))
+                }
+            }
+        }
+        
+        return onStoreIsReady
+            .flatMap { fetch }
             .eraseToAnyPublisher()
     }
 }
