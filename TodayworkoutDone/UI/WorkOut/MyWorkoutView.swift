@@ -88,7 +88,7 @@ private extension MyWorkoutView {
             Text("my workout")
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(myRoutines.array()) { myRoutine in
+                    ForEach(myRoutines.lazyList) { myRoutine in
                         Button(action: {
                             injected.appState[\.routing.myWorkoutView.alertMyWorkout] = true
                             selectedRoutine = myRoutine
@@ -117,7 +117,9 @@ private extension MyWorkoutView {
                     }
                     .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                      content: {
-                        MakeWorkoutView(myRoutine: .constant(injected.appState[\.userData.myRoutine]), isEdit: true)
+                        MakeWorkoutView(myRoutine: .constant(injected.appState[\.userData.myRoutine]),
+                                        myRoutines: $myRoutines,
+                                        isEdit: true)
                     })
                 }
             }

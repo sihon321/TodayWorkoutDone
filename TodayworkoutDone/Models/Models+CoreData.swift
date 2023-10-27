@@ -180,12 +180,18 @@ extension MyRoutine {
                 continue
             }
             
-            if var setsMO = filteredRoutineMO.sets as? Set<SetsMO> {
-                var setsArray = Array(setsMO)
-                let copiedSets = routine.sets.filter { sets in
-                    setsArray.contains(where: { $0.id != sets.id })
-                }
+            if let setsMO = filteredRoutineMO.sets as? Set<SetsMO> {
+                let setsArray = Array(setsMO)
+                var copiedSets: [Sets] = []
                 
+                for sets in routine.sets where setsArray.contains(where: { $0.id != sets.id }) || setsArray.isEmpty {
+                    copiedSets.append(sets)
+                }
+                var newSetsMOArray: [SetsMO] = []
+                if copiedSets.isEmpty && !setsArray.isEmpty {
+                    newSetsMOArray = setsArray
+                }
+
                 copiedSets.forEach {
                     let newSetMO = SetsMO(context: context)
                     newSetMO.id = $0.id
@@ -194,9 +200,21 @@ extension MyRoutine {
                     newSetMO.prevLab = Int16($0.prevLab)
                     newSetMO.weight = $0.weight
                     newSetMO.prevWeight = $0.prevWeight
-                    setsArray.append(newSetMO)
+                    newSetsMOArray.append(newSetMO)
                 }
-                filteredRoutineMO.sets = NSSet(array: setsArray)
+                var copiedSetsMOArray: [SetsMO] = []
+                for setsMO in setsArray where routine.sets.contains(where: { $0.id != setsMO.id }) || routine.sets.isEmpty {
+                    copiedSetsMOArray.append(setsMO)
+                }
+                
+                var combinedSetsMO: [SetsMO] = []
+                if newSetsMOArray.count == copiedSetsMOArray.count {
+                    combinedSetsMO = newSetsMOArray
+                } else {
+                    combinedSetsMO = newSetsMOArray + copiedSetsMOArray
+                }
+                    
+                filteredRoutineMO.sets = NSSet(array: newSetsMOArray + copiedSetsMOArray)
             }
             
             newRoutineMOArray.append(filteredRoutineMO)

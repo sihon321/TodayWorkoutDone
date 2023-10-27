@@ -11,6 +11,7 @@ struct MakeWorkoutView: View {
     @Environment(\.injected) private var injected: DIContainer
     
     @State private var myRoutine: MyRoutine
+    @Binding var myRoutines: Loadable<LazyList<MyRoutine>>
     @State private var editMode: EditMode
     @State private var titleSmall: Bool = false
     
@@ -18,8 +19,12 @@ struct MakeWorkoutView: View {
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
-    init(myRoutine: Binding<MyRoutine>, editMode: EditMode = .active, isEdit: Bool = false) {
+    init(myRoutine: Binding<MyRoutine>,
+         myRoutines: Binding<Loadable<LazyList<MyRoutine>>> = .constant(.notRequested),
+         editMode: EditMode = .active,
+         isEdit: Bool = false) {
         self._myRoutine = .init(initialValue: myRoutine.wrappedValue)
+        self._myRoutines = .init(projectedValue: myRoutines)
         self._editMode = .init(initialValue: editMode)
         self.isEdit = isEdit
     }
@@ -51,8 +56,11 @@ struct MakeWorkoutView: View {
                     if isEdit {
                         Button("Save") {
                             injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
-                            injected.interactors.routineInteractor.update(myRoutine: myRoutine)
+                            injected.interactors.routineInteractor.update(myRoutine: myRoutine) {
+                                injected.interactors.routineInteractor.load(myRoutines: $myRoutines)
+                            }
                         }
+ 
                     } else {
                         Button("Done") {
                             injected.appState[\.userData.myRoutine] = myRoutine

@@ -12,7 +12,7 @@ import SwiftUI
 protocol RoutinesInteractor {
     func load(myRoutines: LoadableSubject<LazyList<MyRoutine>>)
     func store(myRoutine: MyRoutine)
-    func update(myRoutine: MyRoutine)
+    func update(myRoutine: MyRoutine, completion: @escaping () -> ())
     func find(myRoutine: MyRoutine) -> Bool
     func load(workoutRoutines: LoadableSubject<LazyList<WorkoutRoutine>>)
     func store(workoutRoutine: WorkoutRoutine)
@@ -44,14 +44,15 @@ struct RealRoutinesInteractor: RoutinesInteractor {
             .store(in: cancelBag)
     }
     
-    func update(myRoutine: MyRoutine) {
+    func update(myRoutine: MyRoutine, completion: @escaping () -> ()) {
         dbRepository.update(myRoutine: myRoutine)
-            .sink(receiveCompletion: { completion in
-                if let error = completion.error {
+            .sink(receiveCompletion: { receiveCompletion in
+                if let error = receiveCompletion.error {
                     print("\(error)")
                 }
             }, receiveValue: {
                 print("value: \($0)")
+                completion()
             })
             .store(in: cancelBag)
     }
@@ -98,7 +99,9 @@ struct RealRoutinesInteractor: RoutinesInteractor {
 struct StubRoutineInteractor: RoutinesInteractor {
     func load(myRoutines: LoadableSubject<LazyList<MyRoutine>>) { }
     func store(myRoutine: MyRoutine) { }
-    func update(myRoutine: MyRoutine) { }
+    func update(myRoutine: MyRoutine, completion: @escaping () -> ()) {
+        completion()
+    }
     func find(myRoutine: MyRoutine) -> Bool {
         return false
     }
