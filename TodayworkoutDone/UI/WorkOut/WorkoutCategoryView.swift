@@ -16,18 +16,21 @@ struct WorkoutCategoryView: View {
     @State private(set) var categories: Loadable<LazyList<Category>>
     @Binding var workoutsList: Loadable<LazyList<Workouts>>
     @Binding var text: String
+    private var isMyWorkoutView: Bool = false
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.workoutCategoryView)
     }
     
     init(categories: Loadable<LazyList<Category>> = .notRequested,
          workoutsList: Loadable<LazyList<Workouts>>,
-         selectWorkouts: [Workouts],
-         search text: Binding<String>) {
+         selectWorkouts: [Workouts] = [],
+         search text: Binding<String> = .init(projectedValue: .constant("")),
+         isMyWorkoutView: Bool = false) {
         self._categories = .init(initialValue: categories)
+        self._workoutsList = .init(projectedValue: .constant(workoutsList))
         self._selectWorkouts = .init(initialValue: selectWorkouts)
         self._text = .init(projectedValue: text)
-        self._workoutsList = .init(projectedValue: .constant(workoutsList))
+        self.isMyWorkoutView = isMyWorkoutView
     }
     
     var body: some View {
@@ -105,7 +108,8 @@ private extension WorkoutCategoryView {
                 NavigationLink {
                     WorkoutListView(workoutsList: workoutsList,
                                     selectWorkouts: selectWorkouts,
-                                    category: category)
+                                    category: category,
+                                    isMyWorkoutView: isMyWorkoutView)
                     .inject(injected)
                 } label: {
                     WorkoutCategorySubview(category: category.kor)
@@ -116,16 +120,24 @@ private extension WorkoutCategoryView {
         .toolbar {
             if !selectWorkouts.isEmpty {
                 Button(action: {
-                    injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = true
+                    if !isMyWorkoutView {
+                        injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = true
+                    } else {
+                        injected.appState[\.userData.myRoutine].routines += selectWorkouts.compactMap({ Routine(workouts: $0) })
+                        injected.appState[\.userData.selectionWorkouts].removeAll()
+                        injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
+                    }
                 }) {
                     Text("Done(\(selectWorkouts.count))")
                 }
                 .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                  content: {
-                    MakeWorkoutView(
-                        myRoutine: .constant(MyRoutine(name: "", 
-                                                       routines: selectWorkouts.compactMap({ Routine(workouts: $0) })))
-                    )
+                    if !isMyWorkoutView {
+                        MakeWorkoutView(
+                            myRoutine: .constant(MyRoutine(name: "",
+                                                           routines: selectWorkouts.compactMap({ Routine(workouts: $0) })))
+                        )
+                    }
                 })
             }
         }

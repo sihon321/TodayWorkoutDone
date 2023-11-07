@@ -14,6 +14,7 @@ struct WorkoutListView: View {
     @State private var routingState: Routing = .init()
     @State private var workoutsList: Loadable<LazyList<Workouts>>
     @State private var selectWorkouts: [Workouts]
+    private var isMyWorkoutView: Bool
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.workoutListView)
     }
@@ -22,10 +23,12 @@ struct WorkoutListView: View {
     
     init(workoutsList: Loadable<LazyList<Workouts>> = .notRequested,
          selectWorkouts: [Workouts],
-         category: Category) {
+         category: Category,
+         isMyWorkoutView: Bool = false) {
         self._workoutsList = .init(initialValue: workoutsList)
         self._selectWorkouts = .init(initialValue: selectWorkouts)
         self.category = category
+        self.isMyWorkoutView = isMyWorkoutView
     }
     
     var body: some View {
@@ -93,18 +96,26 @@ private extension WorkoutListView {
         .toolbar {
             if !selectWorkouts.isEmpty {
                 Button(action: {
-                    injected.appState[\.routing.workoutListView.makeWorkoutView] = true
+                    if !isMyWorkoutView {
+                        injected.appState[\.routing.workoutListView.makeWorkoutView] = true
+                    } else {
+                        injected.appState[\.userData.myRoutine].routines += selectWorkouts.compactMap({ Routine(workouts: $0) })
+                        injected.appState[\.userData.selectionWorkouts].removeAll()
+                        injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
+                    }
                 }) {
                     Text("Done(\(selectWorkouts.count))")
                 }
                 .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
                                  content: {
-                    MakeWorkoutView(
-                        myRoutine: .constant(MyRoutine(
-                            name: "",
-                            routines: selectWorkouts.compactMap({ Routine(workouts: $0) }))
+                    if !isMyWorkoutView {
+                        MakeWorkoutView(
+                            myRoutine: .constant(MyRoutine(
+                                name: "",
+                                routines: selectWorkouts.compactMap({ Routine(workouts: $0) }))
+                            )
                         )
-                    )
+                    }
                 })
             }
         }

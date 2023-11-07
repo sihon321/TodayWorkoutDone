@@ -6,25 +6,34 @@
 //
 
 import SwiftUI
+import Combine
 
 struct MakeWorkoutView: View {
     @Environment(\.injected) private var injected: DIContainer
     
+    @State private var routingState: Routing = .init()
     @State private var myRoutine: MyRoutine
     @Binding var myRoutines: Loadable<LazyList<MyRoutine>>
+    @Binding var workoutsList: Loadable<LazyList<Workouts>>
     @State private var editMode: EditMode
     @State private var titleSmall: Bool = false
-    
+    @State private var selectionWorkouts: [Workouts] = []
+    private var routingBinding: Binding<Routing> {
+        $routingState.dispatched(to: injected.appState, \.routing.makeWorkoutView)
+    }
     var isEdit: Bool
+    @State private var isAppendSets = true
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
     init(myRoutine: Binding<MyRoutine>,
          myRoutines: Binding<Loadable<LazyList<MyRoutine>>> = .constant(.notRequested),
+         workoutsList: Binding<Loadable<LazyList<Workouts>>> = .constant(.notRequested),
          editMode: EditMode = .active,
          isEdit: Bool = false) {
         self._myRoutine = .init(initialValue: myRoutine.wrappedValue)
         self._myRoutines = .init(projectedValue: myRoutines)
+        self._workoutsList = .init(projectedValue: workoutsList)
         self._editMode = .init(initialValue: editMode)
         self.isEdit = isEdit
     }
@@ -39,8 +48,36 @@ struct MakeWorkoutView: View {
                     .padding([.leading], 15)
                 ForEach($myRoutine.routines) { routine in
                     WorkingOutSection(routine: routine,
-                                      editMode: $editMode)
+                                      editMode: $editMode,
+                                      isAppendSets: $isAppendSets)
                 }
+                .padding([.bottom], 30)
+                Button(action: {
+                    injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = true
+                }) {
+                    Text("add")
+                        .frame(maxWidth: .infinity, minHeight: 40)
+                        .background(.gray)
+                        .padding([.leading, .trailing], 15)
+                }
+                .fullScreenCover(isPresented: routingBinding.workoutCategoryView,
+                                content: {
+                    VStack {
+                        NavigationView {
+                            ScrollView {
+                                VStack {
+                                    WorkoutCategoryView(workoutsList: workoutsList,
+                                                        selectWorkouts: injected.appState[\.userData].selectionWorkouts,
+                                                        isMyWorkoutView: true)
+                                        .inject(injected)
+                                        .onAppear {
+                                            isAppendSets = false
+                                        }
+                                }
+                            }
+                        }
+                    }
+                })
                 Spacer().frame(height: 100)
             }
             .toolbar {
@@ -58,9 +95,9 @@ struct MakeWorkoutView: View {
                             injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
                             injected.interactors.routineInteractor.update(myRoutine: myRoutine) {
                                 injected.interactors.routineInteractor.load(myRoutines: $myRoutines)
+                                injected.appState[\.userData.myRoutine] = myRoutine
                             }
                         }
- 
                     } else {
                         Button("Done") {
                             injected.appState[\.userData.myRoutine] = myRoutine
@@ -77,6 +114,28 @@ struct MakeWorkoutView: View {
             }
             .listStyle(.grouped)
         }
+        .onReceive(routingUpdate) { self.routingState = $0 }
+        .onReceive(myRoutineUpdate) {
+            if isEdit && !isAppendSets {
+                self.myRoutine = $0
+            }
+        }
+    }
+}
+
+extension MakeWorkoutView {
+    struct Routing: Equatable {
+        var workoutCategoryView: Bool = false
+    }
+}
+
+private extension MakeWorkoutView {
+    var routingUpdate: AnyPublisher<Routing, Never> {
+        injected.appState.updates(for: \.routing.makeWorkoutView)
+    }
+    
+    var myRoutineUpdate: AnyPublisher<MyRoutine, Never> {
+        injected.appState.updates(for: \.userData.myRoutine)
     }
 }
 

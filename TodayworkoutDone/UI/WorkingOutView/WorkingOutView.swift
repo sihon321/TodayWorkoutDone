@@ -31,7 +31,7 @@ struct WorkingOutView: View {
                 ForEach(myRoutine.routines) { routine in
                     WorkingOutSection(
                         routine: .constant(routine),
-                        editMode: $editMode
+                        editMode: $editMode, isAppendSets: .constant(false)
                     )
                 }
                 Spacer().frame(height: 100)

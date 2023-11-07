@@ -221,9 +221,34 @@ extension MyRoutine {
                     newRoutineMOArray.append(filteredRoutineMO)
                 }
             } else {
+                let fetchRequest = RoutineMO.routine(id: UUID(uuidString: routine.id))
+                guard let routineMO = try? context.fetch(fetchRequest).first else {
+                    continue
+                }
                 
+                let workoutFetchRequest = WorkoutsMO.workouts(name: [routine.workouts.name])
+                guard let workoutsMO = try? context.fetch(workoutFetchRequest).first else {
+                    continue
+                }
+                workoutsMO.name = routine.workouts.name
+                workoutsMO.category = routine.workouts.category
+                workoutsMO.target = routine.workouts.target
+                let setsMO = routine.sets.compactMap {
+                    let setsMO = SetsMO(context: context)
+                    setsMO.id = $0.id
+                    setsMO.isChecked = $0.isChecked
+                    setsMO.lab = Int16($0.lab)
+                    setsMO.prevLab = Int16($0.prevLab)
+                    setsMO.weight = $0.weight
+                    setsMO.prevWeight = $0.prevWeight
+                    return setsMO
+                }
+                routineMO.workouts = workoutsMO
+                routineMO.sets = NSSet(array: setsMO)
+                routineMO.date = routine.date
+                routineMO.stopwatch = routine.stopwatch
+                newRoutineMOArray.append(routineMO)
             }
-            
         }
         
         myRoutineMO.name = name

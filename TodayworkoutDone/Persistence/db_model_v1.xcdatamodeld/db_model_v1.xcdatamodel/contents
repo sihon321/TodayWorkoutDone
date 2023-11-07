@@ -12,7 +12,7 @@
     <entity name="Routine" representedClassName="RoutineMO" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="stopwatch" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="myRoutine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MyRoutine"/>
+        <relationship name="myRoutine" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="MyRoutine"/>
         <relationship name="sets" toMany="YES" deletionRule="No Action" destinationEntity="Sets"/>
         <relationship name="workoutRoutine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutRoutine"/>
         <relationship name="workouts" maxCount="1" deletionRule="Nullify" destinationEntity="Workouts"/>

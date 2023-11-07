@@ -75,7 +75,7 @@ private extension WorkoutView {
                 VStack {
                     SearchBar(text: $text)
                         .padding(.top, 10)
-                    MyWorkoutView(search: $text)
+                    MyWorkoutView(workoutsList: $workoutsList, search: $text)
                         .padding(.top, 10)
                     WorkoutCategoryView(workoutsList: workoutsList,
                                         selectWorkouts: injected.appState[\.userData].selectionWorkouts,

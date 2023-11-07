@@ -134,6 +134,17 @@ extension MyRoutineMO {
     }
 }
 
+extension RoutineMO {
+    static func routine(id: UUID?) -> NSFetchRequest<RoutineMO> {
+        let request = newFetchRequest()
+        if let uuid = id {
+            request.predicate = NSPredicate(format: "%K == %@", "id", uuid as CVarArg)
+        }
+        request.fetchBatchSize = 1
+        return request
+    }
+}
+
 extension WorkoutRoutineMO {
     static func routines() -> NSFetchRequest<WorkoutRoutineMO> {
         let request = newFetchRequest()
