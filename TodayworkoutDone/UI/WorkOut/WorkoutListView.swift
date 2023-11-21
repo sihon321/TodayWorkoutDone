@@ -14,6 +14,7 @@ struct WorkoutListView: View {
     @State private var routingState: Routing = .init()
     @State private var workoutsList: Loadable<LazyList<Workouts>>
     @State private var selectWorkouts: [Workouts]
+    @Binding var myRoutine: MyRoutine
     private var isMyWorkoutView: Bool
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.workoutListView)
@@ -24,11 +25,13 @@ struct WorkoutListView: View {
     init(workoutsList: Loadable<LazyList<Workouts>> = .notRequested,
          selectWorkouts: [Workouts],
          category: Category,
-         isMyWorkoutView: Bool = false) {
+         isMyWorkoutView: Bool = false,
+         myRoutine: Binding<MyRoutine> = .init(projectedValue: .constant(MyRoutine(name: "", routines: [])))) {
         self._workoutsList = .init(initialValue: workoutsList)
         self._selectWorkouts = .init(initialValue: selectWorkouts)
         self.category = category
         self.isMyWorkoutView = isMyWorkoutView
+        self._myRoutine = myRoutine
     }
     
     var body: some View {
@@ -99,7 +102,7 @@ private extension WorkoutListView {
                     if !isMyWorkoutView {
                         injected.appState[\.routing.workoutListView.makeWorkoutView] = true
                     } else {
-                        injected.appState[\.userData.myRoutine].routines += selectWorkouts.compactMap({ Routine(workouts: $0) })
+                        myRoutine.routines += selectWorkouts.compactMap({ Routine(workouts: $0) })
                         injected.appState[\.userData.selectionWorkouts].removeAll()
                         injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
                     }

@@ -68,7 +68,8 @@ struct MakeWorkoutView: View {
                                 VStack {
                                     WorkoutCategoryView(workoutsList: workoutsList,
                                                         selectWorkouts: injected.appState[\.userData].selectionWorkouts,
-                                                        isMyWorkoutView: true)
+                                                        isMyWorkoutView: true,
+                                                        myRoutine: $myRoutine)
                                         .inject(injected)
                                         .onAppear {
                                             isAppendSets = false
@@ -92,10 +93,10 @@ struct MakeWorkoutView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if isEdit {
                         Button("Save") {
-                            injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
                             injected.interactors.routineInteractor.update(myRoutine: myRoutine) {
                                 injected.interactors.routineInteractor.load(myRoutines: $myRoutines)
                                 injected.appState[\.userData.myRoutine] = myRoutine
+                                injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
                             }
                         }
                     } else {
@@ -115,11 +116,6 @@ struct MakeWorkoutView: View {
             .listStyle(.grouped)
         }
         .onReceive(routingUpdate) { self.routingState = $0 }
-        .onReceive(myRoutineUpdate) {
-            if isEdit && !isAppendSets {
-                self.myRoutine = $0
-            }
-        }
     }
 }
 
