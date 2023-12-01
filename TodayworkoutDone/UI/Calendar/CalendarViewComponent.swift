@@ -132,7 +132,7 @@ private extension CalendarViewComponent {
         var dates: [Date] = []
 
         var currentDate = startDate
-        while currentDate.month! <= endDate.month! {
+        while currentDate.year! <= endDate.year! && currentDate.month! <= endDate.month! {
             dates.append(currentDate)
             
             currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate)!

@@ -51,8 +51,7 @@ struct HomeView: View {
                     } else {
                         
                     }
-                }
-                .tag(0)
+                }.tag(0)
                 CalendarView()
                     .tag(1)
             }
