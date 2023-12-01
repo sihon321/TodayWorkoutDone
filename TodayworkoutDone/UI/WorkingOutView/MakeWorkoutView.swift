@@ -70,7 +70,6 @@ struct MakeWorkoutView: View {
                                                         selectWorkouts: injected.appState[\.userData].selectionWorkouts,
                                                         isMyWorkoutView: true,
                                                         myRoutine: $myRoutine)
-                                        .inject(injected)
                                         .onAppear {
                                             isAppendSets = false
                                         }

@@ -250,7 +250,7 @@ extension MyRoutine {
                 newRoutineMOArray.append(routineMO)
             }
         }
-        
+        myRoutineMO.id = id
         myRoutineMO.name = name
         myRoutineMO.routines = NSSet(array: newRoutineMOArray)
         return myRoutineMO
