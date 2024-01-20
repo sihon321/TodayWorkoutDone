@@ -54,7 +54,6 @@ struct SlideOverCardView<Content: View>: View {
                     } else {
                         hideTabValue = (topSafeArea + tabBarHeight + bottomSafeArea) - value
                     }
-                    print(value)
                 })
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
