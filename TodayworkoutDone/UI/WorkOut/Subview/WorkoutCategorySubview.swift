@@ -14,6 +14,7 @@ struct WorkoutCategorySubview: View {
         HStack(alignment: .center) {
             Image(uiImage: UIImage(named: "woman")!)
                 .padding(.leading, 15)
+                .padding([.top, .bottom], 10)
             VStack {
                 Text(category)
                     .font(.system(size: 18,

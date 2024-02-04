@@ -14,6 +14,7 @@ protocol HealthKitInteractor {
                             typesToRead: Set<HKQuantityType>) -> Deferred<Future<Bool, Error>>
     func stepCount() -> Future<Int, Error>
     func appleExerciseTime() -> Future<Int, Error>
+    func activeEnergyBurned() -> Future<Int, Error>
 }
 
 class RealHealthKitInteractor: HealthKitInteractor {
@@ -144,6 +145,48 @@ class RealHealthKitInteractor: HealthKitInteractor {
                 .store(in: &cancellables)
         }
     }
+    
+    func activeEnergyBurned() -> Future<Int, Error> {
+        Future { [weak self] promise in
+            guard let `self` = self else { return }
+            self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .activeEnergyBurned)!])
+                .sink(receiveCompletion: { completion in
+                    print("\(completion)")
+                }, receiveValue: { [self] _ in
+                    let calendar = NSCalendar.current
+                    let now = Date()
+                    let components = calendar.dateComponents([.year, .month, .day], from: now)
+                    guard let startDate = calendar.date(from: components) else {
+                        promise(.failure(HealthDataError.unavailableOnDevice))
+                        return
+                    }
+                     
+                    guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else {
+                        promise(.failure(HealthDataError.unavailableOnDevice))
+                        return
+                    }
+
+
+                    let today = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+                    
+                    self.healthStore.subject(quantityType: .quantityType(forIdentifier: .appleExerciseTime)!,
+                                             quantitySamplePredicate: today,
+                                             options: .cumulativeSum)
+                    .receive(on: RunLoop.main)
+                    .sink(receiveCompletion: { completion in
+                        print("\(completion)")
+                    }, receiveValue: { statistics in
+                        if let sumQuantity = statistics.sumQuantity() {
+                            promise(.success(Int(sumQuantity.doubleValue(for: .minute()))))
+                        } else {
+                            promise(.success(0))
+                        }
+                    })
+                    .store(in: &self.cancellables)
+                })
+                .store(in: &cancellables)
+        }
+    }
 }
 
 enum HealthDataError: Error {
@@ -152,6 +195,12 @@ enum HealthDataError: Error {
 }
 
 struct StubHealthKitInteractor: HealthKitInteractor {
+    func activeEnergyBurned() -> Future<Int, Error> {
+        Future { promise in
+            promise(.success(0))
+        }
+    }
+    
     
     func appleExerciseTime() -> Future<Int, Error> {
         Future { promise in

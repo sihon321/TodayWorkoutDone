@@ -52,6 +52,7 @@ struct TabButton: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 25, height: 25)
                 .frame(maxWidth: .infinity)
+                .tint(currentIndex == index ? Color(0xfeb548) : Color(0x939393))
         }
     }
 }

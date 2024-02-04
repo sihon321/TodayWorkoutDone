@@ -10,6 +10,7 @@ import SwiftUI
 enum MainContentType {
     case step
     case workoutTime
+    case energyBurn
 }
 
 struct MainContentSubView: View {
@@ -20,8 +21,9 @@ struct MainContentSubView: View {
     
     private var iconName: String {
         switch type {
-        case .step: return "main_walk"
-        case .workoutTime: return "main_walk"
+        case .step: return "figure.walk"
+        case .workoutTime: return "figure.strengthtraining.traditional"
+        case .energyBurn: return "flame.fill"
         }
     }
     
@@ -29,13 +31,14 @@ struct MainContentSubView: View {
         switch type {
         case .step: return "걸음"
         case .workoutTime: return "운동시간"
+        case .energyBurn: return "활동"
         }
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .firstTextBaseline) {
-                Image(iconName)
+                Image(systemName: iconName)
                 Text(headerTitle)
                     .font(.system(size: 15,
                                   weight: .semibold,
@@ -50,6 +53,8 @@ struct MainContentSubView: View {
                     MainContentStepView()
                 case .workoutTime:
                     MainContentWorkoutView()
+                case .energyBurn:
+                    MainContentEnergyBurn()
                 }
             }
             .padding(.leading, 15)

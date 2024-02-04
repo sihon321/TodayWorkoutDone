@@ -11,10 +11,15 @@ import Combine
 struct MainContentWorkoutView: View {
     @Environment(\.injected) private var injected: DIContainer
     @State private var exerciseTime: Int = 0
-    
+    private var hour: Int {
+        return exerciseTime / 60
+    }
+    private var minute: Int {
+        return exerciseTime % 60
+    }
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("\(exerciseTime)")
+            Text("\(hour)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
@@ -24,7 +29,7 @@ struct MainContentWorkoutView: View {
                               design: .default))
                 .foregroundColor(Color(0x7d7d7d))
                 .padding(.leading, -5)
-            Text("18")
+            Text("\(minute)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
