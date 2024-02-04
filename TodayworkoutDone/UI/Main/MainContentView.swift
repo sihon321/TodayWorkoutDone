@@ -20,6 +20,7 @@ struct MainContentView: View {
             LazyVGrid(columns: gridLayout, spacing: 10) {
                 MainContentSubView(type: .step)
                 MainContentSubView(type: .workoutTime)
+                MainContentSubView(type: .energyBurn)
             }
         }
         .padding([.leading, .trailing], 15)

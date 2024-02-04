@@ -20,6 +20,7 @@ struct MyWorkoutSubview: View {
                                   weight: .semibold,
                                   design: .default))
                     .padding(.leading, 15)
+                    .foregroundColor(.black)
                 Spacer()
                 Button(action: {}) {
                     Menu {
@@ -34,6 +35,7 @@ struct MyWorkoutSubview: View {
                             .contentShape(Rectangle())
                             .frame(minHeight: 20)
                             .padding(.trailing, 15)
+                            .tint(Color(0x939393))
                     }
                 }
             }
