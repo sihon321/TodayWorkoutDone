@@ -20,4 +20,15 @@ extension Date {
         let dateComponents = Calendar.current.dateComponents([.day], from: self)
         return dateComponents.day
     }
+    
+    static var currentDateForDeviceRegion: Date {
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        
+        let dateString = dateFormatter.string(from: currentDate)
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        return dateFormatter.date(from: dateString)!
+    }
 }
