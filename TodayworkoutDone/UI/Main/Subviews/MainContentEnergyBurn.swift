@@ -28,9 +28,14 @@ struct MainContentEnergyBurn: View {
 
 extension MainContentEnergyBurn {
     private var energyBurn: AnyPublisher<Int, Never> {
-        injected.interactors.healthkitInteractor.activeEnergyBurned()
-            .replaceError(with: 0)
-            .eraseToAnyPublisher()
+        injected.interactors.healthkitInteractor.activeEnergyBurned(
+            from: Calendar.current.date(byAdding: .day,
+                                        value: -1,
+                                        to: .currentDateForDeviceRegion)!,
+            to: .currentDateForDeviceRegion
+        )
+        .replaceError(with: 0)
+        .eraseToAnyPublisher()
     }
 }
 

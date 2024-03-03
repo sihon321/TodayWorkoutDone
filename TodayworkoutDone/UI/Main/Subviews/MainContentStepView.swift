@@ -33,9 +33,14 @@ struct MainContentStepView: View {
 
 extension MainContentStepView {
     private var stepCount: AnyPublisher<Int, Never> {
-        injected.interactors.healthkitInteractor.stepCount()
-            .replaceError(with: 0)
-            .eraseToAnyPublisher()
+        injected.interactors.healthkitInteractor.stepCount(
+            from: Calendar.current.date(byAdding: .day,
+                                        value: -1,
+                                        to: .currentDateForDeviceRegion)!,
+            to: .currentDateForDeviceRegion
+        )
+        .replaceError(with: 0)
+        .eraseToAnyPublisher()
     }
 }
 

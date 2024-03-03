@@ -49,9 +49,12 @@ struct MainContentWorkoutView: View {
 
 extension MainContentWorkoutView {
     private var appleExerciseTime: AnyPublisher<Int, Never> {
-        injected.interactors.healthkitInteractor.appleExerciseTime()
-            .replaceError(with: 0)
-            .eraseToAnyPublisher()
+        injected.interactors.healthkitInteractor.appleExerciseTime(
+            from: Date(),
+            to: Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        )
+        .replaceError(with: 0)
+        .eraseToAnyPublisher()
     }
 }
 

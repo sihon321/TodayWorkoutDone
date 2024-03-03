@@ -12,9 +12,9 @@ import Combine
 protocol HealthKitInteractor {
     func authorizeHealthKit(typesToShare: Set<HKQuantityType>,
                             typesToRead: Set<HKQuantityType>) -> Deferred<Future<Bool, Error>>
-    func stepCount() -> Future<Int, Error>
-    func appleExerciseTime() -> Future<Int, Error>
-    func activeEnergyBurned() -> Future<Int, Error>
+    func stepCount(from startDate: Date, to endDate: Date) -> Future<Int, Error>
+    func appleExerciseTime(from startDate: Date, to endDate: Date) -> Future<Int, Error>
+    func activeEnergyBurned(from startDate: Date, to endDate: Date) -> Future<Int, Error>
 }
 
 class RealHealthKitInteractor: HealthKitInteractor {
@@ -36,14 +36,14 @@ class RealHealthKitInteractor: HealthKitInteractor {
 //                    HKQuantityType.workoutType()
 //                ]
                 
-//                let typesToRead: Set = [
-//                    HKQuantityType.quantityType(forIdentifier: .stepCount)!,
-//                    HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-//                    HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
+                let typesToRead: Set = [
+                    HKQuantityType.quantityType(forIdentifier: .stepCount)!,
+                    HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+                    HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
 //                    HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
 //                    HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
-//                    HKObjectType.activitySummaryType()
-//                ]
+                    HKObjectType.activitySummaryType()
+                ]
                 
                 healthStore.requestAuthorization(toShare: typesToShare,
                                                  read: typesToRead) { isSuccess, error in
@@ -62,27 +62,13 @@ class RealHealthKitInteractor: HealthKitInteractor {
         }
     }
     
-    func stepCount() -> Future<Int, Error> {
+    func stepCount(from startDate: Date, to endDate: Date) -> Future<Int, Error> {
         Future { [weak self] promise in
             guard let `self` = self else { return }
             self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .stepCount)!])
                 .sink(receiveCompletion: { completion in
                     print("\(completion)")
                 }, receiveValue: { [self] _ in
-                    let calendar = NSCalendar.current
-                    let now = Date()
-                    let components = calendar.dateComponents([.year, .month, .day], from: now)
-                    guard let startDate = calendar.date(from: components) else {
-                        promise(.failure(HealthDataError.unavailableOnDevice))
-                        return
-                    }
-                     
-                    guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else {
-                        promise(.failure(HealthDataError.unavailableOnDevice))
-                        return
-                    }
-
-
                     let today = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
                     
                     self.healthStore.subject(quantityType: .quantityType(forIdentifier: .stepCount)!,
@@ -104,27 +90,14 @@ class RealHealthKitInteractor: HealthKitInteractor {
         }
     }
     
-    func appleExerciseTime() -> Future<Int, Error> {
+    func appleExerciseTime(from startDate: Date = Date(),
+                           to endDate: Date = Calendar.current.date(byAdding: .day, value: -1, to: Date())!) -> Future<Int, Error> {
         Future { [weak self] promise in
             guard let `self` = self else { return }
             self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .appleExerciseTime)!])
                 .sink(receiveCompletion: { completion in
                     print("\(completion)")
                 }, receiveValue: { [self] _ in
-                    let calendar = NSCalendar.current
-                    let now = Date()
-                    let components = calendar.dateComponents([.year, .month, .day], from: now)
-                    guard let startDate = calendar.date(from: components) else {
-                        promise(.failure(HealthDataError.unavailableOnDevice))
-                        return
-                    }
-                     
-                    guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else {
-                        promise(.failure(HealthDataError.unavailableOnDevice))
-                        return
-                    }
-
-
                     let today = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
                     
                     self.healthStore.subject(quantityType: .quantityType(forIdentifier: .appleExerciseTime)!,
@@ -146,27 +119,14 @@ class RealHealthKitInteractor: HealthKitInteractor {
         }
     }
     
-    func activeEnergyBurned() -> Future<Int, Error> {
+    func activeEnergyBurned(from startDate: Date = Date(),
+                            to endDate: Date = Calendar.current.date(byAdding: .day, value: -1, to: Date())!) -> Future<Int, Error> {
         Future { [weak self] promise in
             guard let `self` = self else { return }
             self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .activeEnergyBurned)!])
                 .sink(receiveCompletion: { completion in
                     print("\(completion)")
                 }, receiveValue: { [self] _ in
-                    let calendar = NSCalendar.current
-                    let now = Date()
-                    let components = calendar.dateComponents([.year, .month, .day], from: now)
-                    guard let startDate = calendar.date(from: components) else {
-                        promise(.failure(HealthDataError.unavailableOnDevice))
-                        return
-                    }
-                     
-                    guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else {
-                        promise(.failure(HealthDataError.unavailableOnDevice))
-                        return
-                    }
-
-
                     let today = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
                     
                     self.healthStore.subject(quantityType: .quantityType(forIdentifier: .appleExerciseTime)!,
@@ -195,19 +155,6 @@ enum HealthDataError: Error {
 }
 
 struct StubHealthKitInteractor: HealthKitInteractor {
-    func activeEnergyBurned() -> Future<Int, Error> {
-        Future { promise in
-            promise(.success(0))
-        }
-    }
-    
-    
-    func appleExerciseTime() -> Future<Int, Error> {
-        Future { promise in
-            promise(.success(0))
-        }
-    }
-    
     func authorizeHealthKit(typesToShare: Set<HKQuantityType>,
                             typesToRead: Set<HKQuantityType>) -> Deferred<Future<Bool, Error>> {
         return Deferred {
@@ -216,7 +163,20 @@ struct StubHealthKitInteractor: HealthKitInteractor {
             }
         }
     }
-    func stepCount() -> Future<Int, Error> {
+    
+    func stepCount(from startDate: Date, to endDate: Date) -> Future<Int, Error> {
+        Future { promise in
+            promise(.success(0))
+        }
+    }
+    
+    func activeEnergyBurned(from startDate: Date, to endDate: Date) -> Future<Int, Error> {
+        Future { promise in
+            promise(.success(0))
+        }
+    }
+    
+    func appleExerciseTime(from startDate: Date, to endDate: Date) -> Future<Int, Error> {
         Future { promise in
             promise(.success(0))
         }

@@ -36,7 +36,6 @@ extension HKHealthStore {
             subject.send(completion: .finished)
         }
         
-        
         execute(query)
         
         return subject.eraseToAnyPublisher()
