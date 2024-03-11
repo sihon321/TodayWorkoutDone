@@ -104,6 +104,8 @@ struct RealRoutineDBRepository: RoutineDBRepository {
                     }
                 }
 
+                print("Store id: \(workoutRoutine.uuid) date: \(workoutRoutine.date)")
+                
                 workoutRoutine.store(in: context, date: workoutRoutine.date, id: workoutRoutine.uuid, workouts: workouts, sets: setsMO)
             }
     }

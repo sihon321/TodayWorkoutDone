@@ -16,7 +16,7 @@ struct CalendarDetailView: View {
         NavigationStack {
             VStack {
                 List(filterWorkout(date: date, workoutRoutines), id: \.date) { workoutRoutine in
-                    Section(header: Text("\(workoutRoutine.date)")) {
+                    Section(header: Text("\(workoutRoutine.routines.count) exercises")) {
                         CalendarDetailSubView(workoutRoutine: workoutRoutine)
                     }
                 }

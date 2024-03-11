@@ -12,26 +12,34 @@ struct WorkingOutView: View {
     @Environment(\.injected) private var injected: DIContainer
     @State private var editMode: EditMode = .inactive
     @State private var isSavedWorkout: Bool = false
+    @State private var myRoutine: MyRoutine
     @Binding var isCloseWorking: Bool
     @Binding var hideTabValue: CGFloat
     @Binding var isSavedAlert: Bool
-    
     @State var secondsElapsed = 0
     @State var timer: Timer.TimerPublisher = Timer.publish(every: 1, on: .main, in: .common)
     @State var connectedTimer: Cancellable? = nil
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
-    private var myRoutine: MyRoutine {
-        injected.appState[\.userData.myRoutine]
+    
+    init(myRoutine: Binding<MyRoutine>,
+         isCloseWorking: Binding<Bool>,
+         hideTabValue: Binding<CGFloat>,
+         isSavedAlert: Binding<Bool>) {
+        self._myRoutine = .init(initialValue: myRoutine.wrappedValue)
+        self._isCloseWorking = .init(projectedValue: isCloseWorking)
+        self._hideTabValue = .init(projectedValue: hideTabValue)
+        self._isSavedAlert = .init(projectedValue: isSavedAlert)
     }
     
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach(myRoutine.routines) { routine in
+                ForEach($myRoutine.routines) { routine in
                     WorkingOutSection(
-                        routine: .constant(routine),
-                        editMode: $editMode, isAppendSets: .constant(false)
+                        routine: routine,
+                        editMode: $editMode,
+                        isAppendSets: .constant(false)
                     )
                 }
                 Spacer().frame(height: 100)
@@ -124,7 +132,8 @@ private extension WorkingOutView {
 struct WorkingOutView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkingOutView(isCloseWorking: .constant(false),
+        WorkingOutView(myRoutine: .constant(MyRoutine.mockedData),
+                       isCloseWorking: .constant(false),
                        hideTabValue: .constant(0.0),
                        isSavedAlert: .constant(false))
     }
