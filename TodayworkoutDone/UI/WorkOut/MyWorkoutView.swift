@@ -94,7 +94,8 @@ private extension MyWorkoutView {
                     ForEach(myRoutines.lazyList) { myRoutine in
                         Button(action: {
                             injected.appState[\.routing.myWorkoutView.alertMyWorkout] = true
-                            selectedRoutine = myRoutine
+                            selectedRoutine = MyRoutine(name: myRoutine.name,
+                                                        routines:  myRoutine.routines)
                         }) {
                             MyWorkoutSubview(myRoutine: myRoutine)
                         }

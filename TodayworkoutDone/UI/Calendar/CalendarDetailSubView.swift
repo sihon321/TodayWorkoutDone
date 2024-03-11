@@ -12,12 +12,15 @@ struct CalendarDetailSubView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            Text("\(workoutRoutine.date, format: Date.FormatStyle(date: .numeric, time: .standard))")
             ForEach(workoutRoutine.routines, id: \.id) { routine in
-                Text(routine.workouts.name)
-                ForEach(routine.sets) { sets in
-                    Text("\(sets.weight)")
+                HStack {
+                    Text(routine.workouts.name)
+                    Spacer()
+                    Text("\(routine.sets.count) Sets")
+                    Text("*")
+                    Text("\(routine.sets.compactMap({ $0.lab }).reduce(0, +)) lap")
                 }
-                .padding([.bottom], 5)
             }
         }
     }

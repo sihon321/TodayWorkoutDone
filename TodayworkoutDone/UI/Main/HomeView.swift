@@ -19,10 +19,6 @@ struct HomeView: View {
     @State private var isSavedAlert = false
     @State private var routineName = ""
     
-    private var myRoutine: MyRoutine {
-        injected.appState[\.userData.myRoutine]
-    }
-    
     private var bottomEdge: CGFloat
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.homeView)
@@ -44,7 +40,8 @@ struct HomeView: View {
                     }
                     if routingBinding.workingOutView.wrappedValue {
                         SlideOverCardView(hideTabValue: $hideTabValue, content: {
-                            WorkingOutView(isCloseWorking: $isCloseWorking,
+                            WorkingOutView(myRoutine: .constant(injected.appState[\.userData.myRoutine]),
+                                           isCloseWorking: $isCloseWorking,
                                            hideTabValue: $hideTabValue,
                                            isSavedAlert: $isSavedAlert)
                         })
@@ -82,9 +79,9 @@ struct HomeView: View {
 private extension HomeView {
     func saveMyRoutine() {
         injected.interactors.routineInteractor.store(
-            myRoutine: MyRoutine(id: myRoutine.id,
+            myRoutine: MyRoutine(id: injected.appState[\.userData.myRoutine].id,
                                  name: routineName,
-                                 routines: myRoutine.routines)
+                                 routines: injected.appState[\.userData.myRoutine].routines)
         )
     }
 }
