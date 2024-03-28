@@ -129,13 +129,13 @@ private extension CalendarView {
     
     func startDate(_ workoutRoutines: LazyList<WorkoutRoutine>) -> Date {
         let dates = workoutRoutines.array().compactMap({ $0.date })
-        let sortedDates = dates.sorted(by: <)
+        let sortedDates = dates.sorted(by: >)
         return sortedDates.first ?? Date()
     }
     
     func endDate(_ workoutRoutines: LazyList<WorkoutRoutine>) -> Date {
         let dates = workoutRoutines.array().compactMap({ $0.date })
-        let sortedDates = dates.sorted(by: >)
+        let sortedDates = dates.sorted(by: <)
         return sortedDates.first ?? Date()
     }
     
