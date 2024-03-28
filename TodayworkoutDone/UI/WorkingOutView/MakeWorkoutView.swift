@@ -22,7 +22,6 @@ struct MakeWorkoutView: View {
         $routingState.dispatched(to: injected.appState, \.routing.makeWorkoutView)
     }
     var isEdit: Bool
-    @State private var isAppendSets = true
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
@@ -48,8 +47,7 @@ struct MakeWorkoutView: View {
                     .padding([.leading], 15)
                 ForEach($myRoutine.routines) { routine in
                     WorkingOutSection(routine: routine,
-                                      editMode: $editMode,
-                                      isAppendSets: $isAppendSets)
+                                      editMode: $editMode)
                 }
                 .padding([.bottom], 30)
                 Button(action: {
@@ -70,9 +68,6 @@ struct MakeWorkoutView: View {
                                                         selectWorkouts: injected.appState[\.userData].selectionWorkouts,
                                                         isMyWorkoutView: true,
                                                         myRoutine: $myRoutine)
-                                        .onAppear {
-                                            isAppendSets = false
-                                        }
                                 }
                             }
                         }
