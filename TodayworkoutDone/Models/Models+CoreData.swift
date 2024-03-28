@@ -39,11 +39,10 @@ extension Workouts {
 
 extension Category {
     init?(managedObject: CategoryMO) {
-        guard let kor = managedObject.kor,
-              let en = managedObject.en
+        guard let name = managedObject.name
         else { return nil }
         
-        self.init(kor: kor, en: en)
+        self.init(name: name)
     }
     
     @discardableResult
@@ -51,8 +50,7 @@ extension Category {
         guard let category = CategoryMO.insertNew(in: context) else {
             return nil
         }
-        category.kor = kor
-        category.en = en
+        category.name = name
         return category
     }
 }

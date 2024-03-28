@@ -9,27 +9,24 @@ import Foundation
 import CoreData
 
 struct Category: Codable {
-    var kor: String
-    var en: String
+    var name: String
     
     enum CodingKeys: String, CodingKey {
-        case kor, en
+        case name
     }
     
-    init(kor: String, en: String) {
-        self.kor = kor
-        self.en = en
+    init(name: String) {
+        self.name = name
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(kor, forKey: .kor)
-        try container.encode(en, forKey: .en)
+        try container.encode(name, forKey: .name)
     }
 }
 
 extension Category: Identifiable {
-    var id: String { return kor }
+    var id: String { return name }
 }
 
 typealias Categories = [Category]
