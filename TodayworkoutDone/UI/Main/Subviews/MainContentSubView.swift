@@ -7,10 +7,12 @@
 
 import SwiftUI
 
-enum MainContentType {
+enum MainContentType: String, Identifiable {
     case step
     case workoutTime
     case energyBurn
+    
+    var id: String { self.rawValue }
 }
 
 struct MainContentSubView: View {

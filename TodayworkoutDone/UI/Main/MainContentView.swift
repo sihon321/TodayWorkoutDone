@@ -12,15 +12,20 @@ struct MainContentView: View {
     
     private let gridLayout = Array(repeating: GridItem(.flexible()),
                                    count: 2)
+    private var dataList: [MainContentType] = [.step, .workoutTime, .energyBurn]
     
     var body: some View {
         VStack {
             WeeklyChartView()
             Spacer(minLength: 15)
             LazyVGrid(columns: gridLayout, spacing: 10) {
-                MainContentSubView(type: .step)
-                MainContentSubView(type: .workoutTime)
-                MainContentSubView(type: .energyBurn)
+                ForEach(dataList) { data in
+                    NavigationLink {
+                        MainContentDetailView()
+                    } label: {
+                        MainContentSubView(type: data)
+                    }
+                }
             }
         }
         .padding([.leading, .trailing], 15)

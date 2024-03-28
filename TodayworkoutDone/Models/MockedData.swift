@@ -9,9 +9,9 @@ import Foundation
 
 extension Category {
     static let mockedData: [Category] = [
-        Category(kor: "헬스", en: "gym"),
-        Category(kor: "요가", en: "yoga"),
-        Category(kor: "필라테스", en: "pilates")
+        Category(name: "헬스"),
+        Category(name: "요가"),
+        Category(name: "필라테스")
     ]
 }
 

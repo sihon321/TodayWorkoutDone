@@ -1,10 +1,8 @@
 [
     {
-        "en": "weight",
-        "kor": "웨이트"
+        "name": "weight",
     },
     {
-        "en": "pilates",
-        "kor": "필라테스"
+        "name": "pilates"
     }
 ]

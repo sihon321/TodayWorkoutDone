@@ -12,14 +12,16 @@ struct MainView: View {
     var bottomEdge: CGFloat
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .leading) {
-                MainWelcomeView()
-                MainContentView()
-                    .padding(.bottom, 15 + bottomEdge + 35)
+        NavigationView {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(alignment: .leading) {
+                    MainWelcomeView()
+                    MainContentView()
+                        .padding(.bottom, 15 + bottomEdge + 35)
+                }
             }
+            .background(Color(0xf4f4f4))
         }
-        .background(Color(0xf4f4f4))
     }
 }
 

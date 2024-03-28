@@ -101,7 +101,7 @@ private extension WorkoutCategoryView {
             let categories = categories.array().filter {
                 if filteredCategory.isEmpty {
                     return true
-                } else if filteredCategory.contains($0.kor) || filteredCategory.contains($0.en) {
+                } else if filteredCategory.contains($0.name) {
                     return true
                 } else {
                     return false
@@ -116,7 +116,7 @@ private extension WorkoutCategoryView {
                                     myRoutine: $myRoutine)
                     .inject(injected)
                 } label: {
-                    WorkoutCategorySubview(category: category.kor)
+                    WorkoutCategorySubview(category: category.name)
                 }
             }
         }
