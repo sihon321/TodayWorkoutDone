@@ -12,7 +12,6 @@ struct WorkingOutSection: View {
     
     @Binding var routine: Routine
     @Binding var editMode: EditMode
-    @Binding var isAppendSets: Bool
     
     var body: some View {
         VStack {
@@ -34,7 +33,6 @@ struct WorkingOutSection: View {
             } footer: {
                 WorkingOutFooter()
                     .onTapGesture {
-                        isAppendSets = true
                         routine.sets.append(Sets())
                     }
             }
@@ -55,7 +53,6 @@ struct WorkingOutSection_Previews: PreviewProvider {
     
     static var previews: some View {
         WorkingOutSection(routine: .constant(routine),
-                          editMode: .constant(.active),
-                          isAppendSets: .constant(false))
+                          editMode: .constant(.active))
     }
 }

@@ -146,7 +146,7 @@ struct WorkoutListView_Previews: PreviewProvider {
     static var previews: some View {
         WorkoutListView(workoutsList: .loaded(Workouts.mockedData.lazyList),
                         selectWorkouts: [],
-                        category: Category(kor: "", en: ""))
+                        category: Category(kor: "테스트", en: "test"))
             .inject(.preview)
     }
 }
