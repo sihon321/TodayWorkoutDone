@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23E214" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Category" representedClassName="CategoryMO" syncable="YES" codeGenerationType="class">
         <attribute name="name" attributeType="String"/>
     </entity>
@@ -11,6 +11,7 @@
     <entity name="Routine" representedClassName="RoutineMO" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="stopwatch" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="workotusType" optional="YES" attributeType="String"/>
         <relationship name="myRoutine" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="MyRoutine"/>
         <relationship name="sets" toMany="YES" deletionRule="No Action" destinationEntity="Sets"/>
         <relationship name="workoutRoutine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutRoutine"/>
