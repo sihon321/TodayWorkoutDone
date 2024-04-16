@@ -37,16 +37,13 @@ struct HomeView: View {
                     if !routingBinding.workingOutView.wrappedValue {
                         ExcerciseStartView()
                             .padding([.bottom], 40)
-                    }
-                    if routingBinding.workingOutView.wrappedValue {
+                    } else {
                         SlideOverCardView(hideTabValue: $hideTabValue, content: {
                             WorkingOutView(myRoutine: .constant(injected.appState[\.userData.myRoutine]),
                                            isCloseWorking: $isCloseWorking,
                                            hideTabValue: $hideTabValue,
                                            isSavedAlert: $isSavedAlert)
                         })
-                    } else {
-                        
                     }
                 }.tag(0)
                 CalendarView()

@@ -13,19 +13,22 @@ struct Routine: Codable, Equatable {
     var sets: [Sets]
     var date: Date
     var stopwatch: Double
+    var workotusType: WorkoutsType
     
     enum CodingKeys: String, CodingKey {
-        case workouts, sets, date, stopwatch
+        case workouts, sets, date, stopwatch, workotusType
     }
     
     init(workouts: Workouts,
          sets: [Sets] = [Sets()],
          date: Date = .now,
-         stopwatch: Double = .zero) {
+         stopwatch: Double = .zero,
+         workouts type: WorkoutsType = .barbel) {
         self.workouts = workouts
         self.sets = sets
         self.date = date
         self.stopwatch = stopwatch
+        self.workotusType = type
     }
     
     init(from decoder: Decoder) throws {
@@ -34,6 +37,7 @@ struct Routine: Codable, Equatable {
         sets = try container.decode([Sets].self, forKey: .sets)
         date = try container.decode(Date.self, forKey: .date)
         stopwatch = try container.decode(Double.self, forKey: .stopwatch)
+        workotusType = try container.decode(WorkoutsType.self, forKey: .workotusType)
     }
 }
 

@@ -62,6 +62,7 @@
 		F2903B002AD81FDF008B1916 /* Integer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2903AFF2AD81FDF008B1916 /* Integer+Extension.swift */; };
 		F29285332A17CEE000C3A055 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29285322A17CEE000C3A055 /* CustomTabBar.swift */; };
 		F29285352A17D25400C3A055 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29285342A17D25400C3A055 /* HomeView.swift */; };
+		F292A3A72BB3318900B8EDCD /* WorkoutsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292A3A62BB3318900B8EDCD /* WorkoutsType.swift */; };
 		F296FD722AB5EDF000BCF890 /* CalendarViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F296FD712AB5EDF000BCF890 /* CalendarViewComponent.swift */; };
 		F2AEA40F2A66E31E0023871D /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E52790829C7099B000DCD7F /* Routine.swift */; };
 		F2C474E62A9006C200291AE4 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C474E52A9006C200291AE4 /* Date+Extension.swift */; };
@@ -163,6 +164,7 @@
 		F2903AFF2AD81FDF008B1916 /* Integer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Integer+Extension.swift"; sourceTree = "<group>"; };
 		F29285322A17CEE000C3A055 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		F29285342A17D25400C3A055 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		F292A3A62BB3318900B8EDCD /* WorkoutsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsType.swift; sourceTree = "<group>"; };
 		F296FD712AB5EDF000BCF890 /* CalendarViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewComponent.swift; sourceTree = "<group>"; };
 		F2C474E52A9006C200291AE4 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		F2C63E1F2959F3C700D02F76 /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				8EC563642A6D206600A8DCD5 /* MockedData.swift */,
 				8ED37AF22AC87E0700B4F206 /* MyRoutine.swift */,
 				8ED37AF42AC87E2200B4F206 /* Sets.swift */,
+				F292A3A62BB3318900B8EDCD /* WorkoutsType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -661,6 +664,7 @@
 				8E52790B29C7134D000DCD7F /* ExcerciseStartView.swift in Sources */,
 				F2E221502999555F00B7DCCB /* CheckboxToggleStyle.swift in Sources */,
 				F2335417295B4BF9006E12CB /* WorkingOutView.swift in Sources */,
+				F292A3A72BB3318900B8EDCD /* WorkoutsType.swift in Sources */,
 				F25C89D12A654E47007D920A /* Models+CoreData.swift in Sources */,
 				F26494962A6C039000B0A31C /* Lodable.swift in Sources */,
 				F23264A229DC6A58008649FE /* Category.swift in Sources */,

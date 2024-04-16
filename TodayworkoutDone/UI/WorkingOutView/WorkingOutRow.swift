@@ -28,7 +28,7 @@ struct WorkingOutRow: View {
                 Text(count)
             }
             Spacer()
-            Text("\(sets.prevLab ?? 0)")
+            Text("\(sets.prevLab)")
                 .frame(minWidth: 40)
                 .background(Color(uiColor: .secondarySystemFill))
                 .cornerRadius(5)
@@ -41,7 +41,7 @@ struct WorkingOutRow: View {
                 Text(weight)
             }
             Spacer()
-            Text(String(format: "%.1f", sets.prevWeight ?? 0.0))
+            Text(String(format: "%.1f", sets.prevWeight))
                 .frame(minWidth: 40)
                 .background(Color(uiColor: .secondarySystemFill))
                 .cornerRadius(5)
