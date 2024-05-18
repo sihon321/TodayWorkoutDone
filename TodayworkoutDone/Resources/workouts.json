@@ -1,17 +1,17 @@
 [
         {
             "name": "스쿼트",
-            "category": "웨이트",
+            "category": "weight",
             "target": "하체"
         },
         {
             "name": "데드리프트",
-            "category": "웨이트",
+            "category": "weight",
             "target": "등"
         },
         {
             "name": "벤치프래스",
-            "category": "웨이트",
+            "category": "weight",
             "target": "가슴"
         },
         {
