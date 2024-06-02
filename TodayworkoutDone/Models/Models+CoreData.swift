@@ -219,7 +219,7 @@ extension MyRoutine {
                     newRoutineMOArray.append(filteredRoutineMO)
                 }
             } else {
-                let fetchRequest = RoutineMO.routine(id: UUID(uuidString: routine.id))
+                let fetchRequest = RoutineMO.newFetchRequest()
                 guard let routineMO = try? context.fetch(fetchRequest).first else {
                     continue
                 }
