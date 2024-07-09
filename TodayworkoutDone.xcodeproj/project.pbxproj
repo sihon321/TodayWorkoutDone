@@ -51,6 +51,7 @@
 		F264949C2A6C11E000B0A31C /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F264949B2A6C11E000B0A31C /* ActivityIndicatorView.swift */; };
 		F264AC5C29D21F3A0003E70D /* category.json in Resources */ = {isa = PBXBuildFile; fileRef = F264AC5B29D21F3A0003E70D /* category.json */; };
 		F26808A92A9CE0140016E8E9 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26808A82A9CE0140016E8E9 /* CalendarView.swift */; };
+		F2709CC22C3D866A00302DB0 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F2709CC12C3D866A00302DB0 /* ComposableArchitecture */; };
 		F273486B2AAB037600C04347 /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273486A2AAB037600C04347 /* CalendarViewCell.swift */; };
 		F27631B22A7D0B0A008ACD2F /* RoutineDBRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27631B12A7D0B0A008ACD2F /* RoutineDBRepository.swift */; };
 		F27631B42A7D2374008ACD2F /* RoutinesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27631B32A7D2374008ACD2F /* RoutinesInteractor.swift */; };
@@ -201,6 +202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2709CC22C3D866A00302DB0 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,6 +516,7 @@
 			);
 			name = TodayworkoutDone;
 			packageProductDependencies = (
+				F2709CC12C3D866A00302DB0 /* ComposableArchitecture */,
 			);
 			productName = TodayworkoutDone;
 			productReference = F2E74CE22921F73500BD35F6 /* TodayworkoutDone.app */;
@@ -588,6 +591,7 @@
 			);
 			mainGroup = F2E74CD92921F73500BD35F6;
 			packageReferences = (
+				F2709CC02C3D866A00302DB0 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = F2E74CE32921F73500BD35F6 /* Products */;
 			projectDirPath = "";
@@ -1072,6 +1076,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F2709CC02C3D866A00302DB0 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.11.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F2709CC12C3D866A00302DB0 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F2709CC02C3D866A00302DB0 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		F25C89CA2A652AD3007D920A /* db_model_v1.xcdatamodeld */ = {
