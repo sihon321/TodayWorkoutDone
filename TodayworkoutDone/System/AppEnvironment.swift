@@ -15,7 +15,7 @@ struct AppEnvironment {
 
 extension AppEnvironment {
     static func bootstrap() -> AppEnvironment {
-        let appState = Store<AppState>(AppState())
+        let appState = LegacyStore<AppState>(AppState())
         
         let webRepositories = configuredWebRepositories()
         let dbRepositories = configuredDBRepositories()
@@ -47,7 +47,7 @@ extension AppEnvironment {
                      routineRepository: routineRepository)
     }
     
-    private static func configuredInteractors(appState: Store<AppState>,
+    private static func configuredInteractors(appState: LegacyStore<AppState>,
                                               dbRepositories: DIContainer.DBRepositories,
                                               webRepositories: DIContainer.WebRepositories
     ) -> DIContainer.Interactors {

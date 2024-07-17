@@ -21,11 +21,11 @@ protocol WorkoutInteractor {
 struct RealWorkoutInteractor: WorkoutInteractor {
     let webRepository: WorkoutWebRepository
     let dbRepository: WorkoutDBRepository
-    let appState: Store<AppState>
+    let appState: LegacyStore<AppState>
     
     init(webRepository: WorkoutWebRepository,
          dbRepository: WorkoutDBRepository,
-         appState: Store<AppState>) {
+         appState: LegacyStore<AppState>) {
         self.webRepository = webRepository
         self.dbRepository = dbRepository
         self.appState = appState
