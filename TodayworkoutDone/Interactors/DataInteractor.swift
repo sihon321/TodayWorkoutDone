@@ -14,10 +14,10 @@ protocol DataInteractor {
 }
 
 struct WorkoutDataInteractor: DataInteractor {
-    let appState: Store<AppState>
+    let appState: LegacyStore<AppState>
     var persistentContainer = NSPersistentContainer(name: "ModelData")
     
-    init(appState: Store<AppState>) {
+    init(appState: LegacyStore<AppState>) {
         self.appState = appState
         
         loadPersistentStores()

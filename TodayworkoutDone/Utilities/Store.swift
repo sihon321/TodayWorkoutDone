@@ -8,9 +8,9 @@
 import SwiftUI
 import Combine
 
-typealias Store<State> = CurrentValueSubject<State, Never>
+typealias LegacyStore<State> = CurrentValueSubject<State, Never>
 
-extension Store {
+extension LegacyStore {
     
     subscript<T>(keyPath: WritableKeyPath<Output, T>) -> T where T: Equatable {
         get { value[keyPath: keyPath] }
@@ -36,7 +36,7 @@ extension Store {
 }
 
 extension Binding where Value: Equatable {
-    func dispatched<State>(to state: Store<State>,
+    func dispatched<State>(to state: LegacyStore<State>,
                            _ keyPath: WritableKeyPath<State, Value>) -> Self {
         return onSet { state[keyPath] = $0 }
     }

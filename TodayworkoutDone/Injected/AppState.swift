@@ -24,7 +24,7 @@ extension AppState {
 extension AppState {
     struct ViewRouting: Equatable {
         var homeView = HomeView.Routing()
-        var excerciseStartView = ExcerciseStartView.Routing()
+//        var excerciseStartView = ExcerciseStartView.Routing()
         var workoutView = WorkoutView.Routing()
         var workoutCategoryView = WorkoutCategoryView.Routing()
         var workoutListView = WorkoutListView.Routing()

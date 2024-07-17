@@ -6,20 +6,46 @@
 //
 
 import SwiftUI
-import Combine
+import ComposableArchitecture
 
-struct ExcerciseStartView: View {
-    @Environment(\.injected) private var injected: DIContainer
-    @State private var routingState: Routing = .init()
-    private var routingBinding: Binding<Routing> {
-        $routingState.dispatched(to: injected.appState, \.routing.excerciseStartView)
+@Reducer
+struct ExcerciseStarter {
+    @ObservableState
+    struct State: Equatable {
+        var isWorkoutPresented = false
+        var woktout = WorkoutReducer.State()
     }
     
+    enum Action {
+        case setSheet(isPresented: Bool)
+        case workout(WorkoutReducer.Action)
+    }
+    
+    var body: some Reducer<State, Action> {
+
+        Reduce { state, action in
+            switch action {
+            case .setSheet(let isPresented):
+                state.isWorkoutPresented = isPresented
+                return .none
+            case .workout(.dismiss):
+                state.isWorkoutPresented = false
+                return .none
+            case .workout(.search(_)):
+                return .none
+            }
+        }
+    }
+}
+
+struct ExcerciseStartView: View {
+    @Bindable var store: StoreOf<ExcerciseStarter>
+
     var body: some View {
         VStack {
             Spacer()
             Button(action: {
-                injected.appState[\.routing.excerciseStartView.workoutView] = true
+                store.send(.setSheet(isPresented: true))
             }) {
                 Text("워크아웃 시작")
                     .frame(minWidth: 0, maxWidth: .infinity - 30)
@@ -30,31 +56,20 @@ struct ExcerciseStartView: View {
                                                 style: .continuous))
             }
             .padding(.horizontal, 30)
-            .fullScreenCover(isPresented: routingBinding.workoutView) {
-                WorkoutView()
-                    .inject(injected)
+            .fullScreenCover(isPresented: $store.isWorkoutPresented.sending(\.setSheet)) {
+                WorkoutView(store: store.scope(state: \.woktout,
+                                                    action: \.workout))
             }
             .offset(y: -15)
         }
-        .onReceive(routingUpdate) { self.routingState = $0 }
     }
 }
 
-extension ExcerciseStartView {
-    struct Routing: Equatable {
-        var workoutView: Bool = false
-    }
-}
-
-private extension ExcerciseStartView {
-    var routingUpdate: AnyPublisher<Routing, Never> {
-        injected.appState.updates(for: \.routing.excerciseStartView)
-    }
-}
-
-struct ExcerciseStartView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExcerciseStartView()
+#Preview {
+    NavigationStack {
+        let state = ExcerciseStarter.State()
+        let store = Store(initialState: state, reducer: { ExcerciseStarter() })
+        ExcerciseStartView(store: store)
     }
 }
 

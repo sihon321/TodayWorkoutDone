@@ -7,15 +7,74 @@
 
 import SwiftUI
 import Combine
+import ComposableArchitecture
+
+@Reducer
+struct WorkoutReducer {
+    @ObservableState
+    struct State: Equatable {
+        var workoutsList: [Workouts] = []
+        var keyword: String = ""
+        var search = SearchReducer.State()
+    }
+    
+    enum Action {
+        case dismiss
+        case search(SearchReducer.Action)
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .dismiss:
+                return .none
+            case .search(.search(let keyword)):
+                return .none
+            }
+        }
+    }
+}
 
 struct WorkoutView: View {
+    @Bindable var store: StoreOf<WorkoutReducer>
+    
     @Environment(\.injected) private var injected: DIContainer
     @State private var workoutsList: Loadable<LazyList<Workouts>> = .notRequested
     @State private var routingState: Routing = .init()
     @State private var text: String = ""
     
+    init(store: StoreOf<WorkoutReducer>) {
+        self.store = store
+    }
+    
     var body: some View {
-        content
+        NavigationView {
+            ScrollView {
+                VStack {
+                    SearchBar(store: store.scope(state: \.search, action: \.search))
+                        .padding(.top, 10)
+                    MyWorkoutView(workoutsList: $workoutsList, search: $text)
+                        .padding(.top, 10)
+                    WorkoutCategoryView(workoutsList: workoutsList,
+                                        selectWorkouts: injected.appState[\.userData].selectionWorkouts,
+                                        search: $text)
+                        .inject(injected)
+                        .padding(.top, 10)
+                }
+            }
+            .background(Color(0xf4f4f4))
+            .navigationBarTitle("workout", displayMode: .inline)
+            .toolbar(content: {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
+                        store.send(.dismiss)
+                    }, label: {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.black)
+                    })
+                }
+            })
+        }
         .onReceive(routingUpdate) { self.routingState = $0 }
         .onAppear {
             injected.appState[\.userData.selectionWorkouts].removeAll()
@@ -73,8 +132,10 @@ private extension WorkoutView {
         NavigationView {
             ScrollView {
                 VStack {
-                    SearchBar(text: $text)
-                        .padding(.top, 10)
+                    SearchBar(store: Store(initialState: SearchReducer.State()) {
+                        SearchReducer()
+                    })
+                    .padding(.top, 10)
                     MyWorkoutView(workoutsList: $workoutsList, search: $text)
                         .padding(.top, 10)
                     WorkoutCategoryView(workoutsList: workoutsList,
@@ -89,7 +150,7 @@ private extension WorkoutView {
             .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        injected.appState[\.routing.excerciseStartView.workoutView] = false
+                        store.send(.dismiss)
                     }, label: {
                         Image(systemName: "xmark")
                             .foregroundColor(.black)
@@ -115,7 +176,9 @@ private extension WorkoutView {
 
 struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutView()
-            .background(Color.gray)
+        WorkoutView(store: Store(initialState: WorkoutReducer.State()) {
+            WorkoutReducer()
+        })
+        .background(Color.gray)
     }
 }

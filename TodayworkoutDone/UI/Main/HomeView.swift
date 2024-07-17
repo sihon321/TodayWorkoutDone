@@ -6,7 +6,42 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 import Combine
+
+@Reducer
+struct HomeReducer {
+    enum Tab { case workout }
+    
+    @ObservableState
+    struct State: Equatable {
+        var currentTab = Tab.workout
+        var hideTabValue = 0
+        @Presents var alert: AlertState<Action.Alert>?
+    }
+    
+    enum Action {
+        case alert(PresentationAction<Alert>)
+        
+        @CasePathable
+        enum Alert {
+            case isSaved
+            case isClosedWorking
+        }
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .alert(.presented(.isSaved)), .alert(.presented(.isClosedWorking)):
+                return .none
+                
+            case .alert:
+                return .none
+            }
+        }
+    }
+}
 
 struct HomeView: View {
     @Environment(\.injected) private var injected: DIContainer
@@ -35,8 +70,12 @@ struct HomeView: View {
                 ZStack {
                     MainView(bottomEdge: bottomEdge)
                     if !routingBinding.workingOutView.wrappedValue {
-                        ExcerciseStartView()
-                            .padding([.bottom], 40)
+                        ExcerciseStartView(
+                            store: Store(initialState: ExcerciseStarter.State()) {
+                                ExcerciseStarter()
+                            }
+                        )
+                        .padding([.bottom], 40)
                     } else {
                         SlideOverCardView(hideTabValue: $hideTabValue, content: {
                             WorkingOutView(myRoutine: .constant(injected.appState[\.userData.myRoutine]),

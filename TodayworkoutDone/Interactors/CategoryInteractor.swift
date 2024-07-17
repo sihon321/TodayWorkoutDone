@@ -16,11 +16,11 @@ protocol CategoryInteractor {
 class RealCategoryInteractor: CategoryInteractor {
     let webRepository: CategoryWebRepository
     let dbRepository: CategoryDBRepository
-    let appState: Store<AppState>
+    let appState: LegacyStore<AppState>
     
     init(webRepository: CategoryWebRepository,
          dbRepository: CategoryDBRepository,
-         appState: Store<AppState>) {
+         appState: LegacyStore<AppState>) {
         self.webRepository = webRepository
         self.dbRepository = dbRepository
         self.appState = appState

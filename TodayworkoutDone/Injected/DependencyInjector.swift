@@ -9,16 +9,16 @@ import SwiftUI
 import Combine
 
 struct DIContainer: EnvironmentKey {
-    let appState: Store<AppState>
+    let appState: LegacyStore<AppState>
     let interactors: Interactors
     
-    init(appState: Store<AppState>, interactors: Interactors) {
+    init(appState: LegacyStore<AppState>, interactors: Interactors) {
         self.appState = appState
         self.interactors = interactors
     }
     
     init(appState: AppState, interactors: Interactors) {
-        self.init(appState: Store<AppState>(appState), interactors: interactors)
+        self.init(appState: LegacyStore<AppState>(appState), interactors: interactors)
     }
     
     static var defaultValue: Self { Self.default }
