@@ -29,6 +29,7 @@ struct WorkoutReducer {
             case .dismiss:
                 return .none
             case .search(.search(let keyword)):
+                state.keyword = keyword
                 return .none
             }
         }

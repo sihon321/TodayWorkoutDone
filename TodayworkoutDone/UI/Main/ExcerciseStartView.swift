@@ -22,7 +22,6 @@ struct ExcerciseStarter {
     }
     
     var body: some Reducer<State, Action> {
-
         Reduce { state, action in
             switch action {
             case .setSheet(let isPresented):
@@ -58,7 +57,7 @@ struct ExcerciseStartView: View {
             .padding(.horizontal, 30)
             .fullScreenCover(isPresented: $store.isWorkoutPresented.sending(\.setSheet)) {
                 WorkoutView(store: store.scope(state: \.woktout,
-                                                    action: \.workout))
+                                               action: \.workout))
             }
             .offset(y: -15)
         }

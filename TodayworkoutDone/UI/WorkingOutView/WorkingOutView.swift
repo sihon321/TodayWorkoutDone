@@ -7,14 +7,39 @@
 
 import SwiftUI
 import Combine
+import ComposableArchitecture
+
+@Reducer
+struct WorkingOutReducer {
+    @ObservableState
+    struct State: Equatable {
+        var isHideTabBar = false
+        var tabBarOffset: CGFloat = 0.0
+    }
+    
+    enum Action {
+        case hideTabBar
+        case setTabBarOffset(offset: CGFloat)
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            default:
+                return .none
+            }
+        }
+    }
+}
 
 struct WorkingOutView: View {
+    @Bindable var store: StoreOf<WorkingOutReducer>
+    
     @Environment(\.injected) private var injected: DIContainer
     @State private var editMode: EditMode = .inactive
     @State private var isSavedWorkout: Bool = false
     @State private var myRoutine: MyRoutine
-    @Binding var isCloseWorking: Bool
-    @Binding var hideTabValue: CGFloat
+
     @Binding var isSavedAlert: Bool
     @State var secondsElapsed = 0
     @State var timer: Timer.TimerPublisher = Timer.publish(every: 1, on: .main, in: .common)
@@ -22,13 +47,11 @@ struct WorkingOutView: View {
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
-    init(myRoutine: Binding<MyRoutine>,
-         isCloseWorking: Binding<Bool>,
-         hideTabValue: Binding<CGFloat>,
+    init(store: StoreOf<WorkingOutReducer>,
+         myRoutine: Binding<MyRoutine>,
          isSavedAlert: Binding<Bool>) {
+        self.store = store
         self._myRoutine = .init(initialValue: myRoutine.wrappedValue)
-        self._isCloseWorking = .init(projectedValue: isCloseWorking)
-        self._hideTabValue = .init(projectedValue: hideTabValue)
         self._isSavedAlert = .init(projectedValue: isSavedAlert)
     }
     
@@ -75,16 +98,16 @@ struct WorkingOutView: View {
         .alert("워크아웃을 저장하겠습니까?", isPresented: $isSavedWorkout) {
             Button("Close") {
                 injected.appState[\.routing.homeView.workingOutView] = false
-                isCloseWorking = true
-                hideTabValue = 0.0
+                store.send(.hideTabBar)
+                store.send(.setTabBarOffset(offset: 0.0))
             }
             Button("Cancel") {
                 restartTimer()
             }
             Button("OK") {
                 injected.appState[\.routing.homeView.workingOutView] = false
-                isCloseWorking = true
-                hideTabValue = 0.0
+                store.send(.hideTabBar)
+                store.send(.setTabBarOffset(offset: 0.0))
                 if !injected.interactors.routineInteractor.find(myRoutine: myRoutine) {
                     isSavedAlert = true
                 }
@@ -128,12 +151,12 @@ private extension WorkingOutView {
     }
 }
 
-struct WorkingOutView_Previews: PreviewProvider {
-    @Environment(\.presentationMode) static var presentationmode
-    static var previews: some View {
-        WorkingOutView(myRoutine: .constant(MyRoutine.mockedData),
-                       isCloseWorking: .constant(false),
-                       hideTabValue: .constant(0.0),
-                       isSavedAlert: .constant(false))
-    }
-}
+//struct WorkingOutView_Previews: PreviewProvider {
+//    @Environment(\.presentationMode) static var presentationmode
+//    static var previews: some View {
+//        WorkingOutView(myRoutine: .constant(MyRoutine.mockedData),
+//                       isCloseWorking: .constant(false),
+//                       hideTabValue: .constant(0.0),
+//                       isSavedAlert: .constant(false))
+//    }
+//}

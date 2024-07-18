@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import ComposableArchitecture
 
 struct ContentView: View {
     @Environment(\.presentationMode) var presentationmode
@@ -20,9 +21,14 @@ struct ContentView: View {
         GeometryReader { proxy in
             let bottomEdge = proxy.safeAreaInsets.bottom
             
-            HomeView(bottomEdge: (bottomEdge == 0 ? 15 : bottomEdge))
-                .inject(container)
-                .ignoresSafeArea(.all, edges: .bottom)
+            HomeView(
+                bottomEdge: (bottomEdge == 0 ? 15 : bottomEdge),
+                store: Store(initialState: HomeReducer.State()) {
+                    HomeReducer()
+                }
+            )
+            .inject(container)
+            .ignoresSafeArea(.all, edges: .bottom)
         }
     }
 }
