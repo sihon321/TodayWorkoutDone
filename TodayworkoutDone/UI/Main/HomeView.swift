@@ -15,40 +15,39 @@ struct HomeReducer {
     
     @ObservableState
     struct State: Equatable {
-        var currentTab = Tab.workout
         var routineName = ""
         var workingOut = WorkingOutReducer.State()
-        
-        @Presents var alert: AlertState<Action.Alert>?
+        var tabBar = CustomTabBarReducer.State(
+            tabButton: TabButtonReducer.State(
+                info: TabButtonReducer.TabInfo(imageName: "dumbbell.fill", 
+                                               index: 0)
+            )
+        )
     }
     
     enum Action {
-        case alert(PresentationAction<Alert>)
         case enterRoutineName(name: String)
         case workingOut(WorkingOutReducer.Action)
-        
-        @CasePathable
-        enum Alert {
-            case isSaved
-            case isClosedWorking
-        }
+        case tabBar(CustomTabBarReducer.Action)
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .alert(.presented(.isSaved)), .alert(.presented(.isClosedWorking)):
-                return .none
-            case .alert:
-                return .none
             case .enterRoutineName(let name):
                 state.routineName = name
                 return .none
             case .workingOut(.hideTabBar):
-                state.workingOut.isHideTabBar = false
+                state.workingOut.isHideTabBar = true
                 return .none
             case .workingOut(.setTabBarOffset(let offset)):
                 state.workingOut.tabBarOffset = offset
+                return .none
+            case .workingOut(.saveAlert(let isSavedAlert)):
+                state.workingOut.isSavedAlert = isSavedAlert
+                return .none
+            case .tabBar(.tabButton(.setTab(let info))):
+                state.tabBar.tabButton.info = info
                 return .none
             }
         }
@@ -61,8 +60,6 @@ struct HomeView: View {
     @ObservedObject var viewStore: ViewStoreOf<HomeReducer>
 
     @State private var routingState: Routing = .init()
-    @State private var currentTab = "dumbbell.fill"
-    @State private var currentIndex = 0
     @State private var isSavedAlert = false
     
     private var bottomEdge: CGFloat
@@ -79,7 +76,12 @@ struct HomeView: View {
     
     var body: some View {
         ZStack {
-            TabView(selection: $currentIndex) {
+            TabView(
+                selection: viewStore.binding(
+                    get: { $0.tabBar.tabButton.info },
+                    send: { HomeReducer.Action.tabBar(.tabButton(.setTab(info: $0))) }
+                ).index
+            ) {
                 ZStack {
                     MainView(bottomEdge: bottomEdge)
                     if !routingBinding.workingOutView.wrappedValue {
@@ -102,14 +104,16 @@ struct HomeView: View {
                                     isSavedAlert: $isSavedAlert)
                             })
                     }
-                }.tag(0)
+                }
+                .tag(0)
+                
                 CalendarView()
                     .tag(1)
             }
             .overlay (
                 VStack {
-                    CustomTabBar(currentTab: $currentTab,
-                                 currentIndex: $currentIndex,
+                    CustomTabBar(store: store.scope(state: \.tabBar, 
+                                                    action: \.tabBar),
                                  bottomEdge: bottomEdge)
                 }.offset(y: store.state.workingOut.isHideTabBar ? 0.0 : store.state.workingOut.tabBarOffset),
                 alignment: .bottom
@@ -117,12 +121,19 @@ struct HomeView: View {
             Spacer()
         }
         .onReceive(routingUpdate) { self.routingState = $0 }
-        .alert("루틴은 저장하겠습니까?", isPresented: $isSavedAlert) {
+        .alert("루틴은 저장하겠습니까?",
+               isPresented: viewStore.binding(
+                get: { $0.workingOut.isSavedAlert },
+                send: { HomeReducer.Action.workingOut(.saveAlert(isSavedAlert: $0)) }
+               )
+        ) {
             TextField("루틴 이름을 정해주세요", text: viewStore.binding(
                 get: \.routineName,
                 send: HomeReducer.Action.enterRoutineName)
             )
-            Button("Cancel") { }
+            Button("Cancel") { 
+                viewStore.send(.workingOut(.saveAlert(isSavedAlert: false)))
+            }
             Button("OK") {
                 saveMyRoutine()
             }

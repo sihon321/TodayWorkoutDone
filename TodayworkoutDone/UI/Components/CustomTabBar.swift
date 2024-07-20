@@ -6,20 +6,41 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
+
+@Reducer
+struct CustomTabBarReducer {
+    @ObservableState
+    struct State: Equatable {
+        var tabButton: TabButtonReducer.State
+    }
+    
+    enum Action {
+        case tabButton(TabButtonReducer.Action)
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .tabButton(_):
+                return .none
+            }
+        }
+    }
+}
 
 struct CustomTabBar: View {
+    @Bindable var store: StoreOf<CustomTabBarReducer>
     
-    @Binding var currentTab: String
-    @Binding var currentIndex: Int
     var bottomEdge: CGFloat
     let tab: [String] = ["dumbbell.fill", "calendar"]
     
     var body: some View {
         HStack(spacing: 0) {
             ForEach(tab.indices, id: \.self) { index in
-                TabButton(image: tab[index],
-                          currentTab: $currentTab,
-                          currentIndex: $currentIndex,
+                TabButton(store: store.scope(state: \.tabButton,
+                                             action: \.tabButton),
+                          image: tab[index],
                           index: index)
             }
         }
@@ -29,22 +50,47 @@ struct CustomTabBar: View {
     }
 }
 
-struct CustomTabBar_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomTabBar(currentTab: .constant("dumbbell.fill"), currentIndex: .constant(0), bottomEdge: 15)
+//struct CustomTabBar_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CustomTabBar(currentTab: .constant("dumbbell.fill"), currentIndex: .constant(0), bottomEdge: 15)
+//    }
+//}
+
+@Reducer
+struct TabButtonReducer {
+    struct TabInfo: Equatable, Hashable {
+        var imageName: String
+        var index: Int
+    }
+    @ObservableState
+    struct State: Equatable {
+        var info: TabInfo
+    }
+    
+    enum Action {
+        case setTab(info: TabInfo)
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .setTab(_):
+                return .none
+            }
+        }
     }
 }
 
 struct TabButton: View {
+    @Bindable var store: StoreOf<TabButtonReducer>
+    
     var image: String
-    @Binding var currentTab: String
-    @Binding var currentIndex: Int
     var index: Int
     
     var body: some View {
         Button {
-            withAnimation{ currentTab = image }
-            currentIndex = index
+            store.send(.setTab(info: TabButtonReducer.TabInfo(imageName: image,
+                                                              index: index)))
         } label: {
             Image(systemName: image)
                 .renderingMode(.template)
@@ -52,7 +98,7 @@ struct TabButton: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 25, height: 25)
                 .frame(maxWidth: .infinity)
-                .tint(currentIndex == index ? Color(0xfeb548) : Color(0x939393))
+                .tint(store.state.info.index == index ? Color(0xfeb548) : Color(0x939393))
         }
     }
 }
