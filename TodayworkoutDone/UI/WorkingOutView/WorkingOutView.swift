@@ -15,11 +15,13 @@ struct WorkingOutReducer {
     struct State: Equatable {
         var isHideTabBar = false
         var tabBarOffset: CGFloat = 0.0
+        var isSavedAlert = false
     }
     
     enum Action {
         case hideTabBar
         case setTabBarOffset(offset: CGFloat)
+        case saveAlert(isSavedAlert: Bool)
     }
     
     var body: some Reducer<State, Action> {
@@ -110,6 +112,7 @@ struct WorkingOutView: View {
                 store.send(.setTabBarOffset(offset: 0.0))
                 if !injected.interactors.routineInteractor.find(myRoutine: myRoutine) {
                     isSavedAlert = true
+                    store.send(.saveAlert(isSavedAlert: true))
                 }
                 saveWorkoutRoutine(secondsElapsed)
             }
