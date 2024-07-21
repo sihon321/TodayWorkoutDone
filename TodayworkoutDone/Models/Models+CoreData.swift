@@ -15,7 +15,7 @@ extension RoutineMO: ManagedEntity { }
 extension MyRoutineMO: ManagedEntity { }
 extension WorkoutRoutineMO: ManagedEntity { }
 
-extension Workouts {
+extension Workout {
     init?(managedObject: WorkoutsMO) {
         guard let name = managedObject.name,
               let category = managedObject.category,
@@ -84,7 +84,7 @@ extension Sets {
 extension Routine {
     init?(managedObject: RoutineMO) {
         guard let workoutsMO = managedObject.workouts,
-              let workouts = Workouts(managedObject: workoutsMO),
+              let workouts = Workout(managedObject: workoutsMO),
               let set = managedObject.sets,
               let setsMO = set.allObjects as? [SetsMO],
               let date = managedObject.date else {

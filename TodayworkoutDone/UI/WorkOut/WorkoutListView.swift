@@ -12,8 +12,8 @@ struct WorkoutListView: View {
     @Environment(\.injected) private var injected: DIContainer
 
     @State private var routingState: Routing = .init()
-    @State private var workoutsList: Loadable<LazyList<Workouts>>
-    @State private var selectWorkouts: [Workouts]
+    @State private var workoutsList: Loadable<LazyList<Workout>>
+    @State private var selectWorkouts: [Workout]
     @Binding var myRoutine: MyRoutine
     private var isMyWorkoutView: Bool
     private var routingBinding: Binding<Routing> {
@@ -22,8 +22,8 @@ struct WorkoutListView: View {
     
     var category: Category
     
-    init(workoutsList: Loadable<LazyList<Workouts>> = .notRequested,
-         selectWorkouts: [Workouts],
+    init(workoutsList: Loadable<LazyList<Workout>> = .notRequested,
+         selectWorkouts: [Workout],
          category: Category,
          isMyWorkoutView: Bool = false,
          myRoutine: Binding<MyRoutine> = .init(projectedValue: .constant(MyRoutine(name: "", routines: [])))) {
@@ -71,7 +71,7 @@ private extension WorkoutListView {
         Text("").onAppear(perform: reloadWorkouts)
     }
     
-    func loadingView(_ previouslyLoaded: LazyList<Workouts>?) -> some View {
+    func loadingView(_ previouslyLoaded: LazyList<Workout>?) -> some View {
         if let workoutsList = previouslyLoaded {
             return AnyView(loadedView(workoutsList))
         } else {
@@ -89,7 +89,7 @@ private extension WorkoutListView {
 // MARK: - Displaying Conent
 
 private extension WorkoutListView {
-    func loadedView(_ workoutsList: LazyList<Workouts>) -> some View {
+    func loadedView(_ workoutsList: LazyList<Workout>) -> some View {
         List(workoutsList.array().filter({ category.name == $0.category })) { workouts in
             WorkoutListSubview(workouts: workouts,
                                selectWorkouts: $selectWorkouts)
@@ -136,7 +136,7 @@ private extension WorkoutListView {
         injected.appState.updates(for: \.routing.workoutListView)
     }
     
-    var workoutsUpdate: AnyPublisher<[Workouts], Never> {
+    var workoutsUpdate: AnyPublisher<[Workout], Never> {
         injected.appState.updates(for: \.userData.selectionWorkouts)
     }
 }
@@ -144,7 +144,7 @@ private extension WorkoutListView {
 struct WorkoutListView_Previews: PreviewProvider {
     @Environment(\.presentationMode) static var presentationmode
     static var previews: some View {
-        WorkoutListView(workoutsList: .loaded(Workouts.mockedData.lazyList),
+        WorkoutListView(workoutsList: .loaded(Workout.mockedData.lazyList),
                         selectWorkouts: [],
                         category: Category(name: "테스트"))
             .inject(.preview)

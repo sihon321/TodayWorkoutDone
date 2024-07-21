@@ -10,8 +10,8 @@ import Combine
 
 struct WorkoutListSubview: View {
     @Environment(\.injected) private var injected: DIContainer
-    var workouts: Workouts
-    @Binding var selectWorkouts: [Workouts]
+    var workouts: Workout
+    @Binding var selectWorkouts: [Workout]
     
     var body: some View {
         VStack {
@@ -44,7 +44,7 @@ struct WorkoutListSubview: View {
 
 struct WorkoutListSubview_Previews: PreviewProvider {
     static var workouts = {
-        let excercises = Workouts(name: "test", category: "test_category", target: "test_target")
+        let excercises = Workout(name: "test", category: "test_category", target: "test_target")
         return excercises
     }()
     static var previews: some View {

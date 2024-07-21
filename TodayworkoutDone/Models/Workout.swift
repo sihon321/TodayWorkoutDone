@@ -13,7 +13,7 @@ public extension CodingUserInfoKey {
     static let managedObjectContext = CodingUserInfoKey(rawValue: "managedObjectContext")
 }
 
-struct Workouts: Codable, Equatable {
+struct Workout: Codable, Equatable {
     var name: String
     var category: String
     var target: String
@@ -37,6 +37,6 @@ struct Workouts: Codable, Equatable {
     }
 }
 
-extension Workouts: Identifiable {
+extension Workout: Identifiable {
     var id: String { name }
 }

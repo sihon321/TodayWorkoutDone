@@ -15,10 +15,10 @@ struct MakeWorkoutView: View {
     @State private var routingState: Routing = .init()
     @State private var myRoutine: MyRoutine
     @Binding var myRoutines: Loadable<LazyList<MyRoutine>>
-    @Binding var workoutsList: Loadable<LazyList<Workouts>>
+    @Binding var workoutsList: Loadable<LazyList<Workout>>
     @State private var editMode: EditMode
     @State private var titleSmall: Bool = false
-    @State private var selectionWorkouts: [Workouts] = []
+    @State private var selectionWorkouts: [Workout] = []
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.makeWorkoutView)
     }
@@ -28,7 +28,7 @@ struct MakeWorkoutView: View {
     
     init(myRoutine: Binding<MyRoutine>,
          myRoutines: Binding<Loadable<LazyList<MyRoutine>>> = .constant(.notRequested),
-         workoutsList: Binding<Loadable<LazyList<Workouts>>> = .constant(.notRequested),
+         workoutsList: Binding<Loadable<LazyList<Workout>>> = .constant(.notRequested),
          editMode: EditMode = .active,
          isEdit: Bool = false) {
         self._myRoutine = .init(initialValue: myRoutine.wrappedValue)

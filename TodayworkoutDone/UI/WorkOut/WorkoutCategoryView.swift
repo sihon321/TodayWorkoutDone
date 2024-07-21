@@ -36,10 +36,10 @@ struct WorkoutCategoryView: View {
     @Environment(\.injected) private var injected: DIContainer
 
     @State private var routingState: Routing = .init()
-    @State private var selectWorkouts: [Workouts]
+    @State private var selectWorkouts: [Workout]
     @State private(set) var categories: Loadable<LazyList<Category>>
     
-    @Binding var workoutsList: Loadable<LazyList<Workouts>>
+    @Binding var workoutsList: Loadable<LazyList<Workout>>
 
     @Binding var myRoutine: MyRoutine
     private var isMyWorkoutView: Bool = false
@@ -49,8 +49,8 @@ struct WorkoutCategoryView: View {
     
     init(store: StoreOf<WorkoutCategoryReducer>,
          categories: Loadable<LazyList<Category>> = .notRequested,
-         workoutsList: Loadable<LazyList<Workouts>>,
-         selectWorkouts: [Workouts] = [],
+         workoutsList: Loadable<LazyList<Workout>>,
+         selectWorkouts: [Workout] = [],
          isMyWorkoutView: Bool = false,
          myRoutine: Binding<MyRoutine> = .init(projectedValue: .constant(MyRoutine(name: "", routines: [])))) {
         self.store = store
@@ -154,7 +154,7 @@ private extension WorkoutCategoryView {
         injected.appState.updates(for: \.routing.workoutCategoryView)
     }
     
-    var workoutsUpdate: AnyPublisher<[Workouts], Never> {
+    var workoutsUpdate: AnyPublisher<[Workout], Never> {
         injected.appState.updates(for: \.userData.selectionWorkouts)
     }
 }

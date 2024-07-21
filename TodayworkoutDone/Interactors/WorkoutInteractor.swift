@@ -10,12 +10,12 @@ import Foundation
 import SwiftUI
 
 protocol WorkoutInteractor {
-    func append(_ excercise: Workouts)
-    func remove(_ excercise: Workouts)
-    func contains(_ excercise: Workouts) -> Bool
+    func append(_ excercise: Workout)
+    func remove(_ excercise: Workout)
+    func contains(_ excercise: Workout) -> Bool
     
-    func load(workouts: LoadableSubject<LazyList<Workouts>>)
-    func load(workouts: Binding<LazyList<Workouts>>)
+    func load(workouts: LoadableSubject<LazyList<Workout>>)
+    func load(workouts: Binding<LazyList<Workout>>)
 }
 
 struct RealWorkoutInteractor: WorkoutInteractor {
@@ -31,19 +31,19 @@ struct RealWorkoutInteractor: WorkoutInteractor {
         self.appState = appState
     }
     
-    func append(_ excercise: Workouts) {
+    func append(_ excercise: Workout) {
         appState[\.userData.selectionWorkouts].append(excercise)
     }
     
-    func remove(_ excercise: Workouts) {
+    func remove(_ excercise: Workout) {
         appState[\.userData.selectionWorkouts].removeAll(where: {$0.id == excercise.id })
     }
     
-    func contains(_ excercise: Workouts) -> Bool {
+    func contains(_ excercise: Workout) -> Bool {
         return appState[\.userData.selectionWorkouts].contains(excercise)
     }
     
-    func load(workouts: LoadableSubject<LazyList<Workouts>>) {
+    func load(workouts: LoadableSubject<LazyList<Workout>>) {
         let cancelBag = CancelBag()
         
         workouts.wrappedValue.setIsLoading(cancelBag: cancelBag)
@@ -66,7 +66,7 @@ struct RealWorkoutInteractor: WorkoutInteractor {
             .store(in: cancelBag)
     }
     
-    func load(workouts: Binding<LazyList<Workouts>>) {
+    func load(workouts: Binding<LazyList<Workout>>) {
         let cancelBag = CancelBag()
         
         Just<Void>
@@ -99,9 +99,9 @@ struct RealWorkoutInteractor: WorkoutInteractor {
 }
 
 struct StubWorkoutInteractor: WorkoutInteractor {
-    func append(_ excercise: Workouts) { }
-    func remove(_ excercise: Workouts) { }
-    func contains(_ excercise: Workouts) -> Bool { return true }
-    func load(workouts: LoadableSubject<LazyList<Workouts>>) { }
-    func load(workouts: Binding<LazyList<Workouts>>) { }
+    func append(_ excercise: Workout) { }
+    func remove(_ excercise: Workout) { }
+    func contains(_ excercise: Workout) -> Bool { return true }
+    func load(workouts: LoadableSubject<LazyList<Workout>>) { }
+    func load(workouts: Binding<LazyList<Workout>>) { }
 }

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct Routine: Codable, Equatable {
-    var workouts: Workouts
+    var workouts: Workout
     var sets: [Sets]
     var date: Date
     var stopwatch: Double
@@ -19,7 +19,7 @@ struct Routine: Codable, Equatable {
         case workouts, sets, date, stopwatch, workotusType
     }
     
-    init(workouts: Workouts,
+    init(workouts: Workout,
          sets: [Sets] = [Sets()],
          date: Date = .now,
          stopwatch: Double = .zero,
@@ -33,7 +33,7 @@ struct Routine: Codable, Equatable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        workouts = try container.decode(Workouts.self, forKey: .workouts)
+        workouts = try container.decode(Workout.self, forKey: .workouts)
         sets = try container.decode([Sets].self, forKey: .sets)
         date = try container.decode(Date.self, forKey: .date)
         stopwatch = try container.decode(Double.self, forKey: .stopwatch)

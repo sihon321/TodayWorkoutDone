@@ -9,13 +9,13 @@ import Combine
 import Foundation
 
 protocol WorkoutWebRepository {
-    func loadWorkouts() -> AnyPublisher<[Workouts], Error>
+    func loadWorkouts() -> AnyPublisher<[Workout], Error>
 }
 
 class RealWorkoutWebRepository: WorkoutWebRepository {
-    func loadWorkouts() -> AnyPublisher<[Workouts], Error> {
-        let workouts: [Workouts] = load("workouts.json")
-        return Just<[Workouts]>(workouts)
+    func loadWorkouts() -> AnyPublisher<[Workout], Error> {
+        let workouts: [Workout] = load("workouts.json")
+        return Just<[Workout]>(workouts)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }

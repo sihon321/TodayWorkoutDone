@@ -10,8 +10,8 @@ import Combine
 
 protocol WorkoutDBRepository {
     func hasLoadedWorkouts() -> AnyPublisher<Bool, Error>
-    func workouts() -> AnyPublisher<LazyList<Workouts>, Error>
-    func store(workouts: [Workouts]) -> AnyPublisher<Void, Error>
+    func workouts() -> AnyPublisher<LazyList<Workout>, Error>
+    func store(workouts: [Workout]) -> AnyPublisher<Void, Error>
 }
 
 struct RealWorkoutDBRepository: WorkoutDBRepository {
@@ -25,15 +25,15 @@ struct RealWorkoutDBRepository: WorkoutDBRepository {
             .eraseToAnyPublisher()
     }
     
-    func workouts() -> AnyPublisher<LazyList<Workouts>, Error> {
+    func workouts() -> AnyPublisher<LazyList<Workout>, Error> {
         let fetchRequest = WorkoutsMO.workouts()
         return persistentStore
             .fetch(fetchRequest) {
-                Workouts(managedObject: $0)
+                Workout(managedObject: $0)
             }
     }
     
-    func store(workouts: [Workouts]) -> AnyPublisher<Void, Error> {
+    func store(workouts: [Workout]) -> AnyPublisher<Void, Error> {
         return persistentStore
             .store { context in
                 workouts.forEach {
