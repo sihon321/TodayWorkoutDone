@@ -13,12 +13,12 @@ struct ExcerciseStarter {
     @ObservableState
     struct State: Equatable {
         var isWorkoutPresented = false
-        var woktout = WorkoutReducer.State()
+        var workoutPresent = WorkoutPresent.State()
     }
     
     enum Action {
         case setSheet(isPresented: Bool)
-        case workout(WorkoutReducer.Action)
+        case workoutPresent(WorkoutPresent.Action)
     }
     
     var body: some Reducer<State, Action> {
@@ -27,10 +27,8 @@ struct ExcerciseStarter {
             case .setSheet(let isPresented):
                 state.isWorkoutPresented = isPresented
                 return .none
-            case .workout(.dismiss):
+            case .workoutPresent(.dismiss):
                 state.isWorkoutPresented = false
-                return .none
-            case .workout(.search(_)):
                 return .none
             }
         }
@@ -56,8 +54,13 @@ struct ExcerciseStartView: View {
             }
             .padding(.horizontal, 30)
             .fullScreenCover(isPresented: $store.isWorkoutPresented.sending(\.setSheet)) {
-                WorkoutView(store: store.scope(state: \.woktout,
-                                               action: \.workout))
+                WorkoutView(
+                    store: Store(
+                        initialState: WorkoutReducer.State()) {
+                            WorkoutReducer()
+                        },
+                    presentStore: store.scope(state: \.workoutPresent,
+                                              action: \.workoutPresent))
             }
             .offset(y: -15)
         }

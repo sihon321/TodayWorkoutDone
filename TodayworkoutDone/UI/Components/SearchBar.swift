@@ -23,7 +23,6 @@ struct SearchReducer {
         Reduce { state, action in
             switch action {
             case .search(let keyword):
-                state.keyword = keyword
                 return .none
             }
         }
@@ -45,8 +44,8 @@ struct SearchBar: View {
             TextField(
                 "search",
                 text: viewStore.binding(
-                    get: \.keyword,
-                    send: SearchReducer.Action.search
+                    get: { $0.keyword },
+                    send: { SearchReducer.Action.search(keyword: $0) }
                 )
             )
             .padding(7)
