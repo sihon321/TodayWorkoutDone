@@ -97,10 +97,12 @@ struct MakeWorkoutView: View {
                         Button("Done") {
                             injected.appState[\.userData.myRoutine] = myRoutine
                             injected.appState[\.routing.homeView.workingOutView] = true
-                            injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
+                            
                             injected.appState[\.routing.workoutListView.makeWorkoutView] = false
+                            
+                            injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
                             injected.appState[\.routing.workoutCategoryView.workoutListView] = false
-//                            injected.appState[\.routing.excerciseStartView.workoutView] = false
+
                             injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
                             injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
                         }

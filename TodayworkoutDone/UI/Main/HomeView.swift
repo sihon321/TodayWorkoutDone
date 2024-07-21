@@ -15,14 +15,21 @@ struct HomeReducer {
     
     @ObservableState
     struct State: Equatable {
+        var bottomEdge: CGFloat
         var routineName = ""
         var workingOut = WorkingOutReducer.State()
-        var tabBar = CustomTabBarReducer.State(
-            tabButton: TabButtonReducer.State(
-                info: TabButtonReducer.TabInfo(imageName: "dumbbell.fill", 
-                                               index: 0)
+        var tabBar: CustomTabBarReducer.State
+        
+        init(bottomEdge: CGFloat) {
+            self.bottomEdge = bottomEdge
+            tabBar = CustomTabBarReducer.State(
+                bottomEdge: bottomEdge,
+                tabButton: TabButtonReducer.State(
+                    info: TabButtonReducer.TabInfo(imageName: "dumbbell.fill",
+                                                   index: 0)
+                )
             )
-        )
+        }
     }
     
     enum Action {
@@ -43,8 +50,11 @@ struct HomeReducer {
             case .workingOut(.setTabBarOffset(let offset)):
                 state.workingOut.tabBarOffset = offset
                 return .none
-            case .workingOut(.saveAlert(let isSavedAlert)):
-                state.workingOut.isSavedAlert = isSavedAlert
+            case .workingOut(.saveRoutine(let isSavedRoutine)):
+                state.workingOut.isSavedRoutine = isSavedRoutine
+                return .none
+            case .workingOut(.saveWorkout(let isSavedWorkout)):
+                state.workingOut.isSavedWorkout = isSavedWorkout
                 return .none
             case .tabBar(.tabButton(.setTab(let info))):
                 state.tabBar.tabButton.info = info
@@ -55,23 +65,19 @@ struct HomeReducer {
 }
 
 struct HomeView: View {
-    @Environment(\.injected) private var injected: DIContainer
     @Bindable var store: StoreOf<HomeReducer>
     @ObservedObject var viewStore: ViewStoreOf<HomeReducer>
 
+    @Environment(\.injected) private var injected: DIContainer
     @State private var routingState: Routing = .init()
-    @State private var isSavedAlert = false
-    
-    private var bottomEdge: CGFloat
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.homeView)
     }
     
-    init(bottomEdge: CGFloat, store: StoreOf<HomeReducer>) {
+    init(store: StoreOf<HomeReducer>) {
         UITabBar.appearance().isHidden = true
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
-        self.bottomEdge = bottomEdge
     }
     
     var body: some View {
@@ -83,7 +89,7 @@ struct HomeView: View {
                 ).index
             ) {
                 ZStack {
-                    MainView(bottomEdge: bottomEdge)
+                    MainView(bottomEdge: store.state.bottomEdge)
                     if !routingBinding.workingOutView.wrappedValue {
                         ExcerciseStartView(
                             store: Store(initialState: ExcerciseStarter.State()) {
@@ -100,8 +106,7 @@ struct HomeView: View {
                             content: {
                                 WorkingOutView(
                                     store: store.scope(state: \.workingOut, action: \.workingOut),
-                                    myRoutine: .constant(injected.appState[\.userData.myRoutine]),
-                                    isSavedAlert: $isSavedAlert)
+                                    myRoutine: .constant(injected.appState[\.userData.myRoutine]))
                             })
                     }
                 }
@@ -112,9 +117,8 @@ struct HomeView: View {
             }
             .overlay (
                 VStack {
-                    CustomTabBar(store: store.scope(state: \.tabBar, 
-                                                    action: \.tabBar),
-                                 bottomEdge: bottomEdge)
+                    CustomTabBar(store: store.scope(state: \.tabBar,
+                                                    action: \.tabBar))
                 }.offset(y: store.state.workingOut.isHideTabBar ? 0.0 : store.state.workingOut.tabBarOffset),
                 alignment: .bottom
             )
@@ -123,8 +127,8 @@ struct HomeView: View {
         .onReceive(routingUpdate) { self.routingState = $0 }
         .alert("루틴은 저장하겠습니까?",
                isPresented: viewStore.binding(
-                get: { $0.workingOut.isSavedAlert },
-                send: { HomeReducer.Action.workingOut(.saveAlert(isSavedAlert: $0)) }
+                get: { $0.workingOut.isSavedRoutine },
+                send: { HomeReducer.Action.workingOut(.saveRoutine(isSavedRoutine: $0)) }
                )
         ) {
             TextField("루틴 이름을 정해주세요", text: viewStore.binding(
@@ -132,7 +136,7 @@ struct HomeView: View {
                 send: HomeReducer.Action.enterRoutineName)
             )
             Button("Cancel") { 
-                viewStore.send(.workingOut(.saveAlert(isSavedAlert: false)))
+                viewStore.send(.workingOut(.saveRoutine(isSavedRoutine: false)))
             }
             Button("OK") {
                 saveMyRoutine()

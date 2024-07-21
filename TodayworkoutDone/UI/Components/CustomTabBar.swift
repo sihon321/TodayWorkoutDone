@@ -12,6 +12,7 @@ import ComposableArchitecture
 struct CustomTabBarReducer {
     @ObservableState
     struct State: Equatable {
+        var bottomEdge: CGFloat
         var tabButton: TabButtonReducer.State
     }
     
@@ -32,7 +33,6 @@ struct CustomTabBarReducer {
 struct CustomTabBar: View {
     @Bindable var store: StoreOf<CustomTabBarReducer>
     
-    var bottomEdge: CGFloat
     let tab: [String] = ["dumbbell.fill", "calendar"]
     
     var body: some View {
@@ -45,7 +45,7 @@ struct CustomTabBar: View {
             }
         }
         .padding(.top, 15)
-        .padding(.bottom, bottomEdge)
+        .padding(.bottom, store.state.bottomEdge)
         .background(.white)
     }
 }
