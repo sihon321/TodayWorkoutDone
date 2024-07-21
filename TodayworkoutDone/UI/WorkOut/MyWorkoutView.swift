@@ -7,6 +7,19 @@
 
 import SwiftUI
 import Combine
+import ComposableArchitecture
+
+@Reducer
+struct MyWorkoutReducer {
+    @ObservableState
+    struct State: Equatable {
+        var text: String
+    }
+    
+    enum Action {
+        
+    }
+}
 
 struct MyWorkoutView: View {
     @Environment(\.injected) private var injected: DIContainer
@@ -15,18 +28,15 @@ struct MyWorkoutView: View {
     @State private(set) var myRoutines: Loadable<LazyList<MyRoutine>>
     @State private var selectedRoutine: MyRoutine?
     @Binding var workoutsList: Loadable<LazyList<Workouts>>
-    @Binding var text: String
     
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.myWorkoutView)
     }
     
     init(myRoutines: Loadable<LazyList<MyRoutine>> = .notRequested,
-         workoutsList: Binding<Loadable<LazyList<Workouts>>> = .constant(.notRequested),
-         search text: Binding<String>) {
+         workoutsList: Binding<Loadable<LazyList<Workouts>>> = .constant(.notRequested)) {
         self._myRoutines = .init(initialValue: myRoutines)
         self._workoutsList = .init(projectedValue: workoutsList)
-        self._text = .init(projectedValue: text)
     }
     
     var body: some View {
@@ -146,9 +156,9 @@ private extension MyWorkoutView {
     }
 }
 
-struct MyWorkoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyWorkoutView(search: .constant(""))
-            .background(Color.gray)
-    }
-}
+//struct MyWorkoutView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyWorkoutView()
+//            .background(Color.gray)
+//    }
+//}

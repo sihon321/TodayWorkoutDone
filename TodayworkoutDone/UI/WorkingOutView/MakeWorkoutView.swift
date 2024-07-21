@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import ComposableArchitecture
 
 struct MakeWorkoutView: View {
     @Environment(\.injected) private var injected: DIContainer
@@ -64,7 +65,9 @@ struct MakeWorkoutView: View {
                         NavigationView {
                             ScrollView {
                                 VStack {
-                                    WorkoutCategoryView(workoutsList: workoutsList,
+                                    WorkoutCategoryView(store: Store(initialState: WorkoutCategoryReducer.State()) {
+                                        WorkoutCategoryReducer()
+                                    }, workoutsList: workoutsList,
                                                         selectWorkouts: injected.appState[\.userData].selectionWorkouts,
                                                         isMyWorkoutView: true,
                                                         myRoutine: $myRoutine)

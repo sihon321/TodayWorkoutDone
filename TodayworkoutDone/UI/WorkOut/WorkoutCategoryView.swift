@@ -7,98 +7,68 @@
 
 import SwiftUI
 import Combine
+import ComposableArchitecture
+
+@Reducer
+struct WorkoutCategoryReducer {
+    @ObservableState
+    struct State: Equatable {
+        var keyword: String = ""
+    }
+    
+    enum Action {
+        case setText(keyword: String)
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .setText(_):
+                return .none
+            }
+        }
+    }
+}
 
 struct WorkoutCategoryView: View {
+    @Bindable var store: StoreOf<WorkoutCategoryReducer>
+    
     @Environment(\.injected) private var injected: DIContainer
 
     @State private var routingState: Routing = .init()
     @State private var selectWorkouts: [Workouts]
     @State private(set) var categories: Loadable<LazyList<Category>>
+    
     @Binding var workoutsList: Loadable<LazyList<Workouts>>
-    @Binding var text: String
+
     @Binding var myRoutine: MyRoutine
     private var isMyWorkoutView: Bool = false
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.workoutCategoryView)
     }
     
-    init(categories: Loadable<LazyList<Category>> = .notRequested,
+    init(store: StoreOf<WorkoutCategoryReducer>,
+         categories: Loadable<LazyList<Category>> = .notRequested,
          workoutsList: Loadable<LazyList<Workouts>>,
          selectWorkouts: [Workouts] = [],
-         search text: Binding<String> = .init(projectedValue: .constant("")),
          isMyWorkoutView: Bool = false,
          myRoutine: Binding<MyRoutine> = .init(projectedValue: .constant(MyRoutine(name: "", routines: [])))) {
+        self.store = store
         self._categories = .init(initialValue: categories)
         self._workoutsList = .init(projectedValue: .constant(workoutsList))
         self._selectWorkouts = .init(initialValue: selectWorkouts)
-        self._text = .init(projectedValue: text)
         self.isMyWorkoutView = isMyWorkoutView
         self._myRoutine = myRoutine
     }
     
     var body: some View {
-        self.content
-            .onReceive(routingUpdate) { self.routingState = $0 }
-            .onReceive(workoutsUpdate) { self.selectWorkouts = $0 }
-    }
-    
-    @ViewBuilder private var content: some View {
-        switch categories {
-        case .notRequested:
-            notRequestedView
-        case let .isLoading(last, _):
-            loadingView(last)
-        case let .loaded(categories):
-            loadedView(categories)
-        case let .failed(error):
-            failedView(error)
-        }
-    }
-}
-
-// MARK: - Side Effects
-
-private extension WorkoutCategoryView {
-    func reloadCategory() {
-        injected.interactors.categoryInteractor
-            .load(categories: $categories)
-    }
-}
-
-// MARK: - Loading Content
-
-private extension WorkoutCategoryView {
-    var notRequestedView: some View {
-        Text("")
-            .onAppear(perform: reloadCategory)
-    }
-    
-    func loadingView(_ previouslyLoaded: LazyList<Category>?) -> some View {
-        if let categories = previouslyLoaded {
-            return AnyView(loadedView(categories))
-        } else {
-            return AnyView(ActivityIndicatorView().padding())
-        }
-    }
-    
-    func failedView(_ error: Error) -> some View {
-        ErrorView(error: error, retryAction: {
-            self.reloadCategory()
-        })
-    }
-}
-
-// MARK: - Displaying Conent
-
-private extension WorkoutCategoryView {
-    func loadedView(_ categories: LazyList<Category>) -> some View {
         VStack(alignment: .leading)  {
             Text("category")
             let filteredCategory = workoutsList.value?.array()
-                .filter({ $0.name.hasPrefix(text) })
+                .filter({ $0.name.hasPrefix(store.keyword) })
                 .compactMap({ $0.category })
                 .uniqued() ?? []
-            let categories = categories.array().filter {
+            let categories = categories.value?.array().filter {
                 if filteredCategory.isEmpty {
                     return true
                 } else if filteredCategory.contains($0.name) {
@@ -106,7 +76,7 @@ private extension WorkoutCategoryView {
                 } else {
                     return false
                 }
-            }
+            } ?? []
             ForEach(categories) { category in
                 NavigationLink {
                     WorkoutListView(workoutsList: workoutsList,
@@ -157,6 +127,18 @@ private extension WorkoutCategoryView {
                 }
             }
         }
+        .onAppear(perform: reloadCategory)
+        .onReceive(routingUpdate) { self.routingState = $0 }
+        .onReceive(workoutsUpdate) { self.selectWorkouts = $0 }
+    }
+}
+
+// MARK: - Side Effects
+
+private extension WorkoutCategoryView {
+    func reloadCategory() {
+        injected.interactors.categoryInteractor
+            .load(categories: $categories)
     }
 }
 
@@ -177,13 +159,13 @@ private extension WorkoutCategoryView {
     }
 }
 
-struct WorkoutCategoryView_Previews: PreviewProvider {
-    @Environment(\.presentationMode) static var presentationmode
-    static var previews: some View {
-        WorkoutCategoryView(categories: .loaded(Category.mockedData.lazyList), 
-                            workoutsList: .loaded(Workouts.mockedData.lazyList),
-                            selectWorkouts: [],
-                            search: .constant(""))
-            .inject(.preview)
-    }
-}
+//struct WorkoutCategoryView_Previews: PreviewProvider {
+//    @Environment(\.presentationMode) static var presentationmode
+//    static var previews: some View {
+//        WorkoutCategoryView(categories: .loaded(Category.mockedData.lazyList), 
+//                            workoutsList: .loaded(Workouts.mockedData.lazyList),
+//                            selectWorkouts: [],
+//                            search: .constant(""))
+//            .inject(.preview)
+//    }
+//}

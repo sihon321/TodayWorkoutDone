@@ -10,26 +10,35 @@ import Combine
 import ComposableArchitecture
 
 @Reducer
+struct WorkoutPresent {
+    enum Action {
+        case dismiss
+    }
+}
+
+@Reducer
 struct WorkoutReducer {
     @ObservableState
     struct State: Equatable {
         var workoutsList: [Workouts] = []
-        var keyword: String = ""
         var search = SearchReducer.State()
+        var workoutCategory = WorkoutCategoryReducer.State()
     }
     
     enum Action {
-        case dismiss
         case search(SearchReducer.Action)
+        case workoutCategory(WorkoutCategoryReducer.Action)
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .dismiss:
-                return .none
             case .search(.search(let keyword)):
-                state.keyword = keyword
+                return .run { @MainActor send in
+                    send(.workoutCategory(.setText(keyword: keyword)))
+                }
+            case .workoutCategory(.setText(let keyword)):
+                state.workoutCategory.keyword = keyword
                 return .none
             }
         }
@@ -38,29 +47,35 @@ struct WorkoutReducer {
 
 struct WorkoutView: View {
     @Bindable var store: StoreOf<WorkoutReducer>
+    @Bindable var presentStore: StoreOf<WorkoutPresent>
     
     @Environment(\.injected) private var injected: DIContainer
+    
     @State private var workoutsList: Loadable<LazyList<Workouts>> = .notRequested
     @State private var routingState: Routing = .init()
-    @State private var text: String = ""
     
-    init(store: StoreOf<WorkoutReducer>) {
+    init(store: StoreOf<WorkoutReducer>,
+         presentStore: StoreOf<WorkoutPresent>) {
         self.store = store
+        self.presentStore = presentStore
     }
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    SearchBar(store: store.scope(state: \.search, action: \.search))
+                    SearchBar(store: store.scope(state: \.search, 
+                                                 action: \.search))
                         .padding(.top, 10)
-                    MyWorkoutView(workoutsList: $workoutsList, search: $text)
+                    MyWorkoutView(workoutsList: $workoutsList)
                         .padding(.top, 10)
-                    WorkoutCategoryView(workoutsList: workoutsList,
-                                        selectWorkouts: injected.appState[\.userData].selectionWorkouts,
-                                        search: $text)
-                        .inject(injected)
-                        .padding(.top, 10)
+                    WorkoutCategoryView(
+                        store: store.scope(state: \.workoutCategory,
+                                           action: \.workoutCategory),
+                        workoutsList: workoutsList,
+                        selectWorkouts: injected.appState[\.userData].selectionWorkouts)
+                    .inject(injected)
+                    .padding(.top, 10)
                 }
             }
             .background(Color(0xf4f4f4))
@@ -68,7 +83,7 @@ struct WorkoutView: View {
             .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        store.send(.dismiss)
+                        presentStore.send(.dismiss)
                     }, label: {
                         Image(systemName: "xmark")
                             .foregroundColor(.black)
@@ -81,84 +96,12 @@ struct WorkoutView: View {
             injected.appState[\.userData.selectionWorkouts].removeAll()
         }
     }
-    
-    @ViewBuilder private var content: some View {
-        switch workoutsList {
-        case .notRequested:
-            notRequestedView
-        case let .isLoading(last, _):
-            loadingView(last)
-        case let .loaded(workoutsList):
-            loadedView(workoutsList)
-        case let .failed(error):
-            failedView(error)
-        }
-    }
 }
 
 extension WorkoutView {
     func reloadWorkouts() {
         injected.interactors.workoutInteractor
             .load(workouts: $workoutsList)
-    }
-}
-
-// MARK: - Loading Content
-
-private extension WorkoutView {
-    var notRequestedView: some View {
-        Text("")
-            .onAppear(perform: reloadWorkouts)
-    }
-    
-    func loadingView(_ previouslyLoaded: LazyList<Workouts>?) -> some View {
-        if let workouts = previouslyLoaded {
-            return AnyView(loadedView(workouts))
-        } else {
-            return AnyView(ActivityIndicatorView().padding())
-        }
-    }
-    
-    func failedView(_ error: Error) -> some View {
-        ErrorView(error: error, retryAction: {
-            self.reloadWorkouts()
-        })
-    }
-}
-
-// MARK: - Displaying Conent
-
-private extension WorkoutView {
-    func loadedView(_ workouts: LazyList<Workouts>) -> some View {
-        NavigationView {
-            ScrollView {
-                VStack {
-                    SearchBar(store: Store(initialState: SearchReducer.State()) {
-                        SearchReducer()
-                    })
-                    .padding(.top, 10)
-                    MyWorkoutView(workoutsList: $workoutsList, search: $text)
-                        .padding(.top, 10)
-                    WorkoutCategoryView(workoutsList: workoutsList,
-                                        selectWorkouts: injected.appState[\.userData].selectionWorkouts,
-                                        search: $text)
-                        .inject(injected)
-                        .padding(.top, 10)
-                }
-            }
-            .background(Color(0xf4f4f4))
-            .navigationBarTitle("workout", displayMode: .inline)
-            .toolbar(content: {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(action: {
-                        store.send(.dismiss)
-                    }, label: {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.black)
-                    })
-                }
-            })
-        }
     }
 }
 
@@ -175,11 +118,11 @@ private extension WorkoutView {
 }
 
 
-struct WorkoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        WorkoutView(store: Store(initialState: WorkoutReducer.State()) {
-            WorkoutReducer()
-        })
-        .background(Color.gray)
-    }
-}
+//struct WorkoutView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WorkoutView(store: Store(initialState: WorkoutReducer.State()) {
+//            WorkoutReducer()
+//        })
+//        .background(Color.gray)
+//    }
+//}
