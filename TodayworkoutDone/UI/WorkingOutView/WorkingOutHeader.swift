@@ -74,7 +74,7 @@ struct WorkingOutHeader: View {
 
 struct WorkingOutHeader_Previews: PreviewProvider {
     static var routine = {
-        return Routine(workouts: Workouts(name: "test",
+        return Routine(workouts: Workout(name: "test",
                                           category: "test_category",
                                           target: "test_target"))
     }()

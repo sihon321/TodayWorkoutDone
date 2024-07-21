@@ -27,14 +27,14 @@ struct MyWorkoutView: View {
     @State private var routingState: Routing = .init()
     @State private(set) var myRoutines: Loadable<LazyList<MyRoutine>>
     @State private var selectedRoutine: MyRoutine?
-    @Binding var workoutsList: Loadable<LazyList<Workouts>>
+    @Binding var workoutsList: Loadable<LazyList<Workout>>
     
     private var routingBinding: Binding<Routing> {
         $routingState.dispatched(to: injected.appState, \.routing.myWorkoutView)
     }
     
     init(myRoutines: Loadable<LazyList<MyRoutine>> = .notRequested,
-         workoutsList: Binding<Loadable<LazyList<Workouts>>> = .constant(.notRequested)) {
+         workoutsList: Binding<Loadable<LazyList<Workout>>> = .constant(.notRequested)) {
         self._myRoutines = .init(initialValue: myRoutines)
         self._workoutsList = .init(projectedValue: workoutsList)
     }

@@ -20,7 +20,7 @@ struct WorkoutPresent {
 struct WorkoutReducer {
     @ObservableState
     struct State: Equatable {
-        var workoutsList: [Workouts] = []
+        var workoutsList: [Workout] = []
         var search = SearchReducer.State()
         var workoutCategory = WorkoutCategoryReducer.State()
     }
@@ -51,7 +51,7 @@ struct WorkoutView: View {
     
     @Environment(\.injected) private var injected: DIContainer
     
-    @State private var workoutsList: Loadable<LazyList<Workouts>> = .notRequested
+    @State private var workoutsList: Loadable<LazyList<Workout>> = .notRequested
     @State private var routingState: Routing = .init()
     
     init(store: StoreOf<WorkoutReducer>,
