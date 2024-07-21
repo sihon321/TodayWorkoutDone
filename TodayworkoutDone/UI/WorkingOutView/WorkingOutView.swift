@@ -15,13 +15,15 @@ struct WorkingOutReducer {
     struct State: Equatable {
         var isHideTabBar = false
         var tabBarOffset: CGFloat = 0.0
-        var isSavedAlert = false
+        var isSavedRoutine = false
+        var isSavedWorkout = false
     }
     
     enum Action {
         case hideTabBar
         case setTabBarOffset(offset: CGFloat)
-        case saveAlert(isSavedAlert: Bool)
+        case saveRoutine(isSavedRoutine: Bool)
+        case saveWorkout(isSavedWorkout: Bool)
     }
     
     var body: some Reducer<State, Action> {
@@ -36,13 +38,12 @@ struct WorkingOutReducer {
 
 struct WorkingOutView: View {
     @Bindable var store: StoreOf<WorkingOutReducer>
+    @ObservedObject var viewStore: ViewStoreOf<WorkingOutReducer>
     
     @Environment(\.injected) private var injected: DIContainer
     @State private var editMode: EditMode = .inactive
-    @State private var isSavedWorkout: Bool = false
     @State private var myRoutine: MyRoutine
 
-    @Binding var isSavedAlert: Bool
     @State var secondsElapsed = 0
     @State var timer: Timer.TimerPublisher = Timer.publish(every: 1, on: .main, in: .common)
     @State var connectedTimer: Cancellable? = nil
@@ -50,11 +51,11 @@ struct WorkingOutView: View {
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
     init(store: StoreOf<WorkingOutReducer>,
-         myRoutine: Binding<MyRoutine>,
-         isSavedAlert: Binding<Bool>) {
+         myRoutine: Binding<MyRoutine>) {
         self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
+        
         self._myRoutine = .init(initialValue: myRoutine.wrappedValue)
-        self._isSavedAlert = .init(projectedValue: isSavedAlert)
     }
     
     var body: some View {
@@ -78,7 +79,7 @@ struct WorkingOutView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Close") {
-                        isSavedWorkout.toggle()
+                        store.send(.saveWorkout(isSavedWorkout: true))
                         cancelTimer()
                     }
                 }
@@ -97,9 +98,15 @@ struct WorkingOutView: View {
             .listStyle(.grouped)
             .ignoresSafeArea(.container, edges: .bottom)
         }
-        .alert("워크아웃을 저장하겠습니까?", isPresented: $isSavedWorkout) {
+        .alert("워크아웃을 저장하겠습니까?",
+               isPresented: viewStore.binding(
+                get: { $0.isSavedWorkout },
+                send: { WorkingOutReducer.Action.saveWorkout(isSavedWorkout: $0) }
+               )
+        ) {
             Button("Close") {
                 injected.appState[\.routing.homeView.workingOutView] = false
+                
                 store.send(.hideTabBar)
                 store.send(.setTabBarOffset(offset: 0.0))
             }
@@ -111,8 +118,7 @@ struct WorkingOutView: View {
                 store.send(.hideTabBar)
                 store.send(.setTabBarOffset(offset: 0.0))
                 if !injected.interactors.routineInteractor.find(myRoutine: myRoutine) {
-                    isSavedAlert = true
-                    store.send(.saveAlert(isSavedAlert: true))
+                    store.send(.saveRoutine(isSavedRoutine: true))
                 }
                 saveWorkoutRoutine(secondsElapsed)
             }

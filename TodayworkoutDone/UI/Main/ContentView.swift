@@ -22,11 +22,12 @@ struct ContentView: View {
             let bottomEdge = proxy.safeAreaInsets.bottom
             
             HomeView(
-                bottomEdge: (bottomEdge == 0 ? 15 : bottomEdge),
-                store: Store(initialState: HomeReducer.State()) {
-                    HomeReducer()
-                }
-            )
+                store: Store(
+                    initialState: HomeReducer.State(
+                        bottomEdge: bottomEdge == 0 ? 15 : bottomEdge
+                    )) {
+                        HomeReducer()
+                    })
             .inject(container)
             .ignoresSafeArea(.all, edges: .bottom)
         }
@@ -34,7 +35,7 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
-
+    
     static var previews: some View {
         ContentView(container: .preview)
     }
