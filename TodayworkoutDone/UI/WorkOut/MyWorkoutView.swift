@@ -40,68 +40,11 @@ struct MyWorkoutView: View {
     }
     
     var body: some View {
-        self.content
-            .onReceive(routingUpdate) { self.routingState = $0 }
-    }
-    
-    @ViewBuilder private var content: some View {
-        switch myRoutines {
-        case .notRequested:
-            notRequestedView
-        case .isLoading(let last, _):
-            loadingView(last)
-        case .loaded(let routines):
-            if routines.count > 0 {
-                loadedView(routines)
-            } else {
-                EmptyView()
-            }
-        case .failed(let error):
-            failedView(error)
-        }
-    }
-}
-
-// MARK: - Side Effects
-
-private extension MyWorkoutView {
-    func reloadRoutines() {
-        injected.interactors.routineInteractor
-            .load(myRoutines: $myRoutines)
-    }
-}
-
-// MARK: - Loading Content
-
-private extension MyWorkoutView {
-    var notRequestedView: some View {
-        Text("").onAppear(perform: reloadRoutines)
-    }
-    
-    func loadingView(_ previouslyLoaded: LazyList<MyRoutine>?) -> some View {
-        if let routines = previouslyLoaded {
-            return AnyView(loadedView(routines))
-        } else {
-            return AnyView(ActivityIndicatorView().padding())
-        }
-    }
-    
-    func failedView(_ error: Error) -> some View {
-        ErrorView(error: error, retryAction: {
-            self.reloadRoutines()
-        })
-    }
-}
-
-// MARK: - Displaying Conent
-
-private extension MyWorkoutView {
-    func loadedView(_ myRoutines: LazyList<MyRoutine>) -> some View {
         VStack(alignment: .leading) {
             Text("my workout")
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(myRoutines.lazyList) { myRoutine in
+                    ForEach(myRoutines.value?.array() ?? []) { myRoutine in
                         Button(action: {
                             injected.appState[\.routing.myWorkoutView.alertMyWorkout] = true
                             selectedRoutine = MyRoutine(name: myRoutine.name,
@@ -111,7 +54,7 @@ private extension MyWorkoutView {
                         }
                     }
                     .alert("루틴을 시작하겠습니까?", isPresented: routingBinding.alertMyWorkout) {
-                        Button("Cancel") { 
+                        Button("Cancel") {
                             injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
                         }
                         Button("OK") {
@@ -140,6 +83,17 @@ private extension MyWorkoutView {
             }
         }
         .padding([.leading, .trailing], 15)
+        .onAppear(perform: reloadRoutines)
+        .onReceive(routingUpdate) { self.routingState = $0 }
+    }
+}
+
+// MARK: - Side Effects
+
+private extension MyWorkoutView {
+    func reloadRoutines() {
+        injected.interactors.routineInteractor
+            .load(myRoutines: $myRoutines)
     }
 }
 

@@ -21,22 +21,21 @@ struct WorkoutReducer {
     @ObservableState
     struct State: Equatable {
         var workoutsList: [Workout] = []
-        var search = SearchReducer.State()
+        var keyword: String = ""
         var workoutCategory = WorkoutCategoryReducer.State()
     }
     
     enum Action {
-        case search(SearchReducer.Action)
+        case search(keyword: String)
         case workoutCategory(WorkoutCategoryReducer.Action)
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .search(.search(let keyword)):
-                return .run { @MainActor send in
-                    send(.workoutCategory(.setText(keyword: keyword)))
-                }
+            case .search(let keyword):
+                state.keyword = keyword
+                return .none
             case .workoutCategory(.setText(let keyword)):
                 state.workoutCategory.keyword = keyword
                 return .none
@@ -47,6 +46,7 @@ struct WorkoutReducer {
 
 struct WorkoutView: View {
     @Bindable var store: StoreOf<WorkoutReducer>
+    @ObservedObject var viewStore: ViewStoreOf<WorkoutReducer>
     @Bindable var presentStore: StoreOf<WorkoutPresent>
     
     @Environment(\.injected) private var injected: DIContainer
@@ -57,6 +57,7 @@ struct WorkoutView: View {
     init(store: StoreOf<WorkoutReducer>,
          presentStore: StoreOf<WorkoutPresent>) {
         self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
         self.presentStore = presentStore
     }
     
@@ -64,9 +65,6 @@ struct WorkoutView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    SearchBar(store: store.scope(state: \.search, 
-                                                 action: \.search))
-                        .padding(.top, 10)
                     MyWorkoutView(workoutsList: $workoutsList)
                         .padding(.top, 10)
                     WorkoutCategoryView(
@@ -91,6 +89,10 @@ struct WorkoutView: View {
                 }
             })
         }
+        .searchable(text: viewStore.binding(
+            get: { $0.keyword },
+            send: { WorkoutReducer.Action.search(keyword: $0) }
+        ))
         .onReceive(routingUpdate) { self.routingState = $0 }
         .onAppear {
             injected.appState[\.userData.selectionWorkouts].removeAll()
