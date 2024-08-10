@@ -11,6 +11,11 @@ import ComposableArchitecture
 
 struct ContentView: View {
     @Environment(\.presentationMode) var presentationmode
+    private let container: DIContainer
+    
+    init(container: DIContainer) {
+        self.container = container
+    }
     
     var body: some View {
         GeometryReader { proxy in
@@ -23,6 +28,7 @@ struct ContentView: View {
                     )) {
                         HomeReducer()
                     })
+            .inject(container)
             .ignoresSafeArea(.all, edges: .bottom)
         }
     }
@@ -31,6 +37,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
-        ContentView()
+        ContentView(container: .preview)
     }
 }
