@@ -67,6 +67,12 @@ struct HomeReducer {
 struct HomeView: View {
     @Bindable var store: StoreOf<HomeReducer>
     @ObservedObject var viewStore: ViewStoreOf<HomeReducer>
+
+    @Environment(\.injected) private var injected: DIContainer
+    @State private var routingState: Routing = .init()
+    private var routingBinding: Binding<Routing> {
+        $routingState.dispatched(to: injected.appState, \.routing.homeView)
+    }
     
     init(store: StoreOf<HomeReducer>) {
         UITabBar.appearance().isHidden = true
@@ -118,6 +124,7 @@ struct HomeView: View {
             )
             Spacer()
         }
+        .onReceive(routingUpdate) { self.routingState = $0 }
         .alert("루틴은 저장하겠습니까?",
                isPresented: viewStore.binding(
                 get: { $0.workingOut.isSavedRoutine },
@@ -147,6 +154,22 @@ private extension HomeView {
                                  name: store.state.routineName,
                                  routines: injected.appState[\.userData.myRoutine].routines)
         )
+    }
+}
+
+private extension HomeView {
+    
+}
+
+extension HomeView {
+    struct Routing: Equatable {
+        var workingOutView: Bool = false
+    }
+}
+
+private extension HomeView {
+    var routingUpdate: AnyPublisher<Routing, Never> {
+        injected.appState.updates(for: \.routing.homeView)
     }
 }
 
