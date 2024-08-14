@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 enum WorkoutsType: String, Codable {
     case machine, barbel, dumbbel, cable
