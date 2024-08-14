@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct TodayworkoutDoneApp: App {
@@ -15,5 +16,6 @@ struct TodayworkoutDoneApp: App {
         WindowGroup {
             ContentView(container: environment.container)
         }
+        .modelContainer(SwiftDataConfigurationProvider.shared.container)
     }
 }

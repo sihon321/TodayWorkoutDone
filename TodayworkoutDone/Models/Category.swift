@@ -6,8 +6,9 @@
 //
 
 import Foundation
-import CoreData
+import SwiftData
 
+@Model
 struct Category: Codable {
     var name: String
     
@@ -17,6 +18,11 @@ struct Category: Codable {
     
     init(name: String) {
         self.name = name
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
     }
     
     func encode(to encoder: Encoder) throws {

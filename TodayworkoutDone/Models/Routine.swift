@@ -6,14 +6,15 @@
 //
 
 import Foundation
-import CoreData
+import SwiftData
 
+@Model
 struct Routine: Codable, Equatable {
     var workouts: Workout
     var sets: [Sets]
     var date: Date
     var stopwatch: Double
-    var workotusType: WorkoutsType
+    var workoutsType: WorkoutsType
     
     enum CodingKeys: String, CodingKey {
         case workouts, sets, date, stopwatch, workotusType
@@ -28,7 +29,7 @@ struct Routine: Codable, Equatable {
         self.sets = sets
         self.date = date
         self.stopwatch = stopwatch
-        self.workotusType = type
+        self.workoutsType = type
     }
     
     init(from decoder: Decoder) throws {
@@ -37,8 +38,18 @@ struct Routine: Codable, Equatable {
         sets = try container.decode([Sets].self, forKey: .sets)
         date = try container.decode(Date.self, forKey: .date)
         stopwatch = try container.decode(Double.self, forKey: .stopwatch)
-        workotusType = try container.decode(WorkoutsType.self, forKey: .workotusType)
+        workoutsType = try container.decode(WorkoutsType.self, forKey: .workotusType)
     }
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(workouts, forKey: .workouts)
+        try container.encode(sets, forKey: .sets)
+        try container.encode(date, forKey: .date)
+        try container.encode(stopwatch, forKey: .stopwatch)
+        try container.encode(workoutsType, forKey: .workotusType)
+    }
+
 }
 
 extension Routine: Identifiable {

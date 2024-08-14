@@ -6,8 +6,9 @@
 //
 
 import Foundation
-import CoreData
+import SwiftData
 
+@Model
 struct Sets: Codable, Equatable, Identifiable {
     var id: UUID
     var prevWeight: Double
@@ -42,5 +43,15 @@ struct Sets: Codable, Equatable, Identifiable {
         prevLab = try container.decode(Int.self, forKey: .prevLab)
         lab = try container.decode(Int.self, forKey: .lab)
         isChecked = try container.decode(Bool.self, forKey: .isChecked)
+    }
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(prevWeight, forKey: .prevWeight)
+        try container.encode(weight, forKey: .weight)
+        try container.encode(prevLab, forKey: .prevLab)
+        try container.encode(lab, forKey: .lab)
+        try container.encode(isChecked, forKey: .isChecked)
     }
 }
