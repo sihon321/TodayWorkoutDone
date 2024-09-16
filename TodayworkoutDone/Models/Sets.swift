@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-struct Sets: Codable, Equatable, Identifiable {
+class Sets: Codable, Equatable, Identifiable {
     var id: UUID
     var prevWeight: Double
     var weight: Double
@@ -35,7 +35,7 @@ struct Sets: Codable, Equatable, Identifiable {
         self.isChecked = isChecked
     }
     
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(UUID.self, forKey: .id)
         prevWeight = try container.decode(Double.self, forKey: .prevWeight)

@@ -9,7 +9,6 @@ import SwiftUI
 import Combine
 
 struct MainContentStepView: View {
-    @Environment(\.injected) private var injected: DIContainer
     @State private var step: Int = 0
     
     var body: some View {
@@ -25,23 +24,20 @@ struct MainContentStepView: View {
                 .foregroundColor(Color(0x7d7d7d))
                 .padding(.leading, -5)
         }
-        .onReceive(stepCount) { step in
-            self.step = step
-        }
     }
 }
 
 extension MainContentStepView {
-    private var stepCount: AnyPublisher<Int, Never> {
-        injected.interactors.healthkitInteractor.stepCount(
-            from: Calendar.current.date(byAdding: .day,
-                                        value: -1,
-                                        to: .currentDateForDeviceRegion)!,
-            to: .currentDateForDeviceRegion
-        )
-        .replaceError(with: 0)
-        .eraseToAnyPublisher()
-    }
+//    private var stepCount: AnyPublisher<Int, Never> {
+//        injected.interactors.healthkitInteractor.stepCount(
+//            from: Calendar.current.date(byAdding: .day,
+//                                        value: -1,
+//                                        to: .currentDateForDeviceRegion)!,
+//            to: .currentDateForDeviceRegion
+//        )
+//        .replaceError(with: 0)
+//        .eraseToAnyPublisher()
+//    }
 }
 
 struct MainContentStepView_Previews: PreviewProvider {

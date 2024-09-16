@@ -49,10 +49,7 @@ struct WorkoutView: View {
     @ObservedObject var viewStore: ViewStoreOf<WorkoutReducer>
     @Bindable var presentStore: StoreOf<WorkoutPresent>
     
-    @Environment(\.injected) private var injected: DIContainer
-    
-    @State private var workoutsList: Loadable<LazyList<Workout>> = .notRequested
-    @State private var routingState: Routing = .init()
+    @State private var workoutsList: [Workout] = []
     
     init(store: StoreOf<WorkoutReducer>,
          presentStore: StoreOf<WorkoutPresent>) {
@@ -65,14 +62,15 @@ struct WorkoutView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    MyWorkoutView(workoutsList: $workoutsList)
+                    MyWorkoutView(myRoutines: [],
+                                  workoutsList: $workoutsList)
                         .padding(.top, 10)
                     WorkoutCategoryView(
                         store: store.scope(state: \.workoutCategory,
-                                           action: \.workoutCategory),
+                                           action: \.workoutCategory), 
+                        categories: [],
                         workoutsList: workoutsList,
-                        selectWorkouts: injected.appState[\.userData].selectionWorkouts)
-                    .inject(injected)
+                        selectWorkouts: [])
                     .padding(.top, 10)
                 }
             }
@@ -93,38 +91,12 @@ struct WorkoutView: View {
             get: { $0.keyword },
             send: { WorkoutReducer.Action.search(keyword: $0) }
         ))
-        .onReceive(routingUpdate) { self.routingState = $0 }
-        .onAppear {
-            injected.appState[\.userData.selectionWorkouts].removeAll()
-        }
     }
 }
 
 extension WorkoutView {
     func reloadWorkouts() {
-        injected.interactors.workoutInteractor
-            .load(workouts: $workoutsList)
+//        injected.interactors.workoutInteractor
+//            .load(workouts: $workoutsList)
     }
 }
-
-extension WorkoutView {
-    struct Routing: Equatable {
-        var workoutCategoryView: Bool = false
-    }
-}
-
-private extension WorkoutView {
-    var routingUpdate: AnyPublisher<Routing, Never> {
-        injected.appState.updates(for: \.routing.workoutView)
-    }
-}
-
-
-//struct WorkoutView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WorkoutView(store: Store(initialState: WorkoutReducer.State()) {
-//            WorkoutReducer()
-//        })
-//        .background(Color.gray)
-//    }
-//}

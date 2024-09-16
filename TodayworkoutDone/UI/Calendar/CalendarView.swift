@@ -9,8 +9,7 @@ import SwiftUI
 import Combine
 
 struct CalendarView: View {
-    @Environment(\.injected) private var injected: DIContainer
-    @State private(set) var workoutRoutines: Loadable<LazyList<WorkoutRoutine>> = .notRequested
+    @State private(set) var workoutRoutines: [WorkoutRoutine] = []
     
     @State private var isPresented = false
     
@@ -31,61 +30,12 @@ struct CalendarView: View {
     }
 
     var body: some View {
-        self.content
-            .onAppear(perform: loadWorkoutRoutines)
-    }
-    
-    @ViewBuilder private var content: some View {
-        switch workoutRoutines {
-        case .notRequested:
-            notRequestedView
-        case .isLoading(let last, _):
-            loadingView(last)
-        case .loaded(let routines):
-            loadedView(routines)
-        case .failed(let error):
-            failedView(error)
-        }
-    }
-}
-
-private extension CalendarView {
-    func loadWorkoutRoutines() {
-        injected.interactors.routineInteractor
-            .load(workoutRoutines: $workoutRoutines)
-    }
-}
-
-// MARK: - Loading Content
-
-private extension CalendarView {
-    var notRequestedView: some View {
-        Text("")
-    }
-    
-    func loadingView(_ previouslyLoaded: LazyList<WorkoutRoutine>?) -> some View {
-        if let workoutRoutines = previouslyLoaded {
-            return AnyView(loadedView(workoutRoutines))
-        } else {
-            return AnyView(ActivityIndicatorView().padding())
-        }
-    }
-    
-    func failedView(_ error: Error) -> some View {
-        ErrorView(error: error, retryAction: {
-            self.loadWorkoutRoutines()
-        })
-    }
-}
-
-private extension CalendarView {
-    func loadedView(_ workoutRoutines: LazyList<WorkoutRoutine>) -> some View {
         NavigationView {
             CalendarViewComponent(
                 startDate: startDate(workoutRoutines),
                 date: $todayDate,
                 content: { date in
-                    let filteredWorkout = filterWorkout(date: date, workoutRoutines.array())
+                    let filteredWorkout = filterWorkout(date: date, workoutRoutines)
                     Button(action: {
                         if !filteredWorkout.isEmpty {
                             selectedDate = date
@@ -103,7 +53,7 @@ private extension CalendarView {
                         CalendarDetailView(
                             isPresented: $isPresented,
                             date: selectedDate,
-                            workoutRoutines: workoutRoutines.array()
+                            workoutRoutines: workoutRoutines
                         )
                     }
                 },
@@ -124,17 +74,27 @@ private extension CalendarView {
             .background(Color(0xf4f4f4))
             .navigationTitle("Calendar")
         }
-        
+
+            .onAppear(perform: loadWorkoutRoutines)
     }
-    
-    func startDate(_ workoutRoutines: LazyList<WorkoutRoutine>) -> Date {
-        let dates = workoutRoutines.array().compactMap({ $0.date })
+}
+
+private extension CalendarView {
+    func loadWorkoutRoutines() {
+//        injected.interactors.routineInteractor
+//            .load(workoutRoutines: $workoutRoutines)
+    }
+}
+
+private extension CalendarView {
+    func startDate(_ workoutRoutines: [WorkoutRoutine]) -> Date {
+        let dates = workoutRoutines.compactMap({ $0.date })
         let sortedDates = dates.sorted(by: >)
         return sortedDates.first ?? Date()
     }
     
-    func endDate(_ workoutRoutines: LazyList<WorkoutRoutine>) -> Date {
-        let dates = workoutRoutines.array().compactMap({ $0.date })
+    func endDate(_ workoutRoutines: [WorkoutRoutine]) -> Date {
+        let dates = workoutRoutines.compactMap({ $0.date })
         let sortedDates = dates.sorted(by: <)
         return sortedDates.first ?? Date()
     }

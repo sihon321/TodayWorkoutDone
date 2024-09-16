@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-struct Routine: Codable, Equatable {
+class Routine: Codable, Equatable {
     var workouts: Workout
     var sets: [Sets]
     var date: Date
@@ -32,7 +32,7 @@ struct Routine: Codable, Equatable {
         self.workoutsType = type
     }
     
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         workouts = try container.decode(Workout.self, forKey: .workouts)
         sets = try container.decode([Sets].self, forKey: .sets)

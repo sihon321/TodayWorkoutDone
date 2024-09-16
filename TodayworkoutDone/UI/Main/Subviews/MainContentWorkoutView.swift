@@ -9,7 +9,6 @@ import SwiftUI
 import Combine
 
 struct MainContentWorkoutView: View {
-    @Environment(\.injected) private var injected: DIContainer
     @State private var exerciseTime: Int = 0
     private var hour: Int {
         return exerciseTime / 60
@@ -41,21 +40,18 @@ struct MainContentWorkoutView: View {
                 .foregroundColor(Color(0x7d7d7d))
                 .padding(.leading, -5)
         }
-        .onReceive(appleExerciseTime) { appleExerciseTime in
-            self.exerciseTime = appleExerciseTime
-        }
     }
 }
 
 extension MainContentWorkoutView {
-    private var appleExerciseTime: AnyPublisher<Int, Never> {
-        injected.interactors.healthkitInteractor.appleExerciseTime(
-            from: Date(),
-            to: Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        )
-        .replaceError(with: 0)
-        .eraseToAnyPublisher()
-    }
+//    private var appleExerciseTime: AnyPublisher<Int, Never> {
+//        injected.interactors.healthkitInteractor.appleExerciseTime(
+//            from: Date(),
+//            to: Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+//        )
+//        .replaceError(with: 0)
+//        .eraseToAnyPublisher()
+//    }
 }
 
 struct MainContentWorkoutView_Previews: PreviewProvider {

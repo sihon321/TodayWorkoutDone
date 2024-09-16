@@ -9,7 +9,6 @@ import SwiftUI
 import Combine
 
 struct WorkoutListSubview: View {
-    @Environment(\.injected) private var injected: DIContainer
     var workouts: Workout
     @Binding var selectWorkouts: [Workout]
     
@@ -17,9 +16,9 @@ struct WorkoutListSubview: View {
         VStack {
             Button(action: {
                 if selectWorkouts.contains(workouts) {
-                    injected.interactors.workoutInteractor.remove(workouts)
+//                    injected.interactors.workoutInteractor.remove(workouts)
                 } else {
-                    injected.interactors.workoutInteractor.append(workouts)
+//                    injected.interactors.workoutInteractor.append(workouts)
                 }
             }) {
                 HStack {

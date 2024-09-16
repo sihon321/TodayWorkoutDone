@@ -22,19 +22,12 @@ struct MyWorkoutReducer {
 }
 
 struct MyWorkoutView: View {
-    @Environment(\.injected) private var injected: DIContainer
-    
-    @State private var routingState: Routing = .init()
-    @State private(set) var myRoutines: Loadable<LazyList<MyRoutine>>
+    @State private(set) var myRoutines: [MyRoutine]
     @State private var selectedRoutine: MyRoutine?
-    @Binding var workoutsList: Loadable<LazyList<Workout>>
+    @Binding var workoutsList: [Workout]
     
-    private var routingBinding: Binding<Routing> {
-        $routingState.dispatched(to: injected.appState, \.routing.myWorkoutView)
-    }
-    
-    init(myRoutines: Loadable<LazyList<MyRoutine>> = .notRequested,
-         workoutsList: Binding<Loadable<LazyList<Workout>>> = .constant(.notRequested)) {
+    init(myRoutines: [MyRoutine],
+         workoutsList: Binding<[Workout]> = .constant([])) {
         self._myRoutines = .init(initialValue: myRoutines)
         self._workoutsList = .init(projectedValue: workoutsList)
     }
@@ -44,24 +37,24 @@ struct MyWorkoutView: View {
             Text("my workout")
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(myRoutines.value?.array() ?? []) { myRoutine in
+                    ForEach(myRoutines) { myRoutine in
                         Button(action: {
-                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = true
+//                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = true
                             selectedRoutine = MyRoutine(name: myRoutine.name,
                                                         routines:  myRoutine.routines)
                         }) {
                             MyWorkoutSubview(myRoutine: myRoutine)
                         }
                     }
-                    .alert("루틴을 시작하겠습니까?", isPresented: routingBinding.alertMyWorkout) {
+                    .alert("루틴을 시작하겠습니까?", isPresented: .constant(false)) {
                         Button("Cancel") {
-                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
+//                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
                         }
                         Button("OK") {
-                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
-                            injected.appState[\.routing.homeView.workingOutView] = true
+//                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
+//                            injected.appState[\.routing.homeView.workingOutView] = true
                             if let selectedRoutine = selectedRoutine {
-                                injected.appState[\.userData.myRoutine] = selectedRoutine
+//                                injected.appState[\.userData.myRoutine] = selectedRoutine
                             }
                         }
                     } message: {
@@ -72,19 +65,20 @@ struct MyWorkoutView: View {
                             Text(message)
                         }
                     }
-                    .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
+                    .fullScreenCover(isPresented: .constant(false),
                                      content: {
-                        MakeWorkoutView(myRoutine: .constant(injected.appState[\.userData.myRoutine]),
-                                        myRoutines: $myRoutines,
-                                        workoutsList: $workoutsList,
-                                        isEdit: true)
+                        if let routine = selectedRoutine {
+                            MakeWorkoutView(myRoutine: .constant(routine),
+                                            myRoutines: $myRoutines,
+                                            workoutsList: $workoutsList,
+                                            isEdit: true)
+                        }
                     })
                 }
             }
         }
         .padding([.leading, .trailing], 15)
         .onAppear(perform: reloadRoutines)
-        .onReceive(routingUpdate) { self.routingState = $0 }
     }
 }
 
@@ -92,27 +86,7 @@ struct MyWorkoutView: View {
 
 private extension MyWorkoutView {
     func reloadRoutines() {
-        injected.interactors.routineInteractor
-            .load(myRoutines: $myRoutines)
+//        injected.interactors.routineInteractor
+//            .load(myRoutines: $myRoutines)
     }
 }
-
-extension MyWorkoutView {
-    struct Routing: Equatable {
-        var makeWorkoutView: Bool = false
-        var alertMyWorkout: Bool = false
-    }
-}
-
-private extension MyWorkoutView {
-    var routingUpdate: AnyPublisher<Routing, Never> {
-        injected.appState.updates(for: \.routing.myWorkoutView)
-    }
-}
-
-//struct MyWorkoutView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MyWorkoutView()
-//            .background(Color.gray)
-//    }
-//}

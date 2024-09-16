@@ -14,7 +14,7 @@ public extension CodingUserInfoKey {
 }
 
 @Model
-struct Workout: Codable, Equatable {
+class Workout: Codable, Equatable {
     var name: String
     var category: String
     var target: String
@@ -29,7 +29,7 @@ struct Workout: Codable, Equatable {
         self.target = target
     }
 
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
         category = try container.decode(String.self, forKey: .category)
