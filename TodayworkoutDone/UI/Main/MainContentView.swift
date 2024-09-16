@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct MainContentView: View {
-    @Environment(\.injected) private var injected: DIContainer
-    
     private let gridLayout = Array(repeating: GridItem(.flexible()),
                                    count: 2)
     private var dataList: [MainContentType] = [.step, .workoutTime, .energyBurn]

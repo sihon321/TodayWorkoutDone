@@ -10,11 +10,10 @@ import SwiftData
 
 @main
 struct TodayworkoutDoneApp: App {
-    let environment = AppEnvironment.bootstrap()
     
     var body: some Scene {
         WindowGroup {
-            ContentView(container: environment.container)
+            ContentView()
         }
         .modelContainer(SwiftDataConfigurationProvider.shared.container)
     }

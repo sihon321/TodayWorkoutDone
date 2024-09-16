@@ -9,7 +9,6 @@ import SwiftUI
 import Combine
 
 struct MainContentEnergyBurn: View {
-    @Environment(\.injected) private var injected: DIContainer
     @State private var energyBurned: Int = 0
     
     var body: some View {
@@ -27,16 +26,16 @@ struct MainContentEnergyBurn: View {
 }
 
 extension MainContentEnergyBurn {
-    private var energyBurn: AnyPublisher<Int, Never> {
-        injected.interactors.healthkitInteractor.activeEnergyBurned(
-            from: Calendar.current.date(byAdding: .day,
-                                        value: -1,
-                                        to: .currentDateForDeviceRegion)!,
-            to: .currentDateForDeviceRegion
-        )
-        .replaceError(with: 0)
-        .eraseToAnyPublisher()
-    }
+//    private var energyBurn: AnyPublisher<Int, Never> {
+//        injected.interactors.healthkitInteractor.activeEnergyBurned(
+//            from: Calendar.current.date(byAdding: .day,
+//                                        value: -1,
+//                                        to: .currentDateForDeviceRegion)!,
+//            to: .currentDateForDeviceRegion
+//        )
+//        .replaceError(with: 0)
+//        .eraseToAnyPublisher()
+//    }
 }
 
 #Preview {

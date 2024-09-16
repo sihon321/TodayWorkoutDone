@@ -9,7 +9,6 @@ import SwiftUI
 import Combine
 
 struct MyWorkoutSubview: View {
-    @Environment(\.injected) private var injected: DIContainer
     var myRoutine: MyRoutine
 
     var body: some View {
@@ -25,8 +24,8 @@ struct MyWorkoutSubview: View {
                 Button(action: {}) {
                     Menu {
                         Button(action: {
-                            injected.appState[\.userData.myRoutine] = myRoutine
-                            injected.appState[\.routing.myWorkoutView.makeWorkoutView] = true
+//                            injected.appState[\.userData.myRoutine] = myRoutine
+//                            injected.appState[\.routing.myWorkoutView.makeWorkoutView] = true
                         }) {
                             Label("편집", systemImage: "pencil")
                         }

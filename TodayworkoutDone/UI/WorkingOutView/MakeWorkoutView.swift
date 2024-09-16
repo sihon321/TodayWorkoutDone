@@ -10,25 +10,20 @@ import Combine
 import ComposableArchitecture
 
 struct MakeWorkoutView: View {
-    @Environment(\.injected) private var injected: DIContainer
-    
-    @State private var routingState: Routing = .init()
-    @State private var myRoutine: MyRoutine
-    @Binding var myRoutines: Loadable<LazyList<MyRoutine>>
-    @Binding var workoutsList: Loadable<LazyList<Workout>>
+    @State private var myRoutine: MyRoutine = MyRoutine(id: UUID(), name: "", routines: [])
+    @Binding var myRoutines: [MyRoutine]
+    @Binding var workoutsList: [Workout]
     @State private var editMode: EditMode
     @State private var titleSmall: Bool = false
     @State private var selectionWorkouts: [Workout] = []
-    private var routingBinding: Binding<Routing> {
-        $routingState.dispatched(to: injected.appState, \.routing.makeWorkoutView)
-    }
+
     var isEdit: Bool
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
     init(myRoutine: Binding<MyRoutine>,
-         myRoutines: Binding<Loadable<LazyList<MyRoutine>>> = .constant(.notRequested),
-         workoutsList: Binding<Loadable<LazyList<Workout>>> = .constant(.notRequested),
+         myRoutines: Binding<[MyRoutine]> = .constant([]),
+         workoutsList: Binding<[Workout]> = .constant([]),
          editMode: EditMode = .active,
          isEdit: Bool = false) {
         self._myRoutine = .init(initialValue: myRoutine.wrappedValue)
@@ -52,25 +47,28 @@ struct MakeWorkoutView: View {
                 }
                 .padding([.bottom], 30)
                 Button(action: {
-                    injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = true
+                    
                 }) {
                     Text("add")
                         .frame(maxWidth: .infinity, minHeight: 40)
                         .background(.gray)
                         .padding([.leading, .trailing], 15)
                 }
-                .fullScreenCover(isPresented: routingBinding.workoutCategoryView,
+                .fullScreenCover(isPresented: .constant(false),
                                 content: {
                     VStack {
                         NavigationView {
                             ScrollView {
                                 VStack {
-                                    WorkoutCategoryView(store: Store(initialState: WorkoutCategoryReducer.State()) {
-                                        WorkoutCategoryReducer()
-                                    }, workoutsList: workoutsList,
-                                                        selectWorkouts: injected.appState[\.userData].selectionWorkouts,
-                                                        isMyWorkoutView: true,
-                                                        myRoutine: $myRoutine)
+                                    WorkoutCategoryView(
+                                        store: Store(initialState: WorkoutCategoryReducer.State()) {
+                                            WorkoutCategoryReducer()
+                                        },
+                                        categories: [],
+                                        workoutsList: workoutsList,
+                                        selectWorkouts: selectionWorkouts,
+                                        isMyWorkoutView: true,
+                                        myRoutine: $myRoutine)
                                 }
                             }
                         }
@@ -81,62 +79,38 @@ struct MakeWorkoutView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
-                        injected.appState[\.routing.workoutListView.makeWorkoutView] = false
-                        injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
-                        injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
+//                        injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
+//                        injected.appState[\.routing.workoutListView.makeWorkoutView] = false
+//                        injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
+//                        injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if isEdit {
                         Button("Save") {
-                            injected.interactors.routineInteractor.update(myRoutine: myRoutine) {
-                                injected.interactors.routineInteractor.load(myRoutines: $myRoutines)
-                                injected.appState[\.userData.myRoutine] = myRoutine
-                                injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
-                            }
+//                            injected.interactors.routineInteractor.update(myRoutine: myRoutine) {
+//                                injected.interactors.routineInteractor.load(myRoutines: $myRoutines)
+//                                injected.appState[\.userData.myRoutine] = myRoutine
+//                                injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
+//                            }
                         }
                     } else {
                         Button("Done") {
-                            injected.appState[\.userData.myRoutine] = myRoutine
-                            injected.appState[\.routing.homeView.workingOutView] = true
-                            
-                            injected.appState[\.routing.workoutListView.makeWorkoutView] = false
-                            
-                            injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
-                            injected.appState[\.routing.workoutCategoryView.workoutListView] = false
-
-                            injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
-                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
+//                            injected.appState[\.userData.myRoutine] = myRoutine
+//                            injected.appState[\.routing.homeView.workingOutView] = true
+//                            
+//                            injected.appState[\.routing.workoutListView.makeWorkoutView] = false
+//                            
+//                            injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
+//                            injected.appState[\.routing.workoutCategoryView.workoutListView] = false
+//
+//                            injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
+//                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
                         }
                     }
                 }
             }
             .listStyle(.grouped)
         }
-        .onReceive(routingUpdate) { self.routingState = $0 }
-    }
-}
-
-extension MakeWorkoutView {
-    struct Routing: Equatable {
-        var workoutCategoryView: Bool = false
-    }
-}
-
-private extension MakeWorkoutView {
-    var routingUpdate: AnyPublisher<Routing, Never> {
-        injected.appState.updates(for: \.routing.makeWorkoutView)
-    }
-    
-    var myRoutineUpdate: AnyPublisher<MyRoutine, Never> {
-        injected.appState.updates(for: \.userData.myRoutine)
-    }
-}
-
-struct MakeWorkoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        MakeWorkoutView(myRoutine: .constant(MyRoutine.mockedData),
-                        editMode: .active)
     }
 }

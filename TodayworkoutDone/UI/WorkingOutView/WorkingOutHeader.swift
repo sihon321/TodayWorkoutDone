@@ -20,27 +20,27 @@ struct WorkingOutHeader: View {
                 Button(action: {}) {
                     Menu {
                         Button(action: {
-                            $routine.workotusType.wrappedValue = .machine
+                            $routine.workoutsType.wrappedValue = .machine
                         }) {
                             Label("머신", systemImage: "pencil")
                         }
                         Button(action: {
-                            $routine.workotusType.wrappedValue = .barbel
+                            $routine.workoutsType.wrappedValue = .barbel
                         }) {
                             Label("바벨", systemImage: "pencil")
                         }
                         Button(action: {
-                            $routine.workotusType.wrappedValue = .dumbbel
+                            $routine.workoutsType.wrappedValue = .dumbbel
                         }) {
                             Label("덤벨", systemImage: "pencil")
                         }
                         Button(action: {
-                            $routine.workotusType.wrappedValue = .cable
+                            $routine.workoutsType.wrappedValue = .cable
                         }) {
                             Label("케이블", systemImage: "pencil")
                         }
                     } label: {
-                        Text(routine.workotusType.kor)
+                        Text(routine.workoutsType.kor)
                             .padding([.leading, .trailing], 5)
                             .padding([.top, .bottom], 3)
                             .font(.system(size: 11))

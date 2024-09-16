@@ -10,7 +10,6 @@ import Combine
 import Charts
 
 struct WeeklyChartView: View {
-    @Environment(\.injected) private var injected: DIContainer
     @State private var exerciseTime: Int = 0
     
     struct Weekly: Identifiable {
@@ -47,18 +46,18 @@ struct WeeklyChartView: View {
 }
 
 extension WeeklyChartView {
-    private var appleExerciseTime: AnyPublisher<Int, Never> {
-        var dateComponents = DateComponents()
-        dateComponents.weekOfYear = -1
-        return injected.interactors.healthkitInteractor.appleExerciseTime(
-            from: Calendar.current.date(byAdding: .day,
-                                        value: -1,
-                                        to: .currentDateForDeviceRegion)!,
-            to: .currentDateForDeviceRegion
-        )
-            .replaceError(with: 0)
-            .eraseToAnyPublisher()
-    }
+//    private var appleExerciseTime: AnyPublisher<Int, Never> {
+//        var dateComponents = DateComponents()
+//        dateComponents.weekOfYear = -1
+//        return injected.interactors.healthkitInteractor.appleExerciseTime(
+//            from: Calendar.current.date(byAdding: .day,
+//                                        value: -1,
+//                                        to: .currentDateForDeviceRegion)!,
+//            to: .currentDateForDeviceRegion
+//        )
+//            .replaceError(with: 0)
+//            .eraseToAnyPublisher()
+//    }
 }
 
 struct WeeklyChartView_Previews: PreviewProvider {

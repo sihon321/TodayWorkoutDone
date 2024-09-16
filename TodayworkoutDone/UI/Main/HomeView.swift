@@ -11,11 +11,14 @@ import Combine
 
 @Reducer
 struct HomeReducer {
-    enum Tab { case workout }
+    enum Tab { 
+        case workout
+    }
     
     @ObservableState
     struct State: Equatable {
         var bottomEdge: CGFloat
+        var runningMyRoutine: MyRoutine?
         var routineName = ""
         var workingOut = WorkingOutReducer.State()
         var tabBar: CustomTabBarReducer.State
@@ -36,7 +39,10 @@ struct HomeReducer {
         case enterRoutineName(name: String)
         case workingOut(WorkingOutReducer.Action)
         case tabBar(CustomTabBarReducer.Action)
+        case save
     }
+    
+    @Dependency(\.myRoutineData) var context
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -59,7 +65,24 @@ struct HomeReducer {
             case .tabBar(.tabButton(.setTab(let info))):
                 state.tabBar.tabButton.info = info
                 return .none
+            case .save:
+                saveMyRoutine(myRoutine: state.runningMyRoutine)
+                return .none
+            default:
+                return .none
             }
+        }
+    }
+    
+    func saveMyRoutine(myRoutine: MyRoutine?) {
+        do {
+            if let myRoutine = myRoutine {
+                try context.add(myRoutine)
+            } else {
+                throw MyRoutineDatabase.MyRoutineError.add
+            }
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }
@@ -68,12 +91,6 @@ struct HomeView: View {
     @Bindable var store: StoreOf<HomeReducer>
     @ObservedObject var viewStore: ViewStoreOf<HomeReducer>
 
-    @Environment(\.injected) private var injected: DIContainer
-    @State private var routingState: Routing = .init()
-    private var routingBinding: Binding<Routing> {
-        $routingState.dispatched(to: injected.appState, \.routing.homeView)
-    }
-    
     init(store: StoreOf<HomeReducer>) {
         UITabBar.appearance().isHidden = true
         self.store = store
@@ -90,7 +107,7 @@ struct HomeView: View {
             ) {
                 ZStack {
                     MainView(bottomEdge: store.state.bottomEdge)
-                    if !routingBinding.workingOutView.wrappedValue {
+                    if store.state.runningMyRoutine == nil {
                         ExcerciseStartView(
                             store: Store(initialState: ExcerciseStarter.State()) {
                                 ExcerciseStarter()
@@ -105,8 +122,9 @@ struct HomeView: View {
                             ),
                             content: {
                                 WorkingOutView(
-                                    store: store.scope(state: \.workingOut, action: \.workingOut),
-                                    myRoutine: .constant(injected.appState[\.userData.myRoutine]))
+                                    store: store.scope(state: \.workingOut, 
+                                                       action: \.workingOut)
+                                )
                             })
                     }
                 }
@@ -124,7 +142,6 @@ struct HomeView: View {
             )
             Spacer()
         }
-        .onReceive(routingUpdate) { self.routingState = $0 }
         .alert("루틴은 저장하겠습니까?",
                isPresented: viewStore.binding(
                 get: { $0.workingOut.isSavedRoutine },
@@ -139,44 +156,10 @@ struct HomeView: View {
                 viewStore.send(.workingOut(.saveRoutine(isSavedRoutine: false)))
             }
             Button("OK") {
-                saveMyRoutine()
+                viewStore.send(.save)
             }
         } message: {
             Text("새로운 루틴을 저장하시겟습니까")
         }
     }
 }
-
-private extension HomeView {
-    func saveMyRoutine() {
-        injected.interactors.routineInteractor.store(
-            myRoutine: MyRoutine(id: injected.appState[\.userData.myRoutine].id,
-                                 name: store.state.routineName,
-                                 routines: injected.appState[\.userData.myRoutine].routines)
-        )
-    }
-}
-
-private extension HomeView {
-    
-}
-
-extension HomeView {
-    struct Routing: Equatable {
-        var workingOutView: Bool = false
-    }
-}
-
-private extension HomeView {
-    var routingUpdate: AnyPublisher<Routing, Never> {
-        injected.appState.updates(for: \.routing.homeView)
-    }
-}
-
-//struct HomeView_Previews: PreviewProvider {
-//    
-//    static var previews: some View {
-//        HomeView(bottomEdge: 0)
-//            .inject(.preview)
-//    }
-//}

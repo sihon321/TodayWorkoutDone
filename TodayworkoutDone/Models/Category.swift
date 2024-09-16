@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-struct Category: Codable {
+class Category: Codable {
     var name: String
     
     enum CodingKeys: String, CodingKey {
@@ -20,7 +20,7 @@ struct Category: Codable {
         self.name = name
     }
     
-    init(from decoder: any Decoder) throws {
+    required init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
     }

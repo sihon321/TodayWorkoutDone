@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-struct MyRoutine: Codable, Equatable, Identifiable {
+class MyRoutine: Codable, Equatable, Identifiable {
     var id: UUID
     var name: String
     var routines: [Routine]
@@ -24,7 +24,7 @@ struct MyRoutine: Codable, Equatable, Identifiable {
         self.routines = routines
     }
     
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(UUID.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
@@ -40,7 +40,7 @@ struct MyRoutine: Codable, Equatable, Identifiable {
 }
 
 @Model
-struct WorkoutRoutine: Codable, Equatable, Identifiable {
+class WorkoutRoutine: Codable, Equatable, Identifiable {
     var date: Date
     var routineTime: Int
     var uuid: UUID
@@ -57,7 +57,7 @@ struct WorkoutRoutine: Codable, Equatable, Identifiable {
         self.routineTime = routineTime
     }
     
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         date = try container.decode(Date.self, forKey: .date)
         routineTime = try container.decode(Int.self, forKey: .routineTime)

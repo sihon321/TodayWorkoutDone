@@ -32,24 +32,18 @@ struct WorkoutCategoryReducer {
 
 struct WorkoutCategoryView: View {
     @Bindable var store: StoreOf<WorkoutCategoryReducer>
-    
-    @Environment(\.injected) private var injected: DIContainer
 
-    @State private var routingState: Routing = .init()
     @State private var selectWorkouts: [Workout]
-    @State private(set) var categories: Loadable<LazyList<Category>>
+    @State private(set) var categories: [Category]
     
-    @Binding var workoutsList: Loadable<LazyList<Workout>>
+    @Binding var workoutsList: [Workout]
 
     @Binding var myRoutine: MyRoutine
     private var isMyWorkoutView: Bool = false
-    private var routingBinding: Binding<Routing> {
-        $routingState.dispatched(to: injected.appState, \.routing.workoutCategoryView)
-    }
     
     init(store: StoreOf<WorkoutCategoryReducer>,
-         categories: Loadable<LazyList<Category>> = .notRequested,
-         workoutsList: Loadable<LazyList<Workout>>,
+         categories: [Category],
+         workoutsList: [Workout],
          selectWorkouts: [Workout] = [],
          isMyWorkoutView: Bool = false,
          myRoutine: Binding<MyRoutine> = .init(projectedValue: .constant(MyRoutine(name: "", routines: [])))) {
@@ -64,11 +58,11 @@ struct WorkoutCategoryView: View {
     var body: some View {
         VStack(alignment: .leading)  {
             Text("category")
-            let filteredCategory = workoutsList.value?.array()
+            let filteredCategory = workoutsList
                 .filter({ $0.name.hasPrefix(store.keyword) })
                 .compactMap({ $0.category })
                 .uniqued() ?? []
-            let categories = categories.value?.array().filter {
+            let categories = categories.filter {
                 if filteredCategory.isEmpty {
                     return true
                 } else if filteredCategory.contains($0.name) {
@@ -84,7 +78,6 @@ struct WorkoutCategoryView: View {
                                     category: category,
                                     isMyWorkoutView: isMyWorkoutView,
                                     myRoutine: $myRoutine)
-                    .inject(injected)
                 } label: {
                     WorkoutCategorySubview(category: category.name)
                 }
@@ -96,16 +89,16 @@ struct WorkoutCategoryView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         if !isMyWorkoutView {
-                            injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = true
+                            
                         } else {
                             myRoutine.routines += selectWorkouts.compactMap({ Routine(workouts: $0) })
-                            injected.appState[\.userData.selectionWorkouts].removeAll()
-                            injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
+//                            injected.appState[\.userData.selectionWorkouts].removeAll()
+//                            injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
                         }
                     }) {
                         Text("Done(\(selectWorkouts.count))")
                     }
-                    .fullScreenCover(isPresented: routingBinding.makeWorkoutView,
+                    .fullScreenCover(isPresented: .constant(false),
                                      content: {
                         if !isMyWorkoutView {
                             MakeWorkoutView(
@@ -119,7 +112,7 @@ struct WorkoutCategoryView: View {
             if isMyWorkoutView {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
-                        injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
+//                        injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
                     }, label: {
                         Image(systemName: "xmark")
                             .foregroundColor(.black)
@@ -127,9 +120,6 @@ struct WorkoutCategoryView: View {
                 }
             }
         }
-        .onAppear(perform: reloadCategory)
-        .onReceive(routingUpdate) { self.routingState = $0 }
-        .onReceive(workoutsUpdate) { self.selectWorkouts = $0 }
     }
 }
 
@@ -137,8 +127,8 @@ struct WorkoutCategoryView: View {
 
 private extension WorkoutCategoryView {
     func reloadCategory() {
-        injected.interactors.categoryInteractor
-            .load(categories: $categories)
+//        injected.interactors.categoryInteractor
+//            .load(categories: $categories)
     }
 }
 
@@ -148,24 +138,3 @@ extension WorkoutCategoryView {
         var workoutListView: Bool = false
     }
 }
-
-private extension WorkoutCategoryView {
-    var routingUpdate: AnyPublisher<Routing, Never> {
-        injected.appState.updates(for: \.routing.workoutCategoryView)
-    }
-    
-    var workoutsUpdate: AnyPublisher<[Workout], Never> {
-        injected.appState.updates(for: \.userData.selectionWorkouts)
-    }
-}
-
-//struct WorkoutCategoryView_Previews: PreviewProvider {
-//    @Environment(\.presentationMode) static var presentationmode
-//    static var previews: some View {
-//        WorkoutCategoryView(categories: .loaded(Category.mockedData.lazyList), 
-//                            workoutsList: .loaded(Workouts.mockedData.lazyList),
-//                            selectWorkouts: [],
-//                            search: .constant(""))
-//            .inject(.preview)
-//    }
-//}
