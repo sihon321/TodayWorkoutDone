@@ -12,37 +12,54 @@ import ComposableArchitecture
 struct ExcerciseStarter {
     @ObservableState
     struct State: Equatable {
-        var isWorkoutPresented = false
-        var workoutPresent = WorkoutPresent.State()
+        @Presents public var destination: Destination.State?
     }
     
     enum Action {
-        case setSheet(isPresented: Bool)
-        case workoutPresent(WorkoutPresent.Action)
+        case destination(PresentationAction<Destination.Action>)
+        case startButtonTapped
+        
+        var description: String {
+            return "\(self)"
+        }
+    }
+    
+    @Reducer(state: .equatable)
+    enum Destination {
+        case workoutView(WorkoutReducer)
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
+            print(action.description)
             switch action {
-            case .setSheet(let isPresented):
-                state.isWorkoutPresented = isPresented
+            case .startButtonTapped:
+                state.destination = .workoutView(WorkoutReducer.State())
                 return .none
-            case .workoutPresent(.dismiss):
-                state.isWorkoutPresented = false
-                return .none
+            case .destination:
+              return .none
             }
+        }
+        .ifLet(\.$destination, action: \.destination) {
+          Destination.body
         }
     }
 }
 
 struct ExcerciseStartView: View {
     @Bindable var store: StoreOf<ExcerciseStarter>
-
+    @ObservedObject var viewStore: ViewStoreOf<ExcerciseStarter>
+    
+    init(store: StoreOf<ExcerciseStarter>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
+    }
+    
     var body: some View {
         VStack {
             Spacer()
             Button(action: {
-                store.send(.setSheet(isPresented: true))
+                store.send(.startButtonTapped)
             }) {
                 Text("워크아웃 시작")
                     .frame(minWidth: 0, maxWidth: .infinity - 30)
@@ -53,25 +70,13 @@ struct ExcerciseStartView: View {
                                                 style: .continuous))
             }
             .padding(.horizontal, 30)
-            .fullScreenCover(isPresented: $store.isWorkoutPresented.sending(\.setSheet)) {
-                WorkoutView(
-                    store: Store(
-                        initialState: WorkoutReducer.State()) {
-                            WorkoutReducer()
-                        },
-                    presentStore: store.scope(state: \.workoutPresent,
-                                              action: \.workoutPresent))
+            .fullScreenCover(
+                item: $store.scope(state: \.destination?.workoutView,
+                                   action: \.destination.workoutView)
+            ) { store in
+                WorkoutView(store: store)
             }
             .offset(y: -15)
         }
     }
 }
-
-#Preview {
-    NavigationStack {
-        let state = ExcerciseStarter.State()
-        let store = Store(initialState: state, reducer: { ExcerciseStarter() })
-        ExcerciseStartView(store: store)
-    }
-}
-

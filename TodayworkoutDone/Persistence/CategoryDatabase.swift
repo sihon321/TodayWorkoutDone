@@ -27,7 +27,7 @@ struct CategoryDatabase {
     }
 }
 
-extension CategoryDatabase {
+extension CategoryDatabase: DependencyKey {
     public static let liveValue = Self(
         fetchAll: {
             do {

@@ -64,7 +64,6 @@ struct MakeWorkoutView: View {
                                         store: Store(initialState: WorkoutCategoryReducer.State()) {
                                             WorkoutCategoryReducer()
                                         },
-                                        categories: [],
                                         workoutsList: workoutsList,
                                         selectWorkouts: selectionWorkouts,
                                         isMyWorkoutView: true,

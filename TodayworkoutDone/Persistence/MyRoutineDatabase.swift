@@ -26,7 +26,7 @@ struct MyRoutineDatabase {
     }
 }
 
-extension MyRoutineDatabase {
+extension MyRoutineDatabase: DependencyKey {
     public static let liveValue = Self(
         fetchAll: {
             do {

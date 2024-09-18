@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Combine
+import Dependencies
 import ComposableArchitecture
 
 @Reducer
@@ -14,16 +14,23 @@ struct WorkoutCategoryReducer {
     @ObservableState
     struct State: Equatable {
         var keyword: String = ""
+        var categories: Categories = []
     }
     
     enum Action {
         case setText(keyword: String)
+        case getCategories
+        case updateCategories(Categories)
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .setText(_):
+                return .none
+            case .getCategories:
+                return .none
+            case .updateCategories(_):
                 return .none
             }
         }
@@ -32,23 +39,21 @@ struct WorkoutCategoryReducer {
 
 struct WorkoutCategoryView: View {
     @Bindable var store: StoreOf<WorkoutCategoryReducer>
-
-    @State private var selectWorkouts: [Workout]
-    @State private(set) var categories: [Category]
+    @ObservedObject var viewStore: ViewStoreOf<WorkoutCategoryReducer>
     
+    @State private var selectWorkouts: [Workout]
     @Binding var workoutsList: [Workout]
-
     @Binding var myRoutine: MyRoutine
     private var isMyWorkoutView: Bool = false
     
     init(store: StoreOf<WorkoutCategoryReducer>,
-         categories: [Category],
          workoutsList: [Workout],
          selectWorkouts: [Workout] = [],
          isMyWorkoutView: Bool = false,
          myRoutine: Binding<MyRoutine> = .init(projectedValue: .constant(MyRoutine(name: "", routines: [])))) {
         self.store = store
-        self._categories = .init(initialValue: categories)
+        self.viewStore = ViewStore(store, observe: { $0 })
+        
         self._workoutsList = .init(projectedValue: .constant(workoutsList))
         self._selectWorkouts = .init(initialValue: selectWorkouts)
         self.isMyWorkoutView = isMyWorkoutView
@@ -61,8 +66,8 @@ struct WorkoutCategoryView: View {
             let filteredCategory = workoutsList
                 .filter({ $0.name.hasPrefix(store.keyword) })
                 .compactMap({ $0.category })
-                .uniqued() ?? []
-            let categories = categories.filter {
+                .uniqued()
+            let categories = store.categories.filter {
                 if filteredCategory.isEmpty {
                     return true
                 } else if filteredCategory.contains($0.name) {
@@ -70,7 +75,7 @@ struct WorkoutCategoryView: View {
                 } else {
                     return false
                 }
-            } ?? []
+            }
             ForEach(categories) { category in
                 NavigationLink {
                     WorkoutListView(workoutsList: workoutsList,
@@ -120,21 +125,8 @@ struct WorkoutCategoryView: View {
                 }
             }
         }
-    }
-}
-
-// MARK: - Side Effects
-
-private extension WorkoutCategoryView {
-    func reloadCategory() {
-//        injected.interactors.categoryInteractor
-//            .load(categories: $categories)
-    }
-}
-
-extension WorkoutCategoryView {
-    struct Routing: Equatable {
-        var makeWorkoutView: Bool = false
-        var workoutListView: Bool = false
+        .onAppear {
+            store.send(.getCategories)
+        }
     }
 }
