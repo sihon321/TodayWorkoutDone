@@ -94,9 +94,8 @@ struct WorkoutView: View {
                     .padding(.top, 10)
                     WorkoutCategoryView(
                         store: store.scope(state: \.workoutCategory,
-                                           action: \.workoutCategory),
-                        workoutsList: viewStore.workoutsList,
-                        selectWorkouts: [])
+                                           action: \.workoutCategory)
+                    )
                     .padding(.top, 10)
                 }
             }
