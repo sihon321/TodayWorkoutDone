@@ -15,6 +15,10 @@ struct WorkoutCategoryReducer {
     struct State: Equatable {
         var keyword: String = ""
         var categories: Categories = []
+        var workoutsList: [Workout] = []
+        var selectWorkouts: [Workout] = []
+        var isMyWorkoutView: Bool = false
+        var myRoutine: MyRoutine = MyRoutine(name: "", routines: [])
     }
     
     enum Action {
@@ -41,33 +45,19 @@ struct WorkoutCategoryView: View {
     @Bindable var store: StoreOf<WorkoutCategoryReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkoutCategoryReducer>
     
-    @State private var selectWorkouts: [Workout]
-    @Binding var workoutsList: [Workout]
-    @Binding var myRoutine: MyRoutine
-    private var isMyWorkoutView: Bool = false
-    
-    init(store: StoreOf<WorkoutCategoryReducer>,
-         workoutsList: [Workout],
-         selectWorkouts: [Workout] = [],
-         isMyWorkoutView: Bool = false,
-         myRoutine: Binding<MyRoutine> = .init(projectedValue: .constant(MyRoutine(name: "", routines: [])))) {
+    init(store: StoreOf<WorkoutCategoryReducer>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
-        
-        self._workoutsList = .init(projectedValue: .constant(workoutsList))
-        self._selectWorkouts = .init(initialValue: selectWorkouts)
-        self.isMyWorkoutView = isMyWorkoutView
-        self._myRoutine = myRoutine
     }
     
     var body: some View {
         VStack(alignment: .leading)  {
             Text("category")
-            let filteredCategory = workoutsList
+            let filteredCategory = viewStore.workoutsList
                 .filter({ $0.name.hasPrefix(store.keyword) })
                 .compactMap({ $0.category })
                 .uniqued()
-            let categories = store.categories.filter {
+            let categories = viewStore.categories.filter {
                 if filteredCategory.isEmpty {
                     return true
                 } else if filteredCategory.contains($0.name) {
@@ -78,11 +68,11 @@ struct WorkoutCategoryView: View {
             }
             ForEach(categories) { category in
                 NavigationLink {
-                    WorkoutListView(workoutsList: workoutsList,
-                                    selectWorkouts: selectWorkouts,
+                    WorkoutListView(workoutsList: store.workoutsList,
+                                    selectWorkouts: store.selectWorkouts,
                                     category: category,
-                                    isMyWorkoutView: isMyWorkoutView,
-                                    myRoutine: $myRoutine)
+                                    isMyWorkoutView: store.isMyWorkoutView,
+                                    myRoutine: .constant(viewStore.myRoutine))
                 } label: {
                     WorkoutCategorySubview(category: category.name)
                 }
@@ -90,31 +80,31 @@ struct WorkoutCategoryView: View {
         }
         .padding([.leading, .trailing], 15)
         .toolbar {
-            if !selectWorkouts.isEmpty {
+            if !viewStore.selectWorkouts.isEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        if !isMyWorkoutView {
+                        if !viewStore.isMyWorkoutView {
                             
                         } else {
-                            myRoutine.routines += selectWorkouts.compactMap({ Routine(workouts: $0) })
+                            store.myRoutine.routines += viewStore.selectWorkouts.compactMap({ Routine(workouts: $0) })
 //                            injected.appState[\.userData.selectionWorkouts].removeAll()
 //                            injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
                         }
                     }) {
-                        Text("Done(\(selectWorkouts.count))")
+                        Text("Done(\(viewStore.selectWorkouts.count))")
                     }
                     .fullScreenCover(isPresented: .constant(false),
                                      content: {
-                        if !isMyWorkoutView {
+                        if !viewStore.isMyWorkoutView {
                             MakeWorkoutView(
                                 myRoutine: .constant(MyRoutine(name: "",
-                                                               routines: selectWorkouts.compactMap({ Routine(workouts: $0) })))
+                                                               routines: viewStore.selectWorkouts.compactMap({ Routine(workouts: $0) })))
                             )
                         }
                     })
                 }
             }
-            if isMyWorkoutView {
+            if viewStore.isMyWorkoutView {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
 //                        injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
