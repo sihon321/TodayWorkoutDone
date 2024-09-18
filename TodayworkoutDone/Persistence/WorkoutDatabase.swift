@@ -25,7 +25,7 @@ struct WorkoutDatabase {
     }
 }
 
-extension WorkoutDatabase {
+extension WorkoutDatabase: DependencyKey {
     public static let liveValue = Self(
         fetchAll: {
             do {

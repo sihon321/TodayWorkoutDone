@@ -40,12 +40,17 @@ struct HomeReducer {
         case workingOut(WorkingOutReducer.Action)
         case tabBar(CustomTabBarReducer.Action)
         case save
+        
+        var description: String {
+            return "\(self)"
+        }
     }
     
     @Dependency(\.myRoutineData) var context
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
+            print(action.description)
             switch action {
             case .enterRoutineName(let name):
                 state.routineName = name

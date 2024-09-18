@@ -6,15 +6,8 @@
 //
 
 import SwiftUI
-import Combine
+import Dependencies
 import ComposableArchitecture
-
-@Reducer
-struct WorkoutPresent {
-    enum Action {
-        case dismiss
-    }
-}
 
 @Reducer
 struct WorkoutReducer {
@@ -28,16 +21,48 @@ struct WorkoutReducer {
     enum Action {
         case search(keyword: String)
         case workoutCategory(WorkoutCategoryReducer.Action)
+        case getWorkouts
+        case updateWorkouts([Workout])
+        case dismiss
+        
+        var description: String {
+            return "\(self)"
+        }
     }
     
+    @Dependency(\.workoutAPI) var workoutRepository
+    @Dependency(\.categoryAPI) var categoryRepository
+    @Dependency(\.dismiss) var dismiss
+    
     var body: some Reducer<State, Action> {
-        Reduce { state, action in
+        Reduce { state, action in			
+            print(action.description)
             switch action {
             case .search(let keyword):
                 state.keyword = keyword
                 return .none
             case .workoutCategory(.setText(let keyword)):
                 state.workoutCategory.keyword = keyword
+                return .none
+            case .getWorkouts:
+                return .run { send in
+                    let workouts = workoutRepository.loadWorkouts()
+                    await send(.updateWorkouts(workouts))
+                }
+            case .updateWorkouts(let workouts):
+                state.workoutsList = workouts
+                return .none
+            case .dismiss:
+                return .run { _ in
+                  await dismiss(animation: .default)
+                }
+            case .workoutCategory(.getCategories):
+                return .run { send in
+                    let categories = categoryRepository.loadCategories()
+                    await send(.workoutCategory(.updateCategories(categories)))
+                }
+            case .workoutCategory(.updateCategories(let categories)):
+                state.workoutCategory.categories = categories
                 return .none
             }
         }
@@ -47,29 +72,30 @@ struct WorkoutReducer {
 struct WorkoutView: View {
     @Bindable var store: StoreOf<WorkoutReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkoutReducer>
-    @Bindable var presentStore: StoreOf<WorkoutPresent>
     
-    @State private var workoutsList: [Workout] = []
-    
-    init(store: StoreOf<WorkoutReducer>,
-         presentStore: StoreOf<WorkoutPresent>) {
+    init(store: StoreOf<WorkoutReducer>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
-        self.presentStore = presentStore
     }
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    MyWorkoutView(myRoutines: [],
-                                  workoutsList: $workoutsList)
-                        .padding(.top, 10)
+                    MyWorkoutView(
+                        myRoutines: [],
+                        workoutsList: viewStore.binding(
+                            get: \.workoutsList,
+                            send: {
+                                WorkoutReducer.Action.updateWorkouts($0)
+                            }
+                        )
+                    )
+                    .padding(.top, 10)
                     WorkoutCategoryView(
                         store: store.scope(state: \.workoutCategory,
-                                           action: \.workoutCategory), 
-                        categories: [],
-                        workoutsList: workoutsList,
+                                           action: \.workoutCategory),
+                        workoutsList: viewStore.workoutsList,
                         selectWorkouts: [])
                     .padding(.top, 10)
                 }
@@ -79,13 +105,16 @@ struct WorkoutView: View {
             .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        presentStore.send(.dismiss)
+                        viewStore.send(.dismiss)
                     }, label: {
                         Image(systemName: "xmark")
                             .foregroundColor(.black)
                     })
                 }
             })
+        }
+        .onAppear {
+            store.send(.getWorkouts)
         }
         .searchable(text: viewStore.binding(
             get: { $0.keyword },
