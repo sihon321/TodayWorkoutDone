@@ -9,59 +9,71 @@ import SwiftUI
 import ComposableArchitecture
 import Combine
 
+@Reducer
+struct WorkoutListReducer {
+    @ObservableState
+    struct State: Equatable {
+        var workoutsList: [Workout] = []
+        var selectWorkouts: [Workout] = []
+        var myRoutine: MyRoutine = MyRoutine(id: UUID(), name: "", routines: [])
+        var isMyWorkoutView: Bool = false
+        var category: Category = Category(name: "")
+    }
+    
+    enum Action {
+        
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+                
+            }
+        }
+    }
+}
+
 struct WorkoutListView: View {
-    @State private var workoutsList: [Workout]
-    @State private var selectWorkouts: [Workout]
-    @Binding var myRoutine: MyRoutine
-    private var isMyWorkoutView: Bool
+    @Bindable var store: StoreOf<WorkoutListReducer>
+    @ObservedObject var viewStore: ViewStoreOf<WorkoutListReducer>
     
-    var category: Category
-    
-    init(workoutsList: [Workout],
-         selectWorkouts: [Workout],
-         category: Category,
-         isMyWorkoutView: Bool = false,
-         myRoutine: Binding<MyRoutine> = .init(projectedValue: .constant(MyRoutine(name: "", routines: [])))) {
-        self._workoutsList = .init(initialValue: workoutsList)
-        self._selectWorkouts = .init(initialValue: selectWorkouts)
-        self.category = category
-        self.isMyWorkoutView = isMyWorkoutView
-        self._myRoutine = myRoutine
+    init(store: StoreOf<WorkoutListReducer>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
-        List(workoutsList.filter({ category.name == $0.category })) { workouts in
+        List(viewStore.workoutsList.filter({ viewStore.category.name == $0.category })) { workouts in
             WorkoutListSubview(workouts: workouts,
-                               selectWorkouts: $selectWorkouts)
+                               selectWorkouts: .constant(viewStore.selectWorkouts))
         }
         .listStyle(.plain)
         .toolbar {
-            if !selectWorkouts.isEmpty {
+            if !viewStore.selectWorkouts.isEmpty {
                 Button(action: {
-                    if !isMyWorkoutView {
+                    if !viewStore.isMyWorkoutView {
 //                        injected.appState[\.routing.workoutListView.makeWorkoutView] = true
                     } else {
-                        myRoutine.routines += selectWorkouts.compactMap({ Routine(workouts: $0) })
+                        viewStore.myRoutine.routines += viewStore.selectWorkouts.compactMap({ Routine(workouts: $0) })
 //                        injected.appState[\.userData.selectionWorkouts].removeAll()
 //                        injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
                     }
                 }) {
-                    Text("Done(\(selectWorkouts.count))")
+                    Text("Done(\(viewStore.selectWorkouts.count))")
                 }
                 .fullScreenCover(isPresented: .constant(false),
                                  content: {
-                    if !isMyWorkoutView {
+                    if !viewStore.isMyWorkoutView {
                         MakeWorkoutView(
-                            myRoutine: .constant(MyRoutine(
-                                name: "",
-                                routines: selectWorkouts.compactMap({ Routine(workouts: $0) }))
-                            )
+                            store: Store(initialState: MakeWorkoutReducer.State()) {
+                                MakeWorkoutReducer()
+                            }
                         )
                     }
                 })
             }
         }
-            .navigationTitle(category.name)
+        .navigationTitle(viewStore.category.name)
     }
 }
 

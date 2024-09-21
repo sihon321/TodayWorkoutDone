@@ -6,44 +6,64 @@
 //
 
 import SwiftUI
-import Combine
 import ComposableArchitecture
 
-struct MakeWorkoutView: View {
-    @State private var myRoutine: MyRoutine = MyRoutine(id: UUID(), name: "", routines: [])
-    @Binding var myRoutines: [MyRoutine]
-    @Binding var workoutsList: [Workout]
-    @State private var editMode: EditMode
-    @State private var titleSmall: Bool = false
-    @State private var selectionWorkouts: [Workout] = []
-
-    var isEdit: Bool
+@Reducer
+struct MakeWorkoutReducer {
+    @ObservableState
+    struct State: Equatable {
+        var myRoutine: MyRoutine = MyRoutine(id: UUID(), name: "", routines: [])
+        var myRoutines: [MyRoutine] = []
+        var workoutsList: [Workout] = []
+        var editMode: EditMode = .inactive
+        var titleSmall: Bool = false
+        var selectionWorkouts: [Workout] = []
+        var isEdit: Bool = false
+    }
     
+    enum Action {
+        
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+                
+            }
+        }
+    }
+}
+
+struct MakeWorkoutView: View {
+    @Bindable var store: StoreOf<MakeWorkoutReducer>
+    @ObservedObject var viewStore: ViewStoreOf<MakeWorkoutReducer>
+
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
-    init(myRoutine: Binding<MyRoutine>,
-         myRoutines: Binding<[MyRoutine]> = .constant([]),
-         workoutsList: Binding<[Workout]> = .constant([]),
-         editMode: EditMode = .active,
-         isEdit: Bool = false) {
-        self._myRoutine = .init(initialValue: myRoutine.wrappedValue)
-        self._myRoutines = .init(projectedValue: myRoutines)
-        self._workoutsList = .init(projectedValue: workoutsList)
-        self._editMode = .init(initialValue: editMode)
-        self.isEdit = isEdit
+    init(store: StoreOf<MakeWorkoutReducer>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
         NavigationView {
             ScrollView {
-                TextField("타이틀을 입력하세요", text: $myRoutine.name)
+                TextField("타이틀을 입력하세요", text: .constant(store.myRoutine.name))
                     .multilineTextAlignment(.leading)
                     .font(.title)
                     .accessibilityAddTraits(.isHeader)
                     .padding([.leading], 15)
-                ForEach($myRoutine.routines) { routine in
-                    WorkingOutSection(routine: routine,
-                                      editMode: $editMode)
+                ForEach(store.myRoutine.routines) { routine in
+                    WorkingOutSection(
+                        store: Store(
+                            initialState: WorkingOutSectionReducer.State(
+                                routine: routine,
+                                editMode: store.editMode
+                            )
+                        ) {
+                            WorkingOutSectionReducer()
+                        }
+                    )
                 }
                 .padding([.bottom], 30)
                 Button(action: {
@@ -81,7 +101,7 @@ struct MakeWorkoutView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if isEdit {
+                    if viewStore.isEdit {
                         Button("Save") {
 //                            injected.interactors.routineInteractor.update(myRoutine: myRoutine) {
 //                                injected.interactors.routineInteractor.load(myRoutines: $myRoutines)
