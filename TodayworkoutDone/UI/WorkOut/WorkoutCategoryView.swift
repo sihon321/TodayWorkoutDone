@@ -15,16 +15,28 @@ struct WorkoutCategoryReducer {
     struct State: Equatable {
         var keyword: String = ""
         var categories: Categories = []
-        var workoutsList: [Workout] = []
-        var selectWorkouts: [Workout] = []
         var isMyWorkoutView: Bool = false
         var myRoutine: MyRoutine = MyRoutine(name: "", routines: [])
+
+        var workoutList = WorkoutListReducer.State()
+        
+        var isEmptySelectedWorkouts: Bool {
+            var isEmpty = true
+            for workouts in workoutList.workouts {
+                if workouts.isSelected {
+                    isEmpty = false
+                    break
+                }
+            }
+            return isEmpty
+        }
     }
     
     enum Action {
         case setText(keyword: String)
         case getCategories
         case updateCategories(Categories)
+        case workoutList(WorkoutListReducer.Action)
     }
     
     var body: some Reducer<State, Action> {
@@ -35,6 +47,10 @@ struct WorkoutCategoryReducer {
             case .getCategories:
                 return .none
             case .updateCategories(_):
+                return .none
+            case .workoutList(.getWorkouts):
+                return .none
+            case .workoutList(.updateWorkouts(_)):
                 return .none
             }
         }
@@ -53,7 +69,7 @@ struct WorkoutCategoryView: View {
     var body: some View {
         VStack(alignment: .leading)  {
             Text("category")
-            let filteredCategory = viewStore.workoutsList
+            let filteredCategory = viewStore.workoutList.workouts
                 .filter({ $0.name.hasPrefix(store.keyword) })
                 .compactMap({ $0.category })
                 .uniqued()
@@ -69,36 +85,30 @@ struct WorkoutCategoryView: View {
             ForEach(categories) { category in
                 NavigationLink {
                     WorkoutListView(
-                        store: Store(
-                            initialState: WorkoutListReducer.State(
-                                workoutsList: store.workoutsList,
-                                selectWorkouts: store.selectWorkouts,
-                                myRoutine: viewStore.myRoutine,
-                                isMyWorkoutView: store.isMyWorkoutView,
-                                category: category)
-                        ) {
-                            WorkoutListReducer()
-                        }
+                        store: store.scope(state: \.workoutList,
+                                           action: \.workoutList),
+                        category: category
                     )
                 } label: {
-                    WorkoutCategorySubview(category: category.name)
+                    WorkoutCategorySubview(category: category)
                 }
             }
         }
         .padding([.leading, .trailing], 15)
         .toolbar {
-            if !viewStore.selectWorkouts.isEmpty {
+            if !viewStore.isEmptySelectedWorkouts {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         if !viewStore.isMyWorkoutView {
                             
                         } else {
-                            store.myRoutine.routines += viewStore.selectWorkouts.compactMap({ Routine(workouts: $0) })
-//                            injected.appState[\.userData.selectionWorkouts].removeAll()
-//                            injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
+                            store.myRoutine.routines += viewStore.workoutList.workouts
+                                .filter({ $0.isSelected })
+                                .compactMap({ Routine(workouts: $0) })
                         }
                     }) {
-                        Text("Done(\(viewStore.selectWorkouts.count))")
+                        let selectedWorkout = viewStore.workoutList.workouts.filter({ $0.isSelected })
+                        Text("Done(\(selectedWorkout.count))")
                     }
                     .fullScreenCover(isPresented: .constant(false),
                                      content: {
@@ -115,7 +125,7 @@ struct WorkoutCategoryView: View {
             if viewStore.isMyWorkoutView {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
-//                        injected.appState[\.routing.makeWorkoutView.workoutCategoryView] = false
+
                     }, label: {
                         Image(systemName: "xmark")
                             .foregroundColor(.black)

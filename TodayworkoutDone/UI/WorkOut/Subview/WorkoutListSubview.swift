@@ -10,16 +10,11 @@ import Combine
 
 struct WorkoutListSubview: View {
     var workouts: Workout
-    @Binding var selectWorkouts: [Workout]
     
     var body: some View {
         VStack {
             Button(action: {
-                if selectWorkouts.contains(workouts) {
-//                    injected.interactors.workoutInteractor.remove(workouts)
-                } else {
-//                    injected.interactors.workoutInteractor.append(workouts)
-                }
+                workouts.isSelected = !workouts.isSelected
             }) {
                 HStack {
                     Image(uiImage: UIImage(named: "woman")!)
@@ -28,7 +23,7 @@ struct WorkoutListSubview: View {
                         .padding([.leading], 15)
                     Text(workouts.name)
                     Spacer()
-                    if selectWorkouts.contains(workouts) {
+                    if workouts.isSelected {
                         Image(systemName:"checkmark")
                     }
                 }
@@ -38,15 +33,5 @@ struct WorkoutListSubview: View {
                maxWidth: .infinity,
                maxHeight: 60,
                alignment: .leading)
-    }
-}
-
-struct WorkoutListSubview_Previews: PreviewProvider {
-    static var workouts = {
-        let excercises = Workout(name: "test", category: "test_category", target: "test_target")
-        return excercises
-    }()
-    static var previews: some View {
-        WorkoutListSubview(workouts: workouts, selectWorkouts: .constant([]))
     }
 }
