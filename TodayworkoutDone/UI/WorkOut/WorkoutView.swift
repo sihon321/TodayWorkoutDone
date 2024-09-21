@@ -13,25 +13,25 @@ import ComposableArchitecture
 struct WorkoutReducer {
     @ObservableState
     struct State: Equatable {
-        var workoutsList: [Workout] = []
         var keyword: String = ""
         var workoutCategory = WorkoutCategoryReducer.State()
+        var workouts: [Workout] = []
+        var hasLoaded = false
     }
     
     enum Action {
         case search(keyword: String)
         case workoutCategory(WorkoutCategoryReducer.Action)
-        case getWorkouts
-        case updateWorkouts([Workout])
         case dismiss
+        case hasLoaded
         
         var description: String {
             return "\(self)"
         }
     }
     
-    @Dependency(\.workoutAPI) var workoutRepository
     @Dependency(\.categoryAPI) var categoryRepository
+    @Dependency(\.workoutAPI) var workoutRepository
     @Dependency(\.dismiss) var dismiss
     
     var body: some Reducer<State, Action> {
@@ -44,18 +44,14 @@ struct WorkoutReducer {
             case .workoutCategory(.setText(let keyword)):
                 state.workoutCategory.keyword = keyword
                 return .none
-            case .getWorkouts:
-                return .run { send in
-                    let workouts = workoutRepository.loadWorkouts()
-                    await send(.updateWorkouts(workouts))
-                }
-            case .updateWorkouts(let workouts):
-                state.workoutsList = workouts
-                return .none
             case .dismiss:
                 return .run { _ in
                   await dismiss(animation: .default)
                 }
+            case .hasLoaded:
+                state.hasLoaded = true
+                return .none
+                
             case .workoutCategory(.getCategories):
                 return .run { send in
                     let categories = categoryRepository.loadCategories()
@@ -63,6 +59,16 @@ struct WorkoutReducer {
                 }
             case .workoutCategory(.updateCategories(let categories)):
                 state.workoutCategory.categories = categories
+                return .none
+                
+            case .workoutCategory(.workoutList(.getWorkouts)):
+                return .run { send in
+                    let workouts = workoutRepository.loadWorkouts()
+                    await send(.workoutCategory(.workoutList(.updateWorkouts(workouts))))
+                }
+            case .workoutCategory(.workoutList(.updateWorkouts(let workouts))):
+                state.workouts = workouts
+                state.workoutCategory.workoutList.workouts = workouts
                 return .none
             }
         }
@@ -84,12 +90,7 @@ struct WorkoutView: View {
                 VStack {
                     MyWorkoutView(
                         myRoutines: [],
-                        workoutsList: viewStore.binding(
-                            get: \.workoutsList,
-                            send: {
-                                WorkoutReducer.Action.updateWorkouts($0)
-                            }
-                        )
+                        workoutsList: .constant([])
                     )
                     .padding(.top, 10)
                     WorkoutCategoryView(
@@ -111,20 +112,16 @@ struct WorkoutView: View {
                     })
                 }
             })
-        }
-        .onAppear {
-            store.send(.getWorkouts)
+            .onAppear {
+                if !store.hasLoaded {
+                    viewStore.send(.workoutCategory(.workoutList(.getWorkouts)))
+                    viewStore.send(.hasLoaded)
+                }
+            }
         }
         .searchable(text: viewStore.binding(
             get: { $0.keyword },
             send: { WorkoutReducer.Action.search(keyword: $0) }
         ))
-    }
-}
-
-extension WorkoutView {
-    func reloadWorkouts() {
-//        injected.interactors.workoutInteractor
-//            .load(workouts: $workoutsList)
     }
 }

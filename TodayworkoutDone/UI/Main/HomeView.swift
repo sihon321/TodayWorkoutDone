@@ -20,6 +20,8 @@ struct HomeReducer {
         var bottomEdge: CGFloat
         var runningMyRoutine: MyRoutine?
         var routineName = ""
+        var workouts: [Workout] = []
+        
         var workingOut = WorkingOutReducer.State()
         var tabBar: CustomTabBarReducer.State
         

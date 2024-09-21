@@ -71,14 +71,3 @@ struct WorkingOutHeader: View {
         }
     }
 }
-
-struct WorkingOutHeader_Previews: PreviewProvider {
-    static var routine = {
-        return Routine(workouts: Workout(name: "test",
-                                          category: "test_category",
-                                          target: "test_target"))
-    }()
-    static var previews: some View {
-        WorkingOutHeader(routine: .constant(routine))
-    }
-}

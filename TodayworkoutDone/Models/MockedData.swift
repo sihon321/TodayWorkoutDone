@@ -17,9 +17,9 @@ extension Category {
 
 extension Workout {
     static let mockedData: [Workout] = [
-        Workout(name: "스쿼시", category: "gym", target: "하체"),
-        Workout(name: "스쿼시", category: "gym", target: "하체"),
-        Workout(name: "스쿼시", category: "gym", target: "하체")
+        Workout(name: "스쿼시", category: "gym", target: "하체", isSelected: false),
+        Workout(name: "스쿼시", category: "gym", target: "하체", isSelected: false),
+        Workout(name: "스쿼시", category: "gym", target: "하체", isSelected: false)
     ]
 }
 

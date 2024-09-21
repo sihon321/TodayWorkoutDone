@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkoutCategorySubview: View {
-    var category: String
+    var category: Category
     
     var body: some View {
         HStack(alignment: .center) {
@@ -16,7 +16,7 @@ struct WorkoutCategorySubview: View {
                 .padding(.leading, 15)
                 .padding([.top, .bottom], 10)
             VStack {
-                Text(category)
+                Text(category.name)
                     .font(.system(size: 18,
                                   weight: .bold,
                                   design: .default))
@@ -31,11 +31,5 @@ struct WorkoutCategorySubview: View {
                alignment: .leading)
         .background(Color.white)
         .cornerRadius(15)
-    }
-}
-
-struct WorkoutCategorySubview_Previews: PreviewProvider {
-    static var previews: some View {
-        WorkoutCategorySubview(category: "웨이트")
     }
 }
