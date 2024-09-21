@@ -6,53 +6,67 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
+
+@Reducer
+struct WorkingOutSectionReducer {
+    @ObservableState
+    struct State: Equatable {
+        var routine: Routine
+        var editMode: EditMode
+    }
+    
+    enum Action {
+        
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+                
+            }
+        }
+    }
+}
 
 struct WorkingOutSection: View {
     @Environment(\.defaultMinListRowHeight) var minRowHeight
+    @Bindable var store: StoreOf<WorkingOutSectionReducer>
+    @ObservedObject var viewStore: ViewStoreOf<WorkingOutSectionReducer>
     
-    @Binding var routine: Routine
-    @Binding var editMode: EditMode
+    init(store: StoreOf<WorkingOutSectionReducer>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
+    }
+    
     
     var body: some View {
         VStack {
             Section {
                 List {
-                    ForEach(routine.sets) { sets in
+                    ForEach(viewStore.routine.sets) { sets in
                         WorkingOutRow(sets: .constant(sets),
-                                      editMode: $editMode)
+                                      editMode: .constant(viewStore.editMode))
                             .padding(.bottom, 2)
                     }
                     .onDelete { indexSet in
                         deleteItems(atOffsets: indexSet)
                     }
                 }
-                .frame(minHeight: minRowHeight * CGFloat(routine.sets.count))
+                .frame(minHeight: minRowHeight * CGFloat(viewStore.routine.sets.count))
                 .listStyle(PlainListStyle())
             } header: {
-                WorkingOutHeader(routine: $routine)
+                WorkingOutHeader(routine: .constant(viewStore.routine))
             } footer: {
                 WorkingOutFooter()
                     .onTapGesture {
-                        routine.sets.append(Sets())
+                        viewStore.routine.sets.append(Sets())
                     }
             }
         }
     }
     
     func deleteItems(atOffsets offset: IndexSet) {
-        routine.sets.remove(atOffsets: offset)
-    }
-}
-
-struct WorkingOutSection_Previews: PreviewProvider {
-    static var routine = {
-        return Routine(workouts: Workout(name: "test",
-                                          category: "test_category",
-                                          target: "test_target"))
-    }()
-    
-    static var previews: some View {
-        WorkingOutSection(routine: .constant(routine),
-                          editMode: .constant(.active))
+        store.routine.sets.remove(atOffsets: offset)
     }
 }

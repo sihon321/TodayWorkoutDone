@@ -68,10 +68,11 @@ struct MyWorkoutView: View {
                     .fullScreenCover(isPresented: .constant(false),
                                      content: {
                         if let routine = selectedRoutine {
-                            MakeWorkoutView(myRoutine: .constant(routine),
-                                            myRoutines: $myRoutines,
-                                            workoutsList: $workoutsList,
-                                            isEdit: true)
+                            MakeWorkoutView(
+                                store: Store(initialState: MakeWorkoutReducer.State()) {
+                                    MakeWorkoutReducer()
+                                }
+                            )
                         }
                     })
                 }

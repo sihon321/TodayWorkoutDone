@@ -68,11 +68,18 @@ struct WorkoutCategoryView: View {
             }
             ForEach(categories) { category in
                 NavigationLink {
-                    WorkoutListView(workoutsList: store.workoutsList,
-                                    selectWorkouts: store.selectWorkouts,
-                                    category: category,
-                                    isMyWorkoutView: store.isMyWorkoutView,
-                                    myRoutine: .constant(viewStore.myRoutine))
+                    WorkoutListView(
+                        store: Store(
+                            initialState: WorkoutListReducer.State(
+                                workoutsList: store.workoutsList,
+                                selectWorkouts: store.selectWorkouts,
+                                myRoutine: viewStore.myRoutine,
+                                isMyWorkoutView: store.isMyWorkoutView,
+                                category: category)
+                        ) {
+                            WorkoutListReducer()
+                        }
+                    )
                 } label: {
                     WorkoutCategorySubview(category: category.name)
                 }
@@ -97,8 +104,9 @@ struct WorkoutCategoryView: View {
                                      content: {
                         if !viewStore.isMyWorkoutView {
                             MakeWorkoutView(
-                                myRoutine: .constant(MyRoutine(name: "",
-                                                               routines: viewStore.selectWorkouts.compactMap({ Routine(workouts: $0) })))
+                                store: Store(initialState: MakeWorkoutReducer.State()) {
+                                    MakeWorkoutReducer()
+                                }
                             )
                         }
                     })

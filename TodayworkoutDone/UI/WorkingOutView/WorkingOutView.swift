@@ -62,7 +62,9 @@ struct WorkingOutView: View {
     @State private var editMode: EditMode = .inactive
 
     @State var secondsElapsed = 0
-    @State var timer: Timer.TimerPublisher = Timer.publish(every: 1, on: .main, in: .common)
+    @State var timer: Timer.TimerPublisher = Timer.publish(every: 1, 
+                                                           on: .main,
+                                                           in: .common)
     @State var connectedTimer: Cancellable? = nil
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
@@ -77,8 +79,14 @@ struct WorkingOutView: View {
             ScrollView {
                 ForEach(store.myRoutine.routines) { routine in
                     WorkingOutSection(
-                        routine: .constant(routine),
-                        editMode: $editMode
+                        store: Store(
+                            initialState: WorkingOutSectionReducer.State(
+                                routine: routine,
+                                editMode: editMode
+                            )
+                        ) {
+                            WorkingOutSectionReducer()
+                        }
                     )
                 }
                 Spacer().frame(height: 100)
