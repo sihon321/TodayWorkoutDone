@@ -60,7 +60,7 @@ struct MyWorkoutView: View {
                     } message: {
                         if let selectedRoutine = selectedRoutine {
                             let message = selectedRoutine.routines
-                                .map({ "\($0.workouts.name)" })
+                                .map({ "\($0.workout.name)" })
                                 .joined(separator: "\n")
                             Text(message)
                         }
@@ -69,7 +69,9 @@ struct MyWorkoutView: View {
                                      content: {
                         if let routine = selectedRoutine {
                             MakeWorkoutView(
-                                store: Store(initialState: MakeWorkoutReducer.State()) {
+                                store: Store(initialState: MakeWorkoutReducer.State(
+                                    myRoutine: MyRoutine(name: "", routines: [])
+                                )) {
                                     MakeWorkoutReducer()
                                 }
                             )

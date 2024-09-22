@@ -12,7 +12,7 @@ import ComposableArchitecture
 struct ExcerciseStarter {
     @ObservableState
     struct State: Equatable {
-        @Presents public var destination: Destination.State?
+        @Presents var destination: Destination.State?
     }
     
     enum Action {
@@ -59,7 +59,7 @@ struct ExcerciseStartView: View {
         VStack {
             Spacer()
             Button(action: {
-                store.send(.startButtonTapped)
+                viewStore.send(.startButtonTapped)
             }) {
                 Text("워크아웃 시작")
                     .frame(minWidth: 0, maxWidth: .infinity - 30)

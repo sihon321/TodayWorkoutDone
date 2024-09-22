@@ -15,7 +15,7 @@ struct CalendarDetailSubView: View {
             Text("\(workoutRoutine.date, format: Date.FormatStyle(date: .numeric, time: .standard))")
             ForEach(workoutRoutine.routines, id: \.id) { routine in
                 HStack {
-                    Text(routine.workouts.name)
+                    Text(routine.workout.name)
                     Spacer()
                     Text("\(routine.sets.count) Sets")
                     Text("*")

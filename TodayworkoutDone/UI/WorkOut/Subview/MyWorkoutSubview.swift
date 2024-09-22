@@ -40,7 +40,7 @@ struct MyWorkoutSubview: View {
             }
             VStack(alignment: .leading) {
                 ForEach(myRoutine.routines) { routine in
-                    Text(routine.workouts.name)
+                    Text(routine.workout.name)
                         .font(.system(size: 12,
                                       weight: .light,
                                       design: .default))

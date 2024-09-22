@@ -14,7 +14,7 @@ struct WorkingOutHeader: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(routine.workouts.name)
+                Text(routine.workout.name)
                     .font(.title2)
                 
                 Button(action: {}) {

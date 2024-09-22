@@ -15,21 +15,10 @@ struct WorkoutCategoryReducer {
     struct State: Equatable {
         var keyword: String = ""
         var categories: Categories = []
-        var isMyWorkoutView: Bool = false
+
         var myRoutine: MyRoutine = MyRoutine(name: "", routines: [])
 
         var workoutList = WorkoutListReducer.State()
-        
-        var isEmptySelectedWorkouts: Bool {
-            var isEmpty = true
-            for workouts in workoutList.workouts {
-                if workouts.isSelected {
-                    isEmpty = false
-                    break
-                }
-            }
-            return isEmpty
-        }
     }
     
     enum Action {
@@ -48,9 +37,7 @@ struct WorkoutCategoryReducer {
                 return .none
             case .updateCategories(_):
                 return .none
-            case .workoutList(.getWorkouts):
-                return .none
-            case .workoutList(.updateWorkouts(_)):
+            case .workoutList:
                 return .none
             }
         }
@@ -95,44 +82,6 @@ struct WorkoutCategoryView: View {
             }
         }
         .padding([.leading, .trailing], 15)
-        .toolbar {
-            if !viewStore.isEmptySelectedWorkouts {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        if !viewStore.isMyWorkoutView {
-                            
-                        } else {
-                            store.myRoutine.routines += viewStore.workoutList.workouts
-                                .filter({ $0.isSelected })
-                                .compactMap({ Routine(workouts: $0) })
-                        }
-                    }) {
-                        let selectedWorkout = viewStore.workoutList.workouts.filter({ $0.isSelected })
-                        Text("Done(\(selectedWorkout.count))")
-                    }
-                    .fullScreenCover(isPresented: .constant(false),
-                                     content: {
-                        if !viewStore.isMyWorkoutView {
-                            MakeWorkoutView(
-                                store: Store(initialState: MakeWorkoutReducer.State()) {
-                                    MakeWorkoutReducer()
-                                }
-                            )
-                        }
-                    })
-                }
-            }
-            if viewStore.isMyWorkoutView {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-
-                    }, label: {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.black)
-                    })
-                }
-            }
-        }
         .onAppear {
             store.send(.getCategories)
         }
