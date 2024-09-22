@@ -8,28 +8,80 @@
 import SwiftUI
 import Dependencies
 import ComposableArchitecture
+import SwiftData
 
 @Reducer
 struct WorkoutReducer {
     @ObservableState
     struct State: Equatable {
+        @Presents var destination: Destination.State?
+        
         var keyword: String = ""
         var workoutCategory = WorkoutCategoryReducer.State()
         var workouts: [Workout] = []
         var hasLoaded = false
+        var myRoutine: MyRoutine? = nil
+        
+        var isEmptySelectedWorkouts: Bool {
+            var isEmpty = true
+            for workouts in workouts {
+                if workouts.isSelected {
+                    isEmpty = false
+                    break
+                }
+            }
+            return isEmpty
+        }
+        var predicate: Predicate<MyRoutine> {
+            guard let myRoutine = myRoutine else {
+                return #Predicate { _ in
+                    false
+                }
+            }
+            return #Predicate {
+                $0.id == myRoutine.id
+            }
+        }
+        var sort: [SortDescriptor<MyRoutine>] {
+            return [
+                .init(\.name)
+            ].compactMap { $0 }
+        }
+        var fetchDescriptor: FetchDescriptor<MyRoutine> {
+            return .init(predicate: self.predicate, sortBy: self.sort)
+        }
+        mutating func refetch(_ myRoutine: MyRoutine?) {
+            @Dependency(\.myRoutineData) var context
+            do {
+                self.myRoutine = try context.fetch(self.fetchDescriptor).first
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     enum Action {
+        case destination(PresentationAction<Destination.Action>)
+        
         case search(keyword: String)
         case workoutCategory(WorkoutCategoryReducer.Action)
         case dismiss
         case hasLoaded
+        
+        case addMyRoutine
+        case appearMakeWorkoutView(MyRoutine?)
         
         var description: String {
             return "\(self)"
         }
     }
     
+    @Reducer(state: .equatable)
+    enum Destination {
+        case makeWorkoutView(MakeWorkoutReducer)
+    }
+    
+    @Dependency(\.myRoutineData) var context
     @Dependency(\.categoryAPI) var categoryRepository
     @Dependency(\.workoutAPI) var workoutRepository
     @Dependency(\.dismiss) var dismiss
@@ -41,8 +93,7 @@ struct WorkoutReducer {
             case .search(let keyword):
                 state.keyword = keyword
                 return .none
-            case .workoutCategory(.setText(let keyword)):
-                state.workoutCategory.keyword = keyword
+            case .destination:
                 return .none
             case .dismiss:
                 return .run { _ in
@@ -51,7 +102,36 @@ struct WorkoutReducer {
             case .hasLoaded:
                 state.hasLoaded = true
                 return .none
-                
+            case .addMyRoutine:
+                do {
+                    let routines = state.workouts
+                        .filter({ $0.isSelected })
+                        .compactMap({
+                            return Routine(workouts: $0)
+                        })
+                    let myRoutine = MyRoutine(
+                        name: "",
+                        routines: routines
+                    )
+                    try context.add(myRoutine)
+                    return .run { @MainActor send in
+                        send(.appearMakeWorkoutView(myRoutine))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    return .none
+                }
+            case .appearMakeWorkoutView(let myRoutine):
+                state.refetch(myRoutine)
+                if let myRoutine = myRoutine {
+                    state.destination = .makeWorkoutView(
+                        MakeWorkoutReducer.State(myRoutine: myRoutine)
+                    )
+                }
+                return .none
+            case .workoutCategory(.setText(let keyword)):
+                state.workoutCategory.keyword = keyword
+                return .none
             case .workoutCategory(.getCategories):
                 return .run { send in
                     let categories = categoryRepository.loadCategories()
@@ -70,6 +150,8 @@ struct WorkoutReducer {
                 state.workouts = workouts
                 state.workoutCategory.workoutList.workouts = workouts
                 return .none
+            case .workoutCategory(.workoutList(.makeWorkoutView)):
+                return .send(.addMyRoutine)
             }
         }
     }
@@ -102,16 +184,7 @@ struct WorkoutView: View {
             }
             .background(Color(0xf4f4f4))
             .navigationBarTitle("workout", displayMode: .inline)
-            .toolbar(content: {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(action: {
-                        viewStore.send(.dismiss)
-                    }, label: {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.black)
-                    })
-                }
-            })
+            .workoutViewToolbar(store: store, viewStore: viewStore)
             .onAppear {
                 if !store.hasLoaded {
                     viewStore.send(.workoutCategory(.workoutList(.getWorkouts)))
@@ -123,5 +196,57 @@ struct WorkoutView: View {
             get: { $0.keyword },
             send: { WorkoutReducer.Action.search(keyword: $0) }
         ))
+        .fullScreenCover(
+            item: $store.scope(state: \.destination?.makeWorkoutView,
+                               action: \.destination.makeWorkoutView)
+        ) { store in
+            MakeWorkoutView(store: store)
+        }
+    }
+}
+
+private extension View {
+    func workoutViewToolbar(
+        store: StoreOf<WorkoutReducer>,
+        viewStore: ViewStoreOf<WorkoutReducer>
+    ) -> some View {
+        return self.modifier(WorkoutViewToolbar(store: store,
+                                                viewStore: viewStore))
+    }
+}
+
+private struct WorkoutViewToolbar: ViewModifier {
+    
+    @Bindable var store: StoreOf<WorkoutReducer>
+    @ObservedObject var viewStore: ViewStoreOf<WorkoutReducer>
+    
+    func body(content: Content) -> some View {
+        return content
+            .toolbar(content: {
+                if !viewStore.isEmptySelectedWorkouts {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {
+                            if !viewStore.isEmptySelectedWorkouts {
+                                
+                            } else {
+                                store.myRoutine?.routines += viewStore.workouts
+                                    .filter({ $0.isSelected })
+                                    .compactMap({ Routine(workouts: $0) })
+                            }
+                        }) {
+                            let selectedWorkout = viewStore.workouts.filter({ $0.isSelected })
+                            Text("Done(\(selectedWorkout.count))")
+                        }
+                    }
+                }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
+                        viewStore.send(.dismiss)
+                    }, label: {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.black)
+                    })
+                }
+            })
     }
 }

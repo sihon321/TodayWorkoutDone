@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 class Routine: Codable, Equatable {
-    var workouts: Workout
+    var workout: Workout
     var sets: [Sets]
     var date: Date
     var stopwatch: Double
@@ -25,7 +25,7 @@ class Routine: Codable, Equatable {
          date: Date = .now,
          stopwatch: Double = .zero,
          workouts type: WorkoutsType = .barbel) {
-        self.workouts = workouts
+        self.workout = workouts
         self.sets = sets
         self.date = date
         self.stopwatch = stopwatch
@@ -34,7 +34,7 @@ class Routine: Codable, Equatable {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        workouts = try container.decode(Workout.self, forKey: .workouts)
+        workout = try container.decode(Workout.self, forKey: .workouts)
         sets = try container.decode([Sets].self, forKey: .sets)
         date = try container.decode(Date.self, forKey: .date)
         stopwatch = try container.decode(Double.self, forKey: .stopwatch)
@@ -43,7 +43,7 @@ class Routine: Codable, Equatable {
     
     func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(workouts, forKey: .workouts)
+        try container.encode(workout, forKey: .workouts)
         try container.encode(sets, forKey: .sets)
         try container.encode(date, forKey: .date)
         try container.encode(stopwatch, forKey: .stopwatch)
@@ -53,7 +53,13 @@ class Routine: Codable, Equatable {
 }
 
 extension Routine: Identifiable {
-    var id: String { workouts.id }
+    var id: String { workout.id }
+}
+
+extension Routine {
+    static func == (lhs: Routine, rhs: Routine) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 typealias Routines = [Routine]

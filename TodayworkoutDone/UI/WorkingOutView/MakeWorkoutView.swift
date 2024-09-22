@@ -12,9 +12,7 @@ import ComposableArchitecture
 struct MakeWorkoutReducer {
     @ObservableState
     struct State: Equatable {
-        var myRoutine: MyRoutine = MyRoutine(id: UUID(), name: "", routines: [])
-        var myRoutines: [MyRoutine] = []
-        var workoutsList: [Workout] = []
+        var myRoutine: MyRoutine
         var editMode: EditMode = .inactive
         var titleSmall: Bool = false
         var selectionWorkouts: [Workout] = []
@@ -53,7 +51,7 @@ struct MakeWorkoutView: View {
                     .font(.title)
                     .accessibilityAddTraits(.isHeader)
                     .padding([.leading], 15)
-                ForEach(store.myRoutine.routines) { routine in
+                ForEach(viewStore.myRoutine.routines) { routine in
                     WorkingOutSection(
                         store: Store(
                             initialState: WorkingOutSectionReducer.State(

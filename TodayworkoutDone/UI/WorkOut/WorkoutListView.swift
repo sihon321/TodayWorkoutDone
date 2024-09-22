@@ -15,11 +15,22 @@ struct WorkoutListReducer {
     struct State: Equatable {
         var workouts: [Workout] = []
         var myRoutine: MyRoutine = MyRoutine(id: UUID(), name: "", routines: [])
-        var isMyWorkoutView: Bool = false
+        
+        var isEmptySelectedWorkouts: Bool {
+            var isEmpty = true
+            for workouts in workouts {
+                if workouts.isSelected {
+                    isEmpty = false
+                    break
+                }
+            }
+            return isEmpty
+        }
         var category: Category = .init(name: "")
     }
     
     enum Action {
+        case makeWorkoutView
         case getWorkouts
         case updateWorkouts([Workout])
     }
@@ -27,6 +38,8 @@ struct WorkoutListReducer {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case .makeWorkoutView:
+                return .none
             case .getWorkouts:
                 return .none
             case .updateWorkouts:
@@ -55,8 +68,8 @@ struct WorkoutListView: View {
         .toolbar {
             if !viewStore.workouts.compactMap({ $0.isSelected }).isEmpty {
                 Button(action: {
-                    if !viewStore.isMyWorkoutView {
-
+                    if !viewStore.isEmptySelectedWorkouts {
+                        viewStore.send(.makeWorkoutView)
                     } else {
                         viewStore.myRoutine.routines += viewStore.workouts
                             .filter({ $0.isSelected })
@@ -66,16 +79,6 @@ struct WorkoutListView: View {
                     let selectedWorkout = viewStore.workouts.filter({ $0.isSelected })
                     Text("Done(\(selectedWorkout.count))")
                 }
-                .fullScreenCover(isPresented: .constant(false),
-                                 content: {
-                    if !viewStore.isMyWorkoutView {
-                        MakeWorkoutView(
-                            store: Store(initialState: MakeWorkoutReducer.State()) {
-                                MakeWorkoutReducer()
-                            }
-                        )
-                    }
-                })
             }
         }
         .navigationTitle(viewStore.category.name)
