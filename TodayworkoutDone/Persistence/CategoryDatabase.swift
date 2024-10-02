@@ -17,9 +17,9 @@ extension DependencyValues {
 }
 
 struct CategoryDatabase {
-    var fetchAll: @Sendable () throws -> [Category]
-    var add: @Sendable (Category) throws -> Void
-    var delete: @Sendable (Category) throws -> Void
+    var fetchAll: @Sendable () throws -> [WorkoutCategory]
+    var add: @Sendable (WorkoutCategory) throws -> Void
+    var delete: @Sendable (WorkoutCategory) throws -> Void
     
     enum CategoryError: Error {
         case add
@@ -33,7 +33,7 @@ extension CategoryDatabase: DependencyKey {
             do {
                 @Dependency(\.databaseService.context) var context
                 let categoryContext = try context()
-                let descriptor = FetchDescriptor<Category>(sortBy: [SortDescriptor(\.name)])
+                let descriptor = FetchDescriptor<WorkoutCategory>(sortBy: [SortDescriptor(\.name)])
                 
                 return try categoryContext.fetch(descriptor)
             } catch {

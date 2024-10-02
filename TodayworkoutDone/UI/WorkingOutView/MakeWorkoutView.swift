@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Dependencies
 
 @Reducer
 struct MakeWorkoutReducer {
@@ -20,13 +21,18 @@ struct MakeWorkoutReducer {
     }
     
     enum Action {
-        
+        case dismiss
+        case tappedDone(MyRoutine)
     }
+    
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-                
+            case .dismiss:
+                return .none
+            case .tappedDone:
+                return .none
             }
         }
     }
@@ -92,33 +98,17 @@ struct MakeWorkoutView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-//                        injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
-//                        injected.appState[\.routing.workoutListView.makeWorkoutView] = false
-//                        injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
-//                        injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
+                        viewStore.send(.dismiss)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if viewStore.isEdit {
                         Button("Save") {
-//                            injected.interactors.routineInteractor.update(myRoutine: myRoutine) {
-//                                injected.interactors.routineInteractor.load(myRoutines: $myRoutines)
-//                                injected.appState[\.userData.myRoutine] = myRoutine
-//                                injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
-//                            }
+
                         }
                     } else {
                         Button("Done") {
-//                            injected.appState[\.userData.myRoutine] = myRoutine
-//                            injected.appState[\.routing.homeView.workingOutView] = true
-//                            
-//                            injected.appState[\.routing.workoutListView.makeWorkoutView] = false
-//                            
-//                            injected.appState[\.routing.workoutCategoryView.makeWorkoutView] = false
-//                            injected.appState[\.routing.workoutCategoryView.workoutListView] = false
-//
-//                            injected.appState[\.routing.myWorkoutView.makeWorkoutView] = false
-//                            injected.appState[\.routing.myWorkoutView.alertMyWorkout] = false
+                            viewStore.send(.tappedDone(store.state.myRoutine))
                         }
                     }
                 }

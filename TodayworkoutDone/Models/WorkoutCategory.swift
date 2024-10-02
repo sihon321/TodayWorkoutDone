@@ -1,5 +1,5 @@
 //
-//  Category.swift
+//  WorkoutCategory.swift
 //  TodayworkoutDone
 //
 //  Created by Sihoon Oh on 2023/04/04.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Category: Codable {
+class WorkoutCategory: Codable {
     var name: String
     
     enum CodingKeys: String, CodingKey {
@@ -31,11 +31,11 @@ class Category: Codable {
     }
 }
 
-extension Category: Identifiable {
+extension WorkoutCategory: Identifiable {
     var id: String { return name }
 }
 
-typealias Categories = [Category]
+typealias Categories = [WorkoutCategory]
 
 extension Categories {
     func jsonData() throws -> Data {

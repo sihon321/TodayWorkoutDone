@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkoutCategorySubview: View {
-    var category: Category
+    var category: WorkoutCategory
     
     var body: some View {
         HStack(alignment: .center) {
