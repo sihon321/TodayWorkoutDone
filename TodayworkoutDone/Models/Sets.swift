@@ -8,8 +8,7 @@
 import Foundation
 import SwiftData
 
-@Model
-class Sets: Codable, Equatable, Identifiable {
+class Sets: Codable, Identifiable {
     var id: UUID
     var prevWeight: Double
     var weight: Double

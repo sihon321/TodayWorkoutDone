@@ -26,6 +26,16 @@ extension Database: DependencyKey {
     )
 }
 
+extension ModelContainer {
+    var sqliteCommand: String {
+        if let url = self.configurations.first?.url.path(percentEncoded: false) {
+            "SQLite3 path: \(url)"
+        } else {
+            "No SQLite database found."
+        }
+    }
+}
+
 @MainActor
 let appContext: ModelContext = {
     let container = SwiftDataConfigurationProvider.shared.container
@@ -53,21 +63,20 @@ public class SwiftDataConfigurationProvider {
         let schema = Schema(
             [
                 Workout.self,
-                Routine.self,
-                Category.self,
+                WorkoutCategory.self,
                 MyRoutine.self,
-                Sets.self
+                WorkoutRoutine.self
             ]
         )
         let configuration = ModelConfiguration(
             isStoredInMemoryOnly: isStoredInMemoryOnly
         )
-        
         let container = try! ModelContainer(
             for: schema,
             configurations: [configuration]
         )
         container.mainContext.autosaveEnabled = autosaveEnabled
+        print(container.sqliteCommand)
         return container
     }()
 }

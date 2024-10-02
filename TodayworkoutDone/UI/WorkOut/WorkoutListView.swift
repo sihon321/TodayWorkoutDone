@@ -26,7 +26,7 @@ struct WorkoutListReducer {
             }
             return isEmpty
         }
-        var category: Category = .init(name: "")
+        var category: WorkoutCategory = .init(name: "")
     }
     
     enum Action {
@@ -52,9 +52,9 @@ struct WorkoutListReducer {
 struct WorkoutListView: View {
     @Bindable var store: StoreOf<WorkoutListReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkoutListReducer>
-    private var category: Category
+    private var category: WorkoutCategory
     
-    init(store: StoreOf<WorkoutListReducer>, category: Category) {
+    init(store: StoreOf<WorkoutListReducer>, category: WorkoutCategory) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
         self.category = category
@@ -66,18 +66,20 @@ struct WorkoutListView: View {
         }
         .listStyle(.plain)
         .toolbar {
-            if !viewStore.workouts.compactMap({ $0.isSelected }).isEmpty {
-                Button(action: {
-                    if !viewStore.isEmptySelectedWorkouts {
-                        viewStore.send(.makeWorkoutView)
-                    } else {
-                        viewStore.myRoutine.routines += viewStore.workouts
-                            .filter({ $0.isSelected })
-                            .compactMap({ Routine(workouts: $0) })
+            ToolbarItem(placement: .topBarTrailing) {
+                if !viewStore.isEmptySelectedWorkouts {
+                    Button(action: {
+                        if !viewStore.isEmptySelectedWorkouts {
+                            viewStore.send(.makeWorkoutView)
+                        } else {
+                            viewStore.myRoutine.routines += viewStore.workouts
+                                .filter({ $0.isSelected })
+                                .compactMap({ Routine(workouts: $0) })
+                        }
+                    }) {
+                        let selectedWorkout = viewStore.workouts.filter({ $0.isSelected })
+                        Text("Done(\(selectedWorkout.count))")
                     }
-                }) {
-                    let selectedWorkout = viewStore.workouts.filter({ $0.isSelected })
-                    Text("Done(\(selectedWorkout.count))")
                 }
             }
         }

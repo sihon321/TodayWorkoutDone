@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 
-@Model
 class Routine: Codable, Equatable {
     var workout: Workout
     var sets: [Sets]

@@ -7,11 +7,11 @@
 
 import Foundation
 
-extension Category {
-    static let mockedData: [Category] = [
-        Category(name: "헬스"),
-        Category(name: "요가"),
-        Category(name: "필라테스")
+extension WorkoutCategory {
+    static let mockedData: [WorkoutCategory] = [
+        WorkoutCategory(name: "헬스"),
+        WorkoutCategory(name: "요가"),
+        WorkoutCategory(name: "필라테스")
     ]
 }
 
