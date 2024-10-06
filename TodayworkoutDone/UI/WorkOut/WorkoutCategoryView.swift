@@ -27,21 +27,6 @@ struct WorkoutCategoryReducer {
         case updateCategories(Categories)
         case workoutList(WorkoutListReducer.Action)
     }
-    
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-            case .setText(_):
-                return .none
-            case .getCategories:
-                return .none
-            case .updateCategories(_):
-                return .none
-            case .workoutList:
-                return .none
-            }
-        }
-    }
 }
 
 struct WorkoutCategoryView: View {

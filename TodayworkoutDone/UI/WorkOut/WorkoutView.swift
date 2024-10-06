@@ -18,9 +18,11 @@ struct WorkoutReducer {
         
         var keyword: String = ""
         var workoutCategory = WorkoutCategoryReducer.State()
+        var myRoutineState = MyRoutineReducer.State()
         var makeWorkout: MakeWorkoutReducer.State?
         var workouts: [Workout] = []
         var hasLoaded = false
+        
         var myRoutine: MyRoutine? = nil
         
         var isEmptySelectedWorkouts: Bool {
@@ -67,11 +69,13 @@ struct WorkoutReducer {
         case search(keyword: String)
         case workoutCategory(WorkoutCategoryReducer.Action)
         case makeWorkout(MakeWorkoutReducer.Action)
+        case myRoutineAction(MyRoutineReducer.Action)
         case dismiss
         case hasLoaded
-        
+        case getMyRoutines
         case filterWorkout
         case appearMakeWorkoutView(MyRoutine?)
+        case fetchMyRoutines([MyRoutine])
         
         var description: String {
             return "\(self)"
@@ -81,33 +85,18 @@ struct WorkoutReducer {
     @Reducer(state: .equatable)
     enum Destination {
         case makeWorkoutView(MakeWorkoutReducer)
+        case alert(AlertState<Alert>)
+        
+        enum Alert: Equatable {
+            case tappedMyRoutineStart(MyRoutine)
+        }
     }
     
-    @Dependency(\.myRoutineData) var context
-    @Dependency(\.categoryAPI) var categoryRepository
-    @Dependency(\.workoutAPI) var workoutRepository
-    @Dependency(\.dismiss) var dismiss
-    
     var body: some Reducer<State, Action> {
-        Reduce { state, action in			
+        Reduce { state, action in
             print(action.description)
             switch action {
-            case .search:
-                return .none
-            case .dismiss:
-                return .none
-            case .hasLoaded:
-                return .none
-            case .filterWorkout:
-                return .none
-            case .appearMakeWorkoutView:
-                return .none
-            case .workoutCategory:
-                return .none
-            case .destination:
-                return .none
-            case .makeWorkout(_):
-                return .none
+            default: return .none
             }
         }
     }
@@ -126,9 +115,9 @@ struct WorkoutView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    MyWorkoutView(
-                        myRoutines: [],
-                        workoutsList: .constant([])
+                    MyRoutineView(
+                        store: store.scope(state: \.myRoutineState,
+                                           action: \.myRoutineAction)
                     )
                     .padding(.top, 10)
                     WorkoutCategoryView(
@@ -144,6 +133,7 @@ struct WorkoutView: View {
             .onAppear {
                 if !store.hasLoaded {
                     viewStore.send(.workoutCategory(.workoutList(.getWorkouts)))
+                    viewStore.send(.getMyRoutines)
                     viewStore.send(.hasLoaded)
                 }
             }
@@ -160,6 +150,27 @@ struct WorkoutView: View {
                                        action: \.makeWorkout) {
                 MakeWorkoutView(store: store)
             }
+        }
+        .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
+    }
+}
+
+extension AlertState where Action == WorkoutReducer.Destination.Alert {
+    static func startMyRoutine(_ myRoutine: MyRoutine) -> Self {
+        Self {
+            TextState("루틴을 시작하겠습니까?")
+        } actions: {
+            ButtonState(action: .tappedMyRoutineStart(myRoutine)) {
+                TextState("OK")
+            }
+            ButtonState() {
+                TextState("Cancel")
+            }
+        } message: {
+            let message = myRoutine.routines
+                .map({ "\($0.workout.name)" })
+                .joined(separator: "\n")
+            return TextState(message)
         }
     }
 }

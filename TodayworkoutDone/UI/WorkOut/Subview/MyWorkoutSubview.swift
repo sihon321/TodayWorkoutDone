@@ -6,10 +6,16 @@
 //
 
 import SwiftUI
-import Combine
+import ComposableArchitecture
 
 struct MyWorkoutSubview: View {
-    var myRoutine: MyRoutine
+    @Bindable var store: StoreOf<MyRoutineReducer>
+    private var myRoutine: MyRoutine
+    
+    init(store: StoreOf<MyRoutineReducer>, myRoutine: MyRoutine) {
+        self.store = store
+        self.myRoutine = myRoutine
+    }
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,8 +30,7 @@ struct MyWorkoutSubview: View {
                 Button(action: {}) {
                     Menu {
                         Button(action: {
-//                            injected.appState[\.userData.myRoutine] = myRoutine
-//                            injected.appState[\.routing.myWorkoutView.makeWorkoutView] = true
+                            store.send(.touchedEditMode(myRoutine))
                         }) {
                             Label("편집", systemImage: "pencil")
                         }
@@ -55,12 +60,5 @@ struct MyWorkoutSubview: View {
                alignment: .leading)
         .background(Color.white)
         .cornerRadius(15)
-    }
-}
-
-struct MyWorkoutSubview_Previews: PreviewProvider {
-    static var previews: some View {
-        MyWorkoutSubview(myRoutine: MyRoutine(name: "test", routines: []))
-            .background(Color.black)
     }
 }
