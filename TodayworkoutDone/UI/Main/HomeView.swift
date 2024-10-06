@@ -166,8 +166,19 @@ struct HomeReducer {
                         }
                     }
                     return .none
+                case .getMyRoutines:
+                    return .run { send in
+                        let myRoutines = try context.fetchAll()
+                        await send(.workout(.fetchMyRoutines(myRoutines)))
+                    }
+                case .fetchMyRoutines(let myRoutines):
+                    state.workout?.myRoutineState.myRoutines = myRoutines
+                    return .none
+                case .destination(.presented(.alert(.tappedMyRoutineStart(let myRoutine)))):
+                    return .send(.workout(.makeWorkout(.tappedDone(myRoutine))))
                 case .destination:
                     return .none
+                    
                 // MARK: - workoutCategory
                 case .workoutCategory(let action):
                     switch action {
@@ -182,6 +193,7 @@ struct HomeReducer {
                     case .updateCategories(let categories):
                         state.workout?.workoutCategory.categories = categories
                         return .none
+                        
                     // MARK: - workoutList
                     case .workoutList(let action):
                         switch action {
@@ -198,6 +210,7 @@ struct HomeReducer {
                             return .send(.workout(.filterWorkout))
                         }
                     }
+                    
                 // MARK: - makeWorkout
                 case .makeWorkout(let action):
                     switch action {
@@ -213,7 +226,18 @@ struct HomeReducer {
                         )
                         return .none
                     }
+                    
+                // MARK: - myRoutine
+                case .myRoutineAction(let action):
+                    switch action {
+                    case .touchedMyRoutine(let selectedMyRoutine):
+                        state.workout?.destination = .alert(.startMyRoutine(selectedMyRoutine))
+                        return .none
+                    case .touchedEditMode(let myRoutine):
+                        return .send(.workout(.appearMakeWorkoutView(myRoutine)))
+                    }
                 }
+                
             // MARK: - workingOut
             case .workingOut(let action):
                 switch action {
@@ -367,7 +391,7 @@ extension HomeView {
 extension AlertState where Action == HomeReducer.Destination.Alert {
     static func saveRoutineAlert(_ runningMyRoutine: MyRoutine?) -> Self {
         Self {
-            TextState("루틴 이름을 정해주세요")
+            TextState("루틴 저장")
         } actions: {
             ButtonState(action: .tappedMyRoutineAlerOk(runningMyRoutine)) {
                 TextState("OK")
@@ -380,9 +404,9 @@ extension AlertState where Action == HomeReducer.Destination.Alert {
         }
     }
     
-    static func saveWorkoutAlert(_ secondsElapsed: Int)-> Self {
+    static func saveWorkoutAlert(_ secondsElapsed: Int) -> Self {
         Self {
-            TextState("워크아웃을 저장하겠습니까?")
+            TextState("워크아웃 저장")
         } actions: {
             ButtonState(action: .tappedWorkoutAlertClose) {
                 TextState("Close")
