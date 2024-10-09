@@ -14,7 +14,7 @@ struct WorkoutListReducer {
     @ObservableState
     struct State: Equatable {
         var workouts: [Workout] = []
-        var myRoutine: MyRoutine = MyRoutine(id: UUID(), name: "", routines: [])
+        var myRoutine: MyRoutine?
         
         var isEmptySelectedWorkouts: Bool {
             var isEmpty = true
@@ -72,7 +72,7 @@ struct WorkoutListView: View {
                         if !viewStore.isEmptySelectedWorkouts {
                             viewStore.send(.makeWorkoutView)
                         } else {
-                            viewStore.myRoutine.routines += viewStore.workouts
+                            viewStore.myRoutine?.routines += viewStore.workouts
                                 .filter({ $0.isSelected })
                                 .compactMap({ Routine(workouts: $0) })
                         }

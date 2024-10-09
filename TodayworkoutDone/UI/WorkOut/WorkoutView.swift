@@ -17,7 +17,7 @@ struct WorkoutReducer {
         @Presents var destination: Destination.State?
         
         var keyword: String = ""
-        var workoutCategory = WorkoutCategoryReducer.State()
+        var workoutCategory: WorkoutCategoryReducer.State
         var myRoutineState = MyRoutineReducer.State()
         var makeWorkout: MakeWorkoutReducer.State?
         var workouts: [Workout] = []
@@ -53,13 +53,21 @@ struct WorkoutReducer {
         var fetchDescriptor: FetchDescriptor<MyRoutine> {
             return .init(predicate: self.predicate, sortBy: self.sort)
         }
-        mutating func refetch(_ myRoutine: MyRoutine?) {
+        mutating func refetch(_ myRoutine: MyRoutine?) -> MyRoutine? {
             @Dependency(\.myRoutineData) var context
+            self.myRoutine = myRoutine
             do {
                 self.myRoutine = try context.fetch(self.fetchDescriptor).first
+                return self.myRoutine
             } catch {
                 print(error.localizedDescription)
+                return nil
             }
+        }
+        
+        init(_ myRoutine: MyRoutine?) {
+            self.myRoutine = myRoutine
+            self.workoutCategory = WorkoutCategoryReducer.State(myRoutine)
         }
     }
     
@@ -74,7 +82,7 @@ struct WorkoutReducer {
         case hasLoaded
         case getMyRoutines
         case filterWorkout
-        case appearMakeWorkoutView(MyRoutine?)
+        case appearMakeWorkoutView(MyRoutine?, Bool)
         case fetchMyRoutines([MyRoutine])
         
         var description: String {

@@ -20,9 +20,11 @@ struct MyRoutineDatabase {
     var fetchAll: @Sendable () throws -> [MyRoutine]
     var fetch: @Sendable (FetchDescriptor<MyRoutine>) throws -> [MyRoutine]
     var add: @Sendable (MyRoutine) throws -> Void
+    var save: @Sendable () throws -> Void
+    var delete: @Sendable (MyRoutine) throws -> Void
     
     enum MyRoutineError: Error {
-        case add
+        case add, save, delete
     }
 }
 
@@ -57,6 +59,26 @@ extension MyRoutineDatabase: DependencyKey {
             } catch {
                 throw MyRoutineError.add
             }
+        },
+        save: {
+            do {
+                @Dependency(\.databaseService.context) var context
+                let routineContext = try context()
+                
+                try routineContext.save()
+            } catch {
+                throw MyRoutineError.save
+            }
+        },
+        delete: { model in
+            do {
+                @Dependency(\.databaseService.context) var context
+                let routineContext = try context()
+                
+                routineContext.delete(model)
+            } catch {
+                throw MyRoutineError.delete
+            }
         }
     )
 }
@@ -65,7 +87,9 @@ extension MyRoutineDatabase: TestDependencyKey {
     public static let testValue = Self(
         fetchAll: unimplemented("\(Self.self).fetchAll"),
         fetch: unimplemented("\(Self.self).fetch"),
-        add: unimplemented("\(Self.self).add")
+        add: unimplemented("\(Self.self).add"),
+        save: unimplemented("\(Self.self).save"),
+        delete: unimplemented("\(Self.self).delete")
     )
 }
 
