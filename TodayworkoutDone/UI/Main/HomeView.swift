@@ -88,7 +88,7 @@ struct HomeReducer {
                 state.routineName = name
                 return .none
             case .startButtonTapped:
-                state.workout = WorkoutReducer.State()
+                state.workout = WorkoutReducer.State(state.myRoutine)
                 if let workoutState = state.workout {
                     state.destination = .workoutView(workoutState)
                 }
@@ -111,7 +111,7 @@ struct HomeReducer {
                     await send(.workingOut(.toggleTimer))
                 }
             case .destination(.presented(.alert(.tappedWorkoutAlertOk(let secondsElapsed)))):
-                saveWorkoutRoutine(myRoutine: state.workingOut?.myRoutine,
+                insertWorkoutRoutine(myRoutine: state.workingOut?.myRoutine,
                                    routineTime: secondsElapsed)
                 state.isHideTabBar = true
                 state.myRoutine = nil
@@ -122,7 +122,7 @@ struct HomeReducer {
             case .destination(.presented(.alert(.tappedMyRoutineAlertCancel))):
                 return .none
             case .destination(.presented(.alert(.tappedMyRoutineAlerOk(let myRoutine)))):
-                saveMyRoutine(myRoutine: myRoutine)
+                insertMyRoutine(myRoutine: myRoutine)
                 return .none
             case .destination:
               return .none
@@ -152,15 +152,16 @@ struct HomeReducer {
                         )
                         try context.add(myRoutine)
                         return .run { @MainActor send in
-                            send(.workout(.appearMakeWorkoutView(myRoutine)))
+                            send(.workout(.appearMakeWorkoutView(myRoutine, false)))
                         }
                     } catch {
                         print(error.localizedDescription)
                         return .none
                     }
-                case .appearMakeWorkoutView(let myRoutine):
+                case .appearMakeWorkoutView(let myRoutine, let isEditMode):
                     if let myRoutine = myRoutine {
-                        state.workout?.makeWorkout = .init(myRoutine: myRoutine)
+                        state.workout?.makeWorkout = .init(myRoutine: myRoutine,
+                                                           isEdit: isEditMode)
                         if let makeWorkoutState = state.workout?.makeWorkout {
                             state.workout?.destination = .makeWorkoutView(makeWorkoutState)
                         }
@@ -214,8 +215,12 @@ struct HomeReducer {
                 // MARK: - makeWorkout
                 case .makeWorkout(let action):
                     switch action {
-                    case .dismiss:
+                    case .dismiss(let myRoutine):
                         state.workout?.destination = .none
+                        if let myRoutineState = state.workout?.myRoutineState.myRoutines,
+                            myRoutineState.contains(myRoutine) == false {
+                            deleteMyRoutine(myRoutine)
+                        }
                         return .none
                     case .tappedDone(let myRoutine):
                         state.workout?.destination = .none
@@ -224,6 +229,12 @@ struct HomeReducer {
                         state.workingOut = WorkingOutReducer.State(
                             myRoutine: myRoutine
                         )
+                        return .none
+                    case .save(let myRoutine):
+                        saveMyRoutine()
+                        return .send(.workout(.makeWorkout(.dismiss(myRoutine))))
+                    case .didUpdateText(let text):
+                        state.workout?.makeWorkout?.myRoutine.name = text
                         return .none
                     }
                     
@@ -234,7 +245,10 @@ struct HomeReducer {
                         state.workout?.destination = .alert(.startMyRoutine(selectedMyRoutine))
                         return .none
                     case .touchedEditMode(let myRoutine):
-                        return .send(.workout(.appearMakeWorkoutView(myRoutine)))
+                        if let myRoutine = state.workout?.refetch(myRoutine) {
+                            return .send(.workout(.appearMakeWorkoutView(myRoutine, true)))
+                        }
+                        return .none
                     }
                 }
                 
@@ -274,7 +288,7 @@ struct HomeReducer {
         }
     }
     
-    func saveMyRoutine(myRoutine: MyRoutine?) {
+    private func insertMyRoutine(myRoutine: MyRoutine?) {
         do {
             if let myRoutine = myRoutine {
                 try context.add(myRoutine)
@@ -286,7 +300,7 @@ struct HomeReducer {
         }
     }
     
-    func saveWorkoutRoutine(myRoutine: MyRoutine?, routineTime: Int) {
+    private func insertWorkoutRoutine(myRoutine: MyRoutine?, routineTime: Int) {
         guard let myRoutine = myRoutine else {
             return
         }
@@ -299,6 +313,22 @@ struct HomeReducer {
             try context.add(workoutRoutine)
         } catch {
             print(WorkoutRoutineDatabase.WorkoutRoutineError.add)
+        }
+    }
+    
+    private func saveMyRoutine() {
+        do {
+            try context.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    private func deleteMyRoutine(_ myRoutine: MyRoutine) {
+        do {
+            try context.delete(myRoutine)
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }

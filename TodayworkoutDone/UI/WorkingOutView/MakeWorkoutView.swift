@@ -21,20 +21,10 @@ struct MakeWorkoutReducer {
     }
     
     enum Action {
-        case dismiss
+        case dismiss(MyRoutine)
         case tappedDone(MyRoutine)
-    }
-    
-    
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-            case .dismiss:
-                return .none
-            case .tappedDone:
-                return .none
-            }
-        }
+        case save(MyRoutine)
+        case didUpdateText(String)
     }
 }
 
@@ -52,11 +42,15 @@ struct MakeWorkoutView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                TextField("타이틀을 입력하세요", text: .constant(store.myRoutine.name))
-                    .multilineTextAlignment(.leading)
-                    .font(.title)
-                    .accessibilityAddTraits(.isHeader)
-                    .padding([.leading], 15)
+                TextField("타이틀을 입력하세요",
+                          text: viewStore.binding(
+                            get: \.myRoutine.name,
+                            send: MakeWorkoutReducer.Action.didUpdateText
+                          ))
+                .multilineTextAlignment(.leading)
+                .font(.title)
+                .accessibilityAddTraits(.isHeader)
+                .padding([.leading], 15)
                 ForEach(viewStore.myRoutine.routines) { routine in
                     WorkingOutSection(
                         store: Store(
@@ -85,7 +79,7 @@ struct MakeWorkoutView: View {
                             ScrollView {
                                 VStack {
                                     WorkoutCategoryView(
-                                        store: Store(initialState: WorkoutCategoryReducer.State()) {
+                                        store: Store(initialState: WorkoutCategoryReducer.State(store.myRoutine)) {
                                             WorkoutCategoryReducer()
                                         })
                                 }
@@ -98,17 +92,17 @@ struct MakeWorkoutView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        viewStore.send(.dismiss)
+                        store.send(.dismiss(store.myRoutine))
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if viewStore.isEdit {
+                    if store.isEdit {
                         Button("Save") {
-
+                            store.send(.save(store.myRoutine))
                         }
                     } else {
                         Button("Done") {
-                            viewStore.send(.tappedDone(store.state.myRoutine))
+                            store.send(.tappedDone(store.state.myRoutine))
                         }
                     }
                 }

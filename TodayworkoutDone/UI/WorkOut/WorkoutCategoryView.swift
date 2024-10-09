@@ -16,9 +16,14 @@ struct WorkoutCategoryReducer {
         var keyword: String = ""
         var categories: Categories = []
 
-        var myRoutine: MyRoutine = MyRoutine(name: "", routines: [])
+        var myRoutine: MyRoutine?
 
-        var workoutList = WorkoutListReducer.State()
+        var workoutList: WorkoutListReducer.State
+        
+        init(_ myRoutine: MyRoutine?) {
+            self.myRoutine = myRoutine
+            self.workoutList = WorkoutListReducer.State(myRoutine: myRoutine)
+        }
     }
     
     enum Action {
