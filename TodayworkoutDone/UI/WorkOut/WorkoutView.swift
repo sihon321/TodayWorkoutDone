@@ -16,7 +16,6 @@ struct WorkoutReducer {
     struct State: Equatable {
         @Presents var destination: Destination.State?
         
-        var keyword: String = ""
         var workoutCategory: WorkoutCategoryReducer.State
         var myRoutineState = MyRoutineReducer.State()
         var makeWorkout: MakeWorkoutReducer.State?
@@ -74,10 +73,11 @@ struct WorkoutReducer {
     enum Action {
         case destination(PresentationAction<Destination.Action>)
         
-        case search(keyword: String)
         case workoutCategory(WorkoutCategoryReducer.Action)
         case makeWorkout(MakeWorkoutReducer.Action)
         case myRoutineAction(MyRoutineReducer.Action)
+        
+        case search(keyword: String)
         case dismiss
         case hasLoaded
         case getMyRoutines
@@ -97,15 +97,6 @@ struct WorkoutReducer {
         
         enum Alert: Equatable {
             case tappedMyRoutineStart(MyRoutine)
-        }
-    }
-    
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            print(action.description)
-            switch action {
-            default: return .none
-            }
         }
     }
 }
@@ -147,7 +138,7 @@ struct WorkoutView: View {
             }
         }
         .searchable(text: viewStore.binding(
-            get: { $0.keyword },
+            get: { $0.workoutCategory.keyword },
             send: { WorkoutReducer.Action.search(keyword: $0) }
         ))
         .fullScreenCover(

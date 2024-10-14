@@ -21,6 +21,7 @@ struct HomeReducer {
         var bottomEdge: CGFloat
         var routineName = ""
         var workouts: [Workout] = []
+        var categories: Categories = []
         var isHideTabBar = false
         var tabBarOffset: CGFloat = 0.0
         var myRoutine: MyRoutine?
@@ -97,7 +98,7 @@ struct HomeReducer {
                 state.tabBarOffset = offset
                 return .none
             case .presentedSaveRoutineAlert:
-                state.destination = .alert(.saveRoutineAlert(state.workout?.myRoutine))
+                state.destination = .alert(.saveRoutineAlert(state.myRoutine))
                 return .none
 
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
@@ -120,9 +121,11 @@ struct HomeReducer {
                     await send(.presentedSaveRoutineAlert)
                 }
             case .destination(.presented(.alert(.tappedMyRoutineAlertCancel))):
+                state.myRoutine = nil
                 return .none
             case .destination(.presented(.alert(.tappedMyRoutineAlerOk(let myRoutine)))):
                 insertMyRoutine(myRoutine: myRoutine)
+                state.myRoutine = nil
                 return .none
             case .destination:
               return .none
@@ -131,7 +134,7 @@ struct HomeReducer {
             case .workout(let action):
                 switch action {
                 case .search(let keyword):
-                    state.workout?.keyword = keyword
+                    state.workout?.workoutCategory.keyword = keyword
                     return .none
                 case .dismiss:
                     state.destination = .none
@@ -140,23 +143,17 @@ struct HomeReducer {
                     state.workout?.hasLoaded = true
                     return .none
                 case .filterWorkout:
-                    do {
-                        let routines = state.workout?.workouts
-                            .filter({ $0.isSelected })
-                            .compactMap({
-                                return Routine(workouts: $0)
-                            })
-                        let myRoutine = MyRoutine(
-                            name: "",
-                            routines: routines ?? []
-                        )
-                        try context.add(myRoutine)
-                        return .run { @MainActor send in
-                            send(.workout(.appearMakeWorkoutView(myRoutine, false)))
-                        }
-                    } catch {
-                        print(error.localizedDescription)
-                        return .none
+                    let routines = state.workout?.workouts
+                        .filter({ $0.isSelected })
+                        .compactMap({
+                            return Routine(workouts: $0)
+                        })
+                    let myRoutine = MyRoutine(
+                        name: "",
+                        routines: routines ?? []
+                    )
+                    return .run { @MainActor send in
+                        send(.workout(.appearMakeWorkoutView(myRoutine, false)))
                     }
                 case .appearMakeWorkoutView(let myRoutine, let isEditMode):
                     if let myRoutine = myRoutine {
@@ -215,12 +212,8 @@ struct HomeReducer {
                 // MARK: - makeWorkout
                 case .makeWorkout(let action):
                     switch action {
-                    case .dismiss(let myRoutine):
+                    case .dismiss:
                         state.workout?.destination = .none
-                        if let myRoutineState = state.workout?.myRoutineState.myRoutines,
-                            myRoutineState.contains(myRoutine) == false {
-                            deleteMyRoutine(myRoutine)
-                        }
                         return .none
                     case .tappedDone(let myRoutine):
                         state.workout?.destination = .none
@@ -236,6 +229,62 @@ struct HomeReducer {
                     case .didUpdateText(let text):
                         state.workout?.makeWorkout?.myRoutine.name = text
                         return .none
+                    case .tappedAdd:
+                        if let workoutCategory = state.workout?.makeWorkout?.addWorkoutCategory {
+                            state.workout?.makeWorkout?.destination = .addWorkoutCategory(workoutCategory)
+                        }
+                        return .none
+                    case .destination(.presented(.addWorkoutCategory(let action))):
+                        return .send(.workout(.makeWorkout(.addWorkoutCategory(action))))
+                    case .destination:
+                        return .none
+                        
+                    // MARK: - addmakeWorkout
+                    case .addWorkoutCategory(let action):
+                        switch action {
+                        case .getCategories:
+                            return .run { send in
+                                let categories = categoryRepository.loadCategories()
+                                await send(.workout(.makeWorkout(.addWorkoutCategory(.updateCategories(categories)))))
+                            }
+                        case .updateCategories(let categories):
+                            state.workout?.makeWorkout?.addWorkoutCategory.categories = categories
+                            return .send(.workout(.makeWorkout(.addWorkoutCategory(.workoutList(.getWorkouts)))))
+                        case .dismissWorkoutCategory:
+                            state.workout?.makeWorkout?.destination = .none
+                            return .none
+                            
+                            // MARK: - addmakeWorkout workoutList
+                        case .workoutList(let action):
+                            switch action {
+                            case .getWorkouts:
+                                return .run { send in
+                                    let workouts = workoutRepository.loadWorkouts()
+                                    await send(.workout(.makeWorkout(.addWorkoutCategory(.workoutList(.updateWorkouts(workouts))))))
+                                }
+                            case .updateWorkouts(let workouts):
+                                if let myWorkout = state.workout?.makeWorkout?.addWorkoutCategory.workoutList.myRoutine?.routines.compactMap({ $0.workout }) {
+                                    let myWorkoutIDs = Set(myWorkout.map { $0.id }) // Set을 사용해 성능 최적화
+                                    state.workout?.makeWorkout?.addWorkoutCategory.workoutList.workouts = workouts.map { workout in
+                                        let modifiedWorkout = workout
+                                        modifiedWorkout.isSelected = myWorkoutIDs.contains(workout.id)
+                                        return modifiedWorkout
+                                    }
+                                }
+
+                                return .none
+                            case .makeWorkoutView:
+                                let routines = state.workout?.makeWorkout?
+                                    .addWorkoutCategory.workoutList.workouts
+                                    .filter({ $0.isSelected })
+                                    .compactMap({
+                                        return Routine(workouts: $0)
+                                    }) ?? []
+                                state.workout?.makeWorkout?.myRoutine.routines = routines
+                                state.workout?.makeWorkout?.destination = .none
+                                return .none
+                            }
+                        }
                     }
                     
                 // MARK: - myRoutine
@@ -370,8 +419,10 @@ struct HomeView: View {
                 }
                 .tag(0)
                 
-                CalendarView()
-                    .tag(1)
+                CalendarView(store: Store(initialState: CalendarReducer.State()) {
+                    CalendarReducer()
+                })
+                .tag(1)
             }
             .overlay(
                 VStack {

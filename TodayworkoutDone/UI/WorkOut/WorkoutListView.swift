@@ -34,19 +34,6 @@ struct WorkoutListReducer {
         case getWorkouts
         case updateWorkouts([Workout])
     }
-    
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-            case .makeWorkoutView:
-                return .none
-            case .getWorkouts:
-                return .none
-            case .updateWorkouts:
-                return .none
-            }
-        }
-    }
 }
 
 struct WorkoutListView: View {
@@ -61,8 +48,8 @@ struct WorkoutListView: View {
     }
     
     var body: some View {
-        List(viewStore.workouts.filter({ category.name == $0.category })) { workouts in
-            WorkoutListSubview(workouts: workouts)
+        List(store.workouts.filter({ category.name == $0.category })) { workouts in
+            WorkoutListSubview(store: store, workouts: workouts)
         }
         .listStyle(.plain)
         .toolbar {

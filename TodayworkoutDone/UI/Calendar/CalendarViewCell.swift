@@ -6,32 +6,47 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
+
+@Reducer
+struct CalendarCellReducer {
+    @ObservableState
+    struct State: Equatable {
+        var calendar: Calendar = .current
+        var dayFormatter: DateFormatter
+        var selectedDate: Date
+        var date: Date
+        var workoutRoutines: [WorkoutRoutine] = []
+    }
+}
 
 struct CalendarViewCell: View {
-    var calendar: Calendar = .current
-    var dayFormatter: DateFormatter
-    @Binding var selectedDate: Date
-    var date: Date
-    var workoutRoutines: [WorkoutRoutine]
+    @Bindable var store: StoreOf<CalendarCellReducer>
+    @ObservedObject var viewStore: ViewStoreOf<CalendarCellReducer>
+    
+    init(store: StoreOf<CalendarCellReducer>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
+    }
     
     var body: some View {
         VStack {
-            Text(dayFormatter.string(from: date))
+            Text(store.dayFormatter.string(from: store.date))
                 .padding(2)
-                .foregroundColor(calendar.isDateInToday(date) ? Color.white : .primary)
+                .foregroundColor(store.calendar.isDateInToday(store.date) ? Color.white : .primary)
                 .frame(minWidth: 25, maxHeight: .infinity)
                 .background(
-                    calendar.isDateInToday(date) ? Color.green
-                    : calendar.isDate(date, inSameDayAs: selectedDate) ? .yellow
+                    store.calendar.isDateInToday(store.date) ? Color.green
+                    : store.calendar.isDate(store.date, inSameDayAs: store.selectedDate) ? .yellow
                     : .clear
                 )
                 .contentShape(Rectangle())
                 .cornerRadius(7)
             
-            if workoutRoutines.contains(where: {
-                $0.date.year == date.year
-                && $0.date.month == date.month
-                && $0.date.day == date.day
+            if store.workoutRoutines.contains(where: {
+                $0.date.year == store.date.year
+                && $0.date.month == store.date.month
+                && $0.date.day == store.date.day
             }) {
                 Circle()
                     .foregroundColor(.red)
@@ -45,12 +60,3 @@ struct CalendarViewCell: View {
     }
 }
 
-struct CalendarViewCell_Previews: PreviewProvider {
-    static var previews: some View {
-        CalendarViewCell(calendar: Calendar(identifier: .iso8601),
-                         dayFormatter: DateFormatter(dateFormat: "d", calendar: .current),
-                         selectedDate: .constant(Date()),
-                         date: Date(),
-                         workoutRoutines: [])
-    }
-}

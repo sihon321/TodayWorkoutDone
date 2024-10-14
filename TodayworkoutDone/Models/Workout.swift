@@ -46,6 +46,10 @@ class Workout: Codable, Equatable {
         try container.encode(target, forKey: .target)
         try container.encode(isSelected, forKey: .isSelected)
     }
+    
+    static func ==(lhs: Workout, rhs: Workout) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 extension Workout: Identifiable {

@@ -10,17 +10,13 @@ import ComposableArchitecture
 
 struct ContentView: View {
     var body: some View {
-        GeometryReader { proxy in
-            let bottomEdge = proxy.safeAreaInsets.bottom
-            
-            HomeView(
-                store: Store(
-                    initialState: HomeReducer.State(
-                        bottomEdge: bottomEdge == 0 ? 15 : bottomEdge
-                    )) {
-                        HomeReducer()
-                    })
-            .ignoresSafeArea(.all, edges: .bottom)
-        }
+        HomeView(
+            store: Store(
+                initialState: HomeReducer.State(
+                    bottomEdge: 35
+                )) {
+                    HomeReducer()
+                })
+        .ignoresSafeArea(.all, edges: .bottom)
     }
 }

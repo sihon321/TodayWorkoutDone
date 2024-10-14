@@ -6,54 +6,141 @@
 //
 
 import SwiftUI
-import Combine
+import ComposableArchitecture
+
+@Reducer
+struct CalendarReducer {
+    @ObservableState
+    struct State: Equatable {
+        @Presents var destination: Destination.State?
+        
+        var workoutRoutines: [WorkoutRoutine] = []
+        let monthFormatter = DateFormatter(dateFormat: "MMMM YYYY",
+                                           calendar: .current)
+        let dayFormatter = DateFormatter(dateFormat: "d",
+                                         calendar: .current)
+        let weekDayFormatter = DateFormatter(dateFormat: "EEEEE",
+                                             calendar: .current)
+        let fullFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy",
+                                          calendar: .current)
+        var todayDate = Date()
+        var selectedDate: Date? = nil
+        var isPresented = false
+        var calendarDetail: CalendarDetailReducer.State?
+        
+        func filterWorkout(date: Date?) -> [WorkoutRoutine] {
+            guard let date = date else { return [] }
+            return workoutRoutines.filter({
+                $0.date.year == date.year
+                && $0.date.month == date.month
+                && $0.date.day == date.day
+            })
+        }
+    }
+    
+    enum Action {
+        case loadWorkoutRoutines
+        case fetchWorkoutRoutines([WorkoutRoutine])
+        case tappedDate(Date)
+        
+        case setSheet(isPresented: Bool)
+        case setSheetIsPresentedDelayCompleted
+        case calendarDetail(CalendarDetailReducer.Action)
+        
+        case destination(PresentationAction<Destination.Action>)
+        
+        var description: String {
+            return "\(self)"
+        }
+    }
+    
+    @Reducer(state: .equatable)
+    enum Destination {
+        
+    }
+    
+    @Dependency(\.workoutRoutineData) var workoutRoutineContext
+    @Dependency(\.continuousClock) var clock
+    private enum CancelID { case load }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            print(action.description)
+            switch action {
+            case .loadWorkoutRoutines:
+                return .run { send in
+                    let workoutRoutines = try workoutRoutineContext.fetchAll()
+                    await send(.fetchWorkoutRoutines(workoutRoutines))
+                }
+            case .fetchWorkoutRoutines(let workoutRoutines):
+                state.workoutRoutines = workoutRoutines
+                return .none
+            case .tappedDate(let date):
+                state.selectedDate = date
+                return .none
+                
+            case .setSheet(isPresented: true):
+                state.isPresented = true
+                state.calendarDetail = nil
+                return .run { send in
+                  try await self.clock.sleep(for: .seconds(1))
+                  await send(.setSheetIsPresentedDelayCompleted)
+                }
+                .cancellable(id: CancelID.load)
+            case .setSheet(isPresented: false):
+              state.isPresented = false
+              state.calendarDetail = nil
+              return .cancel(id: CancelID.load)
+            case .setSheetIsPresentedDelayCompleted:
+                if let date = state.selectedDate {
+                    state.calendarDetail = CalendarDetailReducer.State(
+                        date: date,
+                        workoutRoutines: state.filterWorkout(date: date)
+                    )
+                }
+                return .none
+            case .calendarDetail:
+                return .none
+            case .destination:
+                return .none
+            }
+        }
+        .ifLet(\.$destination, action: \.destination) {
+          Destination.body
+        }
+    }
+}
 
 struct CalendarView: View {
-    @State private(set) var workoutRoutines: [WorkoutRoutine] = []
-    
-    @State private var isPresented = false
-    
-    private let monthFormatter: DateFormatter
-    private let dayFormatter: DateFormatter
-    private let weekDayFormatter: DateFormatter
-    private let fullFormatter: DateFormatter
+    @Bindable var store: StoreOf<CalendarReducer>
+    @ObservedObject var viewStore: ViewStoreOf<CalendarReducer>
 
-    @State private var todayDate = Self.now
-    @State private var selectedDate: Date? = nil
-    private static var now = Date()
-
-    init() {
-        self.monthFormatter = DateFormatter(dateFormat: "MMMM YYYY", calendar: .current)
-        self.dayFormatter = DateFormatter(dateFormat: "d", calendar: .current)
-        self.weekDayFormatter = DateFormatter(dateFormat: "EEEEE", calendar: .current)
-        self.fullFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy", calendar: .current)
+    init(store: StoreOf<CalendarReducer>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
     }
 
     var body: some View {
         NavigationView {
             CalendarViewComponent(
-                startDate: startDate(workoutRoutines),
-                date: $todayDate,
+                startDate: startDate(viewStore.workoutRoutines),
+                store: store,
                 content: { date in
-                    let filteredWorkout = filterWorkout(date: date, workoutRoutines)
                     Button(action: {
-                        if !filteredWorkout.isEmpty {
-                            selectedDate = date
-                        }
-                        isPresented = true
+                        store.send(.tappedDate(date))
+                        store.send(.setSheet(isPresented: true))
                     }) {
                         CalendarViewCell(
-                            dayFormatter: dayFormatter,
-                            selectedDate: $todayDate,
-                            date: date,
-                            workoutRoutines: filteredWorkout
-                        )
-                    }
-                    .sheet(item: $selectedDate) { selectedDate in
-                        CalendarDetailView(
-                            isPresented: $isPresented,
-                            date: selectedDate,
-                            workoutRoutines: workoutRoutines
+                            store: Store(
+                                initialState: CalendarCellReducer.State(
+                                    dayFormatter: store.dayFormatter,
+                                    selectedDate: store.todayDate,
+                                    date: date,
+                                    workoutRoutines: store.state.filterWorkout(date: date)
+                                )
+                            ) {
+                                CalendarCellReducer()
+                            }
                         )
                     }
                 },
@@ -62,10 +149,11 @@ struct CalendarView: View {
                         .foregroundColor(.clear)
                 },
                 header: { date in
-                    Text(weekDayFormatter.string(from: date)).fontWeight(.bold)
+                    Text(viewStore.weekDayFormatter.string(from: date))
+                        .fontWeight(.bold)
                 },
                 title: { date in
-                    Text(monthFormatter.string(from: date))
+                    Text(viewStore.monthFormatter.string(from: date))
                         .font(.title)
                         .padding(.vertical, 8)
                 }
@@ -73,16 +161,15 @@ struct CalendarView: View {
             .padding([.leading, .trailing], 15)
             .background(Color(0xf4f4f4))
             .navigationTitle("Calendar")
+            .sheet(isPresented: $store.isPresented.sending(\.setSheet)) {
+                if let store = store.scope(state: \.calendarDetail, action: \.calendarDetail) {
+                  CalendarDetailView(store: store)
+                }
+            }
         }
-
-            .onAppear(perform: loadWorkoutRoutines)
-    }
-}
-
-private extension CalendarView {
-    func loadWorkoutRoutines() {
-//        injected.interactors.routineInteractor
-//            .load(workoutRoutines: $workoutRoutines)
+        .onAppear {
+            store.send(.loadWorkoutRoutines)
+        }
     }
 }
 
@@ -98,15 +185,6 @@ private extension CalendarView {
         let sortedDates = dates.sorted(by: <)
         return sortedDates.first ?? Date()
     }
-    
-    func filterWorkout(date: Date?, _ workoutRoutines: [WorkoutRoutine]) -> [WorkoutRoutine] {
-        guard let date = date else { return [] }
-        return workoutRoutines.filter({
-            $0.date.year == date.year
-            && $0.date.month == date.month
-            && $0.date.day == date.day
-        })
-    }
 }
 
 extension DateFormatter {
@@ -116,17 +194,6 @@ extension DateFormatter {
         self.calendar = calendar
     }
 }
-
-// MARK: - Previews
-
-#if DEBUG
-struct CalendarView_Previews: PreviewProvider {
-    static var previews: some View {
-        CalendarView()
-        //            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
-}
-#endif
 
 extension Date: Identifiable {
     public var id: Date { return self }

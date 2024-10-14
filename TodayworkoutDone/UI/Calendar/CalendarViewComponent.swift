@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
-public struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: View>: View {
+struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: View>: View {
 
     // Injected dependencies
     private var startDate: Date
     private var months: [Date] = []
-    @Binding private var date: Date
+    private var store: StoreOf<CalendarReducer>
     private let content: (Date) -> Day
     private let trailing: (Date) -> Trailing
     private let header: (Date) -> Header
@@ -26,14 +27,14 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
     
     public init(
         startDate: Date,
-        date: Binding<Date>,
+        store: StoreOf<CalendarReducer>,
         @ViewBuilder content: @escaping (Date) -> Day,
         @ViewBuilder trailing: @escaping (Date) -> Trailing,
         @ViewBuilder header: @escaping (Date) -> Header,
         @ViewBuilder title: @escaping (Date) -> Title
     ) {
         self.startDate = startDate
-        self._date = date
+        self.store = store
         self.content = content
         self.trailing = trailing
         self.header = header
@@ -119,7 +120,7 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
 
 extension CalendarViewComponent: Equatable {
     public static func == (lhs: CalendarViewComponent<Day, Header, Title, Trailing>, rhs: CalendarViewComponent<Day, Header, Title, Trailing>) -> Bool {
-        lhs.date == rhs.date
+        lhs.store.todayDate == rhs.store.todayDate
     }
 }
 
