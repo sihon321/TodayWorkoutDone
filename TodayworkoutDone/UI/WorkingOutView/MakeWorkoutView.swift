@@ -13,18 +13,38 @@ import Dependencies
 struct MakeWorkoutReducer {
     @ObservableState
     struct State: Equatable {
+        @Presents var destination: Destination.State?
+
         var myRoutine: MyRoutine
         var editMode: EditMode = .inactive
         var titleSmall: Bool = false
         var selectionWorkouts: [Workout] = []
         var isEdit: Bool = false
+        
+        var addWorkoutCategory: AddWorkoutCategoryReducer.State
+        
+        init(myRoutine: MyRoutine, isEdit: Bool) {
+            self.myRoutine = myRoutine
+            self.isEdit = isEdit
+            self.addWorkoutCategory = AddWorkoutCategoryReducer.State(myRoutine)
+        }
     }
     
     enum Action {
+        case destination(PresentationAction<Destination.Action>)
+
         case dismiss(MyRoutine)
         case tappedDone(MyRoutine)
         case save(MyRoutine)
         case didUpdateText(String)
+        
+        case addWorkoutCategory(AddWorkoutCategoryReducer.Action)
+        case tappedAdd
+    }
+    
+    @Reducer(state: .equatable)
+    enum Destination {
+        case addWorkoutCategory(AddWorkoutCategoryReducer)
     }
 }
 
@@ -65,30 +85,16 @@ struct MakeWorkoutView: View {
                 }
                 .padding([.bottom], 30)
                 Button(action: {
-                    
+                    store.send(.tappedAdd)
                 }) {
                     Text("add")
                         .frame(maxWidth: .infinity, minHeight: 40)
                         .background(.gray)
                         .padding([.leading, .trailing], 15)
                 }
-                .fullScreenCover(isPresented: .constant(false),
-                                content: {
-                    VStack {
-                        NavigationView {
-                            ScrollView {
-                                VStack {
-                                    WorkoutCategoryView(
-                                        store: Store(initialState: WorkoutCategoryReducer.State(store.myRoutine)) {
-                                            WorkoutCategoryReducer()
-                                        })
-                                }
-                            }
-                        }
-                    }
-                })
                 Spacer().frame(height: 100)
             }
+            .listStyle(.grouped)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
@@ -107,7 +113,22 @@ struct MakeWorkoutView: View {
                     }
                 }
             }
-            .listStyle(.grouped)
+            .fullScreenCover(
+                item: $store.scope(state: \.destination?.addWorkoutCategory,
+                                   action: \.destination.addWorkoutCategory)
+            ) { _ in
+                workoutCategoryView(self.store.scope(state: \.addWorkoutCategory,
+                                                     action: \.addWorkoutCategory))
+            }
+
+        }
+    }
+    
+    func workoutCategoryView(_ store: StoreOf<AddWorkoutCategoryReducer>) -> some View {
+        NavigationView {
+            ScrollView {
+                AddWorkoutCategoryView(store: store)
+            }
         }
     }
 }

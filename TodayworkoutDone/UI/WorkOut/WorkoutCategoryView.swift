@@ -32,6 +32,15 @@ struct WorkoutCategoryReducer {
         case updateCategories(Categories)
         case workoutList(WorkoutListReducer.Action)
     }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            default:
+                return .none
+            }
+        }
+    }
 }
 
 struct WorkoutCategoryView: View {
@@ -47,13 +56,14 @@ struct WorkoutCategoryView: View {
         VStack(alignment: .leading)  {
             Text("category")
             let filteredCategory = viewStore.workoutList.workouts
-                .filter({ $0.name.hasPrefix(store.keyword) })
+                .filter({
+                    $0.name.hasPrefix(store.keyword)
+                    || $0.category.hasPrefix(store.keyword)
+                })
                 .compactMap({ $0.category })
                 .uniqued()
             let categories = viewStore.categories.filter {
-                if filteredCategory.isEmpty {
-                    return true
-                } else if filteredCategory.contains($0.name) {
+                if store.keyword.isEmpty || filteredCategory.contains($0.name) {
                     return true
                 } else {
                     return false

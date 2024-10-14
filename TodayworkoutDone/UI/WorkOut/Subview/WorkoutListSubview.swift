@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
-import Combine
+import ComposableArchitecture
 
 struct WorkoutListSubview: View {
+    @Bindable var store: StoreOf<WorkoutListReducer>
     var workouts: Workout
-    
+
     var body: some View {
         VStack {
             Button(action: {

@@ -10,6 +10,7 @@
 		8E2A89062C96E332009C9032 /* WorkoutRoutineDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A89052C96E332009C9032 /* WorkoutRoutineDatabase.swift */; };
 		8E2A89082C96E78E009C9032 /* CategoryDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A89072C96E78E009C9032 /* CategoryDatabase.swift */; };
 		8E4066A729B33CEC004BB7A2 /* workouts.json in Resources */ = {isa = PBXBuildFile; fileRef = 8E4066A629B33CEC004BB7A2 /* workouts.json */; };
+		8E52F6D32CBD049F00362A40 /* AddWorkoutCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E52F6D22CBD049F00362A40 /* AddWorkoutCategoryView.swift */; };
 		8E8767EE2BB55C9E00B74F98 /* MainContentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8767ED2BB55C9E00B74F98 /* MainContentDetailView.swift */; };
 		8EB47E0A2CAFF86B0063C1EA /* WorkoutRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB47E092CAFF86B0063C1EA /* WorkoutRoutine.swift */; };
 		8EB5396F2C98138A00F56034 /* WorkoutAPIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB5396E2C98138A00F56034 /* WorkoutAPIRepository.swift */; };
@@ -43,7 +44,6 @@
 		F2709CC22C3D866A00302DB0 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F2709CC12C3D866A00302DB0 /* ComposableArchitecture */; };
 		F273486B2AAB037600C04347 /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273486A2AAB037600C04347 /* CalendarViewCell.swift */; };
 		F276E2952A6C48B50046EBA4 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F276E2942A6C48B50046EBA4 /* ErrorView.swift */; };
-		F27AD1882A2BA409002C44DD /* SystemEventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AD1872A2BA409002C44DD /* SystemEventsHandler.swift */; };
 		F27FB6302AD99BE900707379 /* Sequence+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27FB62F2AD99BE900707379 /* Sequence+Extension.swift */; };
 		F285400A2ACD961A00CF2BBC /* CalendarDetailSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28540092ACD961A00CF2BBC /* CalendarDetailSubView.swift */; };
 		F286ACA62AB7250D00D74F75 /* CalendarDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F286ACA52AB7250D00D74F75 /* CalendarDetailView.swift */; };
@@ -101,6 +101,7 @@
 		8E4066A629B33CEC004BB7A2 /* workouts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = workouts.json; sourceTree = "<group>"; };
 		8E4066AB29B33D71004BB7A2 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		8E52790829C7099B000DCD7F /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
+		8E52F6D22CBD049F00362A40 /* AddWorkoutCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutCategoryView.swift; sourceTree = "<group>"; };
 		8E8767ED2BB55C9E00B74F98 /* MainContentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentDetailView.swift; sourceTree = "<group>"; };
 		8EB47E092CAFF86B0063C1EA /* WorkoutRoutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRoutine.swift; sourceTree = "<group>"; };
 		8EB5396E2C98138A00F56034 /* WorkoutAPIRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutAPIRepository.swift; sourceTree = "<group>"; };
@@ -132,7 +133,6 @@
 		F26808A82A9CE0140016E8E9 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		F273486A2AAB037600C04347 /* CalendarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewCell.swift; sourceTree = "<group>"; };
 		F276E2942A6C48B50046EBA4 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
-		F27AD1872A2BA409002C44DD /* SystemEventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEventsHandler.swift; sourceTree = "<group>"; };
 		F27FB62F2AD99BE900707379 /* Sequence+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extension.swift"; sourceTree = "<group>"; };
 		F28540092ACD961A00CF2BBC /* CalendarDetailSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDetailSubView.swift; sourceTree = "<group>"; };
 		F286ACA52AB7250D00D74F75 /* CalendarDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDetailView.swift; sourceTree = "<group>"; };
@@ -303,6 +303,7 @@
 				F23F4E9D295826F30084392B /* WorkoutCategoryView.swift */,
 				F23F4E952957FB240084392B /* MyRoutineView.swift */,
 				F2C63E1F2959F3C700D02F76 /* WorkoutListView.swift */,
+				8E52F6D22CBD049F00362A40 /* AddWorkoutCategoryView.swift */,
 			);
 			path = WorkOut;
 			sourceTree = "<group>";
@@ -315,14 +316,6 @@
 				F2C63E212959F3D200D02F76 /* WorkoutListSubview.swift */,
 			);
 			path = Subview;
-			sourceTree = "<group>";
-		};
-		F250986C2A25151F005390D5 /* System */ = {
-			isa = PBXGroup;
-			children = (
-				F27AD1872A2BA409002C44DD /* SystemEventsHandler.swift */,
-			);
-			path = System;
 			sourceTree = "<group>";
 		};
 		F28FBF302A9BBADC0067DEBC /* Calendar */ = {
@@ -389,7 +382,6 @@
 				F2007DA82A8AA25700833AF0 /* HealthKit */,
 				8EB5396D2C98136900F56034 /* API */,
 				F222FFEA2A645B5F002FCCDA /* Persistence */,
-				F250986C2A25151F005390D5 /* System */,
 				8E5E8A1D2A24B415004A4F33 /* Utilities */,
 				8E4066A829B33D02004BB7A2 /* Models */,
 				8E5E8A202A24B869004A4F33 /* Interactors */,
@@ -599,7 +591,6 @@
 				8EC7725B2C95A4F600C35CE7 /* MyRoutineDatabase.swift in Sources */,
 				F2007DA72A8A8AC300833AF0 /* HealthKitInteractor.swift in Sources */,
 				F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */,
-				F27AD1882A2BA409002C44DD /* SystemEventsHandler.swift in Sources */,
 				F276E2952A6C48B50046EBA4 /* ErrorView.swift in Sources */,
 				F26808A92A9CE0140016E8E9 /* CalendarView.swift in Sources */,
 				F2E2214E29994C7000B7DCCB /* WorkingOutHeader.swift in Sources */,
@@ -621,6 +612,7 @@
 				F2AEA40F2A66E31E0023871D /* Routine.swift in Sources */,
 				8ED37AF32AC87E0700B4F206 /* MyRoutine.swift in Sources */,
 				F2E74D29292221D500BD35F6 /* Color+SwiftUI.swift in Sources */,
+				8E52F6D32CBD049F00362A40 /* AddWorkoutCategoryView.swift in Sources */,
 				F285400A2ACD961A00CF2BBC /* CalendarDetailSubView.swift in Sources */,
 				F222FFEC2A645B70002FCCDA /* CoreDataStack.swift in Sources */,
 				F2CB39F3295DE25900CA80D6 /* DragState.swift in Sources */,
