@@ -41,7 +41,6 @@
 		F264949C2A6C11E000B0A31C /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F264949B2A6C11E000B0A31C /* ActivityIndicatorView.swift */; };
 		F264AC5C29D21F3A0003E70D /* category.json in Resources */ = {isa = PBXBuildFile; fileRef = F264AC5B29D21F3A0003E70D /* category.json */; };
 		F26808A92A9CE0140016E8E9 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26808A82A9CE0140016E8E9 /* CalendarView.swift */; };
-		F2709CC22C3D866A00302DB0 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F2709CC12C3D866A00302DB0 /* ComposableArchitecture */; };
 		F273486B2AAB037600C04347 /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273486A2AAB037600C04347 /* CalendarViewCell.swift */; };
 		F276E2952A6C48B50046EBA4 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F276E2942A6C48B50046EBA4 /* ErrorView.swift */; };
 		F27FB6302AD99BE900707379 /* Sequence+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27FB62F2AD99BE900707379 /* Sequence+Extension.swift */; };
@@ -52,6 +51,7 @@
 		F29285352A17D25400C3A055 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29285342A17D25400C3A055 /* HomeView.swift */; };
 		F292A3A72BB3318900B8EDCD /* WorkoutsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292A3A62BB3318900B8EDCD /* WorkoutsType.swift */; };
 		F296FD722AB5EDF000BCF890 /* CalendarViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F296FD712AB5EDF000BCF890 /* CalendarViewComponent.swift */; };
+		F29B88402CCAB1C500BBE377 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F29B883F2CCAB1C500BBE377 /* ComposableArchitecture */; };
 		F2AEA40F2A66E31E0023871D /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E52790829C7099B000DCD7F /* Routine.swift */; };
 		F2C474E62A9006C200291AE4 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C474E52A9006C200291AE4 /* Date+Extension.swift */; };
 		F2C63E202959F3C700D02F76 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C63E1F2959F3C700D02F76 /* WorkoutListView.swift */; };
@@ -176,7 +176,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2709CC22C3D866A00302DB0 /* ComposableArchitecture in Frameworks */,
+				F29B88402CCAB1C500BBE377 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,7 +461,7 @@
 			);
 			name = TodayworkoutDone;
 			packageProductDependencies = (
-				F2709CC12C3D866A00302DB0 /* ComposableArchitecture */,
+				F29B883F2CCAB1C500BBE377 /* ComposableArchitecture */,
 			);
 			productName = TodayworkoutDone;
 			productReference = F2E74CE22921F73500BD35F6 /* TodayworkoutDone.app */;
@@ -536,7 +536,7 @@
 			);
 			mainGroup = F2E74CD92921F73500BD35F6;
 			packageReferences = (
-				F2709CC02C3D866A00302DB0 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				F29B883E2CCAB1C500BBE377 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = F2E74CE32921F73500BD35F6 /* Products */;
 			projectDirPath = "";
@@ -1010,20 +1010,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F2709CC02C3D866A00302DB0 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+		F29B883E2CCAB1C500BBE377 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.11.2;
+				minimumVersion = 1.15.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F2709CC12C3D866A00302DB0 /* ComposableArchitecture */ = {
+		F29B883F2CCAB1C500BBE377 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F2709CC02C3D866A00302DB0 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			package = F29B883E2CCAB1C500BBE377 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
