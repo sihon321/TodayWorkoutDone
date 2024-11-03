@@ -13,17 +13,20 @@ struct WorkingOutSectionReducer {
     @ObservableState
     struct State: Equatable {
         var routine: Routine
+        var sets: [Sets]
         var editMode: EditMode
     }
     
     enum Action {
-        
+        case tappedAddFooter
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-                
+            case .tappedAddFooter:
+                state.sets.append(Sets())
+                return .none
             }
         }
     }
@@ -39,12 +42,11 @@ struct WorkingOutSection: View {
         self.viewStore = ViewStore(store, observe: { $0 })
     }
     
-    
     var body: some View {
         VStack {
             Section {
                 List {
-                    ForEach(viewStore.routine.sets) { sets in
+                    ForEach(viewStore.sets) { sets in
                         WorkingOutRow(sets: .constant(sets),
                                       editMode: .constant(viewStore.editMode))
                             .padding(.bottom, 2)
@@ -53,14 +55,14 @@ struct WorkingOutSection: View {
                         deleteItems(atOffsets: indexSet)
                     }
                 }
-                .frame(minHeight: minRowHeight * CGFloat(viewStore.routine.sets.count))
+                .frame(minHeight: minRowHeight * CGFloat(viewStore.sets.count))
                 .listStyle(PlainListStyle())
             } header: {
                 WorkingOutHeader(routine: .constant(viewStore.routine))
             } footer: {
                 WorkingOutFooter()
                     .onTapGesture {
-                        viewStore.routine.sets.append(Sets())
+                        viewStore.send(.tappedAddFooter)
                     }
             }
         }

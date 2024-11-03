@@ -61,6 +61,7 @@ struct WorkingOutView: View {
                         store: Store(
                             initialState: WorkingOutSectionReducer.State(
                                 routine: routine,
+                                sets: routine.sets,
                                 editMode: editMode
                             )
                         ) {
