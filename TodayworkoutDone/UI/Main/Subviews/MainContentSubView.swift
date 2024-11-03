@@ -70,10 +70,3 @@ struct MainContentSubView: View {
         .cornerRadius(15)
     }
 }
-
-struct MainContentSubView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainContentSubView(type: .workoutTime)
-            .background(Color.black)
-    }
-}

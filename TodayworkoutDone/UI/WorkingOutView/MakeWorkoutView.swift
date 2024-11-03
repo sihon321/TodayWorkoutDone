@@ -76,6 +76,7 @@ struct MakeWorkoutView: View {
                         store: Store(
                             initialState: WorkingOutSectionReducer.State(
                                 routine: routine,
+                                sets: routine.sets,
                                 editMode: store.editMode
                             )
                         ) {

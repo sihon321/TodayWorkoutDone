@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-class Sets: Codable, Identifiable {
+class Sets: Codable, Identifiable, Equatable {
     var id: UUID
     var prevWeight: Double
     var weight: Double
@@ -52,5 +52,9 @@ class Sets: Codable, Identifiable {
         try container.encode(prevLab, forKey: .prevLab)
         try container.encode(lab, forKey: .lab)
         try container.encode(isChecked, forKey: .isChecked)
+    }
+    
+    static func ==(lhs: Sets, rhs: Sets) -> Bool {
+        return lhs.id == rhs.id
     }
 }

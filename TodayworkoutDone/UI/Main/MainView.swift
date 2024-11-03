@@ -24,10 +24,3 @@ struct MainView: View {
         }
     }
 }
-
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView(bottomEdge: 15)
-            .previewDevice(PreviewDevice(rawValue: "iPhone 13"))
-    }
-}

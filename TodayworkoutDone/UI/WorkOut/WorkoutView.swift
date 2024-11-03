@@ -114,11 +114,13 @@ struct WorkoutView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    MyRoutineView(
-                        store: store.scope(state: \.myRoutineState,
-                                           action: \.myRoutineAction)
-                    )
-                    .padding(.top, 10)
+                    if store.myRoutineState.myRoutines.isEmpty == false {
+                        MyRoutineView(
+                            store: store.scope(state: \.myRoutineState,
+                                               action: \.myRoutineAction)
+                        )
+                        .padding(.top, 10)
+                    }
                     WorkoutCategoryView(
                         store: store.scope(state: \.workoutCategory,
                                            action: \.workoutCategory)

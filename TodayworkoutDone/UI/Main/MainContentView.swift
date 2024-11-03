@@ -29,11 +29,3 @@ struct MainContentView: View {
         .padding([.leading, .trailing], 15)
     }
 }
-
-struct MainContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainContentView()
-            .background(Color.gray)
-    }
-}
-
