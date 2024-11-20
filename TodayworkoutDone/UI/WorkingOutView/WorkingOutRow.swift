@@ -6,6 +6,27 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
+
+@Reducer
+struct WorkingOutRowReducer {
+    @ObservableState
+    struct State: Equatable {
+        
+    }
+    
+    enum Action {
+        
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+                
+            }
+        }
+    }
+}
 
 struct WorkingOutRow: View {
     @Binding var sets: Sets
@@ -46,15 +67,5 @@ struct WorkingOutRow: View {
                 .background(Color(uiColor: .secondarySystemFill))
                 .cornerRadius(5)
         }
-    }
-}
-
-struct WorkingOutRow_Previews: PreviewProvider {
-    static var sets = {
-        return Sets()
-    }()
-    static var previews: some View {
-        WorkingOutRow(sets: .constant(sets),
-                      editMode: .constant(.active))
     }
 }
