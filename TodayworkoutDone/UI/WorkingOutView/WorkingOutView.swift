@@ -56,19 +56,16 @@ struct WorkingOutView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach(store.myRoutine.routines) { routine in
-                    WorkingOutSection(
-                        store: Store(
-                            initialState: WorkingOutSectionReducer.State(
-                                routine: routine,
-                                sets: routine.sets,
-                                editMode: editMode
-                            )
-                        ) {
-                            WorkingOutSectionReducer()
-                        }
-                    )
-                }
+                WorkingOutSection(
+                    store: Store(
+                        initialState: WorkingOutSectionReducer.State(
+                            routines: store.myRoutine.routines,
+                            editMode: editMode
+                        )
+                    ) {
+                        WorkingOutSectionReducer()
+                    }
+                )
                 Spacer().frame(height: 100)
             }
             .onAppear {

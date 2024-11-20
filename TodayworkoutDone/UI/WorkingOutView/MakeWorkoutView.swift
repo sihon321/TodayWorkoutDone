@@ -20,6 +20,7 @@ struct MakeWorkoutReducer {
         var titleSmall: Bool = false
         var selectionWorkouts: [Workout] = []
         var isEdit: Bool = false
+        var workoutSections: WorkingOutSectionReducer.State
         
         var addWorkoutCategory: AddWorkoutCategoryReducer.State
         
@@ -27,6 +28,7 @@ struct MakeWorkoutReducer {
             self.myRoutine = myRoutine
             self.isEdit = isEdit
             self.addWorkoutCategory = AddWorkoutCategoryReducer.State(myRoutine)
+            self.workoutSections = WorkingOutSectionReducer.State(routines: myRoutine.routines, editMode: .inactive)
         }
     }
     
@@ -71,19 +73,13 @@ struct MakeWorkoutView: View {
                 .font(.title)
                 .accessibilityAddTraits(.isHeader)
                 .padding([.leading], 15)
-                ForEach(viewStore.myRoutine.routines) { routine in
-                    WorkingOutSection(
-                        store: Store(
-                            initialState: WorkingOutSectionReducer.State(
-                                routine: routine,
-                                sets: routine.sets,
-                                editMode: store.editMode
-                            )
-                        ) {
-                            WorkingOutSectionReducer()
-                        }
-                    )
-                }
+                WorkingOutSection(
+                    store: Store(
+                        initialState: store.workoutSections
+                    ) {
+                        WorkingOutSectionReducer()
+                    }
+                )
                 .padding([.bottom], 30)
                 Button(action: {
                     store.send(.tappedAdd)

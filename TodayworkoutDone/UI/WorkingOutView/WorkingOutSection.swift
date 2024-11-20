@@ -12,20 +12,20 @@ import ComposableArchitecture
 struct WorkingOutSectionReducer {
     @ObservableState
     struct State: Equatable {
-        var routine: Routine
-        var sets: [Sets]
+        var routines: [Routine]
         var editMode: EditMode
+        var workingOutRow = WorkingOutRowReducer.State()
     }
     
     enum Action {
-        case tappedAddFooter
+        case tappedAddFooter(Routine)
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .tappedAddFooter:
-                state.sets.append(Sets())
+            case .tappedAddFooter(let routine):
+                state.routines.first(where: { $0.id == routine.id})?.sets.append(Sets())
                 return .none
             }
         }
@@ -43,10 +43,10 @@ struct WorkingOutSection: View {
     }
     
     var body: some View {
-        VStack {
+        ForEach(viewStore.routines) { routine in
             Section {
                 List {
-                    ForEach(viewStore.sets) { sets in
+                    ForEach(routine.sets) { sets in
                         WorkingOutRow(sets: .constant(sets),
                                       editMode: .constant(viewStore.editMode))
                             .padding(.bottom, 2)
@@ -55,20 +55,20 @@ struct WorkingOutSection: View {
                         deleteItems(atOffsets: indexSet)
                     }
                 }
-                .frame(minHeight: minRowHeight * CGFloat(viewStore.sets.count))
+                .frame(minHeight: minRowHeight * CGFloat(routine.sets.count))
                 .listStyle(PlainListStyle())
             } header: {
-                WorkingOutHeader(routine: .constant(viewStore.routine))
+                WorkingOutHeader(routine: .constant(routine))
             } footer: {
                 WorkingOutFooter()
                     .onTapGesture {
-                        viewStore.send(.tappedAddFooter)
+                        viewStore.send(.tappedAddFooter(routine))
                     }
             }
         }
     }
     
     func deleteItems(atOffsets offset: IndexSet) {
-        store.routine.sets.remove(atOffsets: offset)
+//        store.routine.sets.remove(atOffsets: offset)
     }
 }
