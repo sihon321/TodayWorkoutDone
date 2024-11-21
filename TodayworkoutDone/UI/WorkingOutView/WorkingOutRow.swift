@@ -12,60 +12,39 @@ import ComposableArchitecture
 struct WorkingOutRowReducer {
     @ObservableState
     struct State: Equatable {
-        
+        var sets: IdentifiedArrayOf<WorkingOutRowViewReducer.State>
+        var editMode: EditMode
     }
     
     enum Action {
-        
+        case sets(IdentifiedActionOf<WorkingOutRowViewReducer>)
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-                
+            case .sets:
+                return .none
             }
+        }
+        .forEach(\.sets, action: \.sets) {
+            WorkingOutRowViewReducer()
         }
     }
 }
 
 struct WorkingOutRow: View {
-    @Binding var sets: Sets
-    @Binding var editMode: EditMode
-    @State private var isChecked: Bool = false
-    @State private var prevWeight: String = ""
-    @State private var count: String = ""
-    @State private var weight: String = ""
+    @Bindable var store: StoreOf<WorkingOutRowReducer>
+    @ObservedObject var viewStore: ViewStoreOf<WorkingOutRowReducer>
+    
+    init(store: StoreOf<WorkingOutRowReducer>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
+    }
     
     var body: some View {
-        HStack {
-            Toggle("", isOn: $isChecked)
-                .toggleStyle(CheckboxToggleStyle(style: .square))
-            Spacer()
-            if editMode == .active {
-                TextField("count", text: $count)
-                    .background(Color(uiColor: .secondarySystemBackground))
-                    .cornerRadius(5)
-            } else {
-                Text(count)
-            }
-            Spacer()
-            Text("\(sets.prevLab)")
-                .frame(minWidth: 40)
-                .background(Color(uiColor: .secondarySystemFill))
-                .cornerRadius(5)
-            Spacer()
-            if editMode == .active {
-                TextField("weight", text: $weight)
-                    .background(Color(uiColor: .secondarySystemBackground))
-                    .cornerRadius(5)
-            } else {
-                Text(weight)
-            }
-            Spacer()
-            Text(String(format: "%.1f", sets.prevWeight))
-                .frame(minWidth: 40)
-                .background(Color(uiColor: .secondarySystemFill))
-                .cornerRadius(5)
+        ForEach(store.scope(state: \.sets, action: \.sets)) { setStore in
+            WorkingOutRowView(store: setStore)
         }
     }
 }

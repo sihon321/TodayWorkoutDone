@@ -10,7 +10,7 @@ import SwiftData
 
 class Routine: Codable, Equatable {
     var workout: Workout
-    var sets: [Sets]
+    var sets: [WorkoutSet]
     var date: Date
     var stopwatch: Double
     var workoutsType: WorkoutsType
@@ -20,7 +20,7 @@ class Routine: Codable, Equatable {
     }
     
     init(workouts: Workout,
-         sets: [Sets] = [Sets()],
+         sets: [WorkoutSet] = [WorkoutSet()],
          date: Date = .now,
          stopwatch: Double = .zero,
          workouts type: WorkoutsType = .barbel) {
@@ -34,7 +34,7 @@ class Routine: Codable, Equatable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         workout = try container.decode(Workout.self, forKey: .workouts)
-        sets = try container.decode([Sets].self, forKey: .sets)
+        sets = try container.decode([WorkoutSet].self, forKey: .sets)
         date = try container.decode(Date.self, forKey: .date)
         stopwatch = try container.decode(Double.self, forKey: .stopwatch)
         workoutsType = try container.decode(WorkoutsType.self, forKey: .workotusType)

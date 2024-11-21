@@ -25,9 +25,3 @@ struct CalendarDetailSubView: View {
         }
     }
 }
-
-struct CalendarDetailSubView_Previews: PreviewProvider {
-    static var previews: some View {
-        CalendarDetailSubView(workoutRoutine: WorkoutRoutine.mockedData)
-    }
-}

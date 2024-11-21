@@ -14,7 +14,16 @@ struct WorkingOutSectionReducer {
     struct State: Equatable {
         var routines: [Routine]
         var editMode: EditMode
-        var workingOutRow = WorkingOutRowReducer.State()
+        var workingOutRow: [WorkingOutRowReducer.State]
+        
+        init(routines: [Routine], editMode: EditMode) {
+            self.routines = routines
+            self.editMode = editMode
+            self.workingOutRow = routines.compactMap {
+                let array = IdentifiedArrayOf(WorkingOut)
+                WorkingOutRowReducer.State(sets: $0.sets, editMode: editMode)
+            }
+        }
     }
     
     enum Action {
@@ -25,7 +34,7 @@ struct WorkingOutSectionReducer {
         Reduce { state, action in
             switch action {
             case .tappedAddFooter(let routine):
-                state.routines.first(where: { $0.id == routine.id})?.sets.append(Sets())
+                state.routines.first(where: { $0.id == routine.id})?.sets.append(WorkoutSet())
                 return .none
             }
         }
@@ -46,11 +55,9 @@ struct WorkingOutSection: View {
         ForEach(viewStore.routines) { routine in
             Section {
                 List {
-                    ForEach(routine.sets) { sets in
-                        WorkingOutRow(sets: .constant(sets),
-                                      editMode: .constant(viewStore.editMode))
-                            .padding(.bottom, 2)
-                    }
+                    WorkingOutRow(sets: .constant(sets),
+                                  editMode: .constant(viewStore.editMode))
+                    .padding(.bottom, 2)
                     .onDelete { indexSet in
                         deleteItems(atOffsets: indexSet)
                     }
