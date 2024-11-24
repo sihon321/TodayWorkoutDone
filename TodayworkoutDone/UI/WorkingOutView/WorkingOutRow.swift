@@ -11,26 +11,23 @@ import ComposableArchitecture
 @Reducer
 struct WorkingOutRowReducer {
     @ObservableState
-    struct State: Equatable {
-        var sets: IdentifiedArrayOf<WorkingOutRowViewReducer.State>
+    struct State: Equatable, Identifiable {
+        let id: UUID
+        var workingOutRowView: WorkingOutRowViewReducer.State
         var editMode: EditMode
+        
+        init(workoutSet: WorkoutSet = .init(), editMode: EditMode = .inactive) {
+            self.id = workoutSet.id
+            self.editMode = editMode
+            self.workingOutRowView = WorkingOutRowViewReducer.State(workoutSet: workoutSet,
+                                                                    editMode: editMode)
+        }
     }
     
     enum Action {
-        case sets(IdentifiedActionOf<WorkingOutRowViewReducer>)
+        
     }
-    
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-            case .sets:
-                return .none
-            }
-        }
-        .forEach(\.sets, action: \.sets) {
-            WorkingOutRowViewReducer()
-        }
-    }
+
 }
 
 struct WorkingOutRow: View {
@@ -43,8 +40,8 @@ struct WorkingOutRow: View {
     }
     
     var body: some View {
-        ForEach(store.scope(state: \.sets, action: \.sets)) { setStore in
-            WorkingOutRowView(store: setStore)
-        }
+        WorkingOutRowView(store: Store(initialState: store.workingOutRowView) {
+            WorkingOutRowViewReducer()
+        })
     }
 }

@@ -30,7 +30,7 @@ struct WorkoutListReducer {
     }
     
     enum Action {
-        case makeWorkoutView
+        case makeWorkoutView([Routine])
         case getWorkouts
         case updateWorkouts([Workout])
     }
@@ -57,9 +57,12 @@ struct WorkoutListView: View {
                 if !viewStore.isEmptySelectedWorkouts {
                     Button(action: {
                         if !viewStore.isEmptySelectedWorkouts {
-                            viewStore.send(.makeWorkoutView)
+                            let routines = viewStore.workouts
+                                .filter({ $0.isSelected })
+                                .compactMap({ Routine(workouts: $0) })
+                            store.send(.makeWorkoutView(routines))
                         } else {
-                            viewStore.myRoutine?.routines += viewStore.workouts
+                            viewStore.myRoutine?.routines += store.workouts
                                 .filter({ $0.isSelected })
                                 .compactMap({ Routine(workouts: $0) })
                         }

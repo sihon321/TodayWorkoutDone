@@ -15,9 +15,22 @@ struct WorkingOutReducer {
         var myRoutine: MyRoutine
         var secondsElapsed = 0
         var isTimerActive = false
+        var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
         static func == (lhs: WorkingOutReducer.State, rhs: WorkingOutReducer.State) -> Bool {
             return lhs.myRoutine.id == rhs.myRoutine.id
+        }
+        
+        init(myRoutine: MyRoutine) {
+            self.myRoutine = myRoutine
+            self.workingOutSection = IdentifiedArrayOf(
+                uniqueElements: myRoutine.routines.map {
+                    WorkingOutSectionReducer.State(
+                        routine: $0,
+                        editMode: .inactive
+                    )
+                }
+            )
         }
     }
     
@@ -28,6 +41,8 @@ struct WorkingOutReducer {
         case resetTimer
         case timerTicked
         case toggleTimer
+        
+        indirect case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
     }
     
     var body: some Reducer<State, Action> {
@@ -56,16 +71,9 @@ struct WorkingOutView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                WorkingOutSection(
-                    store: Store(
-                        initialState: WorkingOutSectionReducer.State(
-                            routines: store.myRoutine.routines,
-                            editMode: editMode
-                        )
-                    ) {
-                        WorkingOutSectionReducer()
-                    }
-                )
+                ForEach(store.scope(state: \.workingOutSection, action: \.workingOutSection)) { rowStore in
+                    WorkingOutSection(store: rowStore)
+                }
                 Spacer().frame(height: 100)
             }
             .onAppear {

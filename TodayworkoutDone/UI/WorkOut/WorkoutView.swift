@@ -99,6 +99,15 @@ struct WorkoutReducer {
             case tappedMyRoutineStart(MyRoutine)
         }
     }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            default:
+                return .none
+            }
+        }
+    }
 }
 
 struct WorkoutView: View {

@@ -11,32 +11,42 @@ import ComposableArchitecture
 @Reducer
 struct WorkingOutSectionReducer {
     @ObservableState
-    struct State: Equatable {
-        var routines: [Routine]
+    struct State: Equatable, Identifiable {
+        let id: UUID
         var editMode: EditMode
-        var workingOutRow: [WorkingOutRowReducer.State]
+        var routine: Routine
+        var workingOutRow: IdentifiedArrayOf<WorkingOutRowReducer.State>
         
-        init(routines: [Routine], editMode: EditMode) {
-            self.routines = routines
+        init(routine: Routine, editMode: EditMode) {
+            self.id = routine.id
+            self.routine = routine
             self.editMode = editMode
-            self.workingOutRow = routines.compactMap {
-                let array = IdentifiedArrayOf(WorkingOut)
-                WorkingOutRowReducer.State(sets: $0.sets, editMode: editMode)
-            }
+            self.workingOutRow = IdentifiedArrayOf(
+                uniqueElements: routine.sets.map {
+                    WorkingOutRowReducer.State(workoutSet: $0,
+                                               editMode: editMode)
+                }
+            )
         }
     }
     
     enum Action {
-        case tappedAddFooter(Routine)
+        case tappedAddFooter
+        
+        indirect case workingOutRow(IdentifiedActionOf<WorkingOutRowReducer>)
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .tappedAddFooter(let routine):
-                state.routines.first(where: { $0.id == routine.id})?.sets.append(WorkoutSet())
+            case .tappedAddFooter:
+                return .none
+            case .workingOutRow:
                 return .none
             }
+        }
+        .forEach(\.workingOutRow, action: \.workingOutRow) {
+            WorkingOutRowReducer()
         }
     }
 }
@@ -52,26 +62,25 @@ struct WorkingOutSection: View {
     }
     
     var body: some View {
-        ForEach(viewStore.routines) { routine in
-            Section {
-                List {
-                    WorkingOutRow(sets: .constant(sets),
-                                  editMode: .constant(viewStore.editMode))
+        Section {
+            List {
+                ForEach(store.scope(state: \.workingOutRow, action: \.workingOutRow)) { rowStore in
+                    WorkingOutRow(store: rowStore)
                     .padding(.bottom, 2)
-                    .onDelete { indexSet in
-                        deleteItems(atOffsets: indexSet)
-                    }
                 }
-                .frame(minHeight: minRowHeight * CGFloat(routine.sets.count))
-                .listStyle(PlainListStyle())
-            } header: {
-                WorkingOutHeader(routine: .constant(routine))
-            } footer: {
-                WorkingOutFooter()
-                    .onTapGesture {
-                        viewStore.send(.tappedAddFooter(routine))
-                    }
+                .onDelete { indexSet in
+                    deleteItems(atOffsets: indexSet)
+                }
             }
+            .frame(minHeight: minRowHeight * CGFloat(store.workingOutRow.count))
+            .listStyle(PlainListStyle())
+        } header: {
+            WorkingOutHeader(routine: .constant(store.routine))
+        } footer: {
+            WorkingOutFooter()
+                .onTapGesture {
+                    store.send(.tappedAddFooter)
+                }
         }
     }
     
