@@ -20,15 +20,22 @@ struct MakeWorkoutReducer {
         var titleSmall: Bool = false
         var selectionWorkouts: [Workout] = []
         var isEdit: Bool = false
-        var workoutSections: WorkingOutSectionReducer.State
         
         var addWorkoutCategory: AddWorkoutCategoryReducer.State
+        var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
-        init(myRoutine: MyRoutine, isEdit: Bool) {
+        init(myRoutine: MyRoutine, editMode: EditMode) {
             self.myRoutine = myRoutine
-            self.isEdit = isEdit
+            self.editMode = editMode
             self.addWorkoutCategory = AddWorkoutCategoryReducer.State(myRoutine)
-            self.workoutSections = WorkingOutSectionReducer.State(routines: myRoutine.routines, editMode: .inactive)
+            self.workingOutSection = IdentifiedArrayOf(
+                uniqueElements: myRoutine.routines.map {
+                    WorkingOutSectionReducer.State(
+                        routine: $0,
+                        editMode: editMode
+                    )
+                }
+            )
         }
     }
     
@@ -42,11 +49,28 @@ struct MakeWorkoutReducer {
         
         case addWorkoutCategory(AddWorkoutCategoryReducer.Action)
         case tappedAdd
+        
+        indirect case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
     }
     
     @Reducer(state: .equatable)
     enum Destination {
         case addWorkoutCategory(AddWorkoutCategoryReducer)
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .dismiss:
+                state.destination = .none
+                return .none
+            default:
+                return .none
+            }
+        }
+        .forEach(\.workingOutSection, action: \.workingOutSection) {
+            WorkingOutSectionReducer()
+        }
     }
 }
 
@@ -73,14 +97,12 @@ struct MakeWorkoutView: View {
                 .font(.title)
                 .accessibilityAddTraits(.isHeader)
                 .padding([.leading], 15)
-                WorkingOutSection(
-                    store: Store(
-                        initialState: store.workoutSections
-                    ) {
-                        WorkingOutSectionReducer()
-                    }
-                )
+                
+                ForEach(store.scope(state: \.workingOutSection, action: \.workingOutSection)) { rowStore in
+                    WorkingOutSection(store: rowStore)
+                }
                 .padding([.bottom], 30)
+                
                 Button(action: {
                     store.send(.tappedAdd)
                 }) {

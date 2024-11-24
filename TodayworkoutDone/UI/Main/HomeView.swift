@@ -158,7 +158,7 @@ struct HomeReducer {
                 case .appearMakeWorkoutView(let myRoutine, let isEditMode):
                     if let myRoutine = myRoutine {
                         state.workout?.makeWorkout = .init(myRoutine: myRoutine,
-                                                           isEdit: isEditMode)
+                                                           editMode: isEditMode ? .active : .inactive)
                         if let makeWorkoutState = state.workout?.makeWorkout {
                             state.workout?.destination = .makeWorkoutView(makeWorkoutState)
                         }
@@ -192,7 +192,7 @@ struct HomeReducer {
                         state.workout?.workoutCategory.categories = categories
                         return .none
                         
-                    // MARK: - workoutList
+                        // MARK: - workoutList
                     case .workoutList(let action):
                         switch action {
                         case .getWorkouts:
@@ -204,7 +204,7 @@ struct HomeReducer {
                             state.workout?.workouts = workouts
                             state.workout?.workoutCategory.workoutList.workouts = workouts
                             return .none
-                        case .makeWorkoutView:
+                        case .makeWorkoutView: 
                             return .send(.workout(.filterWorkout))
                         }
                     }
@@ -273,15 +273,44 @@ struct HomeReducer {
                                 }
 
                                 return .none
-                            case .makeWorkoutView:
-                                let routines = state.workout?.makeWorkout?
-                                    .addWorkoutCategory.workoutList.workouts
-                                    .filter({ $0.isSelected })
-                                    .compactMap({
-                                        return Routine(workouts: $0)
-                                    }) ?? []
-                                state.workout?.makeWorkout?.myRoutine.routines = routines
+                            case .makeWorkoutView(let routines):
                                 state.workout?.makeWorkout?.destination = .none
+                                
+                                for routine in routines {
+                                    if let elements = state.workout?.makeWorkout?
+                                        .workingOutSection.elements.map({ $0.routine.workout.name }),
+                                       elements.contains(routine.workout.name) == false {
+                                        state.workout?.makeWorkout?
+                                            .workingOutSection
+                                            .append(
+                                                WorkingOutSectionReducer.State(
+                                                    routine: routine,
+                                                    editMode: .inactive
+                                                )
+                                            )
+                                    }
+                                }
+                                state.workout?.makeWorkout?.myRoutine.routines = routines
+                                return .none
+                            }
+                        }
+                    case let .workingOutSection(action):
+                        switch action {
+                        case let .element(id, action):
+                            switch action {
+                            case .tappedAddFooter:
+                                if let index = state.workout?.makeWorkout?
+                                    .workingOutSection
+                                    .index(id: id) {
+                                    state.workout?.makeWorkout?
+                                        .workingOutSection[index]
+                                        .workingOutRow
+                                        .append(
+                                            WorkingOutRowReducer.State()
+                                        )
+                                }
+                                return .none
+                            case .workingOutRow:
                                 return .none
                             }
                         }
@@ -325,6 +354,8 @@ struct HomeReducer {
                       }
                     }
                     .cancellable(id: CancelID.timer, cancelInFlight: true)
+                case .workingOutSection(_):
+                    return .none
                 }
                 
             case .tabBar(.tabButton(.setTab(let info))):

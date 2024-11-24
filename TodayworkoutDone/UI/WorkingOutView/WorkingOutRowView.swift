@@ -11,8 +11,7 @@ import ComposableArchitecture
 @Reducer
 struct WorkingOutRowViewReducer {
     @ObservableState
-    struct State: Equatable, Identifiable {
-        let id: UUID
+    struct State: Equatable {
         var workoutSet: WorkoutSet
         var editMode: EditMode
     }

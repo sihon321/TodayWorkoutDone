@@ -8,7 +8,8 @@
 import Foundation
 import SwiftData
 
-class Routine: Codable, Equatable {
+class Routine: Codable, Equatable, Identifiable {
+    let id = UUID()
     var workout: Workout
     var sets: [WorkoutSet]
     var date: Date
@@ -49,10 +50,6 @@ class Routine: Codable, Equatable {
         try container.encode(workoutsType, forKey: .workotusType)
     }
 
-}
-
-extension Routine: Identifiable {
-    var id: String { workout.id }
 }
 
 extension Routine {
