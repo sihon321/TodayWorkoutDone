@@ -91,6 +91,6 @@ struct WorkingOutSection: View {
     }
     
     func deleteItems(atOffsets offset: IndexSet) {
-//        store.routine.sets.remove(atOffsets: offset)
+        store.routine.sets.remove(atOffsets: offset)
     }
 }

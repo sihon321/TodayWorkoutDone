@@ -25,9 +25,9 @@ struct WorkingOutRowViewReducer {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case let .toggleCheck(isChecked):
+            case .toggleCheck:
                 return .none
-            case let .typeLab(lab):
+            case .typeLab:
                 return .none
             case .typeWeight:
                 return .none
