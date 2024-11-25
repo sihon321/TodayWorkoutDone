@@ -125,7 +125,7 @@ struct MakeWorkoutView: View {
                         }
                     } else {
                         Button("Done") {
-                            store.send(.tappedDone(store.state.myRoutine))
+                            store.send(.tappedDone(store.myRoutine))
                         }
                     }
                 }

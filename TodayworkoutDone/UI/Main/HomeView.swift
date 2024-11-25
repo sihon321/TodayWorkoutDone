@@ -278,10 +278,11 @@ struct HomeReducer {
                                     uniqueElements: routines.map {
                                         WorkingOutSectionReducer.State(
                                             routine: $0,
-                                            editMode: .inactive
+                                            editMode: .active
                                         )
                                     }
                                 )
+                                state.workout?.makeWorkout?.myRoutine.routines = routines
                                 return .none
                             }
                         }
@@ -297,13 +298,17 @@ struct HomeReducer {
                                         .workingOutSection[index]
                                         .workingOutRow
                                         .append(
-                                            WorkingOutRowReducer.State()
+                                            WorkingOutRowReducer.State(editMode: .active)
                                         )
+                                    state.workout?.makeWorkout?.myRoutine
+                                        .routines[index]
+                                        .sets
+                                        .append(WorkoutSet())
                                 }
                                 return .none
                             case .workingOutRow:
                                 return .none
-                            case .setEditMode(let editMode):
+                            case .setEditMode:
                                 return .none
                             }
                         }
