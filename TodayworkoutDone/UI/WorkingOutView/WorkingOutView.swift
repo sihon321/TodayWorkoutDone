@@ -36,6 +36,7 @@ struct WorkingOutReducer {
     
     enum Action {
         case tappedToolbarCloseButton(secondsElapsed: Int)
+        case tappedEdit
         
         case cancelTimer
         case resetTimer
@@ -96,7 +97,7 @@ struct WorkingOutView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Edit") {
-                        editMode = editMode == .active ? .inactive : .active
+                        store.send(.tappedEdit)
                     }
                 }
             }

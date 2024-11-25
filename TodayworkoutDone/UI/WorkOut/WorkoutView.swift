@@ -82,7 +82,7 @@ struct WorkoutReducer {
         case hasLoaded
         case getMyRoutines
         case filterWorkout
-        case appearMakeWorkoutView(MyRoutine?, Bool)
+        case appearMakeWorkoutView(MyRoutine?)
         case fetchMyRoutines([MyRoutine])
         
         var description: String {

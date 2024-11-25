@@ -153,12 +153,11 @@ struct HomeReducer {
                         routines: routines ?? []
                     )
                     return .run { @MainActor send in
-                        send(.workout(.appearMakeWorkoutView(myRoutine, false)))
+                        send(.workout(.appearMakeWorkoutView(myRoutine)))
                     }
-                case .appearMakeWorkoutView(let myRoutine, let isEditMode):
+                case .appearMakeWorkoutView(let myRoutine):
                     if let myRoutine = myRoutine {
-                        state.workout?.makeWorkout = .init(myRoutine: myRoutine,
-                                                           editMode: isEditMode ? .active : .inactive)
+                        state.workout?.makeWorkout = .init(myRoutine: myRoutine)
                         if let makeWorkoutState = state.workout?.makeWorkout {
                             state.workout?.destination = .makeWorkoutView(makeWorkoutState)
                         }
@@ -275,22 +274,14 @@ struct HomeReducer {
                                 return .none
                             case .makeWorkoutView(let routines):
                                 state.workout?.makeWorkout?.destination = .none
-                                
-                                for routine in routines {
-                                    if let elements = state.workout?.makeWorkout?
-                                        .workingOutSection.elements.map({ $0.routine.workout.name }),
-                                       elements.contains(routine.workout.name) == false {
-                                        state.workout?.makeWorkout?
-                                            .workingOutSection
-                                            .append(
-                                                WorkingOutSectionReducer.State(
-                                                    routine: routine,
-                                                    editMode: .inactive
-                                                )
-                                            )
+                                state.workout?.makeWorkout?.workingOutSection = IdentifiedArrayOf(
+                                    uniqueElements: routines.map {
+                                        WorkingOutSectionReducer.State(
+                                            routine: $0,
+                                            editMode: .inactive
+                                        )
                                     }
-                                }
-                                state.workout?.makeWorkout?.myRoutine.routines = routines
+                                )
                                 return .none
                             }
                         }
@@ -312,6 +303,8 @@ struct HomeReducer {
                                 return .none
                             case .workingOutRow:
                                 return .none
+                            case .setEditMode(let editMode):
+                                return .none
                             }
                         }
                     }
@@ -324,7 +317,7 @@ struct HomeReducer {
                         return .none
                     case .touchedEditMode(let myRoutine):
                         if let myRoutine = state.workout?.refetch(myRoutine) {
-                            return .send(.workout(.appearMakeWorkoutView(myRoutine, true)))
+                            return .send(.workout(.appearMakeWorkoutView(myRoutine)))
                         }
                         return .none
                     }
@@ -336,6 +329,15 @@ struct HomeReducer {
                 case .tappedToolbarCloseButton(let secondsElapsed):
                     state.destination = .alert(.saveWorkoutAlert(secondsElapsed))
                     return .none
+                case .tappedEdit:
+                    return .run { [workingOutSection = state.workingOut?.workingOutSection] send in
+                        if let sections = workingOutSection {
+                            for section in sections {
+                                let editMode: EditMode = section.editMode == .inactive ? .active : .inactive
+                                await send(.workingOut(.workingOutSection(.element(id: section.id, action: .setEditMode(editMode)))))
+                            }
+                        }
+                    }
                 case .cancelTimer:
                     return .cancel(id: CancelID.timer)
                     
@@ -354,8 +356,21 @@ struct HomeReducer {
                       }
                     }
                     .cancellable(id: CancelID.timer, cancelInFlight: true)
-                case .workingOutSection(_):
-                    return .none
+                case let .workingOutSection(action):
+                    switch action {
+                    case let .element(id, action):
+                        switch action {
+                        case .tappedAddFooter:
+                            return .none
+                        case .workingOutRow:
+                            return .none
+                        case .setEditMode(let editMode):
+                            if let index = state.workingOut?.workingOutSection.index(id: id) {
+                                state.workingOut?.workingOutSection[index].editMode = editMode
+                            }
+                            return .none
+                        }
+                    }
                 }
                 
             case .tabBar(.tabButton(.setTab(let info))):
