@@ -16,7 +16,6 @@ struct MakeWorkoutReducer {
         @Presents var destination: Destination.State?
 
         var myRoutine: MyRoutine
-        var editMode: EditMode = .inactive
         var titleSmall: Bool = false
         var selectionWorkouts: [Workout] = []
         var isEdit: Bool = false
@@ -24,15 +23,14 @@ struct MakeWorkoutReducer {
         var addWorkoutCategory: AddWorkoutCategoryReducer.State
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
-        init(myRoutine: MyRoutine, editMode: EditMode) {
+        init(myRoutine: MyRoutine) {
             self.myRoutine = myRoutine
-            self.editMode = editMode
             self.addWorkoutCategory = AddWorkoutCategoryReducer.State(myRoutine)
             self.workingOutSection = IdentifiedArrayOf(
                 uniqueElements: myRoutine.routines.map {
                     WorkingOutSectionReducer.State(
                         routine: $0,
-                        editMode: editMode
+                        editMode: .active
                     )
                 }
             )

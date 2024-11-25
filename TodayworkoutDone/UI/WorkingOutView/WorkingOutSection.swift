@@ -32,6 +32,7 @@ struct WorkingOutSectionReducer {
     
     enum Action {
         case tappedAddFooter
+        case setEditMode(EditMode)
         
         indirect case workingOutRow(IdentifiedActionOf<WorkingOutRowReducer>)
     }
@@ -42,6 +43,8 @@ struct WorkingOutSectionReducer {
             case .tappedAddFooter:
                 return .none
             case .workingOutRow:
+                return .none
+            case .setEditMode:
                 return .none
             }
         }
@@ -77,11 +80,14 @@ struct WorkingOutSection: View {
         } header: {
             WorkingOutHeader(routine: .constant(store.routine))
         } footer: {
-            WorkingOutFooter()
-                .onTapGesture {
-                    store.send(.tappedAddFooter)
-                }
+            if viewStore.editMode == .active {
+                WorkingOutFooter()
+                    .onTapGesture {
+                        store.send(.tappedAddFooter)
+                    }
+            }
         }
+        .environment(\.editMode, viewStore.binding(get: \.editMode, send: WorkingOutSectionReducer.Action.setEditMode))
     }
     
     func deleteItems(atOffsets offset: IndexSet) {
