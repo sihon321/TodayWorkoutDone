@@ -54,15 +54,17 @@ struct WorkingOutRow: View {
     
     var body: some View {
         HStack {
-            Toggle(
-                "",
-                isOn: viewStore.binding(
-                    get: { $0.workoutSet.isChecked },
-                    send: { WorkingOutRowReducer.Action.toggleCheck(isChecked: $0) }
+            if viewStore.editMode == .inactive {
+                Toggle(
+                    "",
+                    isOn: viewStore.binding(
+                        get: { $0.workoutSet.isChecked },
+                        send: { WorkingOutRowReducer.Action.toggleCheck(isChecked: $0) }
+                    )
                 )
-            )
-            .toggleStyle(CheckboxToggleStyle(style: .square))
-            Spacer()
+                .toggleStyle(CheckboxToggleStyle(style: .square))
+                Spacer()
+            }
             if viewStore.editMode == .active {
                 TextField("count", text: viewStore.binding(
                     get: { String($0.workoutSet.lab) },

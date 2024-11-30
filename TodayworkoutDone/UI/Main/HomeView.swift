@@ -288,26 +288,64 @@ struct HomeReducer {
                         }
                     case let .workingOutSection(action):
                         switch action {
-                        case let .element(id, action):
+                        case let .element(sectionId, action):
                             switch action {
                             case .tappedAddFooter:
-                                if let index = state.workout?.makeWorkout?
+                                if let sectionIndex = state.workout?.makeWorkout?
                                     .workingOutSection
-                                    .index(id: id) {
+                                    .index(id: sectionId) {
+                                    let workoutSet = WorkoutSet()
                                     state.workout?.makeWorkout?
-                                        .workingOutSection[index]
+                                        .workingOutSection[sectionIndex]
                                         .workingOutRow
                                         .append(
-                                            WorkingOutRowReducer.State(editMode: .active)
+                                            WorkingOutRowReducer.State(workoutSet: workoutSet,
+                                                                       editMode: .active)
                                         )
                                     state.workout?.makeWorkout?.myRoutine
-                                        .routines[index]
+                                        .routines[sectionIndex]
                                         .sets
-                                        .append(WorkoutSet())
+                                        .append(workoutSet)
                                 }
                                 return .none
-                            case .workingOutRow:
-                                return .none
+                            case let .workingOutRow(action):
+                                switch action {
+                                case let .element(rowId, action):
+                                    switch action {
+                                    case let .toggleCheck(isChecked):
+                                        return .none
+                                    case let .typeLab(lab):
+                                    if let sectionIndex = state.workout?.makeWorkout?
+                                            .workingOutSection
+                                            .index(id: sectionId),
+                                           let rowIndex = state.workout?.makeWorkout?
+                                            .workingOutSection[sectionIndex]
+                                            .workingOutRow
+                                            .index(id: rowId),
+                                           let labValue = Int(lab) {
+                                            state.workout?.makeWorkout?.myRoutine
+                                                .routines[sectionIndex]
+                                                .sets[rowIndex]
+                                                .lab = labValue
+                                        }
+                                        return .none
+                                    case let .typeWeight(weight):
+                                        if let sectionIndex = state.workout?.makeWorkout?
+                                            .workingOutSection
+                                            .index(id: sectionId),
+                                           let rowIndex = state.workout?.makeWorkout?
+                                            .workingOutSection[sectionIndex]
+                                            .workingOutRow
+                                            .index(id: rowId),
+                                           let weightValue = Double(weight) {
+                                            state.workout?.makeWorkout?.myRoutine
+                                                .routines[sectionIndex]
+                                                .sets[rowIndex]
+                                                .weight = weightValue
+                                        }
+                                        return .none
+                                    }
+                                }
                             case .setEditMode:
                                 return .none
                             }
