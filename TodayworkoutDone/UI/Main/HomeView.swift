@@ -152,11 +152,11 @@ struct HomeReducer {
                         routines: routines ?? []
                     )
                     return .run { @MainActor send in
-                        send(.workout(.appearMakeWorkoutView(myRoutine)))
+                        send(.workout(.appearMakeWorkoutView(myRoutine: myRoutine, isEdit: false)))
                     }
-                case .appearMakeWorkoutView(let myRoutine):
+                case let .appearMakeWorkoutView(myRoutine, isEdit):
                     if let myRoutine = myRoutine {
-                        state.workout?.makeWorkout = .init(myRoutine: myRoutine)
+                        state.workout?.makeWorkout = .init(myRoutine: myRoutine, isEdit: isEdit)
                         if let makeWorkoutState = state.workout?.makeWorkout {
                             state.workout?.destination = .makeWorkoutView(makeWorkoutState)
                         }
@@ -359,7 +359,7 @@ struct HomeReducer {
                         return .none
                     case .touchedEditMode(let myRoutine):
                         if let myRoutine = state.workout?.refetch(myRoutine) {
-                            return .send(.workout(.appearMakeWorkoutView(myRoutine)))
+                            return .send(.workout(.appearMakeWorkoutView(myRoutine: myRoutine, isEdit: true)))
                         }
                         return .none
                     }

@@ -23,9 +23,10 @@ struct MakeWorkoutReducer {
         var addWorkoutCategory: AddWorkoutCategoryReducer.State
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
-        init(myRoutine: MyRoutine) {
+        init(myRoutine: MyRoutine, isEdit: Bool) {
             self.myRoutine = myRoutine
             self.addWorkoutCategory = AddWorkoutCategoryReducer.State(myRoutine)
+            self.isEdit = isEdit
             self.workingOutSection = IdentifiedArrayOf(
                 uniqueElements: myRoutine.routines.map {
                     WorkingOutSectionReducer.State(
