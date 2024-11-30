@@ -113,9 +113,8 @@ struct HomeReducer {
                 }
             case .destination(.presented(.alert(.tappedWorkoutAlertOk(let secondsElapsed)))):
                 insertWorkoutRoutine(myRoutine: state.workingOut?.myRoutine,
-                                   routineTime: secondsElapsed)
+                                     routineTime: secondsElapsed)
                 state.isHideTabBar = true
-                state.myRoutine = nil
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
                     await send(.presentedSaveRoutineAlert)
