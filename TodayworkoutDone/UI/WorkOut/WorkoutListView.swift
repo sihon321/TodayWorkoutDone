@@ -56,15 +56,23 @@ struct WorkoutListView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 if !viewStore.isEmptySelectedWorkouts {
                     Button(action: {
-                        if !viewStore.isEmptySelectedWorkouts {
-                            let routines = viewStore.workouts
+                        if store.myRoutine != nil {
+                            if let routines = store.myRoutine?.routines {
+                                var myRoutines: [Routine] = []
+                                let myRoutineWorkouts = routines.map({ $0.workout })
+                                let filteredWorkouts = store.workouts.filter({ $0.isSelected })
+                                
+                                for workout in filteredWorkouts where !myRoutineWorkouts.contains(workout) {
+                                    myRoutines.append(Routine(workouts: workout))
+                                }
+                                
+                                store.send(.makeWorkoutView(routines + myRoutines))
+                            }
+                        } else {
+                            let routines = store.workouts
                                 .filter({ $0.isSelected })
                                 .compactMap({ Routine(workouts: $0) })
                             store.send(.makeWorkoutView(routines))
-                        } else {
-                            viewStore.myRoutine?.routines += store.workouts
-                                .filter({ $0.isSelected })
-                                .compactMap({ Routine(workouts: $0) })
                         }
                     }) {
                         let selectedWorkout = viewStore.workouts.filter({ $0.isSelected })
