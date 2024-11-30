@@ -312,7 +312,7 @@ struct HomeReducer {
                                 switch action {
                                 case let .element(rowId, action):
                                     switch action {
-                                    case let .toggleCheck(isChecked):
+                                    case .toggleCheck:
                                         return .none
                                     case let .typeLab(lab):
                                     if let sectionIndex = state.workout?.makeWorkout?
@@ -401,15 +401,90 @@ struct HomeReducer {
                     .cancellable(id: CancelID.timer, cancelInFlight: true)
                 case let .workingOutSection(action):
                     switch action {
-                    case let .element(id, action):
+                    case let .element(sectionId, action):
                         switch action {
                         case .tappedAddFooter:
+                            if let sectionIndex = state.workingOut?
+                                .workingOutSection
+                                .index(id: sectionId) {
+                                let workoutSet = WorkoutSet()
+                                state.workingOut?
+                                    .workingOutSection[sectionIndex]
+                                    .workingOutRow
+                                    .append(
+                                        WorkingOutRowReducer.State(workoutSet: workoutSet,
+                                                                   editMode: .active)
+                                    )
+                                state.workout?.makeWorkout?.myRoutine
+                                    .routines[sectionIndex]
+                                    .sets
+                                    .append(workoutSet)
+                            }
                             return .none
-                        case .workingOutRow:
-                            return .none
+                        case let .workingOutRow(action):
+                            switch action {
+                            case let .element(rowId, action):
+                                switch action {
+                                case .toggleCheck:
+                                    if let sectionIndex = state.workingOut?
+                                        .workingOutSection
+                                        .index(id: sectionId),
+                                       let rowIndex = state.workingOut?
+                                        .workingOutSection[sectionIndex]
+                                        .workingOutRow
+                                        .index(id: rowId),
+                                       let isChecked = state.workingOut?.myRoutine
+                                           .routines[sectionIndex]
+                                           .sets[rowIndex]
+                                           .isChecked {
+                                        state.workingOut?.myRoutine
+                                            .routines[sectionIndex]
+                                            .sets[rowIndex]
+                                            .isChecked = !isChecked
+                                    }
+                                    return .none
+                                case let .typeLab(lab):
+                                    if let sectionIndex = state.workingOut?
+                                        .workingOutSection
+                                        .index(id: sectionId),
+                                       let rowIndex = state.workingOut?
+                                        .workingOutSection[sectionIndex]
+                                        .workingOutRow
+                                        .index(id: rowId),
+                                       let labValue = Int(lab) {
+                                        state.workingOut?.myRoutine
+                                            .routines[sectionIndex]
+                                            .sets[rowIndex]
+                                            .lab = labValue
+                                    }
+                                    return .none
+                                case let .typeWeight(weight):
+                                    if let sectionIndex = state.workingOut?
+                                        .workingOutSection
+                                        .index(id: sectionId),
+                                       let rowIndex = state.workingOut?
+                                        .workingOutSection[sectionIndex]
+                                        .workingOutRow
+                                        .index(id: rowId),
+                                       let weightValue = Double(weight) {
+                                        state.workingOut?.myRoutine
+                                            .routines[sectionIndex]
+                                            .sets[rowIndex]
+                                            .weight = weightValue
+                                    }
+                                    return .none
+                                }
+                            }
                         case .setEditMode(let editMode):
-                            if let index = state.workingOut?.workingOutSection.index(id: id) {
-                                state.workingOut?.workingOutSection[index].editMode = editMode
+                            if let sections = state.workingOut?.workingOutSection {
+                                for index in sections.indices {
+                                    state.workingOut?.workingOutSection[index].editMode = editMode
+                                    if let rows = state.workingOut?.workingOutSection[index].workingOutRow {
+                                        for rowIndex in rows.indices {
+                                            state.workingOut?.workingOutSection[index].workingOutRow[rowIndex].editMode = editMode
+                                        }
+                                    }
+                                }
                             }
                             return .none
                         }
