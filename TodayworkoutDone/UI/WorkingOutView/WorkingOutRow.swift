@@ -14,12 +14,14 @@ struct WorkingOutRowReducer {
     struct State: Equatable, Identifiable {
         let id: UUID
         var workoutSet: WorkoutSet
+        var isChecked: Bool
         var editMode: EditMode
         
-        init(workoutSet: WorkoutSet = .init(), editMode: EditMode = .inactive) {
+        init(workoutSet: WorkoutSet, editMode: EditMode = .inactive) {
             self.id = workoutSet.id
             self.editMode = editMode
             self.workoutSet = workoutSet
+            self.isChecked = workoutSet.isChecked
         }
     }
     
@@ -58,7 +60,7 @@ struct WorkingOutRow: View {
                 Toggle(
                     "",
                     isOn: viewStore.binding(
-                        get: { $0.workoutSet.isChecked },
+                        get: { $0.isChecked },
                         send: { WorkingOutRowReducer.Action.toggleCheck(isChecked: $0) }
                     )
                 )

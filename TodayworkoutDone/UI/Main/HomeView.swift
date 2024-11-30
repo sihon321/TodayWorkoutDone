@@ -425,22 +425,22 @@ struct HomeReducer {
                             switch action {
                             case let .element(rowId, action):
                                 switch action {
-                                case .toggleCheck:
+                                case let .toggleCheck(isChecked):
                                     if let sectionIndex = state.workingOut?
                                         .workingOutSection
                                         .index(id: sectionId),
                                        let rowIndex = state.workingOut?
                                         .workingOutSection[sectionIndex]
                                         .workingOutRow
-                                        .index(id: rowId),
-                                       let isChecked = state.workingOut?.myRoutine
-                                           .routines[sectionIndex]
-                                           .sets[rowIndex]
-                                           .isChecked {
+                                        .index(id: rowId) {
                                         state.workingOut?.myRoutine
                                             .routines[sectionIndex]
                                             .sets[rowIndex]
-                                            .isChecked = !isChecked
+                                            .isChecked = isChecked
+                                        state.workingOut?
+                                            .workingOutSection[sectionIndex]
+                                            .workingOutRow[rowIndex]
+                                            .isChecked = isChecked
                                     }
                                     return .none
                                 case let .typeLab(lab):
