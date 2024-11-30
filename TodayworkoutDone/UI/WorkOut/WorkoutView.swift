@@ -123,7 +123,7 @@ struct WorkoutView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    if store.myRoutineState.myRoutines.isEmpty == false {
+                    if viewStore.myRoutineState.myRoutines.isEmpty == false {
                         MyRoutineView(
                             store: store.scope(state: \.myRoutineState,
                                                action: \.myRoutineAction)
