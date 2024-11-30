@@ -281,7 +281,11 @@ struct HomeReducer {
                                         )
                                     }
                                 )
-                                state.workout?.makeWorkout?.myRoutine.routines = routines
+                                if let myRoutines = state.workout?.makeWorkout?.myRoutine.routines {
+                                    for routine in routines where !myRoutines.contains(routine) {
+                                        state.workout?.makeWorkout?.myRoutine.routines.append(routine)
+                                    }
+                                }
                                 return .none
                             }
                         }
