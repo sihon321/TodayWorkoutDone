@@ -60,8 +60,6 @@ struct WorkingOutView: View {
     @Bindable var store: StoreOf<WorkingOutReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkingOutReducer>
     
-    @State private var editMode: EditMode = .inactive
-    
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
     init(store: StoreOf<WorkingOutReducer>) {
