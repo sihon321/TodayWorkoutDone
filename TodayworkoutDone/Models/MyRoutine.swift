@@ -18,7 +18,7 @@ class MyRoutine: Codable, Equatable, Identifiable {
         case id, name, routines
     }
 
-    init(id: UUID = UUID(), name: String, routines: [Routine]) {
+    init(id: UUID = UUID(), name: String = "", routines: [Routine] = []) {
         self.id = id
         self.name = name
         self.routines = routines

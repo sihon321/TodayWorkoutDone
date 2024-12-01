@@ -12,11 +12,11 @@ struct ContentView: View {
     var body: some View {
         HomeView(
             store: Store(
-                initialState: HomeReducer.State(
-                    bottomEdge: 35
-                )) {
-                    HomeReducer()
-                })
+                initialState: HomeReducer.State(myRoutine: Shared(MyRoutine()))
+            ) {
+                HomeReducer()
+            }
+        )
         .ignoresSafeArea(.all, edges: .bottom)
     }
 }

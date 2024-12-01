@@ -15,14 +15,13 @@ struct WorkoutReducer {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
+        @Shared var myRoutine: MyRoutine
         
         var workoutCategory: WorkoutCategoryReducer.State
         var myRoutineState = MyRoutineReducer.State()
         var makeWorkout: MakeWorkoutReducer.State?
         var workouts: [Workout] = []
         var hasLoaded = false
-        
-        var myRoutine: MyRoutine? = nil
         
         var isEmptySelectedWorkouts: Bool {
             var isEmpty = true
@@ -35,11 +34,6 @@ struct WorkoutReducer {
             return isEmpty
         }
         var predicate: Predicate<MyRoutine> {
-            guard let myRoutine = myRoutine else {
-                return #Predicate { _ in
-                    false
-                }
-            }
             return #Predicate {
                 $0.id == myRoutine.id
             }
@@ -52,21 +46,14 @@ struct WorkoutReducer {
         var fetchDescriptor: FetchDescriptor<MyRoutine> {
             return .init(predicate: self.predicate, sortBy: self.sort)
         }
-        mutating func refetch(_ myRoutine: MyRoutine?) -> MyRoutine? {
+        mutating func refetch(_ myRoutine: MyRoutine) -> MyRoutine? {
             @Dependency(\.myRoutineData) var context
-            self.myRoutine = myRoutine
-            do {
-                self.myRoutine = try context.fetch(self.fetchDescriptor).first
+            if let routine = try? context.fetch(self.fetchDescriptor).first {
+                self.myRoutine = routine
                 return self.myRoutine
-            } catch {
-                print(error.localizedDescription)
-                return nil
             }
-        }
-        
-        init(_ myRoutine: MyRoutine?) {
-            self.myRoutine = myRoutine
-            self.workoutCategory = WorkoutCategoryReducer.State(myRoutine)
+            
+            return nil
         }
     }
     
@@ -100,12 +87,256 @@ struct WorkoutReducer {
         }
     }
     
+    @Dependency(\.myRoutineData) var context
+    @Dependency(\.categoryAPI) var categoryRepository
+    @Dependency(\.workoutAPI) var workoutRepository
+    
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            default:
+            case .search(let keyword):
+                state.workoutCategory.keyword = keyword
                 return .none
+            case .dismiss:
+                state.destination = .none
+                return .none
+            case .hasLoaded:
+                state.hasLoaded = true
+                return .none
+            case .filterWorkout:
+                let routines = state.workouts
+                    .filter({ $0.isSelected })
+                    .compactMap({
+                        return Routine(workouts: $0)
+                    })
+                let myRoutine = MyRoutine(
+                    name: "",
+                    routines: routines
+                )
+                return .run { @MainActor send in
+                    send(.appearMakeWorkoutView(myRoutine: myRoutine, isEdit: false))
+                }
+            case let .appearMakeWorkoutView(myRoutine, isEdit):
+                if let myRoutine = myRoutine {
+                    state.makeWorkout = .init(myRoutine: myRoutine, isEdit: isEdit)
+                    if let makeWorkoutState = state.makeWorkout {
+                        state.destination = .makeWorkoutView(makeWorkoutState)
+                    }
+                }
+                return .none
+            case .getMyRoutines:
+                return .run { send in
+                    let myRoutines = try context.fetchAll()
+                    await send(.fetchMyRoutines(myRoutines))
+                }
+            case .fetchMyRoutines(let myRoutines):
+                state.myRoutineState.myRoutines = myRoutines
+                return .none
+            case .destination(.presented(.alert(.tappedMyRoutineStart(let myRoutine)))):
+                return .send(.makeWorkout(.tappedDone(myRoutine)))
+            case .destination:
+                return .none
+                
+            // MARK: - workoutCategory
+            case .workoutCategory(let action):
+                switch action {
+                case .setText(let keyword):
+                    state.workoutCategory.keyword = keyword
+                    return .none
+                case .getCategories:
+                    return .run { send in
+                        let categories = categoryRepository.loadCategories()
+                        await send(.workoutCategory(.updateCategories(categories)))
+                    }
+                case .updateCategories(let categories):
+                    state.workoutCategory.categories = categories
+                    return .none
+                    
+                    // MARK: - workoutList
+                case .workoutList(let action):
+                    switch action {
+                    case .getWorkouts:
+                        return .run { send in
+                            let workouts = workoutRepository.loadWorkouts()
+                            await send(.workoutCategory(.workoutList(.updateWorkouts(workouts))))
+                        }
+                    case .updateWorkouts(let workouts):
+                        state.workouts = workouts
+                        state.workoutCategory.workoutList.workouts = workouts
+                        return .none
+                    case .makeWorkoutView:
+                        return .send(.filterWorkout)
+                    }
+                }
+                
+            // MARK: - makeWorkout
+            case .makeWorkout(let action):
+                switch action {
+                case .dismiss:
+                    state.destination = .none
+                    return .none
+                case .tappedDone(let myRoutine):
+                    state.destination = .none
+                    state.myRoutine = myRoutine
+//                    state.workingOut = WorkingOutReducer.State(
+//                        myRoutine: myRoutine
+//                    )
+                    return .none
+                case .save(let myRoutine):
+                    saveMyRoutine()
+                    return .send(.makeWorkout(.dismiss(myRoutine)))
+                case .didUpdateText(let text):
+                    state.makeWorkout?.myRoutine.name = text
+                    return .none
+                case .tappedAdd:
+                    if let workoutCategory = state.makeWorkout?.addWorkoutCategory {
+                        state.makeWorkout?.destination = .addWorkoutCategory(workoutCategory)
+                    }
+                    return .none
+                case .destination(.presented(.addWorkoutCategory(let action))):
+                    return .send(.makeWorkout(.addWorkoutCategory(action)))
+                case .destination:
+                    return .none
+                    
+                // MARK: - addmakeWorkout
+                case .addWorkoutCategory(let action):
+                    switch action {
+                    case .getCategories:
+                        return .run { send in
+                            let categories = categoryRepository.loadCategories()
+                            await send(.makeWorkout(.addWorkoutCategory(.updateCategories(categories))))
+                        }
+                    case .updateCategories(let categories):
+                        state.makeWorkout?.addWorkoutCategory.categories = categories
+                        return .send(.makeWorkout(.addWorkoutCategory(.workoutList(.getWorkouts))))
+                    case .dismissWorkoutCategory:
+                        state.makeWorkout?.destination = .none
+                        return .none
+                        
+                        // MARK: - addmakeWorkout workoutList
+                    case .workoutList(let action):
+                        switch action {
+                        case .getWorkouts:
+                            return .run { send in
+                                let workouts = workoutRepository.loadWorkouts()
+                                await send(.makeWorkout(.addWorkoutCategory(.workoutList(.updateWorkouts(workouts)))))
+                            }
+                        case .updateWorkouts(let workouts):
+                            if let myWorkout = state.makeWorkout?.addWorkoutCategory.workoutList.myRoutine?.routines.compactMap({ $0.workout }) {
+                                let myWorkoutIDs = Set(myWorkout.map { $0.id }) // Set을 사용해 성능 최적화
+                                state.makeWorkout?.addWorkoutCategory.workoutList.workouts = workouts.map { workout in
+                                    let modifiedWorkout = workout
+                                    modifiedWorkout.isSelected = myWorkoutIDs.contains(workout.id)
+                                    return modifiedWorkout
+                                }
+                            }
+
+                            return .none
+                        case .makeWorkoutView(let routines):
+                            state.makeWorkout?.destination = .none
+                            state.makeWorkout?.workingOutSection = IdentifiedArrayOf(
+                                uniqueElements: routines.map {
+                                    WorkingOutSectionReducer.State(
+                                        routine: $0,
+                                        editMode: .active
+                                    )
+                                }
+                            )
+                            if let myRoutines = state.makeWorkout?.myRoutine.routines {
+                                for routine in routines where !myRoutines.contains(routine) {
+                                    state.makeWorkout?.myRoutine.routines.append(routine)
+                                }
+                            }
+                            return .none
+                        }
+                    }
+                case let .workingOutSection(action):
+                    switch action {
+                    case let .element(sectionId, action):
+                        switch action {
+                        case .tappedAddFooter:
+                            if let sectionIndex = state.makeWorkout?
+                                .workingOutSection
+                                .index(id: sectionId) {
+                                let workoutSet = WorkoutSet()
+                                state.makeWorkout?
+                                    .workingOutSection[sectionIndex]
+                                    .workingOutRow
+                                    .append(
+                                        WorkingOutRowReducer.State(workoutSet: workoutSet,
+                                                                   editMode: .active)
+                                    )
+                                state.makeWorkout?.myRoutine
+                                    .routines[sectionIndex]
+                                    .sets
+                                    .append(workoutSet)
+                            }
+                            return .none
+                        case let .workingOutRow(action):
+                            switch action {
+                            case let .element(rowId, action):
+                                switch action {
+                                case .toggleCheck:
+                                    return .none
+                                case let .typeLab(lab):
+                                if let sectionIndex = state.makeWorkout?
+                                        .workingOutSection
+                                        .index(id: sectionId),
+                                       let rowIndex = state.makeWorkout?
+                                        .workingOutSection[sectionIndex]
+                                        .workingOutRow
+                                        .index(id: rowId),
+                                       let labValue = Int(lab) {
+                                        state.makeWorkout?.myRoutine
+                                            .routines[sectionIndex]
+                                            .sets[rowIndex]
+                                            .lab = labValue
+                                    }
+                                    return .none
+                                case let .typeWeight(weight):
+                                    if let sectionIndex = state.makeWorkout?
+                                        .workingOutSection
+                                        .index(id: sectionId),
+                                       let rowIndex = state.makeWorkout?
+                                        .workingOutSection[sectionIndex]
+                                        .workingOutRow
+                                        .index(id: rowId),
+                                       let weightValue = Double(weight) {
+                                        state.makeWorkout?.myRoutine
+                                            .routines[sectionIndex]
+                                            .sets[rowIndex]
+                                            .weight = weightValue
+                                    }
+                                    return .none
+                                }
+                            }
+                        case .setEditMode:
+                            return .none
+                        }
+                    }
+                }
+                
+            // MARK: - myRoutine
+            case .myRoutineAction(let action):
+                switch action {
+                case .touchedMyRoutine(let selectedMyRoutine):
+                    state.destination = .alert(.startMyRoutine(selectedMyRoutine))
+                    return .none
+                case .touchedEditMode(let myRoutine):
+                    if let myRoutine = state.refetch(myRoutine) {
+                        return .send(.appearMakeWorkoutView(myRoutine: myRoutine, isEdit: true))
+                    }
+                    return .none
+                }
             }
+        }
+    }
+    
+    private func saveMyRoutine() {
+        do {
+            try context.save()
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }
@@ -209,7 +440,7 @@ private struct WorkoutViewToolbar: ViewModifier {
                             if !viewStore.isEmptySelectedWorkouts {
                                 viewStore.send(.filterWorkout)
                             } else {
-                                store.myRoutine?.routines += viewStore.workouts
+                                store.myRoutine.routines += viewStore.workouts
                                     .filter({ $0.isSelected })
                                     .compactMap({ Routine(workouts: $0) })
                                 
