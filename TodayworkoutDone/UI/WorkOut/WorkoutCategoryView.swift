@@ -13,17 +13,12 @@ import ComposableArchitecture
 struct WorkoutCategoryReducer {
     @ObservableState
     struct State: Equatable {
+        @Shared var myRoutine: MyRoutine
+        
         var keyword: String = ""
         var categories: Categories = []
 
-        var myRoutine: MyRoutine?
-
         var workoutList: WorkoutListReducer.State
-        
-        init(_ myRoutine: MyRoutine?) {
-            self.myRoutine = myRoutine
-            self.workoutList = WorkoutListReducer.State(myRoutine: myRoutine)
-        }
     }
     
     enum Action {

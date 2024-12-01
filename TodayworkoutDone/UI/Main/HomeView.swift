@@ -83,7 +83,10 @@ struct HomeReducer {
                 state.destination = .workoutView(
                     WorkoutReducer.State(
                         myRoutine: Shared(state.myRoutine),
-                        workoutCategory: WorkoutCategoryReducer.State(state.myRoutine))
+                        workoutCategory: WorkoutCategoryReducer.State(
+                            myRoutine: Shared(state.myRoutine),
+                            workoutList: WorkoutListReducer.State(myRoutine: state.myRoutine))
+                    )
                 )
                 return .none
             case .setTabBarOffset(let offset):
