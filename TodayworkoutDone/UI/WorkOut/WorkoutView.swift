@@ -83,7 +83,7 @@ struct WorkoutReducer {
         case alert(AlertState<Alert>)
         
         enum Alert: Equatable {
-            case tappedMyRoutineStart(MyRoutine)
+            case tappedMyRoutineStart
         }
     }
     
@@ -116,7 +116,7 @@ struct WorkoutReducer {
                 return .run { @MainActor send in
                     send(.appearMakeWorkoutView(myRoutine: nil, isEdit: false))
                 }
-            case let .appearMakeWorkoutView(myRoutine, isEdit):
+            case let .appearMakeWorkoutView(_, isEdit):
                 state.makeWorkout = MakeWorkoutReducer.State(
                     myRoutine: Shared(state.myRoutine),
                     isEdit: isEdit,
@@ -147,7 +147,7 @@ struct WorkoutReducer {
             case .fetchMyRoutines(let myRoutines):
                 state.myRoutineState.myRoutines = myRoutines
                 return .none
-            case .destination(.presented(.alert(.tappedMyRoutineStart(let myRoutine)))):
+            case .destination(.presented(.alert(.tappedMyRoutineStart))):
                 return .send(.makeWorkout(.tappedDone))
             case .destination:
                 return .none
@@ -192,6 +192,7 @@ struct WorkoutReducer {
                     return .none
                 case .tappedDone:
                     state.destination = .none
+                    state.myRoutine.isRunning = true
                     return .run { send in
                         await send(.dismiss)
                     }
@@ -419,7 +420,7 @@ extension AlertState where Action == WorkoutReducer.Destination.Alert {
         Self {
             TextState("루틴을 시작하겠습니까?")
         } actions: {
-            ButtonState(action: .tappedMyRoutineStart(myRoutine)) {
+            ButtonState(action: .tappedMyRoutineStart) {
                 TextState("OK")
             }
             ButtonState() {

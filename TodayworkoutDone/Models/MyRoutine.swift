@@ -13,6 +13,7 @@ class MyRoutine: Codable, Equatable, Identifiable {
     var id: UUID
     var name: String
     var routines: [Routine]
+    var isRunning: Bool = false
     
     enum CodingKeys: CodingKey {
         case id, name, routines

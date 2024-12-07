@@ -12,25 +12,14 @@ import ComposableArchitecture
 struct WorkingOutReducer {
     @ObservableState
     struct State: Equatable {
-        var myRoutine: MyRoutine
+        @Shared var myRoutine: MyRoutine
+        var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
+        
         var secondsElapsed = 0
         var isTimerActive = false
-        var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
         static func == (lhs: WorkingOutReducer.State, rhs: WorkingOutReducer.State) -> Bool {
             return lhs.myRoutine.id == rhs.myRoutine.id
-        }
-        
-        init(myRoutine: MyRoutine) {
-            self.myRoutine = myRoutine
-            self.workingOutSection = IdentifiedArrayOf(
-                uniqueElements: myRoutine.routines.map {
-                    WorkingOutSectionReducer.State(
-                        routine: $0,
-                        editMode: .inactive
-                    )
-                }
-            )
         }
     }
     

@@ -101,6 +101,8 @@ struct HomeReducer {
 
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
                 state.isHideTabBar = true
+                state.myRoutine.isRunning = false
+                state.destination = .none
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
                 }
@@ -112,6 +114,8 @@ struct HomeReducer {
                 insertWorkoutRoutine(myRoutine: state.workingOut?.myRoutine,
                                      routineTime: secondsElapsed)
                 state.isHideTabBar = true
+                state.myRoutine.isRunning = false
+                state.destination = .none
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
                     await send(.presentedSaveRoutineAlert)
@@ -121,11 +125,24 @@ struct HomeReducer {
             case .destination(.presented(.alert(.tappedMyRoutineAlerOk(let myRoutine)))):
                 insertMyRoutine(myRoutine: myRoutine)
                 return .none
+            case .destination(.presented(.workoutView(.makeWorkout(.tappedDone)))):
+                if state.myRoutine.isRunning {
+                    state.workingOut = WorkingOutReducer.State(
+                        myRoutine: Shared(state.myRoutine),
+                        workingOutSection: IdentifiedArrayOf(
+                            uniqueElements: state.myRoutine.routines.map {
+                                WorkingOutSectionReducer.State(
+                                    routine: $0,
+                                    editMode: .inactive
+                                )
+                            }
+                        )
+                    )
+                }
+                return .none
             case .destination:
               return .none
-                
-            
-                
+
             // MARK: - workingOut
             case .workingOut(let action):
                 switch action {
@@ -318,7 +335,7 @@ struct HomeView: View {
             ) {
                 ZStack {
                     MainView(bottomEdge: store.bottomEdge)
-                    if store.myRoutine.routines.isEmpty {
+                    if store.myRoutine.isRunning == false {
                         startButton()
                     } else if let store = store.scope(state: \.workingOut,
                                                        action: \.workingOut) {
