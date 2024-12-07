@@ -90,6 +90,7 @@ struct WorkoutReducer {
     @Dependency(\.myRoutineData) var context
     @Dependency(\.categoryAPI) var categoryRepository
     @Dependency(\.workoutAPI) var workoutRepository
+    @Dependency(\.dismiss) var dismiss
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -99,7 +100,9 @@ struct WorkoutReducer {
                 return .none
             case .dismiss:
                 state.destination = .none
-                return .none
+                return .run { _ in
+                    await self.dismiss()
+                }
             case .hasLoaded:
                 state.hasLoaded = true
                 return .none
@@ -109,20 +112,32 @@ struct WorkoutReducer {
                     .compactMap({
                         return Routine(workouts: $0)
                     })
-                let myRoutine = MyRoutine(
-                    name: "",
-                    routines: routines
-                )
+                state.myRoutine.routines = routines
                 return .run { @MainActor send in
-                    send(.appearMakeWorkoutView(myRoutine: myRoutine, isEdit: false))
+                    send(.appearMakeWorkoutView(myRoutine: nil, isEdit: false))
                 }
             case let .appearMakeWorkoutView(myRoutine, isEdit):
-                if let myRoutine = myRoutine {
-                    state.makeWorkout = .init(myRoutine: myRoutine, isEdit: isEdit)
-                    if let makeWorkoutState = state.makeWorkout {
-                        state.destination = .makeWorkoutView(makeWorkoutState)
-                    }
+                state.makeWorkout = MakeWorkoutReducer.State(
+                    myRoutine: Shared(state.myRoutine),
+                    isEdit: isEdit,
+                    addWorkoutCategory: AddWorkoutCategoryReducer.State(
+                        myRoutine: Shared(state.myRoutine),
+                        workoutList: WorkoutListReducer.State(myRoutine: Shared(state.myRoutine))
+                    ),
+                    workingOutSection:  IdentifiedArrayOf(
+                        uniqueElements: state.myRoutine.routines.map {
+                            WorkingOutSectionReducer.State(
+                                routine: $0,
+                                editMode: .active
+                            )
+                        }
+                    )
+                )
+                
+                if let makeWorkoutState = state.makeWorkout {
+                    state.destination = .makeWorkoutView(makeWorkoutState)
                 }
+                
                 return .none
             case .getMyRoutines:
                 return .run { send in
@@ -133,7 +148,7 @@ struct WorkoutReducer {
                 state.myRoutineState.myRoutines = myRoutines
                 return .none
             case .destination(.presented(.alert(.tappedMyRoutineStart(let myRoutine)))):
-                return .send(.makeWorkout(.tappedDone(myRoutine)))
+                return .send(.makeWorkout(.tappedDone))
             case .destination:
                 return .none
                 
@@ -175,13 +190,11 @@ struct WorkoutReducer {
                 case .dismiss:
                     state.destination = .none
                     return .none
-                case .tappedDone(let myRoutine):
+                case .tappedDone:
                     state.destination = .none
-                    state.myRoutine = myRoutine
-//                    state.workingOut = WorkingOutReducer.State(
-//                        myRoutine: myRoutine
-//                    )
-                    return .none
+                    return .run { send in
+                        await send(.dismiss)
+                    }
                 case .save(let myRoutine):
                     saveMyRoutine()
                     return .send(.makeWorkout(.dismiss(myRoutine)))
@@ -222,7 +235,12 @@ struct WorkoutReducer {
                                 await send(.makeWorkout(.addWorkoutCategory(.workoutList(.updateWorkouts(workouts)))))
                             }
                         case .updateWorkouts(let workouts):
-                            if let myWorkout = state.makeWorkout?.addWorkoutCategory.workoutList.myRoutine?.routines.compactMap({ $0.workout }) {
+                            if let myWorkout = state.makeWorkout?
+                                .addWorkoutCategory
+                                .workoutList
+                                .myRoutine
+                                .routines
+                                .compactMap({ $0.workout }) {
                                 let myWorkoutIDs = Set(myWorkout.map { $0.id }) // Set을 사용해 성능 최적화
                                 state.makeWorkout?.addWorkoutCategory.workoutList.workouts = workouts.map { workout in
                                     let modifiedWorkout = workout

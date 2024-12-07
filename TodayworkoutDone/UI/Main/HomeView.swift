@@ -85,7 +85,10 @@ struct HomeReducer {
                         myRoutine: Shared(state.myRoutine),
                         workoutCategory: WorkoutCategoryReducer.State(
                             myRoutine: Shared(state.myRoutine),
-                            workoutList: WorkoutListReducer.State(myRoutine: state.myRoutine))
+                            workoutList: WorkoutListReducer.State(
+                                myRoutine: Shared(state.myRoutine)
+                            )
+                        )
                     )
                 )
                 return .none

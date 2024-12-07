@@ -13,8 +13,8 @@ import Combine
 struct WorkoutListReducer {
     @ObservableState
     struct State: Equatable {
+        @Shared var myRoutine: MyRoutine
         var workouts: [Workout] = []
-        var myRoutine: MyRoutine?
         
         var isEmptySelectedWorkouts: Bool {
             var isEmpty = true
@@ -56,18 +56,16 @@ struct WorkoutListView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 if !viewStore.isEmptySelectedWorkouts {
                     Button(action: {
-                        if store.myRoutine != nil {
-                            if let routines = store.myRoutine?.routines {
-                                var myRoutines: [Routine] = []
-                                let myRoutineWorkouts = routines.map({ $0.workout })
-                                let filteredWorkouts = store.workouts.filter({ $0.isSelected })
-                                
-                                for workout in filteredWorkouts where !myRoutineWorkouts.contains(workout) {
-                                    myRoutines.append(Routine(workouts: workout))
-                                }
-                                
-                                store.send(.makeWorkoutView(routines + myRoutines))
+                        if store.myRoutine.routines.isEmpty == false {
+                            var myRoutines: [Routine] = []
+                            let myRoutineWorkouts = store.myRoutine.routines.map({ $0.workout })
+                            let filteredWorkouts = store.workouts.filter({ $0.isSelected })
+                            
+                            for workout in filteredWorkouts where !myRoutineWorkouts.contains(workout) {
+                                myRoutines.append(Routine(workouts: workout))
                             }
+                            
+                            store.send(.makeWorkoutView(store.myRoutine.routines + myRoutines))
                         } else {
                             let routines = store.workouts
                                 .filter({ $0.isSelected })
