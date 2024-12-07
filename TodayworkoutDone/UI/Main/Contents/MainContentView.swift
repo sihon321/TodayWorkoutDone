@@ -6,6 +6,19 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
+
+@Reducer
+struct MainContentReducer {
+    @ObservableState
+    struct State: Equatable {
+        
+    }
+    
+    enum Action {
+        
+    }
+}
 
 struct MainContentView: View {
     private let gridLayout = Array(repeating: GridItem(.flexible()),
@@ -14,8 +27,6 @@ struct MainContentView: View {
     
     var body: some View {
         VStack {
-            WeeklyChartView()
-            Spacer(minLength: 15)
             LazyVGrid(columns: gridLayout, spacing: 10) {
                 ForEach(dataList) { data in
                     NavigationLink {

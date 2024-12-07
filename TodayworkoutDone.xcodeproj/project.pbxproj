@@ -71,7 +71,6 @@
 		F2E74CF82921F73600BD35F6 /* TodayworkoutDoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74CF72921F73600BD35F6 /* TodayworkoutDoneTests.swift */; };
 		F2E74D022921F73600BD35F6 /* TodayworkoutDoneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D012921F73600BD35F6 /* TodayworkoutDoneUITests.swift */; };
 		F2E74D042921F73600BD35F6 /* TodayworkoutDoneUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D032921F73600BD35F6 /* TodayworkoutDoneUITestsLaunchTests.swift */; };
-		F2E74D222922219000BD35F6 /* MainWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D1D2922219000BD35F6 /* MainWelcomeView.swift */; };
 		F2E74D242922219000BD35F6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D1F2922219000BD35F6 /* MainView.swift */; };
 		F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D202922219000BD35F6 /* WeeklyChartView.swift */; };
 		F2E74D262922219000BD35F6 /* MainContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D212922219000BD35F6 /* MainContentView.swift */; };
@@ -164,7 +163,6 @@
 		F2E74CFD2921F73600BD35F6 /* TodayworkoutDoneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodayworkoutDoneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2E74D012921F73600BD35F6 /* TodayworkoutDoneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayworkoutDoneUITests.swift; sourceTree = "<group>"; };
 		F2E74D032921F73600BD35F6 /* TodayworkoutDoneUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayworkoutDoneUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		F2E74D1D2922219000BD35F6 /* MainWelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWelcomeView.swift; sourceTree = "<group>"; };
 		F2E74D1F2922219000BD35F6 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F2E74D202922219000BD35F6 /* WeeklyChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeeklyChartView.swift; sourceTree = "<group>"; };
 		F2E74D212922219000BD35F6 /* MainContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentView.swift; sourceTree = "<group>"; };
@@ -263,6 +261,15 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		8EFE4C9B2D04AF6200CC8305 /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				F2E74D202922219000BD35F6 /* WeeklyChartView.swift */,
+				8E8767ED2BB55C9E00B74F98 /* MainContentDetailView.swift */,
+			);
+			path = Chart;
+			sourceTree = "<group>";
+		};
 		F2007DA82A8AA25700833AF0 /* HealthKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,15 +279,16 @@
 			path = HealthKit;
 			sourceTree = "<group>";
 		};
-		F2102C30292BB05200417789 /* Subviews */ = {
+		F2102C30292BB05200417789 /* Contents */ = {
 			isa = PBXGroup;
 			children = (
+				F2E74D212922219000BD35F6 /* MainContentView.swift */,
 				F2102C32292BB06D00417789 /* MainContentSubView.swift */,
 				F2102C31292BB06D00417789 /* MainContentStepView.swift */,
 				F2102C33292BB06D00417789 /* MainContentWorkoutView.swift */,
 				F20108292B6FE03100265F17 /* MainContentEnergyBurn.swift */,
 			);
-			path = Subviews;
+			path = Contents;
 			sourceTree = "<group>";
 		};
 		F222FFEA2A645B5F002FCCDA /* Persistence */ = {
@@ -379,6 +387,8 @@
 		F2E74CE42921F73500BD35F6 /* TodayworkoutDone */ = {
 			isa = PBXGroup;
 			children = (
+				F2E74CE52921F73500BD35F6 /* TodayworkoutDoneApp.swift */,
+				F2E74CE72921F73500BD35F6 /* ContentView.swift */,
 				F2007DA82A8AA25700833AF0 /* HealthKit */,
 				8EB5396D2C98136900F56034 /* API */,
 				F222FFEA2A645B5F002FCCDA /* Persistence */,
@@ -387,7 +397,6 @@
 				8E5E8A202A24B869004A4F33 /* Interactors */,
 				8E5E8A1C2A24AED3004A4F33 /* UI */,
 				8E4066A529B33C90004BB7A2 /* Resources */,
-				F2E74CE52921F73500BD35F6 /* TodayworkoutDoneApp.swift */,
 				F2E74CEC2921F73600BD35F6 /* Preview Content */,
 			);
 			path = TodayworkoutDone;
@@ -421,14 +430,10 @@
 		F2E74D1C2922217500BD35F6 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				F2102C30292BB05200417789 /* Subviews */,
-				F2E74D212922219000BD35F6 /* MainContentView.swift */,
+				8EFE4C9B2D04AF6200CC8305 /* Chart */,
+				F2102C30292BB05200417789 /* Contents */,
 				F29285342A17D25400C3A055 /* HomeView.swift */,
-				F2E74CE72921F73500BD35F6 /* ContentView.swift */,
 				F2E74D1F2922219000BD35F6 /* MainView.swift */,
-				F2E74D1D2922219000BD35F6 /* MainWelcomeView.swift */,
-				F2E74D202922219000BD35F6 /* WeeklyChartView.swift */,
-				8E8767ED2BB55C9E00B74F98 /* MainContentDetailView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -633,7 +638,6 @@
 				F2E74CE62921F73500BD35F6 /* TodayworkoutDoneApp.swift in Sources */,
 				8EB539732C98152E00F56034 /* APIHelper.swift in Sources */,
 				F2E2214A29994BB500B7DCCB /* WorkingOutSection.swift in Sources */,
-				F2E74D222922219000BD35F6 /* MainWelcomeView.swift in Sources */,
 				F2E74D262922219000BD35F6 /* MainContentView.swift in Sources */,
 				8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */,
 				8EC563652A6D206600A8DCD5 /* MockedData.swift in Sources */,

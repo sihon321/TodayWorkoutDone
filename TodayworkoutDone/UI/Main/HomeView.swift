@@ -68,8 +68,6 @@ struct HomeReducer {
     private enum CancelID { case timer }
     
     @Dependency(\.myRoutineData) var context
-    @Dependency(\.categoryAPI) var categoryRepository
-    @Dependency(\.workoutAPI) var workoutRepository
     @Dependency(\.continuousClock) var clock
     
     var body: some Reducer<State, Action> {
