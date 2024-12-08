@@ -6,31 +6,30 @@
 //
 
 import SwiftUI
-import ComposableArchitecture
-
-@Reducer
-struct MainContentReducer {
-    @ObservableState
-    struct State: Equatable {
-        
-    }
-    
-    enum Action {
-        
-    }
-}
 
 struct MainContentView: View {
+    enum MainContentType: String, Identifiable {
+        case stepCount
+        case workoutTime
+        case energyBurn
+        
+        var id: String { self.rawValue }
+    }
+    
     private let gridLayout = Array(repeating: GridItem(.flexible()),
                                    count: 2)
-    private var dataList: [MainContentType] = [.step, .workoutTime, .energyBurn]
+    private var dataList: [MainContentType] = [
+        .stepCount,
+        .workoutTime,
+        .energyBurn
+    ]
     
     var body: some View {
         VStack {
             LazyVGrid(columns: gridLayout, spacing: 10) {
                 ForEach(dataList) { data in
                     NavigationLink {
-                        MainContentDetailView()
+                        
                     } label: {
                         MainContentSubView(type: data)
                     }

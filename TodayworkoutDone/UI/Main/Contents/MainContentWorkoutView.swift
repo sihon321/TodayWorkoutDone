@@ -7,9 +7,14 @@
 
 import SwiftUI
 import Combine
+import Dependencies
 
 struct MainContentWorkoutView: View {
+    @Dependency(\.healthKitManager) private var healthKitManager
+    
     @State private var exerciseTime: Int = 0
+    @State var cancellables: Set<AnyCancellable> = []
+    
     private var hour: Int {
         return exerciseTime / 60
     }
@@ -40,22 +45,18 @@ struct MainContentWorkoutView: View {
                 .foregroundColor(Color(0x7d7d7d))
                 .padding(.leading, -5)
         }
-    }
-}
-
-extension MainContentWorkoutView {
-//    private var appleExerciseTime: AnyPublisher<Int, Never> {
-//        injected.interactors.healthkitInteractor.appleExerciseTime(
-//            from: Date(),
-//            to: Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-//        )
-//        .replaceError(with: 0)
-//        .eraseToAnyPublisher()
-//    }
-}
-
-struct MainContentWorkoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainContentWorkoutView()
+        .onAppear {
+            healthKitManager.appleExerciseTime(
+                from: Calendar.current.date(byAdding: .day,
+                                            value: -1,
+                                            to: .currentDateForDeviceRegion)!,
+                to: .currentDateForDeviceRegion
+            )
+            .replaceError(with: 0)
+            .sink(receiveValue: { appleExerciseTime in
+                self.exerciseTime = appleExerciseTime
+            })
+            .store(in: &cancellables)
+        }
     }
 }

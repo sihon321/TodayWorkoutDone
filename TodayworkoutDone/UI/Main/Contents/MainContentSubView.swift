@@ -7,23 +7,14 @@
 
 import SwiftUI
 
-enum MainContentType: String, Identifiable {
-    case step
-    case workoutTime
-    case energyBurn
-    
-    var id: String { self.rawValue }
-}
-
 struct MainContentSubView: View {
-    
-    var type: MainContentType
+    var type: MainContentView.MainContentType
     private let originalTypeHeight: CGFloat = 80
     private let charTypeHeight = 120
     
     private var iconName: String {
         switch type {
-        case .step: return "figure.walk"
+        case .stepCount: return "figure.walk"
         case .workoutTime: return "figure.strengthtraining.traditional"
         case .energyBurn: return "flame.fill"
         }
@@ -31,7 +22,7 @@ struct MainContentSubView: View {
     
     private var headerTitle: String {
         switch type {
-        case .step: return "걸음"
+        case .stepCount: return "걸음"
         case .workoutTime: return "운동시간"
         case .energyBurn: return "활동"
         }
@@ -51,7 +42,7 @@ struct MainContentSubView: View {
             
             HStack(alignment: .firstTextBaseline) {
                 switch type {
-                case .step:
+                case .stepCount:
                     MainContentStepView()
                 case .workoutTime:
                     MainContentWorkoutView()

@@ -23,7 +23,7 @@
 		8ED37AF32AC87E0700B4F206 /* MyRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED37AF22AC87E0700B4F206 /* MyRoutine.swift */; };
 		8ED37AF52AC87E2200B4F206 /* Sets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED37AF42AC87E2200B4F206 /* Sets.swift */; };
 		8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */; };
-		F2007DA72A8A8AC300833AF0 /* HealthKitInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA62A8A8AC300833AF0 /* HealthKitInteractor.swift */; };
+		F2007DA72A8A8AC300833AF0 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */; };
 		F2007DAA2A8AA27E00833AF0 /* HealthKit+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */; };
 		F201082A2B6FE03100265F17 /* MainContentEnergyBurn.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20108292B6FE03100265F17 /* MainContentEnergyBurn.swift */; };
 		F2102C34292BB06D00417789 /* MainContentStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2102C31292BB06D00417789 /* MainContentStepView.swift */; };
@@ -112,7 +112,7 @@
 		8ED37AF22AC87E0700B4F206 /* MyRoutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutine.swift; sourceTree = "<group>"; };
 		8ED37AF42AC87E2200B4F206 /* Sets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sets.swift; sourceTree = "<group>"; };
 		8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWorkoutView.swift; sourceTree = "<group>"; };
-		F2007DA62A8A8AC300833AF0 /* HealthKitInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitInteractor.swift; sourceTree = "<group>"; };
+		F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthKit+Combine.swift"; sourceTree = "<group>"; };
 		F20108292B6FE03100265F17 /* MainContentEnergyBurn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentEnergyBurn.swift; sourceTree = "<group>"; };
 		F2102C31292BB06D00417789 /* MainContentStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentStepView.swift; sourceTree = "<group>"; };
@@ -273,7 +273,7 @@
 		F2007DA82A8AA25700833AF0 /* HealthKit */ = {
 			isa = PBXGroup;
 			children = (
-				F2007DA62A8A8AC300833AF0 /* HealthKitInteractor.swift */,
+				F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */,
 				F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */,
 			);
 			path = HealthKit;
@@ -594,7 +594,7 @@
 				F23F4E962957FB250084392B /* MyRoutineView.swift in Sources */,
 				8EB47E0A2CAFF86B0063C1EA /* WorkoutRoutine.swift in Sources */,
 				8EC7725B2C95A4F600C35CE7 /* MyRoutineDatabase.swift in Sources */,
-				F2007DA72A8A8AC300833AF0 /* HealthKitInteractor.swift in Sources */,
+				F2007DA72A8A8AC300833AF0 /* HealthKitManager.swift in Sources */,
 				F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */,
 				F276E2952A6C48B50046EBA4 /* ErrorView.swift in Sources */,
 				F26808A92A9CE0140016E8E9 /* CalendarView.swift in Sources */,

@@ -8,22 +8,35 @@
 import Foundation
 import HealthKit
 import Combine
+import ComposableArchitecture
 
-protocol HealthKitInteractor {
-    func authorizeHealthKit(typesToShare: Set<HKQuantityType>,
-                            typesToRead: Set<HKQuantityType>) -> Deferred<Future<Bool, Error>>
+private enum HealthKitManagerKey: DependencyKey {
+    static let liveValue: HealthKitManager = LiveHealthKitManager()
+}
+
+extension DependencyValues {
+    var healthKitManager: HealthKitManager {
+        get { self[HealthKitManagerKey.self] }
+        set { self[HealthKitManagerKey.self] = newValue }
+    }
+}
+
+protocol HealthKitManager {
+    func authorizeHealthKit(typesToShare: Set<HKSampleType>,
+                            typesToRead: Set<HKObjectType>) -> Deferred<Future<Bool, Error>>
+    func requestAuthorization() -> Future<Bool, Error>
     func stepCount(from startDate: Date, to endDate: Date) -> Future<Int, Error>
     func appleExerciseTime(from startDate: Date, to endDate: Date) -> Future<Int, Error>
     func activeEnergyBurned(from startDate: Date, to endDate: Date) -> Future<Int, Error>
 }
 
-class RealHealthKitInteractor: HealthKitInteractor {
+class LiveHealthKitManager: HealthKitManager {
     
     let healthStore = HKHealthStore()
     private var cancellables: Set<AnyCancellable> = []
     
-    func authorizeHealthKit(typesToShare: Set<HKQuantityType>,
-                            typesToRead: Set<HKQuantityType>) -> Deferred<Future<Bool, Error>> {
+    internal func authorizeHealthKit(typesToShare: Set<HKSampleType> = .init(),
+                                    typesToRead: Set<HKObjectType> = .init()) -> Deferred<Future<Bool, Error>> {
         Deferred {
             Future { [weak self] promise in
                 guard let `self` = self,
@@ -31,19 +44,6 @@ class RealHealthKitInteractor: HealthKitInteractor {
                     promise(.failure(HealthDataError.unavailableOnDevice))
                     return
                 }
-                
-//                let typesToShare: Set = [
-//                    HKQuantityType.workoutType()
-//                ]
-                
-                let typesToRead: Set = [
-                    HKQuantityType.quantityType(forIdentifier: .stepCount)!,
-                    HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-                    HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-//                    HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-//                    HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
-                    HKObjectType.activitySummaryType()
-                ]
                 
                 healthStore.requestAuthorization(toShare: typesToShare,
                                                  read: typesToRead) { isSuccess, error in
@@ -59,6 +59,37 @@ class RealHealthKitInteractor: HealthKitInteractor {
                     }
                 }
             }
+        }
+    }
+    
+    func requestAuthorization() -> Future<Bool, Error> {
+        Future { [weak self] promise in
+            guard let self = self else { return }
+            let typesToRead: Set<HKObjectType> = [
+                HKQuantityType.quantityType(forIdentifier: .stepCount)!,
+                HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+                HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
+                HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+                HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
+                HKObjectType.activitySummaryType()
+            ]
+            
+            self.authorizeHealthKit(typesToRead: typesToRead)
+                .sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        print("Authorization request finished.")
+                    case .failure(let error):
+                        print("Authorization request failed with error: \(error)")
+                    }
+                }, receiveValue: { isSucceeded in
+                    if isSucceeded {
+                        promise(.success(isSucceeded))
+                    } else {
+                        promise(.failure(HealthDataError.authorizationRequestError))
+                    }
+                })
+                .store(in: &cancellables)
         }
     }
     
@@ -154,13 +185,19 @@ enum HealthDataError: Error {
     case authorizationRequestError
 }
 
-struct StubHealthKitInteractor: HealthKitInteractor {
-    func authorizeHealthKit(typesToShare: Set<HKQuantityType>,
-                            typesToRead: Set<HKQuantityType>) -> Deferred<Future<Bool, Error>> {
+struct StubHealthKitInteractor: HealthKitManager {
+    func authorizeHealthKit(typesToShare: Set<HKSampleType>,
+                            typesToRead: Set<HKObjectType>) -> Deferred<Future<Bool, Error>> {
         return Deferred {
             Future { promise in
                 promise(.success(true))
             }
+        }
+    }
+    
+    func requestAuthorization() -> Future<Bool, Error> {
+        Future { promise in
+            promise(.success(false))
         }
     }
     
