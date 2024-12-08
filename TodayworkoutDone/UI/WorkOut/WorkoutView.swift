@@ -83,7 +83,7 @@ struct WorkoutReducer {
         case alert(AlertState<Alert>)
         
         enum Alert: Equatable {
-            case tappedMyRoutineStart
+            case tappedMyRoutineStart(MyRoutine)
         }
     }
     
@@ -147,7 +147,9 @@ struct WorkoutReducer {
             case .fetchMyRoutines(let myRoutines):
                 state.myRoutineState.myRoutines = myRoutines
                 return .none
-            case .destination(.presented(.alert(.tappedMyRoutineStart))):
+            case .destination(.presented(.alert(.tappedMyRoutineStart(let myRoutine)))):
+                state.myRoutine.name = myRoutine.name
+                state.myRoutine.routines = myRoutine.routines
                 return .send(.makeWorkout(.tappedDone))
             case .destination:
                 return .none
@@ -420,7 +422,7 @@ extension AlertState where Action == WorkoutReducer.Destination.Alert {
         Self {
             TextState("루틴을 시작하겠습니까?")
         } actions: {
-            ButtonState(action: .tappedMyRoutineStart) {
+            ButtonState(action: .tappedMyRoutineStart(myRoutine)) {
                 TextState("OK")
             }
             ButtonState() {
