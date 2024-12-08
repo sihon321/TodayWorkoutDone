@@ -43,12 +43,17 @@ struct SlideOverCardView<Content: View>: View {
                     }
                 )
                 .onPreferenceChange(ViewOffsetKey.self, perform: { value in
+                    let slideBottomStopHeight: CGFloat = 284.0
+                    let topSafeArea: CGFloat = 47.5
+                    let bottomSafeArea: CGFloat = 10.0
+                    let frameHeight = UIScreen.main.bounds.size.height - topSafeArea - bottomSafeArea
+                    let slideBottomeStopY = (frameHeight - slideBottomStopHeight + topSafeArea - bottomSafeArea)
+                    let tabBarHeight: CGFloat = 78.0
                     if value < 0 {
-                        hideTabValue = 627 + value > 0.0 ? 627 + value : 0.0
+                        hideTabValue = slideBottomeStopY + value > 0.0 ? slideBottomeStopY + value : 0.0
                     } else {
-                        hideTabValue = 327 - value
+                        hideTabValue = (topSafeArea + tabBarHeight + bottomSafeArea) - value
                     }
-                    print(hideTabValue)
                 })
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
