@@ -30,9 +30,7 @@ struct MainContentStepView: View {
         }
         .onAppear {
             healthKitManager.stepCount(
-                from: Calendar.current.date(byAdding: .day,
-                                            value: -1,
-                                            to: .currentDateForDeviceRegion)!,
+                from: .midnight,
                 to: .currentDateForDeviceRegion
             )
             .replaceError(with: 0)

@@ -31,4 +31,16 @@ extension Date {
         dateFormatter.timeZone = TimeZone(identifier: "UTC")
         return dateFormatter.date(from: dateString)!
     }
+    
+    static var midnight: Date {
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        
+        let dateString = dateFormatter.string(from: currentDate)
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        
+        return dateFormatter.date(from: dateString)!
+    }
 }

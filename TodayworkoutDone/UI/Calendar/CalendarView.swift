@@ -83,7 +83,6 @@ struct CalendarReducer {
                 state.isPresented = true
                 state.calendarDetail = nil
                 return .run { send in
-                  try await self.clock.sleep(for: .seconds(1))
                   await send(.setSheetIsPresentedDelayCompleted)
                 }
                 .cancellable(id: CancelID.load)
@@ -128,7 +127,9 @@ struct CalendarView: View {
                 content: { date in
                     Button(action: {
                         store.send(.tappedDate(date))
-                        store.send(.setSheet(isPresented: true))
+                        if store.state.filterWorkout(date: date).isEmpty == false {
+                            store.send(.setSheet(isPresented: true))
+                        }
                     }) {
                         CalendarViewCell(
                             store: Store(

@@ -6,8 +6,28 @@
 //
 
 import SwiftUI
-import Combine
 import Charts
+import ComposableArchitecture
+
+@Reducer
+struct WeeklyChart {
+    @ObservableState
+    struct State: Equatable {
+    
+    }
+    
+    enum Action {
+        
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+                
+            }
+        }
+    }
+}
 
 struct WeeklyChartView: View {
     @State private var exerciseTime: Int = 0
@@ -29,8 +49,8 @@ struct WeeklyChartView: View {
     ]
     
     var body: some View {
-        VStack {
-            Text("")
+        VStack(alignment: .leading) {
+            Text("주당 워크아웃")
             Chart(data) {
                 BarMark(
                     x: .value("Weekly", $0.day),
@@ -42,6 +62,7 @@ struct WeeklyChartView: View {
         .frame(minWidth: 0,
                maxWidth: .infinity,
                minHeight: 165)
+        .padding([.leading, .trailing], 15)
     }
 }
 
@@ -58,10 +79,4 @@ extension WeeklyChartView {
 //            .replaceError(with: 0)
 //            .eraseToAnyPublisher()
 //    }
-}
-
-struct WeeklyChartView_Previews: PreviewProvider {
-    static var previews: some View {
-        WeeklyChartView()
-    }
 }

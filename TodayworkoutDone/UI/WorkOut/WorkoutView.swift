@@ -68,8 +68,8 @@ struct WorkoutReducer {
         case dismiss
         case hasLoaded
         case getMyRoutines
-        case filterWorkout
-        case appearMakeWorkoutView(myRoutine: MyRoutine?, isEdit: Bool)
+        case appearMakeWorkout
+        case createMakeWorkoutView(myRoutine: MyRoutine?, isEdit: Bool)
         case fetchMyRoutines([MyRoutine])
         
         var description: String {
@@ -106,7 +106,7 @@ struct WorkoutReducer {
             case .hasLoaded:
                 state.hasLoaded = true
                 return .none
-            case .filterWorkout:
+            case .appearMakeWorkout:
                 let routines = state.workouts
                     .filter({ $0.isSelected })
                     .compactMap({
@@ -114,18 +114,20 @@ struct WorkoutReducer {
                     })
                 state.myRoutine.routines = routines
                 return .run { @MainActor send in
-                    send(.appearMakeWorkoutView(myRoutine: nil, isEdit: false))
+                    send(.createMakeWorkoutView(myRoutine: nil,
+                                                isEdit: false))
                 }
-            case let .appearMakeWorkoutView(_, isEdit):
+            case let .createMakeWorkoutView(myRoutine, isEdit):
+                let myRoutine = myRoutine ?? state.myRoutine
                 state.makeWorkout = MakeWorkoutReducer.State(
-                    myRoutine: Shared(state.myRoutine),
+                    myRoutine: Shared(myRoutine),
                     isEdit: isEdit,
                     addWorkoutCategory: AddWorkoutCategoryReducer.State(
-                        myRoutine: Shared(state.myRoutine),
-                        workoutList: WorkoutListReducer.State(myRoutine: Shared(state.myRoutine))
+                        myRoutine: Shared(myRoutine),
+                        workoutList: WorkoutListReducer.State(myRoutine: Shared(myRoutine))
                     ),
                     workingOutSection:  IdentifiedArrayOf(
-                        uniqueElements: state.myRoutine.routines.map {
+                        uniqueElements: myRoutine.routines.map {
                             WorkingOutSectionReducer.State(
                                 routine: $0,
                                 editMode: .active
@@ -182,7 +184,7 @@ struct WorkoutReducer {
                         state.workoutCategory.workoutList.workouts = workouts
                         return .none
                     case .makeWorkoutView:
-                        return .send(.filterWorkout)
+                        return .send(.appearMakeWorkout)
                     }
                 }
                 
@@ -344,10 +346,7 @@ struct WorkoutReducer {
                     state.destination = .alert(.startMyRoutine(selectedMyRoutine))
                     return .none
                 case .touchedEditMode(let myRoutine):
-                    if let myRoutine = state.refetch(myRoutine) {
-                        return .send(.appearMakeWorkoutView(myRoutine: myRoutine, isEdit: true))
-                    }
-                    return .none
+                    return .send(.createMakeWorkoutView(myRoutine: myRoutine, isEdit: true))
                 }
             }
         }
@@ -459,7 +458,7 @@ private struct WorkoutViewToolbar: ViewModifier {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
                             if !viewStore.isEmptySelectedWorkouts {
-                                viewStore.send(.filterWorkout)
+                                viewStore.send(.appearMakeWorkout)
                             } else {
                                 store.myRoutine.routines += viewStore.workouts
                                     .filter({ $0.isSelected })
