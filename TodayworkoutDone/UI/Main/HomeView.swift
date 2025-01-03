@@ -23,6 +23,7 @@ struct HomeReducer {
         var isHideTabBar = false
         var tabBarOffset: CGFloat = 0.0
         var bottomEdge: CGFloat = 35
+        var deletedSectionIndex: Int?
         
         var workingOut: WorkingOutReducer.State?
         var tabBar: CustomTabBarReducer.State  = CustomTabBarReducer.State(
@@ -261,6 +262,8 @@ struct HomeReducer {
                                     }
                                 }
                             }
+                            return .none
+                        case .workingOutHeader:
                             return .none
                         }
                     }

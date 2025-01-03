@@ -22,6 +22,7 @@ struct WorkoutReducer {
         var makeWorkout: MakeWorkoutReducer.State?
         var workouts: [Workout] = []
         var hasLoaded = false
+        var deletedSectionIndex: Int?
         
         var isEmptySelectedWorkouts: Bool {
             var isEmpty = true
@@ -202,6 +203,10 @@ struct WorkoutReducer {
                     }
                 case .save(let myRoutine):
                     saveMyRoutine()
+                    if let sectionIndex = state.deletedSectionIndex {
+                        state.makeWorkout?.myRoutine
+                            .routines.remove(at: sectionIndex)
+                    }
                     return .send(.makeWorkout(.dismiss(myRoutine)))
                 case .didUpdateText(let text):
                     state.makeWorkout?.myRoutine.name = text
@@ -332,6 +337,21 @@ struct WorkoutReducer {
                                     }
                                     return .none
                                 }
+                            }
+                        case let .workingOutHeader(action):
+                            switch action {
+                            case .deleteWorkout:
+                                if let sectionIndex = state.makeWorkout?
+                                    .workingOutSection
+                                    .index(id: sectionId) {
+                                    state.deletedSectionIndex = sectionIndex
+                                    state.makeWorkout?
+                                        .workingOutSection.remove(at: sectionIndex)
+                                }
+                                return .none
+                            case let .tappedWorkoutsType(type):
+                                
+                                return .none
                             }
                         case .setEditMode:
                             return .none

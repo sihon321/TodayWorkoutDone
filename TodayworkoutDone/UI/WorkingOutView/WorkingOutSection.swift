@@ -16,6 +16,7 @@ struct WorkingOutSectionReducer {
         var editMode: EditMode
         var routine: Routine
         var workingOutRow: IdentifiedArrayOf<WorkingOutRowReducer.State>
+        let workingOutHeader: WorkingOutHeaderReducer.State
         
         init(routine: Routine, editMode: EditMode) {
             self.id = routine.id
@@ -27,6 +28,7 @@ struct WorkingOutSectionReducer {
                                                editMode: editMode)
                 }
             )
+            self.workingOutHeader = WorkingOutHeaderReducer.State(routine: routine)
         }
     }
     
@@ -35,6 +37,7 @@ struct WorkingOutSectionReducer {
         case setEditMode(EditMode)
         
         indirect case workingOutRow(IdentifiedActionOf<WorkingOutRowReducer>)
+        case workingOutHeader(WorkingOutHeaderReducer.Action)
     }
     
     var body: some Reducer<State, Action> {
@@ -45,6 +48,8 @@ struct WorkingOutSectionReducer {
             case .workingOutRow:
                 return .none
             case .setEditMode:
+                return .none
+            case .workingOutHeader:
                 return .none
             }
         }
@@ -78,7 +83,8 @@ struct WorkingOutSection: View {
             .frame(minHeight: minRowHeight * CGFloat(store.workingOutRow.count))
             .listStyle(PlainListStyle())
         } header: {
-            WorkingOutHeader(routine: .constant(store.routine))
+            WorkingOutHeader(store: store.scope(state: \.workingOutHeader,
+                                                action: \.workingOutHeader))
         } footer: {
             if viewStore.editMode == .active {
                 WorkingOutFooter()
