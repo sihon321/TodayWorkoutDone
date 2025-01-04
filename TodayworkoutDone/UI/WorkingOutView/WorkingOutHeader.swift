@@ -12,7 +12,8 @@ import ComposableArchitecture
 struct WorkingOutHeaderReducer {
     @ObservableState
     struct State: Equatable {
-        var routine: Routine
+        var workoutName: String
+        var workoutType: WorkoutsType
     }
     
     enum Action {
@@ -34,42 +35,51 @@ struct WorkingOutHeaderReducer {
 
 struct WorkingOutHeader: View {
     @Bindable var store: StoreOf<WorkingOutHeaderReducer>
+    @ObservedObject var viewStore: ViewStoreOf<WorkingOutHeaderReducer>
+    
+    @State private var workoutType: WorkoutsType
     @State private var showingOptions = false
     
-    init(store: StoreOf<WorkingOutHeaderReducer>) {
+    init(store: StoreOf<WorkingOutHeaderReducer>, type: State<WorkoutsType>) {
         self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
+        self._workoutType = type
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(store.routine.workout.name)
+                Text(store.workoutName)
                     .font(.title2)
                 
                 Button(action: {}) {
                     Menu {
                         Button(action: {
                             store.send(.tappedWorkoutsType(type: .machine))
+                            workoutType = .machine
                         }) {
                             Label("머신", systemImage: "pencil")
                         }
                         Button(action: {
                             store.send(.tappedWorkoutsType(type: .barbel))
+                            workoutType = .barbel
                         }) {
                             Label("바벨", systemImage: "pencil")
                         }
                         Button(action: {
                             store.send(.tappedWorkoutsType(type: .dumbbel))
+                            workoutType = .dumbbel
                         }) {
                             Label("덤벨", systemImage: "pencil")
                         }
                         Button(action: {
                             store.send(.tappedWorkoutsType(type: .cable))
+                            workoutType = .cable
                         }) {
                             Label("케이블", systemImage: "pencil")
                         }
                     } label: {
-                        Text(store.routine.workoutsType.kor)
+                        Text(workoutType.kor)
                             .padding([.leading, .trailing], 5)
                             .padding([.top, .bottom], 3)
                             .font(.system(size: 11))

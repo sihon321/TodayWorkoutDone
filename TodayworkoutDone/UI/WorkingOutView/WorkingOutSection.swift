@@ -28,7 +28,10 @@ struct WorkingOutSectionReducer {
                                                editMode: editMode)
                 }
             )
-            self.workingOutHeader = WorkingOutHeaderReducer.State(routine: routine)
+            self.workingOutHeader = WorkingOutHeaderReducer.State(
+                workoutName: routine.workout.name,
+                workoutType: routine.workoutsType
+            )
         }
     }
     
@@ -84,7 +87,9 @@ struct WorkingOutSection: View {
             .listStyle(PlainListStyle())
         } header: {
             WorkingOutHeader(store: store.scope(state: \.workingOutHeader,
-                                                action: \.workingOutHeader))
+                                                action: \.workingOutHeader),
+                             type: .init(wrappedValue: store.routine.workoutsType))
+            
         } footer: {
             if viewStore.editMode == .active {
                 WorkingOutFooter()
