@@ -50,12 +50,6 @@ struct CustomTabBar: View {
     }
 }
 
-//struct CustomTabBar_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CustomTabBar(currentTab: .constant("dumbbell.fill"), currentIndex: .constant(0), bottomEdge: 15)
-//    }
-//}
-
 @Reducer
 struct TabButtonReducer {
     struct TabInfo: Equatable, Hashable {

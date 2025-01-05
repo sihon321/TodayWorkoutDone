@@ -26,13 +26,14 @@ struct HomeReducer {
         var deletedSectionIndex: Int?
         
         var workingOut: WorkingOutReducer.State?
-        var tabBar: CustomTabBarReducer.State  = CustomTabBarReducer.State(
+        var tabBar: CustomTabBarReducer.State = CustomTabBarReducer.State(
             bottomEdge: 35,
             tabButton: TabButtonReducer.State(
                 info: TabButtonReducer.TabInfo(imageName: "dumbbell.fill",
                                                index: 0)
             )
         )
+        var calendar: CalendarReducer.State = CalendarReducer.State()
     }
     
     enum Action {
@@ -353,7 +354,7 @@ struct HomeView: View {
                 }
                 .tag(0)
                 
-                CalendarView(store: Store(initialState: CalendarReducer.State()) {
+                CalendarView(store: Store(initialState: store.calendar) {
                     CalendarReducer()
                 })
                 .tag(1)
