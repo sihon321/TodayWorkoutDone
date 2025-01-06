@@ -80,6 +80,7 @@ struct CalendarReducer {
                 return .none
                 
             case .setSheet(isPresented: true):
+                state.isPresented = false
                 state.calendarDetail = nil
                 return .run { send in
                   await send(.setSheetIsPresentedDelayCompleted)
@@ -165,9 +166,6 @@ struct CalendarView: View {
             .sheet(isPresented: $store.isPresented.sending(\.setSheet)) {
                 if let store = store.scope(state: \.calendarDetail, action: \.calendarDetail) {
                   CalendarDetailView(store: store)
-                        .onDisappear {
-                            self.store.send(.setSheet(isPresented: false))
-                        }
                 }
             }
         }

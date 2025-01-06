@@ -29,7 +29,8 @@ struct MainContentStepView: View {
                 .padding(.leading, -5)
         }
         .onAppear {
-            healthKitManager.stepCount(
+            healthKitManager.getHealthQuantityData(
+                type: .stepCount,
                 from: .midnight,
                 to: .currentDateForDeviceRegion
             )

@@ -46,10 +46,9 @@ struct MainContentWorkoutView: View {
                 .padding(.leading, -5)
         }
         .onAppear {
-            healthKitManager.appleExerciseTime(
-                from: Calendar.current.date(byAdding: .day,
-                                            value: -1,
-                                            to: .currentDateForDeviceRegion)!,
+            healthKitManager.getHealthQuantityData(
+                type: .appleExerciseTime,
+                from: .midnight,
                 to: .currentDateForDeviceRegion
             )
             .replaceError(with: 0)

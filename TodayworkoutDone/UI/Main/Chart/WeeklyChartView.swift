@@ -63,20 +63,8 @@ struct WeeklyChartView: View {
                maxWidth: .infinity,
                minHeight: 165)
         .padding([.leading, .trailing], 15)
+        .onAppear {
+            
+        }
     }
-}
-
-extension WeeklyChartView {
-//    private var appleExerciseTime: AnyPublisher<Int, Never> {
-//        var dateComponents = DateComponents()
-//        dateComponents.weekOfYear = -1
-//        return injected.interactors.healthkitInteractor.appleExerciseTime(
-//            from: Calendar.current.date(byAdding: .day,
-//                                        value: -1,
-//                                        to: .currentDateForDeviceRegion)!,
-//            to: .currentDateForDeviceRegion
-//        )
-//            .replaceError(with: 0)
-//            .eraseToAnyPublisher()
-//    }
 }

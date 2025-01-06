@@ -25,9 +25,9 @@ protocol HealthKitManager {
     func authorizeHealthKit(typesToShare: Set<HKSampleType>,
                             typesToRead: Set<HKObjectType>) -> Deferred<Future<Bool, Error>>
     func requestAuthorization() -> Future<Bool, Error>
-    func stepCount(from startDate: Date, to endDate: Date) -> Future<Int, Error>
-    func appleExerciseTime(from startDate: Date, to endDate: Date) -> Future<Int, Error>
-    func activeEnergyBurned(from startDate: Date, to endDate: Date) -> Future<Int, Error>
+    func getHealthQuantityData(type: HKQuantityTypeIdentifier,
+                               from startDate: Date,
+                               to endDate: Date) -> Future<Int, Error>
 }
 
 class LiveHealthKitManager: HealthKitManager {
@@ -36,11 +36,11 @@ class LiveHealthKitManager: HealthKitManager {
     private var cancellables: Set<AnyCancellable> = []
     
     internal func authorizeHealthKit(typesToShare: Set<HKSampleType> = .init(),
-                                    typesToRead: Set<HKObjectType> = .init()) -> Deferred<Future<Bool, Error>> {
+                                     typesToRead: Set<HKObjectType> = .init()) -> Deferred<Future<Bool, Error>> {
         Deferred {
             Future { [weak self] promise in
                 guard let `self` = self,
-                    HKHealthStore.isHealthDataAvailable() else {
+                      HKHealthStore.isHealthDataAvailable() else {
                     promise(.failure(HealthDataError.unavailableOnDevice))
                     return
                 }
@@ -93,16 +93,18 @@ class LiveHealthKitManager: HealthKitManager {
         }
     }
     
-    func stepCount(from startDate: Date, to endDate: Date) -> Future<Int, Error> {
+    func getHealthQuantityData(type: HKQuantityTypeIdentifier,
+                               from startDate: Date,
+                               to endDate: Date) -> Future<Int, Error> {
         Future { [weak self] promise in
             guard let `self` = self else { return }
-            self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .stepCount)!])
+            self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: type)!])
                 .sink(receiveCompletion: { completion in
                     print("\(completion)")
                 }, receiveValue: { [self] _ in
                     let today = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
                     
-                    self.healthStore.subject(quantityType: .quantityType(forIdentifier: .stepCount)!,
+                    self.healthStore.subject(quantityType: .quantityType(forIdentifier: type)!,
                                              quantitySamplePredicate: today,
                                              options: .cumulativeSum)
                     .receive(on: RunLoop.main)
@@ -121,57 +123,42 @@ class LiveHealthKitManager: HealthKitManager {
         }
     }
     
-    func appleExerciseTime(from startDate: Date = Date(),
-                           to endDate: Date = Calendar.current.date(byAdding: .day, value: -1, to: Date())!) -> Future<Int, Error> {
+    func getWeeklyCalories(from startDate: Date,
+                           to endDate: Date) -> Future<[Double], Error> {
         Future { [weak self] promise in
-            guard let `self` = self else { return }
-            self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .appleExerciseTime)!])
-                .sink(receiveCompletion: { completion in
-                    print("\(completion)")
-                }, receiveValue: { [self] _ in
-                    let today = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
-                    
-                    self.healthStore.subject(quantityType: .quantityType(forIdentifier: .appleExerciseTime)!,
-                                             quantitySamplePredicate: today,
-                                             options: .cumulativeSum)
-                    .receive(on: RunLoop.main)
-                    .sink(receiveCompletion: { completion in
-                        print("\(completion)")
-                    }, receiveValue: { statistics in
-                        if let sumQuantity = statistics.sumQuantity() {
-                            promise(.success(Int(sumQuantity.doubleValue(for: .minute()))))
-                        } else {
-                            promise(.success(0))
-                        }
-                    })
-                    .store(in: &self.cancellables)
-                })
-                .store(in: &cancellables)
-        }
-    }
-    
-    func activeEnergyBurned(from startDate: Date = Date(),
-                            to endDate: Date = Calendar.current.date(byAdding: .day, value: -1, to: Date())!) -> Future<Int, Error> {
-        Future { [weak self] promise in
-            guard let `self` = self else { return }
+            guard let self = self else { return }
             self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .activeEnergyBurned)!])
                 .sink(receiveCompletion: { completion in
                     print("\(completion)")
                 }, receiveValue: { [self] _ in
                     let today = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
                     
-                    self.healthStore.subject(quantityType: .quantityType(forIdentifier: .appleExerciseTime)!,
-                                             quantitySamplePredicate: today,
-                                             options: .cumulativeSum)
+                    self.healthStore.subject(
+                        for: .quantityType(forIdentifier: .activeEnergyBurned)!,
+                        predicate: HKQuery.predicateForSamples(withStart: startDate,
+                                                               end: endDate,
+                                                               options: .strictStartDate),
+                        options: .cumulativeSum,
+                        anchorDate: startDate,
+                        intervalComponents: DateComponents(day: 1),
+                        startDate: startDate,
+                        endDate: endDate
+                    )
                     .receive(on: RunLoop.main)
                     .sink(receiveCompletion: { completion in
                         print("\(completion)")
                     }, receiveValue: { statistics in
-                        if let sumQuantity = statistics.sumQuantity() {
-                            promise(.success(Int(sumQuantity.doubleValue(for: .minute()))))
-                        } else {
-                            promise(.success(0))
+                        var weeklyCalories: [Double] = []
+                        
+                        statistics.enumerateStatistics(from: startDate, to: endDate) { statistics, date in
+                            if let quantity = statistics.sumQuantity() {
+                                let date = statistics.startDate
+                                let calories = quantity.doubleValue(for: HKUnit.kilocalorie())
+                                weeklyCalories.append(calories)
+                            }
                         }
+                        
+                        promise(.success(weeklyCalories))
                     })
                     .store(in: &self.cancellables)
                 })
@@ -183,39 +170,4 @@ class LiveHealthKitManager: HealthKitManager {
 enum HealthDataError: Error {
     case unavailableOnDevice
     case authorizationRequestError
-}
-
-struct StubHealthKitInteractor: HealthKitManager {
-    func authorizeHealthKit(typesToShare: Set<HKSampleType>,
-                            typesToRead: Set<HKObjectType>) -> Deferred<Future<Bool, Error>> {
-        return Deferred {
-            Future { promise in
-                promise(.success(true))
-            }
-        }
-    }
-    
-    func requestAuthorization() -> Future<Bool, Error> {
-        Future { promise in
-            promise(.success(false))
-        }
-    }
-    
-    func stepCount(from startDate: Date, to endDate: Date) -> Future<Int, Error> {
-        Future { promise in
-            promise(.success(0))
-        }
-    }
-    
-    func activeEnergyBurned(from startDate: Date, to endDate: Date) -> Future<Int, Error> {
-        Future { promise in
-            promise(.success(0))
-        }
-    }
-    
-    func appleExerciseTime(from startDate: Date, to endDate: Date) -> Future<Int, Error> {
-        Future { promise in
-            promise(.success(0))
-        }
-    }
 }

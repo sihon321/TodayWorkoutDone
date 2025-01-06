@@ -29,10 +29,9 @@ struct MainContentEnergyBurn: View {
                 .padding(.leading, -5)
         }
         .onAppear {
-            healthKitManager.activeEnergyBurned(
-                from: Calendar.current.date(byAdding: .day,
-                                            value: -1,
-                                            to: .currentDateForDeviceRegion)!,
+            healthKitManager.getHealthQuantityData(
+                type: .activeEnergyBurned,
+                from: .midnight,
                 to: .currentDateForDeviceRegion
             )
             .replaceError(with: 0)
