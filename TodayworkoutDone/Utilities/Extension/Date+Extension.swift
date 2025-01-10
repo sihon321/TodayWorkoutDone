@@ -28,7 +28,7 @@ extension Date {
         dateFormatter.timeZone = TimeZone.autoupdatingCurrent
         
         let dateString = dateFormatter.string(from: currentDate)
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return dateFormatter.date(from: dateString)!
     }
     
@@ -39,7 +39,7 @@ extension Date {
         dateFormatter.timeZone = TimeZone.autoupdatingCurrent
         
         let dateString = dateFormatter.string(from: currentDate)
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         
         return dateFormatter.date(from: dateString)!
     }

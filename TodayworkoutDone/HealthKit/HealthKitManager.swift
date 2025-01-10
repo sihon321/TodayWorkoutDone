@@ -28,6 +28,8 @@ protocol HealthKitManager {
     func getHealthQuantityData(type: HKQuantityTypeIdentifier,
                                from startDate: Date,
                                to endDate: Date) -> Future<Int, Error>
+    func getWeeklyCalories(from startDate: Date,
+                           to endDate: Date) -> Future<[Double], Error>
 }
 
 class LiveHealthKitManager: HealthKitManager {
@@ -112,7 +114,7 @@ class LiveHealthKitManager: HealthKitManager {
                         print("\(completion)")
                     }, receiveValue: { statistics in
                         if let sumQuantity = statistics.sumQuantity() {
-                            promise(.success(Int(sumQuantity.doubleValue(for: .count()))))
+                            promise(.success(Int(sumQuantity.doubleValue(for: .kilocalorie()))))
                         } else {
                             promise(.success(0))
                         }
@@ -131,8 +133,6 @@ class LiveHealthKitManager: HealthKitManager {
                 .sink(receiveCompletion: { completion in
                     print("\(completion)")
                 }, receiveValue: { [self] _ in
-                    let today = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
-                    
                     self.healthStore.subject(
                         for: .quantityType(forIdentifier: .activeEnergyBurned)!,
                         predicate: HKQuery.predicateForSamples(withStart: startDate,
@@ -152,7 +152,6 @@ class LiveHealthKitManager: HealthKitManager {
                         
                         statistics.enumerateStatistics(from: startDate, to: endDate) { statistics, date in
                             if let quantity = statistics.sumQuantity() {
-                                let date = statistics.startDate
                                 let calories = quantity.doubleValue(for: HKUnit.kilocalorie())
                                 weeklyCalories.append(calories)
                             }

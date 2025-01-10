@@ -8,50 +8,54 @@
 import SwiftUI
 import Charts
 import ComposableArchitecture
+import Combine
 
 @Reducer
 struct WeeklyChart {
-    @ObservableState
-    struct State: Equatable {
-    
-    }
-    
-    enum Action {
-        
-    }
-    
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-                
-            }
-        }
-    }
-}
-
-struct WeeklyChartView: View {
-    @State private var exerciseTime: Int = 0
-    
     struct Weekly: Identifiable {
         var id = UUID()
         let day: String
         let profit: Double
     }
     
-    let data: [Weekly] = [
-        Weekly(day: "mon", profit: 40.0),
-        Weekly(day: "tue", profit: 50.0),
-        Weekly(day: "wed", profit: 30.0),
-        Weekly(day: "thu", profit: 70.0),
-        Weekly(day: "fri", profit: 100.0),
-        Weekly(day: "sat", profit: 90.0),
-        Weekly(day: "sun", profit: 80.0)
-    ]
+    @ObservableState
+    struct State {
+        var dailyActiveEnergyBurnes: [Weekly] = []
+        var cancellable = Set<AnyCancellable>()
+    }
+    
+    enum Action {
+        case fetchDailyActiveEnergyBurnes
+    }
+    
+    @Dependency(\.healthKitManager) private var healthKitManager
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .fetchDailyActiveEnergyBurnes:
+                
+                return .none
+            }
+        }
+    }
+}
+
+struct WeeklyChartView: View {
+    struct Weekly: Identifiable {
+        var id = UUID()
+        let day: String
+        let profit: Double
+    }
+    @Dependency(\.healthKitManager) private var healthKitManager
+    
+    @State var dailyActiveEnergyBurnes: [Weekly] = []
+    @State var cancellables: Set<AnyCancellable> = []
     
     var body: some View {
         VStack(alignment: .leading) {
             Text("주당 워크아웃")
-            Chart(data) {
+            Chart(dailyActiveEnergyBurnes) {
                 BarMark(
                     x: .value("Weekly", $0.day),
                     y: .value("Profit", $0.profit)
@@ -64,7 +68,30 @@ struct WeeklyChartView: View {
                minHeight: 165)
         .padding([.leading, .trailing], 15)
         .onAppear {
+            let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
+            var calendar = Calendar.current
+            calendar.timeZone = koreanTimeZone
+            let now = Date()
+            let currentWeekday = calendar.component(.weekday, from: now)
+            let daysFromMonday = (currentWeekday - calendar.firstWeekday + 7) % 7
+            let monday = calendar.date(byAdding: .day, value: -daysFromMonday, to: calendar.startOfDay(for: now))!
             
+            healthKitManager.getWeeklyCalories(from: monday, to: now)
+                .replaceError(with: Array(repeating: 7, count: 0))
+                .sink(receiveValue: { statistics in
+                    guard statistics.count != 0 else {
+                        return
+                    }
+                    let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
+                    let activeEnergyBurnes = weekdays
+                        .enumerated()
+                        .map {
+                            let profit = $0.offset >= statistics.count ? 0.0 : statistics[$0.offset]
+                            return Weekly(day: $0.element, profit: profit)
+                        }
+                    self.dailyActiveEnergyBurnes = activeEnergyBurnes
+                })
+                .store(in: &cancellables)
         }
     }
 }
