@@ -32,7 +32,8 @@ struct MainContentEnergyBurn: View {
             healthKitManager.getHealthQuantityData(
                 type: .activeEnergyBurned,
                 from: .midnight,
-                to: .currentDateForDeviceRegion
+                to: .currentDateForDeviceRegion,
+                unit: .kilocalorie()
             )
             .replaceError(with: 0)
             .sink(receiveValue: { energyBurned in

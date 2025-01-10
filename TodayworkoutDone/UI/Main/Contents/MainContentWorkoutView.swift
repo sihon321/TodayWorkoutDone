@@ -49,7 +49,8 @@ struct MainContentWorkoutView: View {
             healthKitManager.getHealthQuantityData(
                 type: .appleExerciseTime,
                 from: .midnight,
-                to: .currentDateForDeviceRegion
+                to: .currentDateForDeviceRegion,
+                unit: .count()
             )
             .replaceError(with: 0)
             .sink(receiveValue: { appleExerciseTime in

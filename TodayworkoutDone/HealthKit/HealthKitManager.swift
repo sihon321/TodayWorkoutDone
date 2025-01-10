@@ -27,7 +27,8 @@ protocol HealthKitManager {
     func requestAuthorization() -> Future<Bool, Error>
     func getHealthQuantityData(type: HKQuantityTypeIdentifier,
                                from startDate: Date,
-                               to endDate: Date) -> Future<Int, Error>
+                               to endDate: Date,
+                               unit: HKUnit) -> Future<Int, Error>
     func getWeeklyCalories(from startDate: Date,
                            to endDate: Date) -> Future<[Double], Error>
 }
@@ -97,7 +98,8 @@ class LiveHealthKitManager: HealthKitManager {
     
     func getHealthQuantityData(type: HKQuantityTypeIdentifier,
                                from startDate: Date,
-                               to endDate: Date) -> Future<Int, Error> {
+                               to endDate: Date,
+                               unit: HKUnit) -> Future<Int, Error> {
         Future { [weak self] promise in
             guard let `self` = self else { return }
             self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: type)!])
@@ -114,7 +116,7 @@ class LiveHealthKitManager: HealthKitManager {
                         print("\(completion)")
                     }, receiveValue: { statistics in
                         if let sumQuantity = statistics.sumQuantity() {
-                            promise(.success(Int(sumQuantity.doubleValue(for: .kilocalorie()))))
+                            promise(.success(Int(sumQuantity.doubleValue(for: unit))))
                         } else {
                             promise(.success(0))
                         }

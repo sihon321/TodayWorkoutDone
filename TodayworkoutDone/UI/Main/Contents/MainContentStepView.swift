@@ -32,7 +32,8 @@ struct MainContentStepView: View {
             healthKitManager.getHealthQuantityData(
                 type: .stepCount,
                 from: .midnight,
-                to: .currentDateForDeviceRegion
+                to: .currentDateForDeviceRegion,
+                unit: .count()
             )
             .replaceError(with: 0)
             .sink(receiveValue: { stepCount in

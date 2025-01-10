@@ -54,7 +54,7 @@ struct WeeklyChartView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("주당 워크아웃")
+            Text("주당 소모 칼로리")
             Chart(dailyActiveEnergyBurnes) {
                 BarMark(
                     x: .value("Weekly", $0.day),
