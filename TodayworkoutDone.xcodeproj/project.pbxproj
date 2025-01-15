@@ -23,6 +23,7 @@
 		8ED37AF32AC87E0700B4F206 /* MyRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED37AF22AC87E0700B4F206 /* MyRoutine.swift */; };
 		8ED37AF52AC87E2200B4F206 /* Sets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED37AF42AC87E2200B4F206 /* Sets.swift */; };
 		8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */; };
+		9248E2AF2D3800D100D5AF37 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9248E2AE2D3800CF00D5AF37 /* DateManager.swift */; };
 		F2007DA72A8A8AC300833AF0 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */; };
 		F2007DAA2A8AA27E00833AF0 /* HealthKit+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */; };
 		F201082A2B6FE03100265F17 /* MainContentEnergyBurn.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20108292B6FE03100265F17 /* MainContentEnergyBurn.swift */; };
@@ -112,6 +113,7 @@
 		8ED37AF22AC87E0700B4F206 /* MyRoutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutine.swift; sourceTree = "<group>"; };
 		8ED37AF42AC87E2200B4F206 /* Sets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sets.swift; sourceTree = "<group>"; };
 		8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWorkoutView.swift; sourceTree = "<group>"; };
+		9248E2AE2D3800CF00D5AF37 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthKit+Combine.swift"; sourceTree = "<group>"; };
 		F20108292B6FE03100265F17 /* MainContentEnergyBurn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentEnergyBurn.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 		F28FBF302A9BBADC0067DEBC /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				9248E2AE2D3800CF00D5AF37 /* DateManager.swift */,
 				F26808A82A9CE0140016E8E9 /* CalendarView.swift */,
 				F273486A2AAB037600C04347 /* CalendarViewCell.swift */,
 				F296FD712AB5EDF000BCF890 /* CalendarViewComponent.swift */,
@@ -589,6 +592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E2A89082C96E78E009C9032 /* CategoryDatabase.swift in Sources */,
+				9248E2AF2D3800D100D5AF37 /* DateManager.swift in Sources */,
 				F2C63E202959F3C700D02F76 /* WorkoutListView.swift in Sources */,
 				F2903B002AD81FDF008B1916 /* Integer+Extension.swift in Sources */,
 				F23F4E962957FB250084392B /* MyRoutineView.swift in Sources */,

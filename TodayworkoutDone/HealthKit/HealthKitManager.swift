@@ -131,10 +131,7 @@ class LiveHealthKitManager: HealthKitManager {
                            to endDate: Date) -> Future<[Date: Double], Error> {
         Future { [weak self] promise in
             guard let self = self else { return }
-            let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
-            var calendar = Calendar.current
-            calendar.timeZone = koreanTimeZone
-            
+
             self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .activeEnergyBurned)!])
                 .sink(receiveCompletion: { completion in
                     print("\(completion)")
@@ -156,7 +153,7 @@ class LiveHealthKitManager: HealthKitManager {
                         
                         statistics.enumerateStatistics(from: startDate, to: endDate) { statistics, _ in
                             if let quantity = statistics.sumQuantity() {
-                                let date = calendar.startOfDay(for: statistics.startDate)
+                                let date = statistics.startDate
                                 let calories = quantity.doubleValue(for: HKUnit.kilocalorie())
                                 weeklyCalories[date] = calories
                             }
