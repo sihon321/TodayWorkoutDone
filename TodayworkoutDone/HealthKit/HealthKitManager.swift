@@ -30,7 +30,7 @@ protocol HealthKitManager {
                                to endDate: Date,
                                unit: HKUnit) -> Future<Int, Error>
     func getWeeklyCalories(from startDate: Date,
-                           to endDate: Date) -> Future<[Double], Error>
+                           to endDate: Date) -> Future<[Date: Double], Error>
 }
 
 class LiveHealthKitManager: HealthKitManager {
@@ -128,9 +128,13 @@ class LiveHealthKitManager: HealthKitManager {
     }
     
     func getWeeklyCalories(from startDate: Date,
-                           to endDate: Date) -> Future<[Double], Error> {
+                           to endDate: Date) -> Future<[Date: Double], Error> {
         Future { [weak self] promise in
             guard let self = self else { return }
+            let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
+            var calendar = Calendar.current
+            calendar.timeZone = koreanTimeZone
+            
             self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .activeEnergyBurned)!])
                 .sink(receiveCompletion: { completion in
                     print("\(completion)")
@@ -142,20 +146,19 @@ class LiveHealthKitManager: HealthKitManager {
                                                                options: .strictStartDate),
                         options: .cumulativeSum,
                         anchorDate: startDate,
-                        intervalComponents: DateComponents(day: 1),
-                        startDate: startDate,
-                        endDate: endDate
+                        intervalComponents: DateComponents(day: 1)
                     )
                     .receive(on: RunLoop.main)
                     .sink(receiveCompletion: { completion in
                         print("\(completion)")
                     }, receiveValue: { statistics in
-                        var weeklyCalories: [Double] = []
+                        var weeklyCalories: [Date: Double] = [:]
                         
-                        statistics.enumerateStatistics(from: startDate, to: endDate) { statistics, date in
+                        statistics.enumerateStatistics(from: startDate, to: endDate) { statistics, _ in
                             if let quantity = statistics.sumQuantity() {
+                                let date = calendar.startOfDay(for: statistics.startDate)
                                 let calories = quantity.doubleValue(for: HKUnit.kilocalorie())
-                                weeklyCalories.append(calories)
+                                weeklyCalories[date] = calories
                             }
                         }
                         

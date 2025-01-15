@@ -77,9 +77,7 @@ extension HKHealthStore {
         predicate: NSPredicate? = nil,
         options: HKStatisticsOptions = [],
         anchorDate: Date,
-        intervalComponents: DateComponents,
-        startDate: Date,
-        endDate: Date
+        intervalComponents: DateComponents
     ) -> AnyPublisher<HKStatisticsCollection, Error> {
         let subject = PassthroughSubject<HKStatisticsCollection, Error>()
         
