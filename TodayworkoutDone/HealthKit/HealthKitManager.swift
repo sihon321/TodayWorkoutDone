@@ -20,150 +20,111 @@ extension DependencyValues {
         set { self[HealthKitManagerKey.self] = newValue }
     }
 }
-
 protocol HealthKitManager {
     func authorizeHealthKit(typesToShare: Set<HKSampleType>,
-                            typesToRead: Set<HKObjectType>) -> Deferred<Future<Bool, Error>>
-    func requestAuthorization() -> Future<Bool, Error>
+                            typesToRead: Set<HKObjectType>) async throws -> Bool
+    func requestAuthorization() async throws -> Bool
     func getHealthQuantityData(type: HKQuantityTypeIdentifier,
                                from startDate: Date,
                                to endDate: Date,
-                               unit: HKUnit) -> Future<Int, Error>
+                               unit: HKUnit) async throws -> Int
     func getWeeklyCalories(from startDate: Date,
-                           to endDate: Date) -> Future<[Date: Double], Error>
+                           to endDate: Date) async throws -> [Date: Double]
 }
 
 class LiveHealthKitManager: HealthKitManager {
-    
     let healthStore = HKHealthStore()
-    private var cancellables: Set<AnyCancellable> = []
     
-    internal func authorizeHealthKit(typesToShare: Set<HKSampleType> = .init(),
-                                     typesToRead: Set<HKObjectType> = .init()) -> Deferred<Future<Bool, Error>> {
-        Deferred {
-            Future { [weak self] promise in
-                guard let `self` = self,
-                      HKHealthStore.isHealthDataAvailable() else {
-                    promise(.failure(HealthDataError.unavailableOnDevice))
-                    return
-                }
-                
-                healthStore.requestAuthorization(toShare: typesToShare,
-                                                 read: typesToRead) { isSuccess, error in
-                    guard error == nil else {
-                        promise(.failure(error!))
-                        return
-                    }
-                    
-                    if isSuccess {
-                        promise(.success(true))
-                    } else {
-                        promise(.failure(HealthDataError.authorizationRequestError))
-                    }
+    func authorizeHealthKit(typesToShare: Set<HKSampleType> = .init(),
+                            typesToRead: Set<HKObjectType> = .init()) async throws -> Bool {
+        guard HKHealthStore.isHealthDataAvailable() else {
+            throw HealthDataError.unavailableOnDevice
+        }
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { success, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: success)
                 }
             }
         }
     }
     
-    func requestAuthorization() -> Future<Bool, Error> {
-        Future { [weak self] promise in
-            guard let self = self else { return }
-            let typesToRead: Set<HKObjectType> = [
-                HKQuantityType.quantityType(forIdentifier: .stepCount)!,
-                HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-                HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-                HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-                HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
-                HKObjectType.activitySummaryType()
-            ]
-            
-            self.authorizeHealthKit(typesToRead: typesToRead)
-                .sink(receiveCompletion: { completion in
-                    switch completion {
-                    case .finished:
-                        print("Authorization request finished.")
-                    case .failure(let error):
-                        print("Authorization request failed with error: \(error)")
-                    }
-                }, receiveValue: { isSucceeded in
-                    if isSucceeded {
-                        promise(.success(isSucceeded))
-                    } else {
-                        promise(.failure(HealthDataError.authorizationRequestError))
-                    }
-                })
-                .store(in: &cancellables)
-        }
+    func requestAuthorization() async throws -> Bool {
+        let typesToRead: Set<HKObjectType> = [
+            HKQuantityType.quantityType(forIdentifier: .stepCount)!,
+            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
+            HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+            HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
+            HKObjectType.activitySummaryType()
+        ]
+        
+        return try await authorizeHealthKit(typesToRead: typesToRead)
     }
     
     func getHealthQuantityData(type: HKQuantityTypeIdentifier,
                                from startDate: Date,
                                to endDate: Date,
-                               unit: HKUnit) -> Future<Int, Error> {
-        Future { [weak self] promise in
-            guard let `self` = self else { return }
-            self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: type)!])
-                .sink(receiveCompletion: { completion in
-                    print("\(completion)")
-                }, receiveValue: { [self] _ in
-                    let today = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
-                    
-                    self.healthStore.subject(quantityType: .quantityType(forIdentifier: type)!,
-                                             quantitySamplePredicate: today,
-                                             options: .cumulativeSum)
-                    .receive(on: RunLoop.main)
-                    .sink(receiveCompletion: { completion in
-                        print("\(completion)")
-                    }, receiveValue: { statistics in
-                        if let sumQuantity = statistics.sumQuantity() {
-                            promise(.success(Int(sumQuantity.doubleValue(for: unit))))
-                        } else {
-                            promise(.success(0))
-                        }
-                    })
-                    .store(in: &self.cancellables)
-                })
-                .store(in: &cancellables)
+                               unit: HKUnit) async throws -> Int {
+        let isAuthorized = try await authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: type)!])
+        guard isAuthorized else {
+            throw HealthDataError.authorizationRequestError
+        }
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+            let query = HKStatisticsQuery(quantityType: .quantityType(forIdentifier: type)!,
+                                          quantitySamplePredicate: predicate,
+                                          options: .cumulativeSum) { _, result, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else if let sumQuantity = result?.sumQuantity() {
+                    continuation.resume(returning: Int(sumQuantity.doubleValue(for: unit)))
+                } else {
+                    continuation.resume(returning: 0)
+                }
+            }
+            healthStore.execute(query)
         }
     }
     
     func getWeeklyCalories(from startDate: Date,
-                           to endDate: Date) -> Future<[Date: Double], Error> {
-        Future { [weak self] promise in
-            guard let self = self else { return }
-
-            self.authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .activeEnergyBurned)!])
-                .sink(receiveCompletion: { completion in
-                    print("\(completion)")
-                }, receiveValue: { [self] _ in
-                    self.healthStore.subject(
-                        for: .quantityType(forIdentifier: .activeEnergyBurned)!,
-                        predicate: HKQuery.predicateForSamples(withStart: startDate,
-                                                               end: endDate,
-                                                               options: .strictStartDate),
-                        options: .cumulativeSum,
-                        anchorDate: startDate,
-                        intervalComponents: DateComponents(day: 1)
-                    )
-                    .receive(on: RunLoop.main)
-                    .sink(receiveCompletion: { completion in
-                        print("\(completion)")
-                    }, receiveValue: { statistics in
-                        var weeklyCalories: [Date: Double] = [:]
-                        
-                        statistics.enumerateStatistics(from: startDate, to: endDate) { statistics, _ in
-                            if let quantity = statistics.sumQuantity() {
-                                let date = statistics.startDate
-                                let calories = quantity.doubleValue(for: HKUnit.kilocalorie())
-                                weeklyCalories[date] = calories
-                            }
-                        }
-                        
-                        promise(.success(weeklyCalories))
-                    })
-                    .store(in: &self.cancellables)
-                })
-                .store(in: &cancellables)
+                           to endDate: Date) async throws -> [Date: Double] {
+        let isAuthorized = try await authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .activeEnergyBurned)!])
+        guard isAuthorized else {
+            throw HealthDataError.authorizationRequestError
+        }
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+            let interval = DateComponents(day: 1)
+            
+            let query = HKStatisticsCollectionQuery(quantityType: .quantityType(forIdentifier: .activeEnergyBurned)!,
+                                                    quantitySamplePredicate: predicate,
+                                                    options: .cumulativeSum,
+                                                    anchorDate: startDate,
+                                                    intervalComponents: interval)
+            
+            query.initialResultsHandler = { _, results, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                var weeklyCalories: [Date: Double] = [:]
+                results?.enumerateStatistics(from: startDate, to: endDate) { statistics, _ in
+                    if let quantity = statistics.sumQuantity() {
+                        let date = statistics.startDate
+                        let calories = quantity.doubleValue(for: .kilocalorie())
+                        weeklyCalories[date] = calories
+                    }
+                }
+                continuation.resume(returning: weeklyCalories)
+            }
+            healthStore.execute(query)
         }
     }
 }
