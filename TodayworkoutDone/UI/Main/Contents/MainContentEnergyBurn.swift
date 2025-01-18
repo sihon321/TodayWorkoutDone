@@ -6,18 +6,59 @@
 //
 
 import SwiftUI
-import Combine
-import Dependencies
+import ComposableArchitecture
 
-struct MainContentEnergyBurn: View {
+@Reducer
+struct EnergyBurnFeature {
+    @ObservableState
+    struct State: Equatable {
+        var energyBurned: Int = 0
+    }
+    
+    enum Action {
+        case fetchEnergyBurned
+        case updateEnergyBurned(Int)
+    }
+    
     @Dependency(\.healthKitManager) private var healthKitManager
     
-    @State private var energyBurned: Int = 0
-    @State var cancellables: Set<AnyCancellable> = []
+    var body: Reduce<State, Action> {
+        Reduce { state, action in
+            switch action {
+                case .fetchEnergyBurned:
+                return .run { send in
+                    do {
+                        let energy = try await healthKitManager.getHealthQuantityData(
+                            type: .activeEnergyBurned,
+                            from: .midnight,
+                            to: .currentDateForDeviceRegion,
+                            unit: .kilocalorie()
+                        )
+                        await send(.updateEnergyBurned(energy))
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            case .updateEnergyBurned(let energyBurned):
+                state.energyBurned = energyBurned
+                return .none
+            }
+        }
+    }
+}
+
+struct MainContentEnergyBurn: View {
+    @Bindable var store: StoreOf<EnergyBurnFeature>
+    @ObservedObject var viewStore: ViewStoreOf<EnergyBurnFeature>
+    
+    init(store: StoreOf<EnergyBurnFeature>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
+    }
     
     var body: some View {
         HStack {
-            Text("\(energyBurned)")
+            Text("\(viewStore.energyBurned)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
@@ -29,17 +70,7 @@ struct MainContentEnergyBurn: View {
                 .padding(.leading, -5)
         }
         .onAppear {
-            healthKitManager.getHealthQuantityData(
-                type: .activeEnergyBurned,
-                from: .midnight,
-                to: .currentDateForDeviceRegion,
-                unit: .kilocalorie()
-            )
-            .replaceError(with: 0)
-            .sink(receiveValue: { energyBurned in
-                self.energyBurned = energyBurned
-            })
-            .store(in: &cancellables)
+            store.send(.fetchEnergyBurned)
         }
     }
 }

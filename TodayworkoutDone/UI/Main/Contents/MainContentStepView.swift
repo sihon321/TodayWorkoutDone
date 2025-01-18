@@ -6,18 +6,59 @@
 //
 
 import SwiftUI
-import Combine
-import Dependencies
+import ComposableArchitecture
 
-struct MainContentStepView: View {
-    @State private var step: Int = 0
-    @State var cancellables: Set<AnyCancellable> = []
+@Reducer
+struct StepFeature {
+    @ObservableState
+    struct State: Equatable {
+        var step: Int = 0
+    }
+    
+    enum Action {
+        case fetchStep
+        case updateStep(Int)
+    }
     
     @Dependency(\.healthKitManager) private var healthKitManager
     
+    var body: Reduce<State, Action> {
+        Reduce { state, action in
+            switch action {
+                case .fetchStep:
+                return .run { send in
+                    do {
+                        let stepCount = try await healthKitManager.getHealthQuantityData(
+                            type: .stepCount,
+                            from: .midnight,
+                            to: .currentDateForDeviceRegion,
+                            unit: .count()
+                        )
+                        await send(.updateStep(stepCount))
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            case .updateStep(let step):
+                state.step = step
+                return .none
+            }
+        }
+    }
+}
+
+struct MainContentStepView: View {
+    @Bindable var store: StoreOf<StepFeature>
+    @ObservedObject var viewStore: ViewStoreOf<StepFeature>
+    
+    init(store: StoreOf<StepFeature>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
+    }
+    
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("\(step)")
+            Text("\(viewStore.step)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
@@ -29,17 +70,7 @@ struct MainContentStepView: View {
                 .padding(.leading, -5)
         }
         .onAppear {
-            healthKitManager.getHealthQuantityData(
-                type: .stepCount,
-                from: .midnight,
-                to: .currentDateForDeviceRegion,
-                unit: .count()
-            )
-            .replaceError(with: 0)
-            .sink(receiveValue: { stepCount in
-                step = stepCount
-            })
-            .store(in: &cancellables)
+            store.send(.fetchStep)
         }
     }
 }

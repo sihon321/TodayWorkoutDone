@@ -28,7 +28,11 @@ struct MainView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading) {
                     welcomeView()
-                    WeeklyChartView()
+                    WeeklyChartView(
+                        store: Store(initialState: WeeklyChart.State()) {
+                            WeeklyChart()
+                        }
+                    )
                     Spacer(minLength: 15)
                     MainContentView()
                         .padding(.bottom, 15 + bottomEdge + 35)

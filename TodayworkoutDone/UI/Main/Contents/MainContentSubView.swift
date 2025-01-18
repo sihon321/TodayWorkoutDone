@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct MainContentSubView: View {
     var type: MainContentView.MainContentType
@@ -43,11 +44,23 @@ struct MainContentSubView: View {
             HStack(alignment: .firstTextBaseline) {
                 switch type {
                 case .stepCount:
-                    MainContentStepView()
+                    MainContentStepView(
+                        store: Store(initialState: StepFeature.State()) {
+                            StepFeature()
+                        }
+                    )
                 case .workoutTime:
-                    MainContentWorkoutView()
+                    MainContentWorkoutView(
+                        store: Store(initialState: ExerciseTimeFeature.State()) {
+                            ExerciseTimeFeature()
+                        }
+                    )
                 case .energyBurn:
-                    MainContentEnergyBurn()
+                    MainContentEnergyBurn(
+                        store: Store(initialState: EnergyBurnFeature.State()) {
+                            EnergyBurnFeature()
+                        }
+                    )
                 }
             }
             .padding(.leading, 15)

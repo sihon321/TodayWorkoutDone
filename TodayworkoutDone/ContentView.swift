@@ -18,7 +18,6 @@ struct ContentReducer {
     
     enum Action {
         case requestAuthorization
-        case authoriazationResponse(Result<Bool, Error>)
     }
     
     @Dependency(\.healthKitManager) private var healthKitManager
@@ -27,16 +26,14 @@ struct ContentReducer {
         Reduce { state, action in
             switch action {
             case .requestAuthorization:
-                healthKitManager.requestAuthorization()
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { _ in
-                        
-                    })
-                    .store(in: &state.cancellable)
-                return .none
-            case .authoriazationResponse(let result):
-                return .none
+                return .run { send in
+                    do {
+                        let isSuccess = try await healthKitManager.requestAuthorization()
+                        print("HealthKit authorization" + isSuccess.description)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
             }
         }
     }

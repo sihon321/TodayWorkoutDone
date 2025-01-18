@@ -6,24 +6,59 @@
 //
 
 import SwiftUI
-import Combine
-import Dependencies
+import ComposableArchitecture
 
-struct MainContentWorkoutView: View {
+@Reducer
+struct ExerciseTimeFeature {
+    @ObservableState
+    struct State: Equatable {
+        var exerciseTime: Int = 0
+    }
+    
+    enum Action {
+        case fetchExerciseTime
+        case updateExerciseTime(Int)
+    }
+    
     @Dependency(\.healthKitManager) private var healthKitManager
     
-    @State private var exerciseTime: Int = 0
-    @State var cancellables: Set<AnyCancellable> = []
+    var body: Reduce<State, Action> {
+        Reduce { state, action in
+            switch action {
+                case .fetchExerciseTime:
+                return .run { send in
+                    do {
+                        let time = try await healthKitManager.getHealthQuantityData(
+                            type: .appleExerciseTime,
+                            from: .midnight,
+                            to: .currentDateForDeviceRegion,
+                            unit: .minute()
+                        )
+                        await send(.updateExerciseTime(time))
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            case .updateExerciseTime(let exerciseTime):
+                state.exerciseTime = exerciseTime
+                return .none
+            }
+        }
+    }
+}
+
+struct MainContentWorkoutView: View {
+    @Bindable var store: StoreOf<ExerciseTimeFeature>
+    @ObservedObject var viewStore: ViewStoreOf<ExerciseTimeFeature>
     
-    private var hour: Int {
-        return exerciseTime / 60
+    init(store: StoreOf<ExerciseTimeFeature>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
     }
-    private var minute: Int {
-        return exerciseTime % 60
-    }
+
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("\(hour)")
+            Text("\(store.exerciseTime / 60)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
@@ -33,7 +68,7 @@ struct MainContentWorkoutView: View {
                               design: .default))
                 .foregroundColor(Color(0x7d7d7d))
                 .padding(.leading, -5)
-            Text("\(minute)")
+            Text("\(store.exerciseTime % 60)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
@@ -46,17 +81,7 @@ struct MainContentWorkoutView: View {
                 .padding(.leading, -5)
         }
         .onAppear {
-            healthKitManager.getHealthQuantityData(
-                type: .appleExerciseTime,
-                from: .midnight,
-                to: .currentDateForDeviceRegion,
-                unit: .count()
-            )
-            .replaceError(with: 0)
-            .sink(receiveValue: { appleExerciseTime in
-                self.exerciseTime = appleExerciseTime
-            })
-            .store(in: &cancellables)
+            store.send(.fetchExerciseTime)
         }
     }
 }
