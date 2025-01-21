@@ -18,10 +18,12 @@ struct WorkoutListSubview: View {
                 workouts.isSelected = !workouts.isSelected
             }) {
                 HStack {
-                    Image(uiImage: UIImage(named: "woman")!)
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .padding([.leading], 15)
+                    if let image = UIImage(named: "default") {
+                        Image(uiImage: image)
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .padding([.leading], 15)
+                    }
                     Text(workouts.name)
                     Spacer()
                     if workouts.isSelected {

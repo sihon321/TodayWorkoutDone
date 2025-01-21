@@ -4,5 +4,41 @@
     },
     {
         "name": "pilates"
+    },
+    {
+        "name": "cardio"
+    },
+    {
+        "name": "yoga"
+    },
+    {
+        "name": "crossfit"
+    },
+    {
+        "name": "stretching"
+    },
+    {
+        "name": "HIIT"
+    },
+    {
+        "name": "aerobics"
+    },
+    {
+        "name": "cycling"
+    },
+    {
+        "name": "running"
+    },
+    {
+        "name": "swimming"
+    },
+    {
+        "name": "boxing"
+    },
+    {
+        "name": "dance"
+    },
+    {
+        "name": "climbing"
     }
 ]

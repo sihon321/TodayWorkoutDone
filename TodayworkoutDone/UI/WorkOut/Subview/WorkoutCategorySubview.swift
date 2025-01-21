@@ -12,9 +12,13 @@ struct WorkoutCategorySubview: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            Image(uiImage: UIImage(named: "woman")!)
-                .padding(.leading, 15)
-                .padding([.top, .bottom], 10)
+            if let image = UIImage(named: category.name) ?? UIImage(named: "default") {
+                Image(uiImage: image)
+                    .resizable()
+                    .padding(.leading, 15)
+                    .padding([.top, .bottom], 10)
+                    .frame(maxWidth: 120)
+            }
             VStack {
                 Text(category.name)
                     .font(.system(size: 18,
