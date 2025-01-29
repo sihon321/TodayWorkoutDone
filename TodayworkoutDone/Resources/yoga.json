@@ -1,0 +1,50 @@
+[
+    {
+        "category": "yoga",
+        "name": "타다아사나",
+        "target": "유연성",
+        "isSelected": false
+    },
+    {
+        "category": "yoga",
+        "name": "전사",
+        "target": "유연성",
+        "isSelected": false
+    },
+    {
+        "category": "yoga",
+        "name": "우티타 트리코나사나",
+        "target": "유연성",
+        "isSelected": false
+    },
+    {
+        "category": "yoga",
+        "name": "받다코나사나",
+        "target": "유연성",
+        "isSelected": false
+    },
+    {
+        "category": "yoga",
+        "name": "수카아사나",
+        "target": "유연성",
+        "isSelected": false
+    },
+    {
+        "category": "yoga",
+        "name": "사바아사나",
+        "target": "유연성",
+        "isSelected": false
+    },
+    {
+        "category": "yoga",
+        "name": "브륵샤아사나",
+        "target": "유연성",
+        "isSelected": false
+    },
+    {
+        "category": "yoga",
+        "name": "발라아사나",
+        "target": "유연성",
+        "isSelected": false
+    }
+]
