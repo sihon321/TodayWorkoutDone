@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8E2A89062C96E332009C9032 /* WorkoutRoutineDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A89052C96E332009C9032 /* WorkoutRoutineDatabase.swift */; };
 		8E2A89082C96E78E009C9032 /* CategoryDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A89072C96E78E009C9032 /* CategoryDatabase.swift */; };
-		8E4066A729B33CEC004BB7A2 /* workouts.json in Resources */ = {isa = PBXBuildFile; fileRef = 8E4066A629B33CEC004BB7A2 /* workouts.json */; };
 		8E52F6D32CBD049F00362A40 /* AddWorkoutCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E52F6D22CBD049F00362A40 /* AddWorkoutCategoryView.swift */; };
 		8E8767EE2BB55C9E00B74F98 /* MainContentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8767ED2BB55C9E00B74F98 /* MainContentDetailView.swift */; };
 		8EB47E0A2CAFF86B0063C1EA /* WorkoutRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB47E092CAFF86B0063C1EA /* WorkoutRoutine.swift */; };
@@ -24,6 +23,11 @@
 		8ED37AF52AC87E2200B4F206 /* Sets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED37AF42AC87E2200B4F206 /* Sets.swift */; };
 		8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */; };
 		9248E2AF2D3800D100D5AF37 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9248E2AE2D3800CF00D5AF37 /* DateManager.swift */; };
+		926B74AD2D4A3AD60006E8CB /* strength.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AA2D4A3AD60006E8CB /* strength.json */; };
+		926B74AE2D4A3AD60006E8CB /* cardio.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74A82D4A3AD60006E8CB /* cardio.json */; };
+		926B74AF2D4A3AD60006E8CB /* pilates.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74A92D4A3AD60006E8CB /* pilates.json */; };
+		926B74B02D4A3AD60006E8CB /* stretching.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AB2D4A3AD60006E8CB /* stretching.json */; };
+		926B74B12D4A3AD60006E8CB /* yoga.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AC2D4A3AD60006E8CB /* yoga.json */; };
 		F2007DA72A8A8AC300833AF0 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */; };
 		F2007DAA2A8AA27E00833AF0 /* HealthKit+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */; };
 		F201082A2B6FE03100265F17 /* MainContentEnergyBurn.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20108292B6FE03100265F17 /* MainContentEnergyBurn.swift */; };
@@ -98,7 +102,6 @@
 /* Begin PBXFileReference section */
 		8E2A89052C96E332009C9032 /* WorkoutRoutineDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRoutineDatabase.swift; sourceTree = "<group>"; };
 		8E2A89072C96E78E009C9032 /* CategoryDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDatabase.swift; sourceTree = "<group>"; };
-		8E4066A629B33CEC004BB7A2 /* workouts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = workouts.json; sourceTree = "<group>"; };
 		8E4066AB29B33D71004BB7A2 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		8E52790829C7099B000DCD7F /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		8E52F6D22CBD049F00362A40 /* AddWorkoutCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutCategoryView.swift; sourceTree = "<group>"; };
@@ -114,6 +117,11 @@
 		8ED37AF42AC87E2200B4F206 /* Sets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sets.swift; sourceTree = "<group>"; };
 		8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWorkoutView.swift; sourceTree = "<group>"; };
 		9248E2AE2D3800CF00D5AF37 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
+		926B74A82D4A3AD60006E8CB /* cardio.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cardio.json; sourceTree = "<group>"; };
+		926B74A92D4A3AD60006E8CB /* pilates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pilates.json; sourceTree = "<group>"; };
+		926B74AA2D4A3AD60006E8CB /* strength.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = strength.json; sourceTree = "<group>"; };
+		926B74AB2D4A3AD60006E8CB /* stretching.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = stretching.json; sourceTree = "<group>"; };
+		926B74AC2D4A3AD60006E8CB /* yoga.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = yoga.json; sourceTree = "<group>"; };
 		F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthKit+Combine.swift"; sourceTree = "<group>"; };
 		F20108292B6FE03100265F17 /* MainContentEnergyBurn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentEnergyBurn.swift; sourceTree = "<group>"; };
@@ -200,10 +208,14 @@
 		8E4066A529B33C90004BB7A2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				926B74A82D4A3AD60006E8CB /* cardio.json */,
+				926B74A92D4A3AD60006E8CB /* pilates.json */,
+				926B74AA2D4A3AD60006E8CB /* strength.json */,
+				926B74AB2D4A3AD60006E8CB /* stretching.json */,
+				926B74AC2D4A3AD60006E8CB /* yoga.json */,
 				F2E74CE92921F73600BD35F6 /* Assets.xcassets */,
 				F2E74CEB2921F73600BD35F6 /* TodayworkoutDone.entitlements */,
 				F2CB39F4295DE48B00CA80D6 /* ColorAsset.xcassets */,
-				8E4066A629B33CEC004BB7A2 /* workouts.json */,
 				F264AC5B29D21F3A0003E70D /* category.json */,
 			);
 			path = Resources;
@@ -564,9 +576,13 @@
 			files = (
 				F2CB39F5295DE48B00CA80D6 /* ColorAsset.xcassets in Resources */,
 				F2E74CEE2921F73600BD35F6 /* Preview Assets.xcassets in Resources */,
+				926B74AD2D4A3AD60006E8CB /* strength.json in Resources */,
+				926B74AE2D4A3AD60006E8CB /* cardio.json in Resources */,
+				926B74AF2D4A3AD60006E8CB /* pilates.json in Resources */,
+				926B74B02D4A3AD60006E8CB /* stretching.json in Resources */,
+				926B74B12D4A3AD60006E8CB /* yoga.json in Resources */,
 				F264AC5C29D21F3A0003E70D /* category.json in Resources */,
 				F2E74CEA2921F73600BD35F6 /* Assets.xcassets in Resources */,
-				8E4066A729B33CEC004BB7A2 /* workouts.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,6 +22,7 @@ struct WorkoutListSubview: View {
                         Image(uiImage: image)
                             .resizable()
                             .frame(width: 50, height: 50)
+                            .cornerRadius(10)
                             .padding([.leading], 15)
                     }
                     Text(workouts.name)

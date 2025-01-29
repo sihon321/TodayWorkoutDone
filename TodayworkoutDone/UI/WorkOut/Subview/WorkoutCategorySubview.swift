@@ -15,9 +15,10 @@ struct WorkoutCategorySubview: View {
             if let image = UIImage(named: category.name) ?? UIImage(named: "default") {
                 Image(uiImage: image)
                     .resizable()
+                    .frame(maxWidth: 100)
+                    .cornerRadius(10)
                     .padding(.leading, 15)
                     .padding([.top, .bottom], 10)
-                    .frame(maxWidth: 120)
             }
             VStack {
                 Text(category.name)

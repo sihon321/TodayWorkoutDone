@@ -176,9 +176,9 @@ struct WorkoutReducer {
                     // MARK: - workoutList
                 case .workoutList(let action):
                     switch action {
-                    case .getWorkouts:
+                    case let .getWorkouts(categoryName):
                         return .run { send in
-                            let workouts = workoutRepository.loadWorkouts()
+                            let workouts = workoutRepository.loadWorkouts(categoryName)
                             await send(.workoutCategory(.workoutList(.updateWorkouts(workouts))))
                         }
                     case .updateWorkouts(let workouts):
@@ -237,7 +237,7 @@ struct WorkoutReducer {
                         }
                     case .updateCategories(let categories):
                         state.makeWorkout?.addWorkoutCategory.categories = categories
-                        return .send(.makeWorkout(.addWorkoutCategory(.workoutList(.getWorkouts))))
+                        return .none
                     case .dismissWorkoutCategory:
                         state.makeWorkout?.destination = .none
                         return .none
@@ -245,9 +245,9 @@ struct WorkoutReducer {
                         // MARK: - addmakeWorkout workoutList
                     case .workoutList(let action):
                         switch action {
-                        case .getWorkouts:
+                        case let .getWorkouts(categoryName):
                             return .run { send in
-                                let workouts = workoutRepository.loadWorkouts()
+                                let workouts = workoutRepository.loadWorkouts(categoryName)
                                 await send(.makeWorkout(.addWorkoutCategory(.workoutList(.updateWorkouts(workouts)))))
                             }
                         case .updateWorkouts(let workouts):
@@ -423,7 +423,6 @@ struct WorkoutView: View {
             .workoutViewToolbar(store: store, viewStore: viewStore)
             .onAppear {
                 if !store.hasLoaded {
-                    viewStore.send(.workoutCategory(.workoutList(.getWorkouts)))
                     viewStore.send(.getMyRoutines)
                     viewStore.send(.hasLoaded)
                 }

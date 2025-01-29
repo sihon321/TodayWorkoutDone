@@ -16,13 +16,13 @@ extension DependencyValues {
 }
 
 struct WorkoutAPIRepository {
-    var loadWorkouts: () -> [Workout]
+    var loadWorkouts: (String) -> [Workout]
 }
 
 extension WorkoutAPIRepository: DependencyKey {
     public static let liveValue = Self(
-        loadWorkouts: {
-            let workouts: [Workout] = load("workouts.json")
+        loadWorkouts: { name in
+            let workouts: [Workout] = load("\(name).json")
             
             return workouts
         }
