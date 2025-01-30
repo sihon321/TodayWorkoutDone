@@ -12,8 +12,6 @@ import ComposableArchitecture
 struct CalendarReducer {
     @ObservableState
     struct State: Equatable {
-        @Presents var destination: Destination.State?
-        
         var workoutRoutines: [WorkoutRoutine] = []
         let monthFormatter = DateFormatter(dateFormat: "MMMM YYYY",
                                            calendar: .current)
@@ -25,7 +23,7 @@ struct CalendarReducer {
                                           calendar: .current)
         var todayDate = Date()
         var selectedDate: Date? = nil
-        var isPresented = false
+        var isSheetPresented = false
         var calendarDetail: CalendarDetailReducer.State?
         
         func filterWorkout(date: Date?) -> [WorkoutRoutine] {
@@ -47,16 +45,9 @@ struct CalendarReducer {
         case setSheetIsPresentedDelayCompleted
         case calendarDetail(CalendarDetailReducer.Action)
         
-        case destination(PresentationAction<Destination.Action>)
-        
         var description: String {
             return "\(self)"
         }
-    }
-    
-    @Reducer(state: .equatable)
-    enum Destination {
-        
     }
     
     @Dependency(\.workoutRoutineData) var workoutRoutineContext
@@ -77,36 +68,35 @@ struct CalendarReducer {
                 return .none
             case .tappedDate(let date):
                 state.selectedDate = date
-                return .none
+                return .run { send in
+                    await send(.setSheet(isPresented: true))
+                }
+                .cancellable(id: CancelID.load)
                 
             case .setSheet(isPresented: true):
-                state.isPresented = false
-                state.calendarDetail = nil
+                state.isSheetPresented = true
                 return .run { send in
                   await send(.setSheetIsPresentedDelayCompleted)
                 }
                 .cancellable(id: CancelID.load)
+                
             case .setSheet(isPresented: false):
-              state.isPresented = false
+              state.isSheetPresented = false
               state.calendarDetail = nil
               return .cancel(id: CancelID.load)
+                
             case .setSheetIsPresentedDelayCompleted:
                 if let date = state.selectedDate {
                     state.calendarDetail = CalendarDetailReducer.State(
                         date: date,
                         workoutRoutines: state.filterWorkout(date: date)
                     )
-                    state.isPresented = true
                 }
-                return .none
-            case .calendarDetail:
-                return .none
-            case .destination:
                 return .none
             }
         }
-        .ifLet(\.$destination, action: \.destination) {
-          Destination.body
+        .ifLet(\.calendarDetail, action: \.calendarDetail) {
+            CalendarDetailReducer()
         }
     }
 }
@@ -123,14 +113,10 @@ struct CalendarView: View {
     var body: some View {
         NavigationView {
             CalendarViewComponent(
-                startDate: startDate(viewStore.workoutRoutines),
                 store: store,
                 content: { date in
                     Button(action: {
                         store.send(.tappedDate(date))
-                        if store.state.filterWorkout(date: date).isEmpty == false {
-                            store.send(.setSheet(isPresented: true))
-                        }
                     }) {
                         CalendarViewCell(
                             store: Store(
@@ -163,7 +149,7 @@ struct CalendarView: View {
             .padding([.leading, .trailing], 15)
             .background(Color(0xf4f4f4))
             .navigationTitle("Calendar")
-            .sheet(isPresented: $store.isPresented.sending(\.setSheet)) {
+            .sheet(isPresented: $store.isSheetPresented.sending(\.setSheet)) {
                 if let store = store.scope(state: \.calendarDetail, action: \.calendarDetail) {
                   CalendarDetailView(store: store)
                 }
@@ -172,20 +158,6 @@ struct CalendarView: View {
         .onAppear {
             store.send(.loadWorkoutRoutines)
         }
-    }
-}
-
-private extension CalendarView {
-    func startDate(_ workoutRoutines: [WorkoutRoutine]) -> Date {
-        let dates = workoutRoutines.compactMap({ $0.date })
-        let sortedDates = dates.sorted(by: >)
-        return sortedDates.first ?? Date()
-    }
-    
-    func endDate(_ workoutRoutines: [WorkoutRoutine]) -> Date {
-        let dates = workoutRoutines.compactMap({ $0.date })
-        let sortedDates = dates.sorted(by: <)
-        return sortedDates.first ?? Date()
     }
 }
 

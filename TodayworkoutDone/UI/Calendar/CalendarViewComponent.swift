@@ -9,11 +9,12 @@ import SwiftUI
 import ComposableArchitecture
 
 struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: View>: View {
-
+    @Bindable var store: StoreOf<CalendarReducer>
+    @ObservedObject var viewStore: ViewStoreOf<CalendarReducer>
+    
     // Injected dependencies
     private var startDate: Date
     private var months: [Date] = []
-    private var store: StoreOf<CalendarReducer>
     private let content: (Date) -> Day
     private let trailing: (Date) -> Trailing
     private let header: (Date) -> Header
@@ -26,15 +27,17 @@ struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: Vie
     private let daysInWeek = 7
     
     public init(
-        startDate: Date,
         store: StoreOf<CalendarReducer>,
         @ViewBuilder content: @escaping (Date) -> Day,
         @ViewBuilder trailing: @escaping (Date) -> Trailing,
         @ViewBuilder header: @escaping (Date) -> Header,
         @ViewBuilder title: @escaping (Date) -> Title
     ) {
-        self.startDate = startDate
         self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
+        let dates = store.workoutRoutines.compactMap({ $0.date })
+        let sortedDates = dates.sorted(by: >)
+        self.startDate = sortedDates.first ?? Date()
         self.content = content
         self.trailing = trailing
         self.header = header

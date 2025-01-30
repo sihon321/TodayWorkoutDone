@@ -176,6 +176,7 @@ struct HomeReducer {
                       }
                     }
                     .cancellable(id: CancelID.timer, cancelInFlight: true)
+                    
                 case let .workingOutSection(action):
                     switch action {
                     case let .element(sectionId, action):
@@ -354,7 +355,7 @@ struct HomeView: View {
                 }
                 .tag(0)
                 
-                CalendarView(store: Store(initialState: store.calendar) {
+                CalendarView(store: Store(initialState: CalendarReducer.State()) {
                     CalendarReducer()
                 })
                 .tag(1)
