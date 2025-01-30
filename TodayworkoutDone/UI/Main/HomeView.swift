@@ -102,6 +102,7 @@ struct HomeReducer {
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
                 state.isHideTabBar = true
                 state.myRoutine.isRunning = false
+                state.workingOut = nil
                 state.destination = .none
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
@@ -115,6 +116,7 @@ struct HomeReducer {
                                      routineTime: secondsElapsed)
                 state.isHideTabBar = true
                 state.myRoutine.isRunning = false
+                state.workingOut = nil
                 state.destination = .none
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
@@ -340,17 +342,6 @@ struct HomeView: View {
                     MainView(bottomEdge: store.bottomEdge)
                     if store.myRoutine.isRunning == false {
                         startButton()
-                    } else if let store = store.scope(state: \.workingOut,
-                                                       action: \.workingOut) {
-                        SlideOverCardView(
-                            hideTabValue: viewStore.binding(
-                                get: { $0.tabBarOffset },
-                                send: { HomeReducer.Action.setTabBarOffset(offset: $0) }
-                            ),
-                            content: {
-                                WorkingOutView(store: store)
-                            }
-                        )
                     }
                 }
                 .tag(0)
@@ -360,15 +351,27 @@ struct HomeView: View {
                 })
                 .tag(1)
             }
-            .overlay(
-                VStack {
-                    CustomTabBar(store: store.scope(state: \.tabBar,
-                                                    action: \.tabBar))
-                }.offset(y: store.isHideTabBar ? CGFloat.zero : store.tabBarOffset),
-                alignment: .bottom
-            )
+            if let store = store.scope(state: \.workingOut,
+                                       action: \.workingOut) {
+                SlideOverCardView(
+                    hideTabValue: viewStore.binding(
+                        get: { $0.tabBarOffset },
+                        send: { HomeReducer.Action.setTabBarOffset(offset: $0) }
+                    ),
+                    content: {
+                        WorkingOutView(store: store)
+                    }
+                )
+            }
             Spacer()
         }
+        .overlay(
+            VStack {
+                CustomTabBar(store: store.scope(state: \.tabBar,
+                                                action: \.tabBar))
+            }.offset(y: store.isHideTabBar ? CGFloat.zero : store.tabBarOffset),
+            alignment: .bottom
+        )
         .fullScreenCover(
             item: $store.scope(state: \.destination?.workoutView,
                                action: \.destination.workoutView)
