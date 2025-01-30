@@ -208,15 +208,10 @@
 		8E4066A529B33C90004BB7A2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				926B74A82D4A3AD60006E8CB /* cardio.json */,
-				926B74A92D4A3AD60006E8CB /* pilates.json */,
-				926B74AA2D4A3AD60006E8CB /* strength.json */,
-				926B74AB2D4A3AD60006E8CB /* stretching.json */,
-				926B74AC2D4A3AD60006E8CB /* yoga.json */,
+				924762DB2D4B7ACE008FF911 /* Json */,
 				F2E74CE92921F73600BD35F6 /* Assets.xcassets */,
 				F2E74CEB2921F73600BD35F6 /* TodayworkoutDone.entitlements */,
 				F2CB39F4295DE48B00CA80D6 /* ColorAsset.xcassets */,
-				F264AC5B29D21F3A0003E70D /* category.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -282,6 +277,19 @@
 				8E8767ED2BB55C9E00B74F98 /* MainContentDetailView.swift */,
 			);
 			path = Chart;
+			sourceTree = "<group>";
+		};
+		924762DB2D4B7ACE008FF911 /* Json */ = {
+			isa = PBXGroup;
+			children = (
+				926B74A82D4A3AD60006E8CB /* cardio.json */,
+				926B74A92D4A3AD60006E8CB /* pilates.json */,
+				926B74AA2D4A3AD60006E8CB /* strength.json */,
+				926B74AB2D4A3AD60006E8CB /* stretching.json */,
+				926B74AC2D4A3AD60006E8CB /* yoga.json */,
+				F264AC5B29D21F3A0003E70D /* category.json */,
+			);
+			path = Json;
 			sourceTree = "<group>";
 		};
 		F2007DA82A8AA25700833AF0 /* HealthKit */ = {
