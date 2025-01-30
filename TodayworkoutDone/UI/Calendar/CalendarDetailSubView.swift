@@ -13,6 +13,7 @@ struct CalendarDetailSubView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("\(workoutRoutine.date, format: Date.FormatStyle(date: .numeric, time: .standard))")
+            Text(workoutRoutine.uuid.uuidString)
             ForEach(workoutRoutine.routines, id: \.id) { routine in
                 HStack {
                     Text(routine.workout.name)

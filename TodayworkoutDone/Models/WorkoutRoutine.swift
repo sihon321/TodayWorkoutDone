@@ -21,7 +21,7 @@ class WorkoutRoutine: Codable, Equatable, Identifiable {
     
     init(date: Date, routineTime: Int, myRoutine: MyRoutine) {
         self.date = date
-        self.uuid = myRoutine.id
+        self.uuid = UUID()
         self.routineTime = routineTime
         self.routines = myRoutine.routines
     }
@@ -44,5 +44,5 @@ class WorkoutRoutine: Codable, Equatable, Identifiable {
 }
 
 extension WorkoutRoutine {
-    var id: String { date.description }
+    var id: String { uuid.uuidString }
 }

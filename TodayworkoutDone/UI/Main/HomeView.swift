@@ -79,6 +79,7 @@ struct HomeReducer {
             case .enterRoutineName(let name):
                 state.routineName = name
                 return .none
+                
             case .startButtonTapped:
                 state.destination = .workoutView(
                     WorkoutReducer.State(
@@ -92,9 +93,11 @@ struct HomeReducer {
                     )
                 )
                 return .none
+                
             case .setTabBarOffset(let offset):
                 state.tabBarOffset = offset
                 return .none
+                
             case .presentedSaveRoutineAlert:
                 state.destination = .alert(.saveRoutineAlert(state.myRoutine))
                 return .none
@@ -102,31 +105,36 @@ struct HomeReducer {
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
                 state.isHideTabBar = true
                 state.myRoutine.isRunning = false
-                state.workingOut = nil
                 state.destination = .none
+                state.workingOut = nil
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
                 }
+                
             case .destination(.presented(.alert(.tappedWorkoutAlertCancel))):
                 return .run { send in
                     await send(.workingOut(.toggleTimer))
                 }
+                
             case .destination(.presented(.alert(.tappedWorkoutAlertOk(let secondsElapsed)))):
                 insertWorkoutRoutine(myRoutine: state.workingOut?.myRoutine,
                                      routineTime: secondsElapsed)
                 state.isHideTabBar = true
                 state.myRoutine.isRunning = false
-                state.workingOut = nil
                 state.destination = .none
+                state.workingOut = nil
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
                     await send(.presentedSaveRoutineAlert)
                 }
+                
             case .destination(.presented(.alert(.tappedMyRoutineAlertCancel))):
                 return .none
+                
             case .destination(.presented(.alert(.tappedMyRoutineAlerOk(let myRoutine)))):
                 insertMyRoutine(myRoutine: myRoutine)
                 return .none
+                
             case .destination(.presented(.workoutView(.makeWorkout(.tappedDone)))):
                 if state.myRoutine.isRunning {
                     state.workingOut = WorkingOutReducer.State(
@@ -142,6 +150,7 @@ struct HomeReducer {
                     )
                 }
                 return .none
+                
             case .destination:
               return .none
 
@@ -274,7 +283,9 @@ struct HomeReducer {
                 }
                 
             case .tabBar(.tabButton(.setTab(let info))):
-                state.tabBar.tabButton.info = info
+                if state.tabBar.tabButton.info.index != info.index {
+                    state.tabBar.tabButton.info = info
+                }
                 return .none
             }
         }
@@ -306,6 +317,7 @@ struct HomeReducer {
                                                 routineTime: routineTime,
                                                 myRoutine: myRoutine)
             try context.add(workoutRoutine)
+            try context.save()
         } catch {
             print(WorkoutRoutineDatabase.WorkoutRoutineError.add)
         }

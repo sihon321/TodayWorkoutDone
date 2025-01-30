@@ -19,10 +19,12 @@ extension DependencyValues {
 struct WorkoutRoutineDatabase {
     var fetchAll: @Sendable () throws -> [WorkoutRoutine]
     var add: @Sendable (WorkoutRoutine) throws -> Void
+    var save: @Sendable () throws -> Void
     var delete: @Sendable (WorkoutRoutine) throws -> Void
     
     enum WorkoutRoutineError: Error {
         case add
+        case save
         case delete
     }
 }
@@ -50,6 +52,16 @@ extension WorkoutRoutineDatabase: DependencyKey {
                 throw WorkoutRoutineError.add
             }
         },
+        save: {
+            do {
+                @Dependency(\.databaseService.context) var context
+                let routineContext = try context()
+                
+                try routineContext.save()
+            } catch {
+                throw WorkoutRoutineError.save
+            }
+        },
         delete: { model in
             do {
                 @Dependency(\.databaseService.context) var context
@@ -67,8 +79,7 @@ extension WorkoutRoutineDatabase: TestDependencyKey {
     public static let testValue = Self(
         fetchAll: unimplemented("\(Self.self).fetchAll"),
         add: unimplemented("\(Self.self).add"),
+        save: unimplemented("\(Self.self).save"),
         delete: unimplemented("\(Self.self).delete")
     )
 }
-
-
