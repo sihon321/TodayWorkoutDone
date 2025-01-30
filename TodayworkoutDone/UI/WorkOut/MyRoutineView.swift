@@ -39,7 +39,7 @@ struct MyRoutineView: View {
                 HStack {
                     ForEach(viewStore.myRoutines) { myRoutine in
                         Button(action: {
-                            viewStore.send(.touchedMyRoutine(myRoutine))
+                            store.send(.touchedMyRoutine(myRoutine))
                         }) {
                             MyWorkoutSubview(store: store, myRoutine: myRoutine)
                         }

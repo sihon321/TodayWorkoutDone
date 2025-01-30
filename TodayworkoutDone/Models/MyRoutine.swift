@@ -38,4 +38,8 @@ class MyRoutine: Codable, Equatable, Identifiable {
         try container.encode(name, forKey: .name)
         try container.encode(routines, forKey: .routines)
     }
+    
+    static func == (lhs: MyRoutine, rhs: MyRoutine) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

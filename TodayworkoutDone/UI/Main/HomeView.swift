@@ -34,6 +34,7 @@ struct HomeReducer {
             )
         )
         var calendar: CalendarReducer.State = CalendarReducer.State()
+        var myRoutineState = MyRoutineReducer.State()
     }
     
     enum Action {
@@ -43,6 +44,9 @@ struct HomeReducer {
         case enterRoutineName(name: String)
         case setTabBarOffset(offset: CGFloat)
         case presentedSaveRoutineAlert
+        
+        case getMyRoutines
+        case fetchMyRoutines([MyRoutine])
         
         case workingOut(WorkingOutReducer.Action)
         case tabBar(CustomTabBarReducer.Action)
@@ -89,7 +93,8 @@ struct HomeReducer {
                             workoutList: WorkoutListReducer.State(
                                 myRoutine: Shared(state.myRoutine)
                             )
-                        )
+                        ),
+                        myRoutineState: state.myRoutineState
                     )
                 )
                 return .none
@@ -99,7 +104,19 @@ struct HomeReducer {
                 return .none
                 
             case .presentedSaveRoutineAlert:
-                state.destination = .alert(.saveRoutineAlert(state.myRoutine))
+                if state.myRoutineState.myRoutines.contains(state.myRoutine) == false {
+                    state.destination = .alert(.saveRoutineAlert(state.myRoutine))
+                }
+                return .none
+                
+            case .getMyRoutines:
+                return .run { send in
+                    let myRoutines = try context.fetchAll()
+                    await send(.fetchMyRoutines(myRoutines))
+                }
+                
+            case .fetchMyRoutines(let myRoutines):
+                state.myRoutineState.myRoutines = myRoutines
                 return .none
 
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
@@ -123,8 +140,10 @@ struct HomeReducer {
                 state.myRoutine.isRunning = false
                 state.destination = .none
                 state.workingOut = nil
+
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
+                    
                     await send(.presentedSaveRoutineAlert)
                 }
                 
@@ -376,6 +395,9 @@ struct HomeView: View {
                 )
             }
             Spacer()
+        }
+        .onAppear {
+            store.send(.getMyRoutines)
         }
         .overlay(
             VStack {

@@ -18,7 +18,7 @@ struct WorkoutReducer {
         @Shared var myRoutine: MyRoutine
         
         var workoutCategory: WorkoutCategoryReducer.State
-        var myRoutineState = MyRoutineReducer.State()
+        var myRoutineState: MyRoutineReducer.State
         var makeWorkout: MakeWorkoutReducer.State?
         var workouts: [Workout] = []
         var hasLoaded = false
@@ -69,10 +69,9 @@ struct WorkoutReducer {
         case search(keyword: String)
         case dismiss
         case hasLoaded
-        case getMyRoutines
+        
         case appearMakeWorkout
         case createMakeWorkoutView(myRoutine: MyRoutine?, isEdit: Bool)
-        case fetchMyRoutines([MyRoutine])
         
         var description: String {
             return "\(self)"
@@ -143,15 +142,9 @@ struct WorkoutReducer {
                 }
                 
                 return .none
-            case .getMyRoutines:
-                return .run { send in
-                    let myRoutines = try context.fetchAll()
-                    await send(.fetchMyRoutines(myRoutines))
-                }
-            case .fetchMyRoutines(let myRoutines):
-                state.myRoutineState.myRoutines = myRoutines
-                return .none
+                
             case .destination(.presented(.alert(.tappedMyRoutineStart(let myRoutine)))):
+                state.myRoutine.id = myRoutine.id
                 state.myRoutine.name = myRoutine.name
                 state.myRoutine.routines = myRoutine.routines
                 return .send(.makeWorkout(.tappedDone))
@@ -423,7 +416,6 @@ struct WorkoutView: View {
             .workoutViewToolbar(store: store, viewStore: viewStore)
             .onAppear {
                 if !store.hasLoaded {
-                    viewStore.send(.getMyRoutines)
                     viewStore.send(.hasLoaded)
                 }
             }
