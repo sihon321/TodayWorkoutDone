@@ -24,6 +24,7 @@ struct HomeReducer {
         var tabBarOffset: CGFloat = 0.0
         var bottomEdge: CGFloat = 35
         var deletedSectionIndex: Int?
+        var workoutRoutine: WorkoutRoutine?
         
         var workingOut: WorkingOutReducer.State?
         var tabBar: CustomTabBarReducer.State = CustomTabBarReducer.State(
@@ -123,7 +124,7 @@ struct HomeReducer {
                 state.isHideTabBar = true
                 state.myRoutine.isRunning = false
                 state.destination = .none
-                state.workingOut = nil
+                state.workingOut = .none
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
                 }
@@ -134,13 +135,18 @@ struct HomeReducer {
                 }
                 
             case .destination(.presented(.alert(.tappedWorkoutAlertOk(let secondsElapsed)))):
-                insertWorkoutRoutine(myRoutine: state.workingOut?.myRoutine,
-                                     routineTime: secondsElapsed)
+                guard let myRoutine = state.workingOut?.myRoutine else {
+                    return .none
+                }
+                let workoutRoutine = WorkoutRoutine(date: Date(),
+                                                    routineTime: secondsElapsed,
+                                                    myRoutine: myRoutine)
+                insertWorkoutRoutine(workout: workoutRoutine)
                 state.isHideTabBar = true
                 state.myRoutine.isRunning = false
                 state.destination = .none
-                state.workingOut = nil
-
+                state.workingOut = .none
+                
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
                     
@@ -167,6 +173,7 @@ struct HomeReducer {
                             }
                         )
                     )
+                    state.workoutRoutine = WorkoutRoutine
                 }
                 return .none
                 
@@ -325,17 +332,11 @@ struct HomeReducer {
         }
     }
     
-    private func insertWorkoutRoutine(myRoutine: MyRoutine?, routineTime: Int) {
-        guard let myRoutine = myRoutine else {
-            return
-        }
+    private func insertWorkoutRoutine(workout routine: WorkoutRoutine) {
         @Dependency(\.workoutRoutineData) var context
         
         do {
-            let workoutRoutine = WorkoutRoutine(date: Date(),
-                                                routineTime: routineTime,
-                                                myRoutine: myRoutine)
-            try context.add(workoutRoutine)
+            try context.add(routine)
             try context.save()
         } catch {
             print(WorkoutRoutineDatabase.WorkoutRoutineError.add)

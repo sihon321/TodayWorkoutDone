@@ -10,9 +10,11 @@ import SwiftData
 
 @Model
 class WorkoutRoutine: Codable, Equatable, Identifiable {
-    var date: Date
-    var routineTime: Int
     var uuid: UUID
+    var startDate: Date
+    var endDate: Date
+    var routineTime: Int
+    
     @Relationship(deleteRule: .cascade) var routines: [Routine]
     
     enum CodingKeys: CodingKey {
@@ -20,8 +22,8 @@ class WorkoutRoutine: Codable, Equatable, Identifiable {
     }
     
     init(date: Date, routineTime: Int, myRoutine: MyRoutine) {
-        self.date = date
         self.uuid = UUID()
+        self.date = date
         self.routineTime = routineTime
         self.routines = myRoutine.routines
     }

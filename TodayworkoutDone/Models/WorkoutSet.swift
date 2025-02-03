@@ -1,5 +1,5 @@
 //
-//  Sets.swift
+//  WorkoutSet.swift
 //  TodayworkoutDone
 //
 //  Created by ocean on 2023/10/01.
@@ -12,25 +12,25 @@ class WorkoutSet: Codable, Identifiable, Equatable {
     var id: UUID
     var prevWeight: Double
     var weight: Double
-    var prevLab: Int
-    var lab: Int
+    var prevReps: Int
+    var reps: Int
     var isChecked: Bool
     
     enum CodingKeys: String, CodingKey {
-        case id, prevWeight, weight, prevLab, lab, isChecked
+        case id, prevWeight, weight, prevReps, reps, isChecked
     }
     
     init(id: UUID = UUID(),
          prevWeight: Double = .zero,
          weight: Double = .zero,
-         prevLab: Int = .zero,
-         lab: Int = .zero,
+         prevReps: Int = .zero,
+         reps: Int = .zero,
          isChecked: Bool = false) {
         self.id = id
         self.prevWeight = prevWeight
         self.weight = weight
-        self.prevLab = prevLab
-        self.lab = lab
+        self.prevReps = prevReps
+        self.reps = reps
         self.isChecked = isChecked
     }
     
@@ -39,8 +39,8 @@ class WorkoutSet: Codable, Identifiable, Equatable {
         id = try container.decode(UUID.self, forKey: .id)
         prevWeight = try container.decode(Double.self, forKey: .prevWeight)
         weight = try container.decode(Double.self, forKey: .weight)
-        prevLab = try container.decode(Int.self, forKey: .prevLab)
-        lab = try container.decode(Int.self, forKey: .lab)
+        prevReps = try container.decode(Int.self, forKey: .prevReps)
+        reps = try container.decode(Int.self, forKey: .reps)
         isChecked = try container.decode(Bool.self, forKey: .isChecked)
     }
     
@@ -49,8 +49,8 @@ class WorkoutSet: Codable, Identifiable, Equatable {
         try container.encode(id, forKey: .id)
         try container.encode(prevWeight, forKey: .prevWeight)
         try container.encode(weight, forKey: .weight)
-        try container.encode(prevLab, forKey: .prevLab)
-        try container.encode(lab, forKey: .lab)
+        try container.encode(prevReps, forKey: .prevReps)
+        try container.encode(reps, forKey: .reps)
         try container.encode(isChecked, forKey: .isChecked)
     }
     
