@@ -35,7 +35,7 @@ extension WorkoutRoutineDatabase: DependencyKey {
             do {
                 @Dependency(\.databaseService.context) var context
                 let routineContext = try context()
-                let descriptor = FetchDescriptor<WorkoutRoutine>(sortBy: [SortDescriptor(\.date)])
+                let descriptor = FetchDescriptor<WorkoutRoutine>(sortBy: [SortDescriptor(\.startDate)])
                 
                 return try routineContext.fetch(descriptor)
             } catch {

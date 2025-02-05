@@ -44,9 +44,9 @@ struct CalendarViewCell: View {
                 .cornerRadius(7)
             
             if store.workoutRoutines.contains(where: {
-                $0.date.year == store.date.year
-                && $0.date.month == store.date.month
-                && $0.date.day == store.date.day
+                $0.startDate.year == store.date.year
+                && $0.startDate.month == store.date.month
+                && $0.startDate.day == store.date.day
             }) {
                 Circle()
                     .foregroundColor(.red)

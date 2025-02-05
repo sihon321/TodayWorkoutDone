@@ -138,10 +138,9 @@ struct HomeReducer {
                 guard let myRoutine = state.workingOut?.myRoutine else {
                     return .none
                 }
-                let workoutRoutine = WorkoutRoutine(date: Date(),
-                                                    routineTime: secondsElapsed,
-                                                    myRoutine: myRoutine)
-                insertWorkoutRoutine(workout: workoutRoutine)
+                state.workoutRoutine?.endDate = Date()
+                state.workoutRoutine?.routineTime = secondsElapsed
+                insertWorkoutRoutine(workout: state.workoutRoutine!)
                 state.isHideTabBar = true
                 state.myRoutine.isRunning = false
                 state.destination = .none
@@ -173,7 +172,10 @@ struct HomeReducer {
                             }
                         )
                     )
-                    state.workoutRoutine = WorkoutRoutine
+                    if let myRoutine = state.workingOut?.myRoutine  {
+                        state.workoutRoutine = WorkoutRoutine(startDate: Date(),
+                                                              myRoutine: myRoutine)
+                    }
                 }
                 return .none
                 
@@ -270,7 +272,7 @@ struct HomeReducer {
                                         state.workingOut?.myRoutine
                                             .routines[sectionIndex]
                                             .sets[rowIndex]
-                                            .lab = labValue
+                                            .reps = labValue
                                     }
                                     return .none
                                 case let .typeWeight(weight):

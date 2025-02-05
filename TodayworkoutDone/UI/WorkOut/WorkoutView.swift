@@ -317,7 +317,7 @@ struct WorkoutReducer {
                                         state.makeWorkout?.myRoutine
                                             .routines[sectionIndex]
                                             .sets[rowIndex]
-                                            .lab = labValue
+                                            .reps = labValue
                                     }
                                     return .none
                                 case let .typeWeight(weight):

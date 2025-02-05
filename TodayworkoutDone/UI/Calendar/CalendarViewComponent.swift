@@ -35,7 +35,7 @@ struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: Vie
     ) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
-        let dates = store.workoutRoutines.compactMap({ $0.date })
+        let dates = store.workoutRoutines.compactMap({ $0.startDate })
         let sortedDates = dates.sorted(by: >)
         self.startDate = sortedDates.first ?? Date()
         self.content = content

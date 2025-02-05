@@ -69,16 +69,16 @@ struct WorkingOutRow: View {
             }
             if viewStore.editMode == .active {
                 TextField("count", text: viewStore.binding(
-                    get: { String($0.workoutSet.lab) },
+                    get: { String($0.workoutSet.reps) },
                     send: { WorkingOutRowReducer.Action.typeLab(lab: $0) })
                 )
                 .background(Color(uiColor: .secondarySystemBackground))
                 .cornerRadius(5)
             } else {
-                Text(String(viewStore.workoutSet.lab))
+                Text(String(viewStore.workoutSet.reps))
             }
             Spacer()
-            Text("\(viewStore.workoutSet.prevLab)")
+            Text("\(viewStore.workoutSet.prevReps)")
                 .frame(minWidth: 40)
                 .background(Color(uiColor: .secondarySystemFill))
                 .cornerRadius(5)

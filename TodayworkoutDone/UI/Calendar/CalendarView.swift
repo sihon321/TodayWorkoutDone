@@ -29,9 +29,9 @@ struct CalendarReducer {
         func filterWorkout(date: Date?) -> [WorkoutRoutine] {
             guard let date = date else { return [] }
             return workoutRoutines.filter({
-                $0.date.year == date.year
-                && $0.date.month == date.month
-                && $0.date.day == date.day
+                $0.startDate.year == date.year
+                && $0.startDate.month == date.month
+                && $0.startDate.day == date.day
             })
         }
     }
