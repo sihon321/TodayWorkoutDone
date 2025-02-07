@@ -15,9 +15,11 @@ class WorkoutSet: Codable, Identifiable, Equatable {
     var prevReps: Int
     var reps: Int
     var isChecked: Bool
+    var endDate: Date?
+    var restTime: Int = 0
     
     enum CodingKeys: String, CodingKey {
-        case id, prevWeight, weight, prevReps, reps, isChecked
+        case id, prevWeight, weight, prevReps, reps, isChecked, endDate, restTime
     }
     
     init(id: UUID = UUID(),
@@ -42,6 +44,8 @@ class WorkoutSet: Codable, Identifiable, Equatable {
         prevReps = try container.decode(Int.self, forKey: .prevReps)
         reps = try container.decode(Int.self, forKey: .reps)
         isChecked = try container.decode(Bool.self, forKey: .isChecked)
+        endDate = try container.decode(Date?.self, forKey: .endDate)
+        restTime = try container.decode(Int.self, forKey: .restTime)
     }
     
     func encode(to encoder: any Encoder) throws {
@@ -52,6 +56,8 @@ class WorkoutSet: Codable, Identifiable, Equatable {
         try container.encode(prevReps, forKey: .prevReps)
         try container.encode(reps, forKey: .reps)
         try container.encode(isChecked, forKey: .isChecked)
+        try container.encode(endDate, forKey: .endDate)
+        try container.encode(restTime, forKey: .restTime)
     }
     
     static func ==(lhs: WorkoutSet, rhs: WorkoutSet) -> Bool {

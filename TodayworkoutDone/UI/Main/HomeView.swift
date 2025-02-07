@@ -74,7 +74,6 @@ struct HomeReducer {
     
     private enum CancelID { case timer }
     
-    @Dependency(\.myRoutineData) var context
     @Dependency(\.continuousClock) var clock
     
     var body: some Reducer<State, Action> {
@@ -112,6 +111,7 @@ struct HomeReducer {
                 
             case .getMyRoutines:
                 return .run { send in
+                    @Dependency(\.myRoutineData) var context
                     let myRoutines = try context.fetchAll()
                     await send(.fetchMyRoutines(myRoutines))
                 }
@@ -254,10 +254,21 @@ struct HomeReducer {
                                             .routines[sectionIndex]
                                             .sets[rowIndex]
                                             .isChecked = isChecked
+                                        state.workingOut?.myRoutine
+                                            .routines[sectionIndex]
+                                            .sets[rowIndex]
+                                            .endDate = isChecked ? Date() : nil
                                         state.workingOut?
                                             .workingOutSection[sectionIndex]
                                             .workingOutRow[rowIndex]
                                             .isChecked = isChecked
+                                        if let isAllTrue = state.workingOut?.myRoutine
+                                            .routines[sectionIndex]
+                                            .allTrue, isAllTrue {
+                                            state.workingOut?.myRoutine
+                                                .routines[sectionIndex]
+                                                .endDate = Date()
+                                        }
                                     }
                                     return .none
                                 case let .typeLab(lab):
@@ -323,9 +334,11 @@ struct HomeReducer {
     }
     
     private func insertMyRoutine(myRoutine: MyRoutine?) {
+        @Dependency(\.myRoutineData) var context
         do {
             if let myRoutine = myRoutine {
                 try context.add(myRoutine)
+                try context.save()
             } else {
                 throw MyRoutineDatabase.MyRoutineError.add
             }
@@ -346,8 +359,10 @@ struct HomeReducer {
     }
     
     private func deleteMyRoutine(_ myRoutine: MyRoutine) {
+        @Dependency(\.myRoutineData) var context
         do {
             try context.delete(myRoutine)
+            try context.save()
         } catch {
             print(error.localizedDescription)
         }

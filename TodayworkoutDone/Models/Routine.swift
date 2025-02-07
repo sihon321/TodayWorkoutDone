@@ -14,10 +14,11 @@ class Routine: Codable, Equatable, Identifiable {
     var sets: [WorkoutSet]
     var workoutsType: WorkoutsType
     var endDate: Date?
-    var workoutTime: Double?
+    var calories: Double = 0.0
+    var restTime: Int = 0
     
     enum CodingKeys: String, CodingKey {
-        case workouts, sets, workotusType, endDate, workoutTime
+        case workouts, sets, workotusType, endDate, calories, restTime
     }
     
     init(workouts: Workout,
@@ -34,8 +35,8 @@ class Routine: Codable, Equatable, Identifiable {
         sets = try container.decode([WorkoutSet].self, forKey: .sets)
         workoutsType = try container.decode(WorkoutsType.self, forKey: .workotusType)
         endDate = try container.decode(Date?.self, forKey: .endDate)
-        workoutTime = try container.decode(Double?.self, forKey: .workoutTime)
-        
+        calories = try container.decode(Double.self, forKey: .calories)
+        restTime = try container.decode(Int.self, forKey: .restTime)
     }
     
     func encode(to encoder: any Encoder) throws {
@@ -44,9 +45,15 @@ class Routine: Codable, Equatable, Identifiable {
         try container.encode(sets, forKey: .sets)
         try container.encode(workoutsType, forKey: .workotusType)
         try container.encode(endDate, forKey: .endDate)
-        try container.encode(workoutTime, forKey: .workoutTime)
+        try container.encode(calories, forKey: .calories)
+        try container.encode(restTime, forKey: .restTime)
     }
+}
 
+extension Routine {
+    var allTrue: Bool {
+        return self.sets.allSatisfy { $0.isChecked }
+    }
 }
 
 extension Routine {
@@ -56,3 +63,5 @@ extension Routine {
 }
 
 typealias Routines = [Routine]
+
+
