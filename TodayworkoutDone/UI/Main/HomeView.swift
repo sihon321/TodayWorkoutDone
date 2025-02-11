@@ -88,12 +88,7 @@ struct HomeReducer {
                 state.destination = .workoutView(
                     WorkoutReducer.State(
                         myRoutine: Shared(state.myRoutine),
-                        workoutCategory: WorkoutCategoryReducer.State(
-                            myRoutine: Shared(state.myRoutine),
-                            workoutList: WorkoutListReducer.State(
-                                myRoutine: Shared(state.myRoutine)
-                            )
-                        ),
+                        temporary: Shared(MyRoutine()),
                         myRoutineState: state.myRoutineState
                     )
                 )

@@ -16,6 +16,7 @@ struct WorkoutListSubview: View {
         VStack {
             Button(action: {
                 workouts.isSelected = !workouts.isSelected
+                store.send(.updateMyRoutine(workouts))
             }) {
                 HStack {
                     if let image = UIImage(named: "default") {
@@ -27,7 +28,7 @@ struct WorkoutListSubview: View {
                     }
                     Text(workouts.name)
                     Spacer()
-                    if workouts.isSelected {
+                    if store.myRoutine.routines.contains(where: { $0.workout.id == workouts.id }) {
                         Image(systemName:"checkmark")
                     }
                 }

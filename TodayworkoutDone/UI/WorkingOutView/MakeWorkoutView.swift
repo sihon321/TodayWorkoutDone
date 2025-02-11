@@ -22,6 +22,25 @@ struct MakeWorkoutReducer {
         
         var addWorkoutCategory: AddWorkoutCategoryReducer.State
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
+        
+        init(myRoutine: Shared<MyRoutine>,
+             isEdit: Bool) {
+            self._myRoutine = myRoutine
+            self.isEdit = isEdit
+            addWorkoutCategory = AddWorkoutCategoryReducer.State(
+                myRoutine: myRoutine,
+                workoutList: WorkoutListReducer.State(myRoutine: myRoutine)
+            )
+            let elements = myRoutine.routines.wrappedValue.map {
+                WorkingOutSectionReducer.State(
+                    routine: $0,
+                    editMode: .active
+                )
+            }
+            workingOutSection = IdentifiedArrayOf(
+                uniqueElements: elements
+            )
+        }
     }
     
     enum Action {

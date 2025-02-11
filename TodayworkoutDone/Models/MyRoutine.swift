@@ -42,4 +42,8 @@ class MyRoutine: Codable, Equatable, Identifiable {
     static func == (lhs: MyRoutine, rhs: MyRoutine) -> Bool {
         return lhs.id == rhs.id
     }
+    
+    func copy() -> MyRoutine {
+        return MyRoutine(id: id, name: name, routines: routines)
+    }
 }

@@ -15,18 +15,7 @@ struct WorkoutListReducer {
     struct State: Equatable {
         @Shared var myRoutine: MyRoutine
         var workouts: [Workout] = []
-        
-        var isEmptySelectedWorkouts: Bool {
-            var isEmpty = true
-            for workouts in workouts {
-                if workouts.isSelected {
-                    isEmpty = false
-                    break
-                }
-            }
-            return isEmpty
-        }
-        
+
         var groupedNames: [(key: String, value: [Workout])] {
             let groupedDictionary = Dictionary(grouping: workouts, by: { extractFirstCharacter($0.name) })
             return groupedDictionary.sorted { $0.key < $1.key }
@@ -51,6 +40,7 @@ struct WorkoutListReducer {
     }
     
     enum Action {
+        case updateMyRoutine(Workout)
         case makeWorkoutView([Routine])
         case getWorkouts(String)
         case updateWorkouts([Workout])
@@ -81,27 +71,12 @@ struct WorkoutListView: View {
         .listStyle(.plain)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                if !viewStore.isEmptySelectedWorkouts {
+                if !viewStore.myRoutine.routines.isEmpty {
                     Button(action: {
-                        if store.myRoutine.routines.isEmpty == false {
-                            var myRoutines: [Routine] = []
-                            let myRoutineWorkouts = store.myRoutine.routines.map({ $0.workout })
-                            let filteredWorkouts = store.workouts.filter({ $0.isSelected })
-                            
-                            for workout in filteredWorkouts where !myRoutineWorkouts.contains(workout) {
-                                myRoutines.append(Routine(workouts: workout))
-                            }
-                            
-                            store.send(.makeWorkoutView(store.myRoutine.routines + myRoutines))
-                        } else {
-                            let routines = store.workouts
-                                .filter({ $0.isSelected })
-                                .compactMap({ Routine(workouts: $0) })
-                            store.send(.makeWorkoutView(routines))
-                        }
+                        store.send(.makeWorkoutView(store.myRoutine.routines))
                     }) {
-                        let selectedWorkout = viewStore.workouts.filter({ $0.isSelected })
-                        Text("Done(\(selectedWorkout.count))")
+                        let selectedWorkoutCount = viewStore.myRoutine.routines.count
+                        Text("Done(\(selectedWorkoutCount))")
                     }
                 }
             }

@@ -55,3 +55,9 @@ class Workout: Codable, Equatable {
 extension Workout: Identifiable {
     var id: String { name }
 }
+
+extension Array where Element == Workout {
+    var allTrue: Bool {
+        return self.allSatisfy { $0.isSelected }
+    }
+}
