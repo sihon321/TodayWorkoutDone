@@ -34,6 +34,11 @@ struct MyWorkoutSubview: View {
                         }) {
                             Label("편집", systemImage: "pencil")
                         }
+                        Button(action: {
+                            store.send(.touchedDelete(myRoutine))
+                        }) {
+                            Label("삭제", systemImage: "pencil")
+                        }
                     } label: {
                         Image(systemName: "ellipsis")
                             .contentShape(Rectangle())

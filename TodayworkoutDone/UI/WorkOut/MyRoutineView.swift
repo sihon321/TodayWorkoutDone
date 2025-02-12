@@ -20,6 +20,7 @@ struct MyRoutineReducer {
     enum Action {
         case touchedMyRoutine(MyRoutine)
         case touchedEditMode(MyRoutine)
+        case touchedDelete(MyRoutine)
     }
 }
 

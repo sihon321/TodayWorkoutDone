@@ -382,13 +382,19 @@ struct WorkoutReducer {
                 }
                 
             // MARK: - myRoutine
-            case .myRoutineAction(let action):
+            case let .myRoutineAction(action):
                 switch action {
-                case .touchedMyRoutine(let selectedMyRoutine):
+                case let .touchedMyRoutine(selectedMyRoutine):
                     state.destination = .alert(.startMyRoutine(selectedMyRoutine))
                     return .none
-                case .touchedEditMode(let myRoutine):
+                case let .touchedEditMode(myRoutine):
                     return .send(.createMakeWorkoutView(myRoutine: myRoutine, isEdit: true))
+                case let .touchedDelete(myRoutine):
+                    return .run { send in
+                        try context.delete(myRoutine)
+                        try context.save()
+                        await send(.getMyRoutines)
+                    }
                 }
             }
         }
