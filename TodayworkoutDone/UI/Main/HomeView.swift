@@ -87,7 +87,7 @@ struct HomeReducer {
             case .startButtonTapped:
                 state.destination = .workoutView(
                     WorkoutReducer.State(
-                        myRoutine: Shared(state.myRoutine),
+                        myRoutine: state.$myRoutine,
                         temporary: Shared(MyRoutine()),
                         myRoutineState: state.myRoutineState
                     )
