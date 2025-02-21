@@ -50,19 +50,8 @@ struct WorkoutCategoryView: View {
     var body: some View {
         VStack(alignment: .leading)  {
             Text("category")
-            let filteredCategory = viewStore.workoutList.workouts
-                .filter({
-                    $0.name.hasPrefix(store.keyword)
-                    || $0.category.hasPrefix(store.keyword)
-                })
-                .compactMap({ $0.category })
-                .uniqued()
             let categories = viewStore.categories.filter {
-                if store.keyword.isEmpty || filteredCategory.contains($0.name) {
-                    return true
-                } else {
-                    return false
-                }
+                $0.name.hasPrefix(store.keyword)
             }
             ForEach(categories) { category in
                 NavigationLink {

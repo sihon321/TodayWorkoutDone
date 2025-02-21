@@ -175,6 +175,9 @@ struct WorkoutReducer {
                     // MARK: - workoutList
                 case .workoutList(let action):
                     switch action {
+                    case .search(let keyword):
+                        state.workoutCategory.workoutList.keyword = keyword
+                        return .none
                     case let .updateMyRoutine(workout):
                         if workout.isSelected {
                             state.temporaryRoutine.routines.append(Routine(workouts: workout))
@@ -250,6 +253,12 @@ struct WorkoutReducer {
                         // MARK: - addmakeWorkout workoutList
                     case .workoutList(let action):
                         switch action {
+                        case .search(let keyword):
+                            state.makeWorkout?
+                                .addWorkoutCategory
+                                .workoutList
+                                .keyword = keyword
+                            return .none
                         case let .updateMyRoutine(workout):
                             if workout.isSelected {
                                 state.temporaryRoutine.routines.append(Routine(workouts: workout))

@@ -15,9 +15,11 @@ struct WorkoutListReducer {
     struct State: Equatable {
         @Shared var myRoutine: MyRoutine
         var workouts: [Workout] = []
-
+        var keyword: String = ""
         var groupedNames: [(key: String, value: [Workout])] {
-            let groupedDictionary = Dictionary(grouping: workouts, by: { extractFirstCharacter($0.name) })
+            let filteredWorkout = workouts.filter { $0.name.hasPrefix(keyword) }
+            let groupedDictionary = Dictionary(grouping: filteredWorkout,
+                                               by: { extractFirstCharacter($0.name) })
             return groupedDictionary.sorted { $0.key < $1.key }
         }
         
@@ -40,6 +42,7 @@ struct WorkoutListReducer {
     }
     
     enum Action {
+        case search(keyword: String)
         case updateMyRoutine(Workout)
         case makeWorkoutView([Routine])
         case getWorkouts(String)
@@ -81,6 +84,10 @@ struct WorkoutListView: View {
                 }
             }
         }
+        .searchable(text: viewStore.binding(
+            get: { $0.keyword },
+            send: { WorkoutListReducer.Action.search(keyword: $0) }
+        ))
         .navigationTitle(categoryName)
         .onAppear {
             store.send(.getWorkouts(categoryName))
