@@ -12,13 +12,18 @@ import ComposableArchitecture
 @main
 struct TodayworkoutDoneApp: App {
     @State private var isActive = false
+    @State private var isLogin = false
     
     var body: some Scene {
         WindowGroup {
             if isActive {
-                ContentView(store: Store(initialState: ContentReducer.State()) {
-                    ContentReducer()
-                })
+                if isLogin {
+                    ContentView(store: Store(initialState: ContentReducer.State()) {
+                        ContentReducer()
+                    })
+                } else {
+                    LoginView(isLogin: $isLogin)
+                }
             } else {
                 SplashView(isActive: $isActive)
             }

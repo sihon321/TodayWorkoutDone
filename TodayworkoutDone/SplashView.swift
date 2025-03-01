@@ -22,7 +22,7 @@ struct SplashView: View {
             }
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // 2초 후 전환
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 withAnimation {
                     isActive = true
                 }
