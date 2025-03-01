@@ -11,12 +11,17 @@ import ComposableArchitecture
 
 @main
 struct TodayworkoutDoneApp: App {
+    @State private var isActive = false
     
     var body: some Scene {
         WindowGroup {
-            ContentView(store: Store(initialState: ContentReducer.State()) {
-                ContentReducer()
-            })
+            if isActive {
+                ContentView(store: Store(initialState: ContentReducer.State()) {
+                    ContentReducer()
+                })
+            } else {
+                SplashView(isActive: $isActive)
+            }
         }
         .modelContainer(SwiftDataConfigurationProvider.shared.container)
     }
