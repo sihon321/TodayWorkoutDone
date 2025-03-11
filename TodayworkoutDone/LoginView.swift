@@ -11,12 +11,14 @@ struct LoginView: View {
     @Binding var isLogin: Bool
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack {
+            Spacer()
             Image(.splash)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 242, height: 100)
-                .padding(.bottom, 150)
+            Spacer()
+            
             Button(action: {
                 isLogin = true
             }) {
@@ -34,6 +36,7 @@ struct LoginView: View {
             .frame(width: 330, height: 55)
             .background(Color.white)
             .cornerRadius(10)
+            Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(0xFEB548))

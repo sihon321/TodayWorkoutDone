@@ -67,6 +67,13 @@ struct CalendarReducer {
                 state.workoutRoutines = workoutRoutines
                 return .none
             case .tappedDate(let date):
+                guard state.workoutRoutines.contains(where: {
+                    $0.startDate.year == date.year
+                    && $0.startDate.month == date.month
+                    && $0.startDate.day == date.day
+                }) else {
+                    return .none
+                }
                 state.selectedDate = date
                 return .run { send in
                     await send(.setSheet(isPresented: true))

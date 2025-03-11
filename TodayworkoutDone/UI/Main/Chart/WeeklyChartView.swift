@@ -63,7 +63,7 @@ struct WeeklyChart {
             case let .weeklyCaloriesResponse(.success(dailyCalories)):
                 state.dailyActiveEnergyBurnes = dailyCalories
                 return .none
-            case let.weeklyCaloriesResponse(.failure(error)):
+            case .weeklyCaloriesResponse(.failure(_)):
                 let now = Date()
                 guard let monday = state.dateManager.getMondayOfCurrentWeek(from: now) else {
                     return .none

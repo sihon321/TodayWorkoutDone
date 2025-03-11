@@ -31,25 +31,12 @@ struct CalendarDetailView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                List(filterWorkout(date: viewStore.date, viewStore.workoutRoutines)) { workoutRoutine in
-                    Section(header: Text("\(workoutRoutine.routines.count) exercises")) {
-                        CalendarDetailSubView(workoutRoutine: workoutRoutine)
-                    }
-                }
+        VStack {
+            ForEach(viewStore.workoutRoutines) { workoutRoutine in
+                CalendarDetailSubView(workoutRoutine: workoutRoutine)
             }
-            .padding([.top], 30)
-            .padding([.leading, .bottom, .trailing], 15)
         }
-    }
-    
-    func filterWorkout(date: Date?, _ workoutRoutines: [WorkoutRoutine]) -> [WorkoutRoutine] {
-        guard let date = date else { return [] }
-        return workoutRoutines.filter({
-            $0.startDate.year == date.year
-            && $0.startDate.month == date.month
-            && $0.startDate.day == date.day
-        })
+        .padding([.top], 30)
+        .padding([.leading, .bottom, .trailing], 15)
     }
 }

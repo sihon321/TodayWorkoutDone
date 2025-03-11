@@ -130,9 +130,6 @@ struct HomeReducer {
                 }
                 
             case .destination(.presented(.alert(.tappedWorkoutAlertOk(let secondsElapsed)))):
-                guard let myRoutine = state.workingOut?.myRoutine else {
-                    return .none
-                }
                 state.workoutRoutine?.endDate = Date()
                 state.workoutRoutine?.routineTime = secondsElapsed
                 insertWorkoutRoutine(workout: state.workoutRoutine!)
