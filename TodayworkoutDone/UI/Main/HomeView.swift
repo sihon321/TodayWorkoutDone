@@ -165,8 +165,11 @@ struct HomeReducer {
                         )
                     )
                     if let myRoutine = state.workingOut?.myRoutine  {
-                        state.workoutRoutine = WorkoutRoutine(startDate: Date(),
-                                                              myRoutine: myRoutine)
+                        state.workoutRoutine = WorkoutRoutine(
+                            name: myRoutine.name,
+                            startDate: Date(),
+                            myRoutine: myRoutine
+                        )
                     }
                 }
                 return .none
@@ -257,9 +260,11 @@ struct HomeReducer {
                                         if let isAllTrue = state.workingOut?.myRoutine
                                             .routines[sectionIndex]
                                             .allTrue, isAllTrue {
+                                            let setEndDates = state.workingOut?.myRoutine
+                                                .routines[sectionIndex].sets.compactMap { $0.endDate }
                                             state.workingOut?.myRoutine
                                                 .routines[sectionIndex]
-                                                .endDate = Date()
+                                                .averageEndDate = setEndDates?.calculateAverageSecondsBetweenDates()
                                         }
                                     }
                                     return .none

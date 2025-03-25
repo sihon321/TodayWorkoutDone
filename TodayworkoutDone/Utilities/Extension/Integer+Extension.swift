@@ -31,4 +31,23 @@ extension Int {
         }
         return hms
     }
+    
+    func convertSecondsToHMS() -> String {
+        let hours = self / 3600
+        let minutes = (self % 3600) / 60
+        let remainingSeconds = self % 60
+        
+        var result: String = ""
+        if hours > 0 {
+            result += "\(hours)시간 "
+        }
+        
+        if minutes > 0 {
+            result += "\(minutes)분 "
+        }
+        
+        result += "\(remainingSeconds)초"
+        
+        return result
+    }
 }

@@ -43,4 +43,32 @@ extension Date {
         
         return dateFormatter.date(from: dateString)!
     }
+    
+    func formatToKoreanStyle() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy년 M월 d일, EEEE, a h:mm"
+        return dateFormatter.string(from: self)
+    }
 }
+
+extension Array where Element == Date {
+    
+    func calculateAverageSecondsBetweenDates() -> Double {
+        guard self.count > 1 else {
+            return 0 // 날짜가 1개 이하면 간격을 계산할 수 없음
+        }
+        
+        let sortedDates = self.sorted()
+        var totalSeconds = 0.0
+        
+        for i in 1..<sortedDates.count {
+            let interval = sortedDates[i].timeIntervalSince(sortedDates[i-1])
+            totalSeconds += interval
+        }
+        
+        return totalSeconds / Double(sortedDates.count - 1)
+    }
+
+}
+

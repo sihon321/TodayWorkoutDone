@@ -13,7 +13,7 @@ class Routine: Codable, Equatable, Identifiable {
     var workout: Workout
     var sets: [WorkoutSet]
     var workoutsType: WorkoutsType
-    var endDate: Date?
+    var averageEndDate: Double?
     var calories: Double = 0.0
     var restTime: Int = 0
     
@@ -34,7 +34,7 @@ class Routine: Codable, Equatable, Identifiable {
         workout = try container.decode(Workout.self, forKey: .workouts)
         sets = try container.decode([WorkoutSet].self, forKey: .sets)
         workoutsType = try container.decode(WorkoutsType.self, forKey: .workotusType)
-        endDate = try container.decode(Date?.self, forKey: .endDate)
+        averageEndDate = try container.decode(Double?.self, forKey: .endDate)
         calories = try container.decode(Double.self, forKey: .calories)
         restTime = try container.decode(Int.self, forKey: .restTime)
     }
@@ -44,7 +44,7 @@ class Routine: Codable, Equatable, Identifiable {
         try container.encode(workout, forKey: .workouts)
         try container.encode(sets, forKey: .sets)
         try container.encode(workoutsType, forKey: .workotusType)
-        try container.encode(endDate, forKey: .endDate)
+        try container.encode(averageEndDate, forKey: .endDate)
         try container.encode(calories, forKey: .calories)
         try container.encode(restTime, forKey: .restTime)
     }
