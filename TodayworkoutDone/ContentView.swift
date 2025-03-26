@@ -13,7 +13,7 @@ import Combine
 struct ContentReducer {
     @ObservableState
     struct State: Equatable {
-        var cancellable = Set<AnyCancellable>()
+        
     }
     
     enum Action {

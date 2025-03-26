@@ -35,8 +35,6 @@ struct CalendarDetailView: View {
             ForEach(viewStore.workoutRoutines) { workoutRoutine in
                 CalendarDetailSubView(workoutRoutine: workoutRoutine)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.gray.opacity(0.1))
         }
         .padding([.top], 30)
         .padding([.leading, .bottom, .trailing], 15)

@@ -77,7 +77,7 @@ struct WorkingOutSection: View {
             List {
                 ForEach(store.scope(state: \.workingOutRow, action: \.workingOutRow)) { rowStore in
                     WorkingOutRow(store: rowStore)
-                    .padding(.bottom, 2)
+                        .padding(.bottom, 2)
                 }
                 .onDelete { indexSet in
                     deleteItems(atOffsets: indexSet)
@@ -103,5 +103,28 @@ struct WorkingOutSection: View {
     
     func deleteItems(atOffsets offset: IndexSet) {
         store.routine.sets.remove(atOffsets: offset)
+    }
+}
+
+#Preview {
+    let workingOutRowStores = WorkoutSet.mockedData.map {
+        WorkingOutRowReducer.State(workoutSet: $0)
+    }
+    Section {
+        List {
+            ForEach(workingOutRowStores) { state in
+                WorkingOutRow(store: Store(initialState: state){
+                    WorkingOutRowReducer()
+                })
+            }
+        }
+        .listStyle(PlainListStyle())
+    } header: {
+        WorkingOutHeader(store: Store(
+            initialState: WorkingOutHeaderReducer.State(workoutName: "test",
+                                                        workoutType: .barbel)
+        ) {
+            WorkingOutHeaderReducer()
+        }, type: .init(initialValue: .barbel))
     }
 }

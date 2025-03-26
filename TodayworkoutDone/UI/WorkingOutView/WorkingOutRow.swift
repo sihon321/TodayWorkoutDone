@@ -67,6 +67,11 @@ struct WorkingOutRow: View {
                 .toggleStyle(CheckboxToggleStyle(style: .square))
                 Spacer()
             }
+            Text("\(viewStore.workoutSet.prevReps) X \(String(format: "%.1f", viewStore.workoutSet.prevWeight))")
+                .frame(minWidth: 40)
+                .background(Color(uiColor: .secondarySystemFill))
+                .cornerRadius(5)
+            Spacer()
             if viewStore.editMode == .active {
                 TextField("count", text: viewStore.binding(
                     get: { String($0.workoutSet.reps) },
@@ -77,11 +82,6 @@ struct WorkingOutRow: View {
             } else {
                 Text(String(viewStore.workoutSet.reps))
             }
-            Spacer()
-            Text("\(viewStore.workoutSet.prevReps)")
-                .frame(minWidth: 40)
-                .background(Color(uiColor: .secondarySystemFill))
-                .cornerRadius(5)
             Spacer()
             if viewStore.editMode == .active {
                 TextField("weight", text: viewStore.binding(
@@ -94,10 +94,6 @@ struct WorkingOutRow: View {
                 Text(String(viewStore.workoutSet.weight))
             }
             Spacer()
-            Text(String(format: "%.1f", viewStore.workoutSet.prevWeight))
-                .frame(minWidth: 40)
-                .background(Color(uiColor: .secondarySystemFill))
-                .cornerRadius(5)
         }
     }
 }

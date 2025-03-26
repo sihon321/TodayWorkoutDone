@@ -102,10 +102,14 @@ struct WorkingOutHeader: View {
             }
             .padding()
             HStack {
-                Text("횟수")
-                    .padding(.leading, 30)
-                Text("무게")
-                    .padding(.leading, 60)
+                Text("세트")
+                    .padding(.leading, 17)
+                Text("이전")
+                    .padding(.leading, 70)
+                Text("랩")
+                    .padding(.leading, 65)
+                Text("KG")
+                    .padding(.leading, 50)
             }
         }
     }

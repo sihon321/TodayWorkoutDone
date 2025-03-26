@@ -13,7 +13,9 @@ struct CalendarDetailSubView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("\(workoutRoutine.name)")
+                .font(.title)
             Text("\(workoutRoutine.startDate.formatToKoreanStyle())")
+                .font(.caption)
             
             HStack {
                 Image(systemName: "timer")
@@ -43,9 +45,13 @@ struct CalendarDetailSubView: View {
                         Text("\(routine.sets[index].reps) reps")
                     }
                 }
-                Spacer()
             }
             Spacer()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
+}
+
+#Preview {
+    CalendarDetailSubView(workoutRoutine: WorkoutRoutine.mockedData)
 }
