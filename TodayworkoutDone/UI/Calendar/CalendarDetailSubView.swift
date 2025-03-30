@@ -15,7 +15,6 @@ struct CalendarDetailSubView: View {
             Text("\(workoutRoutine.name)")
                 .font(.title)
             Text("\(workoutRoutine.startDate.formatToKoreanStyle())")
-                .font(.caption)
             
             HStack {
                 Image(systemName: "timer")
@@ -23,10 +22,13 @@ struct CalendarDetailSubView: View {
                 Image(systemName: "flame")
                 Text("\(Int(workoutRoutine.calories)) kcal")
             }
+            .padding(.bottom, 5)
             
             ForEach(workoutRoutine.routines, id: \.id) { routine in
                 Text(routine.workout.name)
                 HStack {
+                    Image(systemName: "dumbbell")
+                    Text("\(String(format: "%.2f", routine.sets.reduce(0) { $0 + $1.weight })) kg")
                     Image(systemName: "flame")
                     Text("\(Int(routine.calories)) kcal")
                 }
@@ -34,21 +36,16 @@ struct CalendarDetailSubView: View {
                     HStack {
                         Text("\(index + 1)")
                             .frame(width: 20, height: 20)
-                            .padding(3)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .stroke(Color.black, lineWidth: 1)
-                            )
-                            .padding(.leading, 1)
-                            .padding(.trailing, 5)
                         Text("\(String(format: "%.2f", routine.sets[index].weight)) kg")
                         Text("\(routine.sets[index].reps) reps")
                     }
                 }
             }
+
             Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(5)
     }
 }
 

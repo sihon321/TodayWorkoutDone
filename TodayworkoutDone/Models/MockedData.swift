@@ -17,14 +17,23 @@ extension WorkoutCategory {
 
 extension Workout {
     static let mockedData: [Workout] = [
-        Workout(name: "스쿼시", category: "gym", target: "하체", isSelected: false),
-        Workout(name: "스쿼시", category: "gym", target: "하체", isSelected: false),
-        Workout(name: "스쿼시", category: "gym", target: "하체", isSelected: false)
+        Workout(name: "벤치프레스", category: "gym", target: "하체", isSelected: false),
+        Workout(name: "데드리프트", category: "gym", target: "하체", isSelected: false),
+        Workout(name: "스쿼트", category: "gym", target: "하체", isSelected: false)
     ]
 }
 
 extension Routine {
-    static let mockedData: [Routine] = Workout.mockedData.compactMap { Routine(workouts: $0) }
+    static let mockedData: [Routine] = Workout.mockedData.compactMap {
+        Routine(
+            workouts: $0,
+            sets: [
+                WorkoutSet(weight: 50, reps: 12),
+                WorkoutSet(weight: 60, reps: 12),
+                WorkoutSet(weight: 70, reps: 12)
+            ]
+        )
+    }
 }
 
 extension MyRoutine {

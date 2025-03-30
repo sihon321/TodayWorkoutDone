@@ -34,6 +34,10 @@ struct CalendarDetailView: View {
         ScrollView {
             ForEach(viewStore.workoutRoutines) { workoutRoutine in
                 CalendarDetailSubView(workoutRoutine: workoutRoutine)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color.gray.opacity(0.1))
+                    )
             }
         }
         .padding([.top], 30)
