@@ -152,8 +152,7 @@ struct WorkoutReducer {
                 return .none
                 
             case .destination(.presented(.alert(.tappedMyRoutineStart(let myRoutine)))):
-                state.myRoutine = myRoutine.copy()
-                return .send(.makeWorkout(.tappedDone))
+                return .send(.makeWorkout(.tappedDone(myRoutine)))
             case .destination:
                 return .none
                 
@@ -204,8 +203,12 @@ struct WorkoutReducer {
                 case .dismiss:
                     state.destination = .none
                     return .none
-                case .tappedDone:
-                    state.myRoutine = state.temporaryRoutine.copy()
+                case .tappedDone(let myRoutine):
+                    if let myRoutine = myRoutine {
+                        state.myRoutine = myRoutine
+                    } else {
+                        state.myRoutine = state.temporaryRoutine.copy()
+                    }
                     state.myRoutine.isRunning = true
                     return .run { send in
                         await send(.dismiss)
@@ -406,6 +409,9 @@ struct WorkoutReducer {
                     }
                 }
             }
+        }
+        .ifLet(\.$destination, action: \.destination) {
+          Destination.body
         }
     }
     

@@ -47,7 +47,7 @@ struct MakeWorkoutReducer {
         case destination(PresentationAction<Destination.Action>)
 
         case dismiss(MyRoutine)
-        case tappedDone
+        case tappedDone(MyRoutine?)
         case save(MyRoutine)
         case didUpdateText(String)
         
@@ -131,7 +131,7 @@ struct MakeWorkoutView: View {
                         }
                     } else {
                         Button("Done") {
-                            store.send(.tappedDone)
+                            store.send(.tappedDone(nil))
                         }
                     }
                 }
