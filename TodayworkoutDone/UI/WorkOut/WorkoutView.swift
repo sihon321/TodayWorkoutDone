@@ -178,7 +178,6 @@ struct WorkoutReducer {
                     state.myRoutine.isRunning = true
 
                     return .run { send in
-                        try context.add(myRoutine)
                         await send(.dismiss)
                     }
                 case .save(let myRoutine):
