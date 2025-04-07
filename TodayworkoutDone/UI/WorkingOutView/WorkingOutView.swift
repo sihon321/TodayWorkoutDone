@@ -12,7 +12,7 @@ import ComposableArchitecture
 struct WorkingOutReducer {
     @ObservableState
     struct State: Equatable {
-        @Shared var myRoutine: MyRoutine
+        var myRoutine: MyRoutine
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
         var secondsElapsed = 0

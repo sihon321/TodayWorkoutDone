@@ -13,7 +13,7 @@ import Combine
 struct WorkoutListReducer {
     @ObservableState
     struct State: Equatable {
-        @Shared var myRoutine: MyRoutine
+        var myRoutine: MyRoutine
         var workouts: [Workout] = []
         var keyword: String = ""
         var groupedNames: [(key: String, value: [Workout])] {

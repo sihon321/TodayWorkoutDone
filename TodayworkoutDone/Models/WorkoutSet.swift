@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+@Model
 class WorkoutSet: Codable, Identifiable, Equatable {
     var id: UUID
     var prevWeight: Double

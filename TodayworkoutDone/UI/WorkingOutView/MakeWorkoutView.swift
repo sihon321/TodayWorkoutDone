@@ -15,7 +15,7 @@ struct MakeWorkoutReducer {
     struct State: Equatable {
         @Presents var destination: Destination.State?
 
-        @Shared var myRoutine: MyRoutine
+        var myRoutine: MyRoutine
         var titleSmall: Bool = false
         var selectionWorkouts: [Workout] = []
         var isEdit: Bool = false
@@ -23,15 +23,15 @@ struct MakeWorkoutReducer {
         var addWorkoutCategory: AddWorkoutCategoryReducer.State
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
-        init(myRoutine: Shared<MyRoutine>,
+        init(myRoutine: MyRoutine,
              isEdit: Bool) {
-            self._myRoutine = myRoutine
+            self.myRoutine = myRoutine
             self.isEdit = isEdit
             addWorkoutCategory = AddWorkoutCategoryReducer.State(
                 myRoutine: myRoutine,
                 workoutList: WorkoutListReducer.State(myRoutine: myRoutine)
             )
-            let elements = myRoutine.routines.wrappedValue.map {
+            let elements = myRoutine.routines.map {
                 WorkingOutSectionReducer.State(
                     routine: $0,
                     editMode: .active
@@ -47,7 +47,7 @@ struct MakeWorkoutReducer {
         case destination(PresentationAction<Destination.Action>)
 
         case dismiss(MyRoutine)
-        case tappedDone(MyRoutine?)
+        case tappedDone(MyRoutine)
         case save(MyRoutine)
         case didUpdateText(String)
         
@@ -131,7 +131,7 @@ struct MakeWorkoutView: View {
                         }
                     } else {
                         Button("Done") {
-                            store.send(.tappedDone(nil))
+                            store.send(.tappedDone(store.myRoutine))
                         }
                     }
                 }

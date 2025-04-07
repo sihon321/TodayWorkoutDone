@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import SwiftData
 
 @Reducer
 struct HomeReducer {
@@ -17,7 +18,7 @@ struct HomeReducer {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
-        @Shared var myRoutine: MyRoutine
+        var myRoutine: MyRoutine?
         
         var routineName = ""
         var isHideTabBar = false
@@ -75,6 +76,7 @@ struct HomeReducer {
     private enum CancelID { case timer }
     
     @Dependency(\.continuousClock) var clock
+    @Dependency(\.myRoutineData) var myRoutineContext
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -85,10 +87,10 @@ struct HomeReducer {
                 return .none
                 
             case .startButtonTapped:
+                state.myRoutine = MyRoutine()
                 state.destination = .workoutView(
                     WorkoutReducer.State(
-                        myRoutine: state.$myRoutine,
-                        temporary: Shared(MyRoutine()),
+                        myRoutine: state.myRoutine!,
                         myRoutineState: state.myRoutineState
                     )
                 )
@@ -99,8 +101,9 @@ struct HomeReducer {
                 return .none
                 
             case .presentedSaveRoutineAlert:
-                if state.myRoutineState.myRoutines.contains(state.myRoutine) == false {
-                    state.destination = .alert(.saveRoutineAlert(state.myRoutine))
+                if let routine = state.myRoutine,
+                    state.myRoutineState.myRoutines.contains(routine) == false {
+                    state.destination = .alert(.saveRoutineAlert(routine))
                 }
                 return .none
                 
@@ -117,9 +120,10 @@ struct HomeReducer {
 
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
                 state.isHideTabBar = true
-                state.myRoutine.isRunning = false
                 state.destination = .none
                 state.workingOut = .none
+                state.myRoutine?.isRunning = false
+                
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
                 }
@@ -134,9 +138,9 @@ struct HomeReducer {
                 state.workoutRoutine?.routineTime = secondsElapsed
                 insertWorkoutRoutine(workout: state.workoutRoutine!)
                 state.isHideTabBar = true
-                state.myRoutine.isRunning = false
                 state.destination = .none
                 state.workingOut = .none
+                state.myRoutine?.isRunning = false
                 
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
@@ -152,11 +156,12 @@ struct HomeReducer {
                 return .none
                 
             case .destination(.presented(.workoutView(.makeWorkout(.tappedDone)))):
-                if state.myRoutine.isRunning {
+                if let routine = state.myRoutine,
+                    routine.isRunning {
                     state.workingOut = WorkingOutReducer.State(
-                        myRoutine: Shared(state.myRoutine),
+                        myRoutine: routine,
                         workingOutSection: IdentifiedArrayOf(
-                            uniqueElements: state.myRoutine.routines.map {
+                            uniqueElements: routine.routines.map {
                                 WorkingOutSectionReducer.State(
                                     routine: $0,
                                     editMode: .inactive
@@ -386,7 +391,7 @@ struct HomeView: View {
             ) {
                 ZStack {
                     MainView(bottomEdge: store.bottomEdge)
-                    if store.myRoutine.isRunning == false {
+                    if store.myRoutine == nil || store.myRoutine?.isRunning == false {
                         startButton()
                     }
                 }

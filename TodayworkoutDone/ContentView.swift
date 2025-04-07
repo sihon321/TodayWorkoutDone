@@ -49,7 +49,7 @@ struct ContentView: View {
     var body: some View {
         HomeView(
             store: Store(
-                initialState: HomeReducer.State(myRoutine: Shared(MyRoutine()))
+                initialState: HomeReducer.State()
             ) {
                 HomeReducer()
             }

@@ -8,8 +8,9 @@
 import Foundation
 import SwiftData
 
+@Model
 class Routine: Codable, Equatable, Identifiable {
-    let id = UUID()
+    var id = UUID()
     var workout: Workout
     var sets: [WorkoutSet]
     var workoutsType: WorkoutsType

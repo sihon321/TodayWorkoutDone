@@ -14,7 +14,7 @@ import ComposableArchitecture
 struct AddWorkoutCategoryReducer {
     @ObservableState
     struct State: Equatable {
-        @Shared var myRoutine: MyRoutine
+        var myRoutine: MyRoutine
         
         var keyword: String = ""
         var categories: Categories = []

@@ -15,8 +15,7 @@ struct WorkoutReducer {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
-        @Shared var myRoutine: MyRoutine
-        @Shared var temporaryRoutine: MyRoutine
+        var myRoutine: MyRoutine
         
         var workoutCategory: WorkoutCategoryReducer.State
         var myRoutineState: MyRoutineReducer.State
@@ -26,38 +25,12 @@ struct WorkoutReducer {
         var deletedSectionIndex: Int?
         var changedTypes: [Int: WorkoutsType] = [:]
         
-        var predicate: Predicate<MyRoutine> {
-            return #Predicate {
-                $0.id == temporaryRoutine.id
-            }
-        }
-        var sort: [SortDescriptor<MyRoutine>] {
-            return [
-                .init(\.name)
-            ].compactMap { $0 }
-        }
-        var fetchDescriptor: FetchDescriptor<MyRoutine> {
-            return .init(predicate: self.predicate, sortBy: self.sort)
-        }
-        mutating func refetch(_ myRoutine: MyRoutine) -> MyRoutine? {
-            @Dependency(\.myRoutineData) var context
-            if let routine = try? context.fetch(self.fetchDescriptor).first {
-                self.temporaryRoutine = routine
-                return self.temporaryRoutine
-            }
-            
-            return nil
-        }
-        
-        init(myRoutine: Shared<MyRoutine>,
-            temporary routine: Shared<MyRoutine>,
+        init(myRoutine: MyRoutine,
              myRoutineState: MyRoutineReducer.State) {
-            _myRoutine = myRoutine
-            _temporaryRoutine = routine
+            self.myRoutine = myRoutine
             workoutCategory = WorkoutCategoryReducer.State(
-                myRoutine: routine,
                 workoutList: WorkoutListReducer.State(
-                    myRoutine: routine
+                    myRoutine: myRoutine
                 )
             )
             self.myRoutineState = myRoutineState
@@ -127,20 +100,17 @@ struct WorkoutReducer {
                 return .none
                 
             case .appearMakeWorkout:
-                let myRoutine = state.temporaryRoutine
-                return .run { @MainActor send in
-                    send(.createMakeWorkoutView(myRoutine: myRoutine,
-                                                isEdit: false))
-                }
+                return .send(.createMakeWorkoutView(myRoutine: state.myRoutine,
+                                                    isEdit: false))
             case let .createMakeWorkoutView(myRoutine, isEdit):
                 if let myRoutine = myRoutine {
                     state.makeWorkout = MakeWorkoutReducer.State(
-                        myRoutine: Shared(myRoutine),
+                        myRoutine: myRoutine,
                         isEdit: isEdit
                     )
                 } else {
                     state.makeWorkout = MakeWorkoutReducer.State(
-                        myRoutine: state.$temporaryRoutine,
+                        myRoutine: state.myRoutine,
                         isEdit: isEdit
                     )
                 }
@@ -179,9 +149,9 @@ struct WorkoutReducer {
                         return .none
                     case let .updateMyRoutine(workout):
                         if workout.isSelected {
-                            state.temporaryRoutine.routines.append(Routine(workouts: workout))
+                            state.myRoutine.routines.append(Routine(workouts: workout))
                         } else {
-                            state.temporaryRoutine.routines.removeAll { $0.workout.name == workout.name }
+                            state.myRoutine.routines.removeAll { $0.workout.name == workout.name }
                         }
                         return .none
                     case let .getWorkouts(categoryName):
@@ -204,13 +174,11 @@ struct WorkoutReducer {
                     state.destination = .none
                     return .none
                 case .tappedDone(let myRoutine):
-                    if let myRoutine = myRoutine {
-                        state.myRoutine = myRoutine
-                    } else {
-                        state.myRoutine = state.temporaryRoutine.copy()
-                    }
+                    state.myRoutine = myRoutine
                     state.myRoutine.isRunning = true
+
                     return .run { send in
+                        try context.add(myRoutine)
                         await send(.dismiss)
                     }
                 case .save(let myRoutine):
@@ -264,9 +232,9 @@ struct WorkoutReducer {
                             return .none
                         case let .updateMyRoutine(workout):
                             if workout.isSelected {
-                                state.temporaryRoutine.routines.append(Routine(workouts: workout))
+                                state.myRoutine.routines.append(Routine(workouts: workout))
                             } else {
-                                state.temporaryRoutine.routines.removeAll { $0.workout.name == workout.name }
+                                state.myRoutine.routines.removeAll { $0.workout.name == workout.name }
                             }
                             return .none
                         case let .getWorkouts(categoryName):
@@ -518,12 +486,12 @@ private struct WorkoutViewToolbar: ViewModifier {
     func body(content: Content) -> some View {
         return content
             .toolbar(content: {
-                if !viewStore.temporaryRoutine.routines.isEmpty {
+                if !viewStore.myRoutine.routines.isEmpty {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
                             viewStore.send(.appearMakeWorkout)
                         }) {
-                            let selectedWorkoutCount = viewStore.temporaryRoutine.routines.count
+                            let selectedWorkoutCount = viewStore.myRoutine.routines.count
                             Text("Done(\(selectedWorkoutCount))")
                         }
                     }
