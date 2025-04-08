@@ -33,10 +33,12 @@ struct MainContentSubView: View {
         VStack(alignment: .leading) {
             HStack(alignment: .firstTextBaseline) {
                 Image(systemName: iconName)
+                    .foregroundStyle(.black)
                 Text(headerTitle)
                     .font(.system(size: 15,
                                   weight: .semibold,
                                   design: .default))
+                    .foregroundStyle(.black)
                     .padding(.leading, -5)
             }
             .padding([.leading], 15)

@@ -48,6 +48,7 @@ struct WorkoutCategoryView: View {
     var body: some View {
         VStack(alignment: .leading)  {
             Text("category")
+                .font(.system(size: 20, weight: .medium))
             let categories = viewStore.categories.filter {
                 $0.name.hasPrefix(store.keyword)
             }

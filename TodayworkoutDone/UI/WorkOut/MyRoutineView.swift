@@ -35,7 +35,8 @@ struct MyRoutineView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("my Routine")
+            Text("My Routine")
+                .font(.system(size: 20, weight: .medium))
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(viewStore.myRoutines) { myRoutine in

@@ -62,6 +62,7 @@ struct MainContentEnergyBurn: View {
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
+                .foregroundStyle(.black)
             Text("kcal")
                 .font(.system(size: 12,
                               weight: .semibold,
