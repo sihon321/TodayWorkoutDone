@@ -27,9 +27,13 @@ struct WorkoutListSubview: View {
                             .padding([.leading], 15)
                     }
                     Text(workouts.name)
+                        .font(.system(size: 15, weight: .light))
+                        .foregroundStyle(.black)
                     Spacer()
                     if store.myRoutine.routines.contains(where: { $0.workout.id == workouts.id }) {
                         Image(systemName:"checkmark")
+                            .foregroundStyle(.black)
+                            .padding(.trailing, 15)
                     }
                 }
             }

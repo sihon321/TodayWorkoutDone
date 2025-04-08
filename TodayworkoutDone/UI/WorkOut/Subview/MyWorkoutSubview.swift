@@ -37,7 +37,7 @@ struct MyWorkoutSubview: View {
                         Button(action: {
                             store.send(.touchedDelete(myRoutine))
                         }) {
-                            Label("삭제", systemImage: "pencil")
+                            Label("삭제", systemImage: "trash")
                         }
                     } label: {
                         Image(systemName: "ellipsis")
@@ -48,17 +48,19 @@ struct MyWorkoutSubview: View {
                     }
                 }
             }
-            VStack(alignment: .leading) {
-                ForEach(myRoutine.routines) { routine in
-                    Text(routine.workout.name)
-                        .font(.system(size: 12,
-                                      weight: .light,
-                                      design: .default))
-                        .padding(.leading, 15)
-                        .foregroundColor(Color(0x939393))
-                }
+            .padding(.top, 20)
+            .padding(.bottom, 5)
+            
+            ForEach(myRoutine.routines) { routine in
+                Text(routine.workout.name)
+                    .font(.system(size: 12,
+                                  weight: .light,
+                                  design: .default))
+                    .padding(.leading, 15)
+                    .foregroundColor(Color(0x939393))
             }
-            .padding(.top, 1)
+            
+            Spacer()
         }
         .frame(width: 150,
                height: 120,
