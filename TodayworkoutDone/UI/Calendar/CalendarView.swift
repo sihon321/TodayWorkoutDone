@@ -176,6 +176,3 @@ extension DateFormatter {
     }
 }
 
-extension Date: Identifiable {
-    public var id: Date { return self }
-}

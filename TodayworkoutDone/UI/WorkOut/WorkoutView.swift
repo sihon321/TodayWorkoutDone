@@ -369,9 +369,16 @@ struct WorkoutReducer {
                 case let .touchedEditMode(myRoutine):
                     return .send(.createMakeWorkoutView(myRoutine: myRoutine, isEdit: true))
                 case let .touchedDelete(myRoutine):
+                    let id = myRoutine.persistentModelID
                     return .run { send in
-                        try context.delete(myRoutine)
-                        try context.save()
+                        let descriptor = FetchDescriptor<MyRoutine>(
+                            predicate: #Predicate { $0.persistentModelID == id }
+                        )
+                        if let routineToDelete = try context.fetch(descriptor).first {
+                            try context.delete(routineToDelete)
+                            try context.save()
+                        }
+
                         await send(.getMyRoutines)
                     }
                 }

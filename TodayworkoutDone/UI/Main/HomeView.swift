@@ -80,7 +80,6 @@ struct HomeReducer {
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
-            print(action.description)
             switch action {
             case .enterRoutineName(let name):
                 state.routineName = name
@@ -155,13 +154,14 @@ struct HomeReducer {
                 insertMyRoutine(myRoutine: myRoutine)
                 return .none
                 
-            case .destination(.presented(.workoutView(.makeWorkout(.tappedDone)))):
-                if let routine = state.myRoutine,
-                    routine.isRunning {
+            case .destination(.presented(.workoutView(.makeWorkout(.tappedDone(let myRoutine))))):
+                state.myRoutine = myRoutine
+                state.myRoutine?.isRunning = true
+                if let runningRoutine = state.myRoutine {
                     state.workingOut = WorkingOutReducer.State(
-                        myRoutine: routine,
+                        myRoutine: runningRoutine,
                         workingOutSection: IdentifiedArrayOf(
-                            uniqueElements: routine.routines.map {
+                            uniqueElements: runningRoutine.routines.map {
                                 WorkingOutSectionReducer.State(
                                     routine: $0,
                                     editMode: .inactive
@@ -177,6 +177,7 @@ struct HomeReducer {
                         )
                     }
                 }
+
                 return .none
                 
             case .destination:
@@ -339,6 +340,11 @@ struct HomeReducer {
         @Dependency(\.myRoutineData) var context
         do {
             if let myRoutine = myRoutine {
+                myRoutine.routines.forEach {
+                    $0.sets.forEach {
+                        $0.isChecked = false
+                    }
+                }
                 try context.add(myRoutine)
                 try context.save()
             } else {
