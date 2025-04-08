@@ -53,6 +53,8 @@ struct AddWorkoutCategoryView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     Text("category")
+                        .font(.system(size: 20, weight: .medium))
+                        .padding(.leading, 15)
                     let filteredCategory = viewStore.workoutList.workouts
                         .filter({ $0.name.hasPrefix(store.keyword) })
                         .compactMap({ $0.category })
@@ -82,14 +84,16 @@ struct AddWorkoutCategoryView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        self.store.send(.dismissWorkoutCategory)
+                        viewStore.send(.dismissWorkoutCategory)
                     }
                 }
             }
+            .ignoresSafeArea(.container, edges: .bottom)
         }
-        .padding([.leading, .trailing], 15)
         .onAppear {
-            store.send(.getCategories)
+            if viewStore.categories.isEmpty {
+                viewStore.send(.getCategories)
+            }
         }
     }
 }

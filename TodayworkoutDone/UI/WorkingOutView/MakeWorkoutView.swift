@@ -117,7 +117,6 @@ struct MakeWorkoutView: View {
                 }
                 Spacer().frame(height: 100)
             }
-            .listStyle(.grouped)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
@@ -140,18 +139,11 @@ struct MakeWorkoutView: View {
                 item: $store.scope(state: \.destination?.addWorkoutCategory,
                                    action: \.destination.addWorkoutCategory)
             ) { _ in
-                workoutCategoryView(self.store.scope(state: \.addWorkoutCategory,
-                                                     action: \.addWorkoutCategory))
+                AddWorkoutCategoryView(store: self.store.scope(state: \.addWorkoutCategory,
+                                                          action: \.addWorkoutCategory))
             }
 
         }
     }
     
-    func workoutCategoryView(_ store: StoreOf<AddWorkoutCategoryReducer>) -> some View {
-        NavigationView {
-            ScrollView {
-                AddWorkoutCategoryView(store: store)
-            }
-        }
-    }
 }
