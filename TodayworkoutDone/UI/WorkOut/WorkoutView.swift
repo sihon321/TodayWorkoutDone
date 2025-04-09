@@ -16,11 +16,10 @@ struct WorkoutReducer {
     struct State: Equatable {
         @Presents var destination: Destination.State?
         var myRoutine: MyRoutine
-        
-        var workoutCategory: WorkoutCategoryReducer.State
+        var keyword: String = ""
         var myRoutineState: MyRoutineReducer.State
         var makeWorkout: MakeWorkoutReducer.State?
-
+        var categories: Categories = []
         var hasLoaded = false
         var deletedSectionIndex: Int?
         var changedTypes: [Int: WorkoutsType] = [:]
@@ -28,11 +27,6 @@ struct WorkoutReducer {
         init(myRoutine: MyRoutine,
              myRoutineState: MyRoutineReducer.State) {
             self.myRoutine = myRoutine
-            workoutCategory = WorkoutCategoryReducer.State(
-                workoutList: WorkoutListReducer.State(
-                    myRoutine: myRoutine
-                )
-            )
             self.myRoutineState = myRoutineState
         }
     }
@@ -40,14 +34,14 @@ struct WorkoutReducer {
     enum Action {
         case destination(PresentationAction<Destination.Action>)
         
-        case workoutCategory(WorkoutCategoryReducer.Action)
         case makeWorkout(MakeWorkoutReducer.Action)
         case myRoutineAction(MyRoutineReducer.Action)
         
         case search(keyword: String)
         case dismiss
         case hasLoaded
-        
+        case getCategories
+        case updateCategories(Categories)
         case getMyRoutines
         case fetchMyRoutines([MyRoutine])
         
@@ -78,7 +72,7 @@ struct WorkoutReducer {
         Reduce { state, action in
             switch action {
             case .search(let keyword):
-                state.workoutCategory.keyword = keyword
+                state.keyword = keyword
                 return .none
             case .dismiss:
                 state.destination = .none
@@ -88,7 +82,14 @@ struct WorkoutReducer {
             case .hasLoaded:
                 state.hasLoaded = true
                 return .none
-                
+            case .getCategories:
+                return .run { send in
+                    let categories = categoryRepository.loadCategories()
+                    await send(.updateCategories(categories))
+                }
+            case .updateCategories(let categories):
+                state.categories = categories
+                return .none
             case .getMyRoutines:
                 return .run { send in
                     let myRoutines = try context.fetchAll()
@@ -125,47 +126,6 @@ struct WorkoutReducer {
                 return .send(.makeWorkout(.tappedDone(myRoutine)))
             case .destination:
                 return .none
-                
-            // MARK: - workoutCategory
-            case .workoutCategory(let action):
-                switch action {
-                case .setText(let keyword):
-                    state.workoutCategory.keyword = keyword
-                    return .none
-                case .getCategories:
-                    return .run { send in
-                        let categories = categoryRepository.loadCategories()
-                        await send(.workoutCategory(.updateCategories(categories)))
-                    }
-                case .updateCategories(let categories):
-                    state.workoutCategory.categories = categories
-                    return .none
-                    
-                    // MARK: - workoutList
-                case .workoutList(let action):
-                    switch action {
-                    case .search(let keyword):
-                        state.workoutCategory.workoutList.keyword = keyword
-                        return .none
-                    case let .updateMyRoutine(workout):
-                        if workout.isSelected {
-                            state.myRoutine.routines.append(Routine(workouts: workout))
-                        } else {
-                            state.myRoutine.routines.removeAll { $0.workout.name == workout.name }
-                        }
-                        return .none
-                    case let .getWorkouts(categoryName):
-                        return .run { send in
-                            let workouts = workoutRepository.loadWorkouts(categoryName)
-                            await send(.workoutCategory(.workoutList(.updateWorkouts(workouts))))
-                        }
-                    case .updateWorkouts(let workouts):
-                        state.workoutCategory.workoutList.workouts = workouts
-                        return .none
-                    case .makeWorkoutView:
-                        return .send(.appearMakeWorkout)
-                    }
-                }
                 
             // MARK: - makeWorkout
             case .makeWorkout(let action):
@@ -272,6 +232,12 @@ struct WorkoutReducer {
                                     state.makeWorkout?.myRoutine.routines.append(routine)
                                 }
                             }
+                            return .none
+                        case .destination:
+                            return .none
+                        case .appearMakeWorkout:
+                            return .none
+                        case .createMakeWorkoutView(myRoutine: let myRoutine, isEdit: let isEdit):
                             return .none
                         }
                     }
@@ -419,8 +385,20 @@ struct WorkoutView: View {
                         .padding(.top, 10)
                     }
                     WorkoutCategoryView(
-                        store: store.scope(state: \.workoutCategory,
-                                           action: \.workoutCategory)
+                        store: Store(
+                            initialState: WorkoutCategoryReducer.State(
+                                myRoutine: store.myRoutine,
+                                workoutList: IdentifiedArrayOf(
+                                    uniqueElements: store.categories.compactMap {
+                                        WorkoutListReducer.State(id: UUID(),
+                                                                 myRoutine: store.myRoutine,
+                                                                 categoryName: $0.name)
+                                    }
+                                )
+                            )
+                        ) {
+                            WorkoutCategoryReducer()
+                        }
                     )
                     .padding(.top, 10)
                 }
@@ -435,7 +413,7 @@ struct WorkoutView: View {
             }
         }
         .searchable(text: viewStore.binding(
-            get: { $0.workoutCategory.keyword },
+            get: { $0.keyword },
             send: { WorkoutReducer.Action.search(keyword: $0) }
         ))
         .fullScreenCover(
@@ -447,9 +425,11 @@ struct WorkoutView: View {
                 MakeWorkoutView(store: store)
             }
         }
-        .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
+        .alert($store.scope(state: \.destination?.alert,
+                            action: \.destination.alert))
         .onAppear {
-            store.send(.getMyRoutines)
+            viewStore.send(.getMyRoutines)
+            viewStore.send(.getCategories)
         }
     }
 }

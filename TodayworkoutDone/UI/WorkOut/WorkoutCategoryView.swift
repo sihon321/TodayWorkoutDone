@@ -13,25 +13,31 @@ import ComposableArchitecture
 struct WorkoutCategoryReducer {
     @ObservableState
     struct State: Equatable {
+        var myRoutine: MyRoutine
         var keyword: String = ""
-        var categories: Categories = []
-
-        var workoutList: WorkoutListReducer.State
+        
+        var workoutList: IdentifiedArrayOf<WorkoutListReducer.State>
     }
     
     enum Action {
         case setText(keyword: String)
-        case getCategories
-        case updateCategories(Categories)
-        case workoutList(WorkoutListReducer.Action)
+        case workoutList(IdentifiedActionOf<WorkoutListReducer>)
     }
+    
+    @Dependency(\.categoryAPI) var categoryRepository
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            default:
+            case .setText(let keyword):
+                state.keyword = keyword
+                return .none
+            case .workoutList(_):
                 return .none
             }
+        }
+        .forEach(\.workoutList, action: \.workoutList) {
+            WorkoutListReducer()
         }
     }
 }
@@ -46,27 +52,21 @@ struct WorkoutCategoryView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading)  {
+        VStack(alignment: .leading) {
             Text("category")
                 .font(.system(size: 20, weight: .medium))
-            let categories = viewStore.categories.filter {
-                $0.name.hasPrefix(store.keyword)
-            }
-            ForEach(categories) { category in
-                NavigationLink {
-                    WorkoutListView(
-                        store: store.scope(state: \.workoutList,
-                                           action: \.workoutList),
-                        category: category.name
-                    )
-                } label: {
-                    WorkoutCategorySubview(category: category)
+            ForEachStore(
+                store.scope(state: \.workoutList, action: \.workoutList)
+            ) { rowStore in
+                if rowStore.categoryName.hasPrefix(store.keyword) {
+                    NavigationLink {
+                        WorkoutListView(store: rowStore)
+                    } label: {
+                        WorkoutCategorySubview(category: WorkoutCategory(name: rowStore.categoryName))
+                    }
                 }
             }
         }
         .padding([.leading, .trailing], 15)
-        .onAppear {
-            store.send(.getCategories)
-        }
     }
 }

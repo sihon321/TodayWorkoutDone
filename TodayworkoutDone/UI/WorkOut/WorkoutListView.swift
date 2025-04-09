@@ -12,10 +12,15 @@ import Combine
 @Reducer
 struct WorkoutListReducer {
     @ObservableState
-    struct State: Equatable {
+    struct State: Equatable, Identifiable {
+        @Presents var destination: Destination.State?
+        
+        let id: UUID
         var myRoutine: MyRoutine
+        let categoryName: String
         var workouts: [Workout] = []
         var keyword: String = ""
+        
         var groupedNames: [(key: String, value: [Workout])] {
             let filteredWorkout = workouts.filter { $0.name.hasPrefix(keyword) }
             let groupedDictionary = Dictionary(grouping: filteredWorkout,
@@ -42,11 +47,68 @@ struct WorkoutListReducer {
     }
     
     enum Action {
+        case destination(PresentationAction<Destination.Action>)
+        
         case search(keyword: String)
         case updateMyRoutine(Workout)
         case makeWorkoutView([Routine])
         case getWorkouts(String)
         case updateWorkouts([Workout])
+        
+        case appearMakeWorkout
+        case createMakeWorkoutView(myRoutine: MyRoutine?, isEdit: Bool)
+    }
+    
+    @Reducer(state: .equatable)
+    enum Destination {
+        case makeWorkoutView(MakeWorkoutReducer)
+    }
+    
+    @Dependency(\.workoutAPI) var workoutRepository
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .search(let keyword):
+                state.keyword = keyword
+                return .none
+            case let .updateMyRoutine(workout):
+                if workout.isSelected {
+                    state.myRoutine.routines.append(Routine(workouts: workout))
+                } else {
+                    state.myRoutine.routines.removeAll { $0.workout.name == workout.name }
+                }
+                return .none
+            case let .getWorkouts(categoryName):
+                return .run { send in
+                    let workouts = workoutRepository.loadWorkouts(categoryName)
+                    await send(.updateWorkouts(workouts))
+                }
+            case .updateWorkouts(let workouts):
+                state.workouts = workouts
+                return .none
+            case .makeWorkoutView:
+                return .send(.appearMakeWorkout)
+                
+            case .appearMakeWorkout:
+                return .send(.createMakeWorkoutView(myRoutine: state.myRoutine,
+                                                    isEdit: false))
+            case let .createMakeWorkoutView(myRoutine, isEdit):
+                state.destination = .makeWorkoutView(
+                    MakeWorkoutReducer.State(
+                        myRoutine: myRoutine ?? state.myRoutine,
+                        isEdit: isEdit
+                    )
+                )
+                
+                return .none
+            case .destination:
+                return .none
+            }
+        }
+        .ifLet(\.$destination, action: \.destination) {
+            Destination.body
+        }
     }
 }
 
@@ -56,19 +118,17 @@ struct WorkoutListView: View {
     @State private var topHeaderIndex: Int? = nil
     private var filters: [String] = []
     @State private var selectedFilters: Set<String> = []
-    private var categoryName = ""
     
-    init(store: StoreOf<WorkoutListReducer>, category name: String) {
+    init(store: StoreOf<WorkoutListReducer>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
-        self.categoryName = name
         self.filters = Array(Set(store.workouts.compactMap(\.target))).sorted()
     }
     
     var body: some View {
         ZStack(alignment: .top) {
             if let index = topHeaderIndex {
-                Text(store.groupedNames[index].key)
+                Text(viewStore.groupedNames[index].key)
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
@@ -81,7 +141,7 @@ struct WorkoutListView: View {
                     HorizontalFilterView(filters: filters,
                                          selectedFilters: $selectedFilters)
                         .padding(.horizontal)
-                    ForEach(Array(store.groupedNames.enumerated()), id: \.offset) { index, section in
+                    ForEach(Array(viewStore.groupedNames.enumerated()), id: \.offset) { index, section in
                         StickyHeaderView(index: index,
                                          title: section.key,
                                          topHeaderIndex: $topHeaderIndex)
@@ -112,10 +172,16 @@ struct WorkoutListView: View {
                 get: { $0.keyword },
                 send: { WorkoutListReducer.Action.search(keyword: $0) }
             ))
-            .navigationTitle(categoryName)
+            .navigationTitle(viewStore.categoryName)
         }
         .onAppear {
-            store.send(.getWorkouts(categoryName))
+            store.send(.getWorkouts(viewStore.categoryName))
+        }
+        .fullScreenCover(
+            item: $store.scope(state: \.destination?.makeWorkoutView,
+                               action: \.destination.makeWorkoutView)
+        ) { store in
+            MakeWorkoutView(store: store)
         }
     }
 }

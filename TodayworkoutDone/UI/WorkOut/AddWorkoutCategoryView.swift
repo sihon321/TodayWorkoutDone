@@ -73,7 +73,6 @@ struct AddWorkoutCategoryView: View {
                             WorkoutListView(
                                 store: store.scope(state: \.workoutList,
                                                    action: \.workoutList),
-                                category: category.name
                             )
                         } label: {
                             WorkoutCategorySubview(category: category)

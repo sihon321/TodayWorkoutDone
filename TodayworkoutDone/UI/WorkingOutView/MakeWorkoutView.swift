@@ -29,7 +29,9 @@ struct MakeWorkoutReducer {
             self.isEdit = isEdit
             addWorkoutCategory = AddWorkoutCategoryReducer.State(
                 myRoutine: myRoutine,
-                workoutList: WorkoutListReducer.State(myRoutine: myRoutine)
+                workoutList: WorkoutListReducer.State(id: UUID(),
+                                                      myRoutine: myRoutine,
+                                                      categoryName: "")
             )
             let elements = myRoutine.routines.map {
                 WorkingOutSectionReducer.State(
