@@ -17,46 +17,39 @@ struct MakeWorkoutReducer {
 
         var myRoutine: MyRoutine
         var titleSmall: Bool = false
+        var categories: Categories = []
         var selectionWorkouts: [Workout] = []
         var isEdit: Bool = false
-        
-        var addWorkoutCategory: AddWorkoutCategoryReducer.State
+        var deletedSectionIndex: Int?
+        var changedTypes: [Int: WorkoutsType] = [:]
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
         init(myRoutine: MyRoutine,
+             categories: Categories,
              isEdit: Bool) {
             self.myRoutine = myRoutine
+            self.categories = categories
             self.isEdit = isEdit
-            addWorkoutCategory = AddWorkoutCategoryReducer.State(
-                myRoutine: myRoutine,
-                workoutList: WorkoutListReducer.State(id: UUID(),
-                                                      myRoutine: myRoutine,
-                                                      categoryName: "")
-            )
-            let elements = myRoutine.routines.map {
-                WorkingOutSectionReducer.State(
-                    routine: $0,
-                    editMode: .active
-                )
-            }
             workingOutSection = IdentifiedArrayOf(
-                uniqueElements: elements
+                uniqueElements: myRoutine.routines.map {
+                    WorkingOutSectionReducer.State(
+                        routine: $0,
+                        editMode: .active
+                    )
+                }
             )
         }
     }
     
     enum Action {
-        case destination(PresentationAction<Destination.Action>)
-
-        case dismiss(MyRoutine)
+        case dismissMakeWorkout
         case tappedDone(MyRoutine)
         case save(MyRoutine)
         case didUpdateText(String)
         
-        case addWorkoutCategory(AddWorkoutCategoryReducer.Action)
         case tappedAdd
-        
-        indirect case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
+        case destination(PresentationAction<Destination.Action>)
+        case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
     }
     
     @Reducer(state: .equatable)
@@ -64,18 +57,143 @@ struct MakeWorkoutReducer {
         case addWorkoutCategory(AddWorkoutCategoryReducer)
     }
     
+    @Dependency(\.myRoutineData) var myRoutineContext
+    @Dependency(\.dismiss) var dismiss
+    
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .dismiss:
+            case .dismissMakeWorkout:
                 state.destination = .none
+                return .run { _ in
+                    await self.dismiss()
+                }
+            case .tappedDone(let myRoutine):
+                state.myRoutine = myRoutine
+                state.myRoutine.isRunning = true
+
+                return .run { send in
+                    await send(.dismissMakeWorkout)
+                }
+            case .save(let myRoutine):
+                if let sectionIndex = state.deletedSectionIndex {
+                    state.myRoutine
+                        .routines.remove(at: sectionIndex)
+                }
+                if state.changedTypes.isEmpty == false {
+                    for (index, type) in state.changedTypes {
+                        state.myRoutine.routines[index].workoutsType = type
+                    }
+                }
+                return .run { send in
+                    try myRoutineContext.save()
+                    await send(.dismissMakeWorkout)
+                }
+            case .didUpdateText(let text):
+                state.myRoutine.name = text
                 return .none
-            default:
+            case .tappedAdd:
+                state.destination = .addWorkoutCategory(
+                    AddWorkoutCategoryReducer.State(
+                        myRoutine: state.myRoutine,
+                        workoutList: IdentifiedArrayOf(
+                            uniqueElements: state.categories.compactMap {
+                                WorkoutListReducer.State(id: UUID(),
+                                                         isAddWorkoutPresented: true,
+                                                         myRoutine: state.myRoutine,
+                                                         categoryName: $0.name,
+                                                         categories: state.categories)
+                            }
+                        )
+                    )
+                )
                 return .none
+            case .destination(.presented(.addWorkoutCategory(let action))):
+                return .none
+            case .destination:
+                return .none
+
+            case let .workingOutSection(action):
+                switch action {
+                case let .element(sectionId, action):
+                    switch action {
+                    case .tappedAddFooter:
+                        if let sectionIndex = state.workingOutSection
+                            .index(id: sectionId) {
+                            let workoutSet = WorkoutSet()
+                            state.workingOutSection[sectionIndex]
+                                .workingOutRow
+                                .append(
+                                    WorkingOutRowReducer.State(workoutSet: workoutSet,
+                                                               editMode: .active)
+                                )
+                            state.myRoutine
+                                .routines[sectionIndex]
+                                .sets
+                                .append(workoutSet)
+                        }
+                        return .none
+                    case let .workingOutRow(action):
+                        switch action {
+                        case let .element(rowId, action):
+                            switch action {
+                            case .toggleCheck:
+                                return .none
+                            case let .typeLab(lab):
+                            if let sectionIndex = state.workingOutSection
+                                    .index(id: sectionId),
+                                   let rowIndex = state.workingOutSection[sectionIndex]
+                                    .workingOutRow
+                                    .index(id: rowId),
+                                   let labValue = Int(lab) {
+                                    state.myRoutine
+                                        .routines[sectionIndex]
+                                        .sets[rowIndex]
+                                        .reps = labValue
+                                }
+                                return .none
+                            case let .typeWeight(weight):
+                                if let sectionIndex = state.workingOutSection
+                                    .index(id: sectionId),
+                                   let rowIndex = state.workingOutSection[sectionIndex]
+                                    .workingOutRow
+                                    .index(id: rowId),
+                                   let weightValue = Double(weight) {
+                                    state.myRoutine
+                                        .routines[sectionIndex]
+                                        .sets[rowIndex]
+                                        .weight = weightValue
+                                }
+                                return .none
+                            }
+                        }
+                    case let .workingOutHeader(action):
+                        switch action {
+                        case .deleteWorkout:
+                            if let sectionIndex = state.workingOutSection
+                                .index(id: sectionId) {
+                                state.deletedSectionIndex = sectionIndex
+                                state.workingOutSection.remove(at: sectionIndex)
+                            }
+                            return .none
+                        case let .tappedWorkoutsType(type):
+                            if let sectionIndex = state.workingOutSection
+                                .index(id: sectionId) {
+                                state.changedTypes[sectionIndex] = type
+                            }
+                            return .none
+                        }
+                    case .setEditMode:
+                        return .none
+                    }
+                }
             }
         }
         .forEach(\.workingOutSection, action: \.workingOutSection) {
             WorkingOutSectionReducer()
+        }
+        .ifLet(\.$destination, action: \.destination) {
+          Destination.body
         }
     }
 }
@@ -104,7 +222,8 @@ struct MakeWorkoutView: View {
                 .accessibilityAddTraits(.isHeader)
                 .padding([.leading], 15)
                 
-                ForEach(store.scope(state: \.workingOutSection, action: \.workingOutSection)) { rowStore in
+                ForEach(store.scope(state: \.workingOutSection,
+                                    action: \.workingOutSection)) { rowStore in
                     WorkingOutSection(store: rowStore)
                 }
                 .padding([.bottom], 30)
@@ -122,7 +241,7 @@ struct MakeWorkoutView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        store.send(.dismiss(store.myRoutine))
+                        store.send(.dismissMakeWorkout)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -140,9 +259,8 @@ struct MakeWorkoutView: View {
             .fullScreenCover(
                 item: $store.scope(state: \.destination?.addWorkoutCategory,
                                    action: \.destination.addWorkoutCategory)
-            ) { _ in
-                AddWorkoutCategoryView(store: self.store.scope(state: \.addWorkoutCategory,
-                                                          action: \.addWorkoutCategory))
+            ) { store in
+                AddWorkoutCategoryView(store: store)
             }
 
         }

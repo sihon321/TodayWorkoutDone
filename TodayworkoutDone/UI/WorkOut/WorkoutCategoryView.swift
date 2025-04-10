@@ -32,7 +32,7 @@ struct WorkoutCategoryReducer {
             case .setText(let keyword):
                 state.keyword = keyword
                 return .none
-            case .workoutList(_):
+            case .workoutList:
                 return .none
             }
         }
@@ -62,7 +62,9 @@ struct WorkoutCategoryView: View {
                     NavigationLink {
                         WorkoutListView(store: rowStore)
                     } label: {
-                        WorkoutCategorySubview(category: WorkoutCategory(name: rowStore.categoryName))
+                        WorkoutCategorySubview(
+                            category: WorkoutCategory(name: rowStore.categoryName)
+                        )
                     }
                 }
             }

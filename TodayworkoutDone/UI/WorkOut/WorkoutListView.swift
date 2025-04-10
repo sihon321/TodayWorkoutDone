@@ -16,8 +16,10 @@ struct WorkoutListReducer {
         @Presents var destination: Destination.State?
         
         let id: UUID
+        let isAddWorkoutPresented: Bool
         var myRoutine: MyRoutine
         let categoryName: String
+        var categories: Categories
         var workouts: [Workout] = []
         var keyword: String = ""
         
@@ -54,7 +56,7 @@ struct WorkoutListReducer {
         case makeWorkoutView([Routine])
         case getWorkouts(String)
         case updateWorkouts([Workout])
-        
+        case dismiss
         case appearMakeWorkout
         case createMakeWorkoutView(myRoutine: MyRoutine?, isEdit: Bool)
     }
@@ -65,6 +67,7 @@ struct WorkoutListReducer {
     }
     
     @Dependency(\.workoutAPI) var workoutRepository
+    @Dependency(\.dismiss) var dismiss
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -89,7 +92,10 @@ struct WorkoutListReducer {
                 return .none
             case .makeWorkoutView:
                 return .send(.appearMakeWorkout)
-                
+            case .dismiss:
+                return .run { _ in
+                    await self.dismiss()
+                }
             case .appearMakeWorkout:
                 return .send(.createMakeWorkoutView(myRoutine: state.myRoutine,
                                                     isEdit: false))
@@ -97,6 +103,7 @@ struct WorkoutListReducer {
                 state.destination = .makeWorkoutView(
                     MakeWorkoutReducer.State(
                         myRoutine: myRoutine ?? state.myRoutine,
+                        categories: state.categories,
                         isEdit: isEdit
                     )
                 )
@@ -160,7 +167,11 @@ struct WorkoutListView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     if !viewStore.myRoutine.routines.isEmpty {
                         Button(action: {
-                            store.send(.makeWorkoutView(store.myRoutine.routines))
+                            if store.isAddWorkoutPresented {
+                                store.send(.dismiss)
+                            } else {
+                                store.send(.makeWorkoutView(store.myRoutine.routines))
+                            }
                         }) {
                             let selectedWorkoutCount = viewStore.myRoutine.routines.count
                             Text("Done(\(selectedWorkoutCount))")

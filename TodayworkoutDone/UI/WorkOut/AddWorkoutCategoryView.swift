@@ -15,26 +15,44 @@ struct AddWorkoutCategoryReducer {
     @ObservableState
     struct State: Equatable {
         var myRoutine: MyRoutine
-        
         var keyword: String = ""
         var categories: Categories = []
-
-        var workoutList: WorkoutListReducer.State
+        
+        var workoutList: IdentifiedArrayOf<WorkoutListReducer.State>
     }
     
     enum Action {
         case getCategories
         case updateCategories(Categories)
-        case workoutList(WorkoutListReducer.Action)
         case dismissWorkoutCategory
+        case workoutList(IdentifiedActionOf<WorkoutListReducer>)
     }
+    
+    @Dependency(\.categoryAPI) var categoryRepository
+    @Dependency(\.workoutAPI) var workoutRepository
+    @Dependency(\.dismiss) var dismiss
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            default:
+            case .getCategories:
+                return .run { send in
+                    let categories = categoryRepository.loadCategories()
+                    await send(.updateCategories(categories))
+                }
+            case .updateCategories(let categories):
+                state.categories = categories
+                return .none
+            case .dismissWorkoutCategory:
+                return .run { _ in
+                    await self.dismiss()
+                }
+            case .workoutList:
                 return .none
             }
+        }
+        .forEach(\.workoutList, action: \.workoutList) {
+            WorkoutListReducer()
         }
     }
 }
@@ -55,27 +73,17 @@ struct AddWorkoutCategoryView: View {
                     Text("category")
                         .font(.system(size: 20, weight: .medium))
                         .padding(.leading, 15)
-                    let filteredCategory = viewStore.workoutList.workouts
-                        .filter({ $0.name.hasPrefix(store.keyword) })
-                        .compactMap({ $0.category })
-                        .uniqued()
-                    let categories = viewStore.categories.filter {
-                        if filteredCategory.isEmpty {
-                            return true
-                        } else if filteredCategory.contains($0.name) {
-                            return true
-                        } else {
-                            return false
-                        }
-                    }
-                    ForEach(categories) { category in
-                        NavigationLink {
-                            WorkoutListView(
-                                store: store.scope(state: \.workoutList,
-                                                   action: \.workoutList),
-                            )
-                        } label: {
-                            WorkoutCategorySubview(category: category)
+                    ForEachStore(
+                        store.scope(state: \.workoutList, action: \.workoutList)
+                    ) { rowStore in
+                        if rowStore.categoryName.hasPrefix(store.keyword) {
+                            NavigationLink {
+                                WorkoutListView(store: rowStore)
+                            } label: {
+                                WorkoutCategorySubview(
+                                    category: WorkoutCategory(name: rowStore.categoryName)
+                                )
+                            }
                         }
                     }
                 }

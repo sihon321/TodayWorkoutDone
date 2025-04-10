@@ -24,7 +24,7 @@ struct HomeReducer {
         var isHideTabBar = false
         var tabBarOffset: CGFloat = 0.0
         var bottomEdge: CGFloat = 35
-        var deletedSectionIndex: Int?
+        
         var workoutRoutine: WorkoutRoutine?
         
         var workingOut: WorkingOutReducer.State?
@@ -152,32 +152,6 @@ struct HomeReducer {
                 
             case .destination(.presented(.alert(.tappedMyRoutineAlerOk(let myRoutine)))):
                 insertMyRoutine(myRoutine: myRoutine)
-                return .none
-                
-            case .destination(.presented(.workoutView(.makeWorkout(.tappedDone(let myRoutine))))):
-                state.myRoutine = myRoutine
-                state.myRoutine?.isRunning = true
-                if let runningRoutine = state.myRoutine {
-                    state.workingOut = WorkingOutReducer.State(
-                        myRoutine: runningRoutine,
-                        workingOutSection: IdentifiedArrayOf(
-                            uniqueElements: runningRoutine.routines.map {
-                                WorkingOutSectionReducer.State(
-                                    routine: $0,
-                                    editMode: .inactive
-                                )
-                            }
-                        )
-                    )
-                    if let myRoutine = state.workingOut?.myRoutine  {
-                        state.workoutRoutine = WorkoutRoutine(
-                            name: myRoutine.name,
-                            startDate: Date(),
-                            myRoutine: myRoutine
-                        )
-                    }
-                }
-
                 return .none
                 
             case .destination:
