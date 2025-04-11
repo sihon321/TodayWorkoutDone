@@ -13,11 +13,11 @@ struct WorkingOutHeaderReducer {
     @ObservableState
     struct State: Equatable {
         var workoutName: String
-        var workoutType: WorkoutsType
+        var equipmentType: EquipmentType
     }
     
     enum Action {
-        case tappedWorkoutsType(type: WorkoutsType)
+        case tappedWorkoutsType(type: EquipmentType)
         case deleteWorkout
     }
     
@@ -37,13 +37,13 @@ struct WorkingOutHeader: View {
     @Bindable var store: StoreOf<WorkingOutHeaderReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkingOutHeaderReducer>
     
-    @State private var workoutType: WorkoutsType
+    @State private var equipmentType: EquipmentType
     @State private var showingOptions = false
     
-    init(store: StoreOf<WorkingOutHeaderReducer>, type: State<WorkoutsType>) {
+    init(store: StoreOf<WorkingOutHeaderReducer>, equipmentType: State<EquipmentType>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
-        self._workoutType = type
+        self._equipmentType = equipmentType
     }
     
     var body: some View {
@@ -56,30 +56,30 @@ struct WorkingOutHeader: View {
                     Menu {
                         Button(action: {
                             store.send(.tappedWorkoutsType(type: .machine))
-                            workoutType = .machine
+                            equipmentType = .machine
                         }) {
                             Label("머신", systemImage: "pencil")
                         }
                         Button(action: {
                             store.send(.tappedWorkoutsType(type: .barbel))
-                            workoutType = .barbel
+                            equipmentType = .barbel
                         }) {
                             Label("바벨", systemImage: "pencil")
                         }
                         Button(action: {
                             store.send(.tappedWorkoutsType(type: .dumbbel))
-                            workoutType = .dumbbel
+                            equipmentType = .dumbbel
                         }) {
                             Label("덤벨", systemImage: "pencil")
                         }
                         Button(action: {
                             store.send(.tappedWorkoutsType(type: .cable))
-                            workoutType = .cable
+                            equipmentType = .cable
                         }) {
                             Label("케이블", systemImage: "pencil")
                         }
                     } label: {
-                        Text(workoutType.kor)
+                        Text(equipmentType.kor)
                             .padding([.leading, .trailing], 5)
                             .padding([.top, .bottom], 3)
                             .font(.system(size: 11))

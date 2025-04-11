@@ -7,7 +7,6 @@
 
 import SwiftUI
 import ComposableArchitecture
-import SwiftData
 
 @Reducer
 struct HomeReducer {
@@ -18,14 +17,14 @@ struct HomeReducer {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
-        var myRoutine: MyRoutine?
+        var myRoutine: MyRoutineState?
         
         var routineName = ""
         var isHideTabBar = false
         var tabBarOffset: CGFloat = 0.0
         var bottomEdge: CGFloat = 35
         
-        var workoutRoutine: WorkoutRoutine?
+        var workoutRoutine: WorkoutRoutineState?
         
         var workingOut: WorkingOutReducer.State?
         var tabBar: CustomTabBarReducer.State = CustomTabBarReducer.State(
@@ -48,7 +47,7 @@ struct HomeReducer {
         case presentedSaveRoutineAlert
         
         case getMyRoutines
-        case fetchMyRoutines([MyRoutine])
+        case fetchMyRoutines([MyRoutineState])
         
         case workingOut(WorkingOutReducer.Action)
         case tabBar(CustomTabBarReducer.Action)
@@ -65,7 +64,7 @@ struct HomeReducer {
         
         enum Alert: Equatable {
             case tappedMyRoutineAlertCancel
-            case tappedMyRoutineAlerOk(MyRoutine?)
+            case tappedMyRoutineAlerOk(MyRoutineState?)
             
             case tappedWorkoutAlertClose
             case tappedWorkoutAlertCancel
@@ -76,7 +75,6 @@ struct HomeReducer {
     private enum CancelID { case timer }
     
     @Dependency(\.continuousClock) var clock
-    @Dependency(\.myRoutineData) var myRoutineContext
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -86,7 +84,7 @@ struct HomeReducer {
                 return .none
                 
             case .startButtonTapped:
-                state.myRoutine = MyRoutine()
+                state.myRoutine = MyRoutineState()
                 state.destination = .workoutView(
                     WorkoutReducer.State(
                         myRoutine: state.myRoutine!,
@@ -110,7 +108,10 @@ struct HomeReducer {
                 return .run { send in
                     @Dependency(\.myRoutineData) var context
                     let myRoutines = try context.fetchAll()
-                    await send(.fetchMyRoutines(myRoutines))
+                    await send(.fetchMyRoutines(
+                            myRoutines
+                                .compactMap({ MyRoutineState(model: $0) })
+                        ))
                 }
                 
             case .fetchMyRoutines(let myRoutines):
@@ -199,7 +200,7 @@ struct HomeReducer {
                             if let sectionIndex = state.workingOut?
                                 .workingOutSection
                                 .index(id: sectionId) {
-                                let workoutSet = WorkoutSet()
+                                let workoutSet = WorkoutSetState()
                                 state.workingOut?
                                     .workingOutSection[sectionIndex]
                                     .workingOutRow
@@ -310,16 +311,16 @@ struct HomeReducer {
         }
     }
     
-    private func insertMyRoutine(myRoutine: MyRoutine?) {
+    private func insertMyRoutine(myRoutine: MyRoutineState?) {
         @Dependency(\.myRoutineData) var context
         do {
-            if let myRoutine = myRoutine {
-                myRoutine.routines.forEach {
+            if let myRoutineModel = myRoutine?.toModel() {
+                myRoutineModel.routines.forEach {
                     $0.sets.forEach {
                         $0.isChecked = false
                     }
                 }
-                try context.add(myRoutine)
+                try context.add(myRoutineModel)
                 try context.save()
             } else {
                 throw MyRoutineDatabase.MyRoutineError.add
@@ -329,21 +330,21 @@ struct HomeReducer {
         }
     }
     
-    private func insertWorkoutRoutine(workout routine: WorkoutRoutine) {
+    private func insertWorkoutRoutine(workout routine: WorkoutRoutineState) {
         @Dependency(\.workoutRoutineData) var context
         
         do {
-            try context.add(routine)
+            try context.add(routine.toModel())
             try context.save()
         } catch {
             print(WorkoutRoutineDatabase.WorkoutRoutineError.add)
         }
     }
     
-    private func deleteMyRoutine(_ myRoutine: MyRoutine) {
+    private func deleteMyRoutine(_ myRoutine: MyRoutineState) {
         @Dependency(\.myRoutineData) var context
         do {
-            try context.delete(myRoutine)
+            try context.delete(myRoutine.toModel())
             try context.save()
         } catch {
             print(error.localizedDescription)
@@ -440,7 +441,7 @@ extension HomeView {
 }
 
 extension AlertState where Action == HomeReducer.Destination.Alert {
-    static func saveRoutineAlert(_ runningMyRoutine: MyRoutine?) -> Self {
+    static func saveRoutineAlert(_ runningMyRoutine: MyRoutineState?) -> Self {
         Self {
             TextState("루틴 저장")
         } actions: {

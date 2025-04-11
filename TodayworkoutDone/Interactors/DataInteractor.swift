@@ -103,3 +103,8 @@ struct WorkoutDataInteractor: DataInteractor {
 struct StubWorkoutDataInteractor: DataInteractor {
     var persistentContainer = NSPersistentContainer(name: "ModelData")
 }
+
+public extension CodingUserInfoKey {
+    // Helper property to retrieve the context
+    static let managedObjectContext = CodingUserInfoKey(rawValue: "managedObjectContext")
+}

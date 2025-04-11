@@ -15,17 +15,17 @@ struct MakeWorkoutReducer {
     struct State: Equatable {
         @Presents var destination: Destination.State?
 
-        var myRoutine: MyRoutine
+        var myRoutine: MyRoutineState
         var titleSmall: Bool = false
-        var categories: Categories = []
-        var selectionWorkouts: [Workout] = []
+        var categories: [WorkoutCategoryState] = []
+        var selectionWorkouts: [WorkoutState] = []
         var isEdit: Bool = false
         var deletedSectionIndex: Int?
-        var changedTypes: [Int: WorkoutsType] = [:]
+        var changedTypes: [Int: EquipmentType] = [:]
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
-        init(myRoutine: MyRoutine,
-             categories: Categories,
+        init(myRoutine: MyRoutineState,
+             categories: [WorkoutCategoryState],
              isEdit: Bool) {
             self.myRoutine = myRoutine
             self.categories = categories
@@ -43,10 +43,10 @@ struct MakeWorkoutReducer {
     
     enum Action {
         case dismissMakeWorkout
-        case tappedDone(MyRoutine)
-        case save(MyRoutine)
+        case tappedDone(MyRoutineState)
+        case save(MyRoutineState)
         case didUpdateText(String)
-        
+
         case tappedAdd
         case destination(PresentationAction<Destination.Action>)
         case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
@@ -82,7 +82,7 @@ struct MakeWorkoutReducer {
                 }
                 if state.changedTypes.isEmpty == false {
                     for (index, type) in state.changedTypes {
-                        state.myRoutine.routines[index].workoutsType = type
+                        state.myRoutine.routines[index].equipmentType = type
                     }
                 }
                 return .run { send in
@@ -92,6 +92,7 @@ struct MakeWorkoutReducer {
             case .didUpdateText(let text):
                 state.myRoutine.name = text
                 return .none
+
             case .tappedAdd:
                 state.destination = .addWorkoutCategory(
                     AddWorkoutCategoryReducer.State(
@@ -120,7 +121,7 @@ struct MakeWorkoutReducer {
                     case .tappedAddFooter:
                         if let sectionIndex = state.workingOutSection
                             .index(id: sectionId) {
-                            let workoutSet = WorkoutSet()
+                            let workoutSet = WorkoutSetState()
                             state.workingOutSection[sectionIndex]
                                 .workingOutRow
                                 .append(
@@ -262,7 +263,6 @@ struct MakeWorkoutView: View {
             ) { store in
                 AddWorkoutCategoryView(store: store)
             }
-
         }
     }
     

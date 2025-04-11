@@ -16,13 +16,13 @@ extension DependencyValues {
 }
 
 struct RealCategoryAPIRepository {
-    var loadCategories: () -> Categories
+    var loadCategories: () -> [WorkoutCategoryState]
 }
 
 extension RealCategoryAPIRepository: DependencyKey {
     public static let liveValue = Self(
         loadCategories: {
-            let categories: Categories = load("category.json")
+            let categories: [WorkoutCategoryState] = load("category.json")
             
             return categories
         }

@@ -17,13 +17,15 @@ struct WorkoutListReducer {
         
         let id: UUID
         let isAddWorkoutPresented: Bool
-        var myRoutine: MyRoutine
+        var myRoutine: MyRoutineState
         let categoryName: String
-        var categories: Categories
-        var workouts: [Workout] = []
+        var categories: [WorkoutCategoryState]
+        var workouts: [WorkoutState] = []
         var keyword: String = ""
+        var filters: [String] = []
+        var soretedWorkoutSection: IdentifiedArrayOf<SortedWorkoutSectionReducer.State> = []
         
-        var groupedNames: [(key: String, value: [Workout])] {
+        var groupedNames: [(key: String, value: [WorkoutState])] {
             let filteredWorkout = workouts.filter { $0.name.hasPrefix(keyword) }
             let groupedDictionary = Dictionary(grouping: filteredWorkout,
                                                by: { extractFirstCharacter($0.name) })
@@ -52,13 +54,15 @@ struct WorkoutListReducer {
         case destination(PresentationAction<Destination.Action>)
         
         case search(keyword: String)
-        case updateMyRoutine(Workout)
-        case makeWorkoutView([Routine])
+        case updateMyRoutine(WorkoutState)
+        case makeWorkoutView([RoutineState])
         case getWorkouts(String)
-        case updateWorkouts([Workout])
+        case updateWorkouts([WorkoutState])
         case dismiss
         case appearMakeWorkout
-        case createMakeWorkoutView(myRoutine: MyRoutine?, isEdit: Bool)
+        case createMakeWorkoutView(myRoutine: MyRoutineState?, isEdit: Bool)
+        
+        case sortedWorkoutSection(IdentifiedActionOf<SortedWorkoutSectionReducer>)
     }
     
     @Reducer(state: .equatable)
@@ -77,9 +81,9 @@ struct WorkoutListReducer {
                 return .none
             case let .updateMyRoutine(workout):
                 if workout.isSelected {
-                    state.myRoutine.routines.append(Routine(workouts: workout))
+                    state.myRoutine.routines.append(RoutineState(workout: workout))
                 } else {
-                    state.myRoutine.routines.removeAll { $0.workout.name == workout.name }
+//                    state.myRoutine.routines.removeAll { $0.workout.name == workout.name }
                 }
                 return .none
             case let .getWorkouts(categoryName):
@@ -89,6 +93,18 @@ struct WorkoutListReducer {
                 }
             case .updateWorkouts(let workouts):
                 state.workouts = workouts
+                state.filters = Array(Set(workouts.compactMap(\.target))).sorted()
+                state.soretedWorkoutSection = IdentifiedArrayOf(
+                    uniqueElements: state.groupedNames.enumerated().compactMap { index, element in
+                        SortedWorkoutSectionReducer.State(
+                            id: UUID(),
+                            myRoutine: state.myRoutine,
+                            index: index,
+                            key: element.key,
+                            workouts: element.value
+                        )
+                    }
+                )
                 return .none
             case .makeWorkoutView:
                 return .send(.appearMakeWorkout)
@@ -111,10 +127,65 @@ struct WorkoutListReducer {
                 return .none
             case .destination:
                 return .none
+            case .sortedWorkoutSection:
+                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination) {
             Destination.body
+        }
+        .forEach(\.soretedWorkoutSection, action: \.sortedWorkoutSection) {
+            SortedWorkoutSectionReducer()
+        }
+    }
+}
+
+@Reducer
+struct SortedWorkoutSectionReducer {
+    @ObservableState
+    struct State: Equatable, Identifiable {
+        let id: UUID
+        var myRoutine: MyRoutineState
+        let index: Int
+        let key: String
+        var workouts: [WorkoutState]
+        var workoutList: IdentifiedArrayOf<WorkoutListSubviewReducer.State> = []
+        
+        init(id: UUID,
+             myRoutine: MyRoutineState,
+             index: Int,
+             key: String,
+             workouts: [WorkoutState]) {
+            self.id = id
+            self.myRoutine = myRoutine
+            self.index = index
+            self.key = key
+            self.workouts = workouts
+            self.workoutList = IdentifiedArray(
+                uniqueElements: workouts.compactMap {
+                    WorkoutListSubviewReducer.State(
+                        id: UUID(),
+                        myRoutine: myRoutine,
+                        workout: $0
+                    )
+                }
+            )
+        }
+    }
+    
+    enum Action {
+        case workoutList(IdentifiedActionOf<WorkoutListSubviewReducer>)
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .workoutList:
+                return .none
+            }
+        }
+        .forEach(\.workoutList, action: \.workoutList) {
+            WorkoutListSubviewReducer()
         }
     }
 }
@@ -123,13 +194,11 @@ struct WorkoutListView: View {
     @Bindable var store: StoreOf<WorkoutListReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkoutListReducer>
     @State private var topHeaderIndex: Int? = nil
-    private var filters: [String] = []
     @State private var selectedFilters: Set<String> = []
     
     init(store: StoreOf<WorkoutListReducer>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
-        self.filters = Array(Set(store.workouts.compactMap(\.target))).sorted()
     }
     
     var body: some View {
@@ -145,18 +214,21 @@ struct WorkoutListView: View {
             }
             ScrollView {
                 VStack(spacing: 0) {
-                    HorizontalFilterView(filters: filters,
+                    HorizontalFilterView(filters: store.filters,
                                          selectedFilters: $selectedFilters)
                         .padding(.horizontal)
-                    ForEach(Array(viewStore.groupedNames.enumerated()), id: \.offset) { index, section in
-                        StickyHeaderView(index: index,
-                                         title: section.key,
+                    ForEach(store.scope(state: \.soretedWorkoutSection,
+                                        action: \.sortedWorkoutSection)) { sectionStore in
+                        StickyHeaderView(index: sectionStore.index,
+                                         title: sectionStore.key,
                                          topHeaderIndex: $topHeaderIndex)
-                        ForEach(section.value, id: \.self) { workouts in
+                        
+                        ForEach(sectionStore.scope(state: \.workoutList,
+                                                   action: \.workoutList)) { rowStore in
                             if selectedFilters.isEmpty
                                 || (selectedFilters.isEmpty == false
-                                && selectedFilters.contains(where: { $0 == workouts.target })) {
-                                WorkoutListSubview(store: store, workouts: workouts)
+                                    && selectedFilters.contains(where: { $0 == rowStore.workout.target })) {
+                                WorkoutListSubview(store: rowStore)
                                     .padding(.vertical, 3)
                             }
                         }

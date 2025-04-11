@@ -26,7 +26,7 @@ extension Workout {
 extension Routine {
     static let mockedData: [Routine] = Workout.mockedData.compactMap {
         Routine(
-            workouts: $0,
+            workout: $0,
             sets: [
                 WorkoutSet(weight: 50, reps: 12),
                 WorkoutSet(weight: 60, reps: 12),
@@ -43,7 +43,7 @@ extension MyRoutine {
 extension WorkoutRoutine {
     static let mockedData: WorkoutRoutine = WorkoutRoutine(name: "Test",
                                                            startDate: Date(),
-                                                           myRoutine: MyRoutine.mockedData)
+                                                           routines: Routine.mockedData)
 }
 
 extension WorkoutSet {

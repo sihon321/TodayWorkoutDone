@@ -14,11 +14,11 @@ struct WorkingOutSectionReducer {
     struct State: Equatable, Identifiable {
         let id: UUID
         var editMode: EditMode
-        var routine: Routine
+        var routine: RoutineState
         var workingOutRow: IdentifiedArrayOf<WorkingOutRowReducer.State>
         let workingOutHeader: WorkingOutHeaderReducer.State
         
-        init(routine: Routine, editMode: EditMode) {
+        init(routine: RoutineState, editMode: EditMode) {
             self.id = routine.id
             self.routine = routine
             self.editMode = editMode
@@ -30,7 +30,7 @@ struct WorkingOutSectionReducer {
             )
             self.workingOutHeader = WorkingOutHeaderReducer.State(
                 workoutName: routine.workout.name,
-                workoutType: routine.workoutsType
+                equipmentType: routine.equipmentType
             )
         }
     }
@@ -88,7 +88,7 @@ struct WorkingOutSection: View {
         } header: {
             WorkingOutHeader(store: store.scope(state: \.workingOutHeader,
                                                 action: \.workingOutHeader),
-                             type: .init(wrappedValue: store.routine.workoutsType))
+                             equipmentType: .init(wrappedValue: store.routine.equipmentType))
             
         } footer: {
             if viewStore.editMode == .active {
@@ -102,13 +102,13 @@ struct WorkingOutSection: View {
     }
     
     func deleteItems(atOffsets offset: IndexSet) {
-        store.routine.sets.remove(atOffsets: offset)
+//        store.routine.sets.remove(atOffsets: offset)
     }
 }
 
 #Preview {
     let workingOutRowStores = WorkoutSet.mockedData.map {
-        WorkingOutRowReducer.State(workoutSet: $0)
+        WorkingOutRowReducer.State(workoutSet: WorkoutSetState(model: $0))
     }
     Section {
         List {
@@ -122,9 +122,9 @@ struct WorkingOutSection: View {
     } header: {
         WorkingOutHeader(store: Store(
             initialState: WorkingOutHeaderReducer.State(workoutName: "test",
-                                                        workoutType: .barbel)
+                                                        equipmentType: .barbel)
         ) {
             WorkingOutHeaderReducer()
-        }, type: .init(initialValue: .barbel))
+        }, equipmentType: .init(initialValue: .barbel))
     }
 }

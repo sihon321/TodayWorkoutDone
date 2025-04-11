@@ -13,11 +13,11 @@ struct WorkingOutRowReducer {
     @ObservableState
     struct State: Equatable, Identifiable {
         let id: UUID
-        var workoutSet: WorkoutSet
+        var workoutSet: WorkoutSetState
         var isChecked: Bool
         var editMode: EditMode
         
-        init(workoutSet: WorkoutSet, editMode: EditMode = .inactive) {
+        init(workoutSet: WorkoutSetState, editMode: EditMode = .inactive) {
             self.id = workoutSet.id
             self.editMode = editMode
             self.workoutSet = workoutSet

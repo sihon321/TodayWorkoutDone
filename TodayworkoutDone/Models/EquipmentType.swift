@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-enum WorkoutsType: String, Codable {
+enum EquipmentType: String, Codable {
     case machine, barbel, dumbbel, cable
     
     var kor: String {

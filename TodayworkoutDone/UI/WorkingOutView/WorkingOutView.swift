@@ -11,16 +11,13 @@ import ComposableArchitecture
 @Reducer
 struct WorkingOutReducer {
     @ObservableState
-    struct State: Equatable {
-        var myRoutine: MyRoutine
+    struct State: Equatable, Identifiable {
+        let id: UUID
+        var myRoutine: MyRoutineState
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
         var secondsElapsed = 0
         var isTimerActive = false
-        
-        static func == (lhs: WorkingOutReducer.State, rhs: WorkingOutReducer.State) -> Bool {
-            return lhs.myRoutine.id == rhs.myRoutine.id
-        }
     }
     
     enum Action {

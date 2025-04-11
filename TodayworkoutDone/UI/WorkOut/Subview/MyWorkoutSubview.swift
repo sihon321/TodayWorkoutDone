@@ -8,19 +8,31 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct MyWorkoutSubview: View {
-    @Bindable var store: StoreOf<MyRoutineReducer>
-    private var myRoutine: MyRoutine
+@Reducer
+struct MyWorkoutSubviewReducer {
+    @ObservableState
+    struct State {
+        var myRoutine: MyRoutineState
+    }
     
-    init(store: StoreOf<MyRoutineReducer>, myRoutine: MyRoutine) {
+    enum Action {
+        case touchedMyRoutine(MyRoutineState)
+        case touchedEditMode(MyRoutineState)
+        case touchedDelete(MyRoutineState)
+    }
+}
+
+struct MyWorkoutSubview: View {
+    @Bindable var store: StoreOf<MyWorkoutSubviewReducer>
+    
+    init(store: StoreOf<MyWorkoutSubviewReducer>) {
         self.store = store
-        self.myRoutine = myRoutine
     }
 
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(myRoutine.name)
+                Text(store.myRoutine.name)
                     .font(.system(size: 18,
                                   weight: .semibold,
                                   design: .default))
@@ -30,12 +42,12 @@ struct MyWorkoutSubview: View {
                 Button(action: {}) {
                     Menu {
                         Button(action: {
-                            store.send(.touchedEditMode(myRoutine))
+                            store.send(.touchedEditMode(store.myRoutine))
                         }) {
                             Label("편집", systemImage: "pencil")
                         }
                         Button(action: {
-                            store.send(.touchedDelete(myRoutine))
+                            store.send(.touchedDelete(store.myRoutine))
                         }) {
                             Label("삭제", systemImage: "trash")
                         }
@@ -51,7 +63,7 @@ struct MyWorkoutSubview: View {
             .padding(.top, 20)
             .padding(.bottom, 5)
             
-            ForEach(myRoutine.routines) { routine in
+            ForEach(store.myRoutine.routines) { routine in
                 Text(routine.workout.name)
                     .font(.system(size: 12,
                                   weight: .light,

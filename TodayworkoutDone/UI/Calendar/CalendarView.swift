@@ -12,7 +12,7 @@ import ComposableArchitecture
 struct CalendarReducer {
     @ObservableState
     struct State: Equatable {
-        var workoutRoutines: [WorkoutRoutine] = []
+        var workoutRoutines: [WorkoutRoutineState] = []
         let monthFormatter = DateFormatter(dateFormat: "MMMM YYYY",
                                            calendar: .current)
         let dayFormatter = DateFormatter(dateFormat: "d",
@@ -26,7 +26,7 @@ struct CalendarReducer {
         var isSheetPresented = false
         var calendarDetail: CalendarDetailReducer.State?
         
-        func filterWorkout(date: Date?) -> [WorkoutRoutine] {
+        func filterWorkout(date: Date?) -> [WorkoutRoutineState] {
             guard let date = date else { return [] }
             return workoutRoutines.filter({
                 $0.startDate.year == date.year
@@ -38,7 +38,7 @@ struct CalendarReducer {
     
     enum Action {
         case loadWorkoutRoutines
-        case fetchWorkoutRoutines([WorkoutRoutine])
+        case fetchWorkoutRoutines([WorkoutRoutineState])
         case tappedDate(Date)
         
         case setSheet(isPresented: Bool)
@@ -60,7 +60,7 @@ struct CalendarReducer {
             switch action {
             case .loadWorkoutRoutines:
                 return .run { send in
-                    let workoutRoutines = try workoutRoutineContext.fetchAll()
+                    let workoutRoutines = try workoutRoutineContext.fetchAll().compactMap { WorkoutRoutineState(model: $0) }
                     await send(.fetchWorkoutRoutines(workoutRoutines))
                 }
             case .fetchWorkoutRoutines(let workoutRoutines):

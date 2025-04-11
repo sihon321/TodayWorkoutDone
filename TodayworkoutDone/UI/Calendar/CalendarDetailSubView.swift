@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CalendarDetailSubView: View {
-    var workoutRoutine: WorkoutRoutine
+    var workoutRoutine: WorkoutRoutineState
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -50,5 +50,7 @@ struct CalendarDetailSubView: View {
 }
 
 #Preview {
-    CalendarDetailSubView(workoutRoutine: WorkoutRoutine.mockedData)
+    CalendarDetailSubView(
+        workoutRoutine: WorkoutRoutineState(model: WorkoutRoutine.mockedData)
+    )
 }

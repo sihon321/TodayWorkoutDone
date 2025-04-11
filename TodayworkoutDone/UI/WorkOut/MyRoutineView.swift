@@ -13,14 +13,14 @@ struct MyRoutineReducer {
     @ObservableState
     struct State: Equatable {
         var text: String = ""
-        var myRoutines: [MyRoutine] = []
-        var selectedRoutine: MyRoutine?
+        var myRoutines: [MyRoutineState] = []
+        var selectedRoutine: MyRoutineState?
     }
     
     enum Action {
-        case touchedMyRoutine(MyRoutine)
-        case touchedEditMode(MyRoutine)
-        case touchedDelete(MyRoutine)
+        case touchedMyRoutine(MyRoutineState)
+        case touchedEditMode(MyRoutineState)
+        case touchedDelete(MyRoutineState)
     }
 }
 
@@ -43,7 +43,13 @@ struct MyRoutineView: View {
                         Button(action: {
                             store.send(.touchedMyRoutine(myRoutine))
                         }) {
-                            MyWorkoutSubview(store: store, myRoutine: myRoutine)
+                            MyWorkoutSubview(
+                                store: Store(
+                                    initialState: MyWorkoutSubviewReducer.State(myRoutine: myRoutine)
+                                ) {
+                                    MyWorkoutSubviewReducer()
+                                }
+                            )
                         }
                     }
                 }

@@ -13,7 +13,7 @@ struct CalendarDetailReducer {
     @ObservableState
     struct State: Equatable {
         var date: Date
-        var workoutRoutines: [WorkoutRoutine]
+        var workoutRoutines: [WorkoutRoutineState]
     }
     
     enum Action: Equatable {

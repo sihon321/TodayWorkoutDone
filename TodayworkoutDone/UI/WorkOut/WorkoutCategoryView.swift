@@ -13,7 +13,7 @@ import ComposableArchitecture
 struct WorkoutCategoryReducer {
     @ObservableState
     struct State: Equatable {
-        var myRoutine: MyRoutine
+        var myRoutine: MyRoutineState
         var keyword: String = ""
         
         var workoutList: IdentifiedArrayOf<WorkoutListReducer.State>
@@ -63,7 +63,7 @@ struct WorkoutCategoryView: View {
                         WorkoutListView(store: rowStore)
                     } label: {
                         WorkoutCategorySubview(
-                            category: WorkoutCategory(name: rowStore.categoryName)
+                            category: WorkoutCategoryState(name: rowStore.categoryName)
                         )
                     }
                 }

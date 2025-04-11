@@ -14,16 +14,26 @@ import ComposableArchitecture
 struct AddWorkoutCategoryReducer {
     @ObservableState
     struct State: Equatable {
-        var myRoutine: MyRoutine
+        var myRoutine: MyRoutineState
         var keyword: String = ""
-        var categories: Categories = []
+        var categories: [WorkoutCategoryState] = []
         
         var workoutList: IdentifiedArrayOf<WorkoutListReducer.State>
+
+        init(myRoutine: MyRoutineState,
+             keyword: String = "",
+             categories: [WorkoutCategoryState] = [],
+             workoutList: IdentifiedArrayOf<WorkoutListReducer.State>) {
+            self.myRoutine = myRoutine
+            self.keyword = keyword
+            self.categories = categories
+            self.workoutList = workoutList
+        }
     }
     
     enum Action {
         case getCategories
-        case updateCategories(Categories)
+        case updateCategories([WorkoutCategoryState])
         case dismissWorkoutCategory
         case workoutList(IdentifiedActionOf<WorkoutListReducer>)
     }
@@ -81,7 +91,7 @@ struct AddWorkoutCategoryView: View {
                                 WorkoutListView(store: rowStore)
                             } label: {
                                 WorkoutCategorySubview(
-                                    category: WorkoutCategory(name: rowStore.categoryName)
+                                    category: WorkoutCategoryState(name: rowStore.categoryName)
                                 )
                             }
                         }

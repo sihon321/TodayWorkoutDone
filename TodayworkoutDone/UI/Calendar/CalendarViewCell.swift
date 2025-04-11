@@ -16,7 +16,7 @@ struct CalendarCellReducer {
         var dayFormatter: DateFormatter
         var selectedDate: Date
         var date: Date
-        var workoutRoutines: [WorkoutRoutine] = []
+        var workoutRoutines: [WorkoutRoutineState] = []
     }
 }
 

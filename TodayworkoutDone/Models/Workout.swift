@@ -8,13 +8,15 @@
 import Foundation
 import SwiftData
 
-public extension CodingUserInfoKey {
-    // Helper property to retrieve the context
-    static let managedObjectContext = CodingUserInfoKey(rawValue: "managedObjectContext")
+protocol WorkoutData {
+    var name: String { get set }
+    var category: String { get set }
+    var target: String { get set }
+    var isSelected: Bool { get set }
 }
 
-@Model
-class Workout: Codable, Equatable {
+struct WorkoutState: WorkoutData, Codable, Equatable {
+    var id: UUID = UUID()
     var name: String
     var category: String
     var target: String
@@ -31,7 +33,7 @@ class Workout: Codable, Equatable {
         self.isSelected = isSelected
     }
 
-    required init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
         category = try container.decode(String.self, forKey: .category)
@@ -46,14 +48,56 @@ class Workout: Codable, Equatable {
         try container.encode(target, forKey: .target)
         try container.encode(isSelected, forKey: .isSelected)
     }
+}
+
+extension WorkoutState {
+    init(model: Workout) {
+        self.name = model.name
+        self.category = model.category
+        self.target = model.target
+        self.isSelected = model.isSelected
+    }
     
-    static func ==(lhs: Workout, rhs: Workout) -> Bool {
-        return lhs.id == rhs.id
+    func toModel() -> Workout {
+        return Workout(
+            name: name,
+            category: category,
+            target: target,
+            isSelected: isSelected
+        )
     }
 }
 
-extension Workout: Identifiable {
-    var id: String { name }
+extension Array where Element == WorkoutState {
+    var allTrue: Bool {
+        return self.allSatisfy { $0.isSelected }
+    }
+}
+
+// MARK: - SwiftData
+
+@Model
+class Workout: WorkoutData, Equatable {
+    var name: String
+    var category: String
+    var target: String
+    var isSelected: Bool
+
+    init(name: String, category: String, target: String, isSelected: Bool) {
+        self.name = name
+        self.category = category
+        self.target = target
+        self.isSelected = isSelected
+    }
+}
+
+extension Workout {
+    func update(from state: WorkoutState) {
+        name = state.name
+        category = state.category
+        target = state.target
+        isSelected = state.isSelected
+    }
 }
 
 extension Array where Element == Workout {

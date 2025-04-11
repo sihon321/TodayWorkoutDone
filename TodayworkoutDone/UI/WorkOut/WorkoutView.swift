@@ -15,14 +15,14 @@ struct WorkoutReducer {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
-        var myRoutine: MyRoutine
+        var myRoutine: MyRoutineState
         var keyword: String = ""
         var myRoutineState: MyRoutineReducer.State
         
-        var categories: Categories = []
+        var categories: [WorkoutCategoryState] = []
         var hasLoaded = false
         
-        init(myRoutine: MyRoutine,
+        init(myRoutine: MyRoutineState,
              myRoutineState: MyRoutineReducer.State) {
             self.myRoutine = myRoutine
             self.myRoutineState = myRoutineState
@@ -38,12 +38,12 @@ struct WorkoutReducer {
         case dismiss
         case hasLoaded
         case getCategories
-        case updateCategories(Categories)
+        case updateCategories([WorkoutCategoryState])
         case getMyRoutines
-        case fetchMyRoutines([MyRoutine])
+        case fetchMyRoutines([MyRoutineState])
         
         case appearMakeWorkout
-        case createMakeWorkoutView(myRoutine: MyRoutine?, isEdit: Bool)
+        case createMakeWorkoutView(myRoutine: MyRoutineState?, isEdit: Bool)
         
         var description: String {
             return "\(self)"
@@ -56,7 +56,7 @@ struct WorkoutReducer {
         case alert(AlertState<Alert>)
         
         enum Alert: Equatable {
-            case tappedMyRoutineStart(MyRoutine)
+            case tappedMyRoutineStart(MyRoutineState)
         }
     }
     
@@ -90,6 +90,7 @@ struct WorkoutReducer {
             case .getMyRoutines:
                 return .run { send in
                     let myRoutines = try context.fetchAll()
+                        .compactMap { MyRoutineState(model: $0) }
                     await send(.fetchMyRoutines(myRoutines))
                 }
                 
@@ -124,17 +125,20 @@ struct WorkoutReducer {
                 case let .touchedEditMode(myRoutine):
                     return .send(.createMakeWorkoutView(myRoutine: myRoutine, isEdit: true))
                 case let .touchedDelete(myRoutine):
-                    let id = myRoutine.persistentModelID
-                    return .run { send in
-                        let descriptor = FetchDescriptor<MyRoutine>(
-                            predicate: #Predicate { $0.persistentModelID == id }
-                        )
-                        if let routineToDelete = try context.fetch(descriptor).first {
-                            try context.delete(routineToDelete)
-                            try context.save()
+                    if let id = myRoutine.persistentModelID {
+                        return .run { send in
+                            let descriptor = FetchDescriptor<MyRoutine>(
+                                predicate: #Predicate { $0.persistentModelID == id }
+                            )
+                            if let routineToDelete = try context.fetch(descriptor).first {
+                                try context.delete(routineToDelete)
+                                try context.save()
+                            }
+                            
+                            await send(.getMyRoutines)
                         }
-
-                        await send(.getMyRoutines)
+                    } else {
+                        return .none
                     }
                 }
             case .destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine)))):
@@ -241,7 +245,7 @@ struct WorkoutView: View {
 }
 
 extension AlertState where Action == WorkoutReducer.Destination.Alert {
-    static func startMyRoutine(_ myRoutine: MyRoutine) -> Self {
+    static func startMyRoutine(_ myRoutine: MyRoutineState) -> Self {
         Self {
             TextState("루틴을 시작하겠습니까?")
         } actions: {
