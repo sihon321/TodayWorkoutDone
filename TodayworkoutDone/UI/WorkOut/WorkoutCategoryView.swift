@@ -13,18 +13,23 @@ import ComposableArchitecture
 struct WorkoutCategoryReducer {
     @ObservableState
     struct State: Equatable {
-        var myRoutine: MyRoutineState
+        var myRoutine: MyRoutineState?
         var keyword: String = ""
+        var workoutList: IdentifiedArrayOf<WorkoutListReducer.State> = []
         
-        var workoutList: IdentifiedArrayOf<WorkoutListReducer.State>
+        init(myRoutine: MyRoutineState? = nil,
+             keyword: String = "",
+             workoutList: IdentifiedArrayOf<WorkoutListReducer.State> = []) {
+            self.myRoutine = myRoutine
+            self.keyword = keyword
+            self.workoutList = workoutList
+        }
     }
     
     enum Action {
         case setText(keyword: String)
         case workoutList(IdentifiedActionOf<WorkoutListReducer>)
     }
-    
-    @Dependency(\.categoryAPI) var categoryRepository
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in

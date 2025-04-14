@@ -13,34 +13,29 @@ protocol WorkoutCategoryData {
 }
 
 struct WorkoutCategoryState: WorkoutCategoryData, Equatable, Codable {
-    var id: UUID
     var name: String
     
     enum CodingKeys: String, CodingKey {
-        case id, name
+        case name
     }
     
     init(name: String) {
-        self.id = UUID()
         self.name = name
     }
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(UUID.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
     }
 }
 
 extension WorkoutCategoryState {
     init(model: WorkoutCategory) {
-        self.id = UUID()
         self.name = model.name
     }
     

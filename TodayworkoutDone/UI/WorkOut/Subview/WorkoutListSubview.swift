@@ -13,7 +13,6 @@ struct WorkoutListSubviewReducer {
     @ObservableState
     struct State: Equatable, Identifiable {
         let id: UUID
-        var myRoutine: MyRoutineState
         var workout: WorkoutState
     }
     
@@ -26,11 +25,6 @@ struct WorkoutListSubviewReducer {
             switch action {
             case .didTapped:
                 state.workout.isSelected = !state.workout.isSelected
-                if state.workout.isSelected {
-                    state.myRoutine.routines.append(RoutineState(workout: state.workout))
-                } else {
-//                    state.myRoutine.routines.removeAll { $0.workout.name == state.workout.name }
-                }
                 return .none
             }
         }
@@ -57,7 +51,7 @@ struct WorkoutListSubview: View {
                         .font(.system(size: 15, weight: .light))
                         .foregroundStyle(.black)
                     Spacer()
-                    if store.myRoutine.routines.contains(where: { $0.workout.id == store.workout.id }) {
+                    if store.workout.isSelected {
                         Image(systemName:"checkmark")
                             .foregroundStyle(.black)
                             .padding(.trailing, 15)

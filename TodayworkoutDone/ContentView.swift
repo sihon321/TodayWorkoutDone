@@ -49,7 +49,13 @@ struct ContentView: View {
     var body: some View {
         HomeView(
             store: Store(
-                initialState: HomeReducer.State()
+                initialState: HomeReducer.State(tabBar: CustomTabBarReducer.State(
+                    bottomEdge: 35,
+                    tabButton: TabButtonReducer.State(
+                        info: TabButtonReducer.TabInfo(imageName: "dumbbell.fill",
+                                                       index: 0)
+                    )
+                ))
             ) {
                 HomeReducer()
             }

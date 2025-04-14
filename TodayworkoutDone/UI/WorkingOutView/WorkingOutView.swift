@@ -11,8 +11,7 @@ import ComposableArchitecture
 @Reducer
 struct WorkingOutReducer {
     @ObservableState
-    struct State: Equatable, Identifiable {
-        let id: UUID
+    struct State: Equatable {
         var myRoutine: MyRoutineState
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         

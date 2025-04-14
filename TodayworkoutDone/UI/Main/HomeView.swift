@@ -27,15 +27,8 @@ struct HomeReducer {
         var workoutRoutine: WorkoutRoutineState?
         
         var workingOut: WorkingOutReducer.State?
-        var tabBar: CustomTabBarReducer.State = CustomTabBarReducer.State(
-            bottomEdge: 35,
-            tabButton: TabButtonReducer.State(
-                info: TabButtonReducer.TabInfo(imageName: "dumbbell.fill",
-                                               index: 0)
-            )
-        )
+        var tabBar: CustomTabBarReducer.State
         var calendar: CalendarReducer.State = CalendarReducer.State()
-        var myRoutineState = MyRoutineReducer.State()
     }
     
     enum Action {
@@ -78,6 +71,7 @@ struct HomeReducer {
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
+            print(action.description)
             switch action {
             case .enterRoutineName(let name):
                 state.routineName = name
@@ -86,10 +80,7 @@ struct HomeReducer {
             case .startButtonTapped:
                 state.myRoutine = MyRoutineState()
                 state.destination = .workoutView(
-                    WorkoutReducer.State(
-                        myRoutine: state.myRoutine!,
-                        myRoutineState: state.myRoutineState
-                    )
+                    WorkoutReducer.State(myRoutine: state.myRoutine!)
                 )
                 return .none
                 
@@ -98,10 +89,10 @@ struct HomeReducer {
                 return .none
                 
             case .presentedSaveRoutineAlert:
-                if let routine = state.myRoutine,
-                    state.myRoutineState.myRoutines.contains(routine) == false {
-                    state.destination = .alert(.saveRoutineAlert(routine))
-                }
+//                if let routine = state.myRoutine,
+//                    state.myRoutines.contains(routine) == false {
+//                    state.destination = .alert(.saveRoutineAlert(routine))
+//                }
                 return .none
                 
             case .getMyRoutines:
@@ -115,7 +106,7 @@ struct HomeReducer {
                 }
                 
             case .fetchMyRoutines(let myRoutines):
-                state.myRoutineState.myRoutines = myRoutines
+//                state.myRoutineState.myRoutines = myRoutines
                 return .none
 
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
@@ -144,15 +135,33 @@ struct HomeReducer {
                 
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
-                    
                     await send(.presentedSaveRoutineAlert)
                 }
-                
-            case .destination(.presented(.alert(.tappedMyRoutineAlertCancel))):
-                return .none
-                
-            case .destination(.presented(.alert(.tappedMyRoutineAlerOk(let myRoutine)))):
-                insertMyRoutine(myRoutine: myRoutine)
+
+            case .destination(.presented(.workoutView(.destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine))))))):
+                state.myRoutine = myRoutine
+                state.myRoutine?.isRunning = true
+                if let runningRoutine = state.myRoutine {
+                    state.workingOut = WorkingOutReducer.State(
+                        myRoutine: runningRoutine,
+                        workingOutSection: IdentifiedArrayOf(
+                            uniqueElements: runningRoutine.routines.map {
+                                WorkingOutSectionReducer.State(
+                                    routine: $0,
+                                    editMode: .inactive
+                                )
+                            }
+                        )
+                    )
+                    if let myRoutine = state.workingOut?.myRoutine  {
+                        state.workoutRoutine = WorkoutRoutineState(
+                            name: myRoutine.name,
+                            startDate: Date(),
+                            routines: myRoutine.routines
+                        )
+                    }
+                }
+
                 return .none
                 
             case .destination:
@@ -307,7 +316,7 @@ struct HomeReducer {
             }
         }
         .ifLet(\.$destination, action: \.destination) {
-          Destination.body
+            Destination.body
         }
     }
     

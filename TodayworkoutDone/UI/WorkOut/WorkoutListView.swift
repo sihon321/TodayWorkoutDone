@@ -54,12 +54,11 @@ struct WorkoutListReducer {
         case destination(PresentationAction<Destination.Action>)
         
         case search(keyword: String)
-        case updateMyRoutine(WorkoutState)
-        case makeWorkoutView([RoutineState])
+        
         case getWorkouts(String)
         case updateWorkouts([WorkoutState])
+        
         case dismiss
-        case appearMakeWorkout
         case createMakeWorkoutView(myRoutine: MyRoutineState?, isEdit: Bool)
         
         case sortedWorkoutSection(IdentifiedActionOf<SortedWorkoutSectionReducer>)
@@ -79,13 +78,7 @@ struct WorkoutListReducer {
             case .search(let keyword):
                 state.keyword = keyword
                 return .none
-            case let .updateMyRoutine(workout):
-                if workout.isSelected {
-                    state.myRoutine.routines.append(RoutineState(workout: workout))
-                } else {
-//                    state.myRoutine.routines.removeAll { $0.workout.name == workout.name }
-                }
-                return .none
+                
             case let .getWorkouts(categoryName):
                 return .run { send in
                     let workouts = workoutRepository.loadWorkouts(categoryName)
@@ -106,15 +99,10 @@ struct WorkoutListReducer {
                     }
                 )
                 return .none
-            case .makeWorkoutView:
-                return .send(.appearMakeWorkout)
             case .dismiss:
                 return .run { _ in
                     await self.dismiss()
                 }
-            case .appearMakeWorkout:
-                return .send(.createMakeWorkoutView(myRoutine: state.myRoutine,
-                                                    isEdit: false))
             case let .createMakeWorkoutView(myRoutine, isEdit):
                 state.destination = .makeWorkoutView(
                     MakeWorkoutReducer.State(
@@ -127,8 +115,30 @@ struct WorkoutListReducer {
                 return .none
             case .destination:
                 return .none
-            case .sortedWorkoutSection:
-                return .none
+            case let .sortedWorkoutSection(.element(sectionId, action)):
+                switch action {
+                case let .workoutList(.element(rowId, action)):
+                    switch action {
+                    case .didTapped:
+                        if let sectionIndex = state.soretedWorkoutSection
+                            .firstIndex(where: { $0.id == sectionId }) {
+                            if let rowIndex = state.soretedWorkoutSection[sectionIndex].workoutList
+                                .firstIndex(where: { $0.id == rowId }) {
+                                let workout = state.soretedWorkoutSection[sectionIndex]
+                                    .workoutList[rowIndex]
+                                    .workout
+
+                                if workout.isSelected {
+                                    state.myRoutine.routines.append(RoutineState(workout: workout))
+                                } else {
+                                    state.myRoutine.routines.removeAll { $0.workout.name == workout.name }
+                                }
+                            }
+                        }
+
+                        return .none
+                    }
+                }
             }
         }
         .ifLet(\.$destination, action: \.destination) {
@@ -165,7 +175,6 @@ struct SortedWorkoutSectionReducer {
                 uniqueElements: workouts.compactMap {
                     WorkoutListSubviewReducer.State(
                         id: UUID(),
-                        myRoutine: myRoutine,
                         workout: $0
                     )
                 }
@@ -242,7 +251,8 @@ struct WorkoutListView: View {
                             if store.isAddWorkoutPresented {
                                 store.send(.dismiss)
                             } else {
-                                store.send(.makeWorkoutView(store.myRoutine.routines))
+                                store.send(.createMakeWorkoutView(myRoutine: store.myRoutine,
+                                                                  isEdit: false))
                             }
                         }) {
                             let selectedWorkoutCount = viewStore.myRoutine.routines.count

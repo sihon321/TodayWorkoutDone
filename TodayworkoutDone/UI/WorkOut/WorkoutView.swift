@@ -17,33 +17,31 @@ struct WorkoutReducer {
         @Presents var destination: Destination.State?
         var myRoutine: MyRoutineState
         var keyword: String = ""
-        var myRoutineState: MyRoutineReducer.State
-        
         var categories: [WorkoutCategoryState] = []
-        var hasLoaded = false
         
-        init(myRoutine: MyRoutineState,
-             myRoutineState: MyRoutineReducer.State) {
+        var myRoutineReducer = MyRoutineReducer.State()
+        var workoutCategory = WorkoutCategoryReducer.State()
+        
+        init(myRoutine: MyRoutineState) {
             self.myRoutine = myRoutine
-            self.myRoutineState = myRoutineState
         }
     }
     
     enum Action {
         case destination(PresentationAction<Destination.Action>)
         
-        case myRoutineAction(MyRoutineReducer.Action)
-        
         case search(keyword: String)
         case dismiss
-        case hasLoaded
+
         case getCategories
         case updateCategories([WorkoutCategoryState])
         case getMyRoutines
         case fetchMyRoutines([MyRoutineState])
         
-        case appearMakeWorkout
         case createMakeWorkoutView(myRoutine: MyRoutineState?, isEdit: Bool)
+        
+        case myRoutineReducer(MyRoutineReducer.Action)
+        case workoutCategory(WorkoutCategoryReducer.Action)
         
         var description: String {
             return "\(self)"
@@ -66,6 +64,12 @@ struct WorkoutReducer {
     @Dependency(\.dismiss) var dismiss
     
     var body: some Reducer<State, Action> {
+        Scope(state: \.myRoutineReducer, action: \.myRoutineReducer) {
+            MyRoutineReducer()
+        }
+        Scope(state: \.workoutCategory, action: \.workoutCategory) {
+            WorkoutCategoryReducer()
+        }
         Reduce { state, action in
             switch action {
             case .search(let keyword):
@@ -76,9 +80,7 @@ struct WorkoutReducer {
                 return .run { _ in
                     await self.dismiss()
                 }
-            case .hasLoaded:
-                state.hasLoaded = true
-                return .none
+
             case .getCategories:
                 return .run { send in
                     let categories = categoryRepository.loadCategories()
@@ -86,6 +88,15 @@ struct WorkoutReducer {
                 }
             case .updateCategories(let categories):
                 state.categories = categories
+                state.workoutCategory.workoutList = IdentifiedArrayOf(
+                    uniqueElements: categories.compactMap {
+                        WorkoutListReducer.State(id: UUID(),
+                                                 isAddWorkoutPresented: false,
+                                                 myRoutine: state.myRoutine,
+                                                 categoryName: $0.name,
+                                                 categories: categories)
+                    }
+                )
                 return .none
             case .getMyRoutines:
                 return .run { send in
@@ -95,19 +106,16 @@ struct WorkoutReducer {
                 }
                 
             case .fetchMyRoutines(let myRoutines):
-                state.myRoutineState.myRoutines = myRoutines
+                state.myRoutineReducer.myRoutines = myRoutines
                 return .none
                 
-            case .appearMakeWorkout:
-                return .send(.createMakeWorkoutView(myRoutine: state.myRoutine,
-                                                    isEdit: false))
+
             case let .createMakeWorkoutView(myRoutine, isEdit):
                 state.destination = .makeWorkoutView(MakeWorkoutReducer.State(
                     myRoutine: myRoutine ?? state.myRoutine,
                     categories: state.categories,
                     isEdit: isEdit,
                 ))
-                
                 return .none
                 
             case .destination(.presented(.alert(.tappedMyRoutineStart(let myRoutine)))):
@@ -115,9 +123,10 @@ struct WorkoutReducer {
                 return .none
             case .destination:
                 return .none
-                
+            case .workoutCategory(let action):
+                return .none
             // MARK: - myRoutine
-            case let .myRoutineAction(action):
+            case let .myRoutineReducer(action):
                 switch action {
                 case let .touchedMyRoutine(selectedMyRoutine):
                     state.destination = .alert(.startMyRoutine(selectedMyRoutine))
@@ -141,31 +150,7 @@ struct WorkoutReducer {
                         return .none
                     }
                 }
-            case .destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine)))):
-                state.myRoutine = myRoutine
-                state.myRoutine.isRunning = true
-//                if let runningRoutine = state.myRoutine {
-//                    state.workingOut = WorkingOutReducer.State(
-//                        myRoutine: runningRoutine,
-//                        workingOutSection: IdentifiedArrayOf(
-//                            uniqueElements: runningRoutine.routines.map {
-//                                WorkingOutSectionReducer.State(
-//                                    routine: $0,
-//                                    editMode: .inactive
-//                                )
-//                            }
-//                        )
-//                    )
-//                    if let myRoutine = state.workingOut?.myRoutine  {
-//                        state.workoutRoutine = WorkoutRoutine(
-//                            name: myRoutine.name,
-//                            startDate: Date(),
-//                            myRoutine: myRoutine
-//                        )
-//                    }
-//                }
-
-                return .none
+            // MARK: - workoutCategory
                 
             }
         }
@@ -188,30 +173,16 @@ struct WorkoutView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    if viewStore.myRoutineState.myRoutines.isEmpty == false {
+                    if viewStore.myRoutineReducer.myRoutines.isEmpty == false {
                         MyRoutineView(
-                            store: store.scope(state: \.myRoutineState,
-                                               action: \.myRoutineAction)
+                            store: store.scope(state: \.myRoutineReducer,
+                                               action: \.myRoutineReducer)
                         )
                         .padding(.top, 10)
                     }
                     WorkoutCategoryView(
-                        store: Store(
-                            initialState: WorkoutCategoryReducer.State(
-                                myRoutine: store.myRoutine,
-                                workoutList: IdentifiedArrayOf(
-                                    uniqueElements: store.categories.compactMap {
-                                        WorkoutListReducer.State(id: UUID(),
-                                                                 isAddWorkoutPresented: false,
-                                                                 myRoutine: store.myRoutine,
-                                                                 categoryName: $0.name,
-                                                                 categories: store.categories)
-                                    }
-                                )
-                            )
-                        ) {
-                            WorkoutCategoryReducer()
-                        }
+                        store: store.scope(state: \.workoutCategory,
+                                           action: \.workoutCategory)
                     )
                     .padding(.top, 10)
                 }
@@ -219,11 +190,6 @@ struct WorkoutView: View {
             .background(Color(0xf4f4f4))
             .navigationBarTitle("workout", displayMode: .inline)
             .workoutViewToolbar(store: store, viewStore: viewStore)
-            .onAppear {
-                if !store.hasLoaded {
-                    viewStore.send(.hasLoaded)
-                }
-            }
         }
         .searchable(text: viewStore.binding(
             get: { $0.keyword },
@@ -285,7 +251,8 @@ private struct WorkoutViewToolbar: ViewModifier {
                 if !viewStore.myRoutine.routines.isEmpty {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
-                            viewStore.send(.appearMakeWorkout)
+                            viewStore.send(.createMakeWorkoutView(myRoutine: store.myRoutine,
+                                                                  isEdit: false))
                         }) {
                             let selectedWorkoutCount = viewStore.myRoutine.routines.count
                             Text("Done(\(selectedWorkoutCount))")
