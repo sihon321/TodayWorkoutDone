@@ -76,6 +76,7 @@ extension MyRoutineDatabase: DependencyKey {
                 let routineContext = try context()
                 
                 routineContext.delete(model)
+                try routineContext.save()
             } catch {
                 throw MyRoutineError.delete
             }

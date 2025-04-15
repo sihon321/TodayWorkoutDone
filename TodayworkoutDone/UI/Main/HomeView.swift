@@ -365,7 +365,6 @@ struct HomeReducer {
         @Dependency(\.myRoutineData) var context
         do {
             try context.delete(myRoutine.toModel())
-            try context.save()
         } catch {
             print(error.localizedDescription)
         }

@@ -58,7 +58,7 @@ struct WorkoutListReducer {
         case getWorkouts(String)
         case updateWorkouts([WorkoutState])
         
-        case dismiss
+        case dismiss(MyRoutineState)
         case createMakeWorkoutView(myRoutine: MyRoutineState?, isEdit: Bool)
         
         case sortedWorkoutSection(IdentifiedActionOf<SortedWorkoutSectionReducer>)
@@ -175,7 +175,8 @@ struct SortedWorkoutSectionReducer {
                 uniqueElements: workouts.compactMap {
                     WorkoutListSubviewReducer.State(
                         id: UUID(),
-                        workout: $0
+                        workout: $0,
+                        myRoutine: myRoutine
                     )
                 }
             )
@@ -248,11 +249,11 @@ struct WorkoutListView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     if !viewStore.myRoutine.routines.isEmpty {
                         Button(action: {
-                            if store.isAddWorkoutPresented {
-                                store.send(.dismiss)
+                            if viewStore.isAddWorkoutPresented {
+                                viewStore.send(.dismiss(viewStore.myRoutine))
                             } else {
-                                store.send(.createMakeWorkoutView(myRoutine: store.myRoutine,
-                                                                  isEdit: false))
+                                viewStore.send(.createMakeWorkoutView(myRoutine: viewStore.myRoutine,
+                                                                      isEdit: false))
                             }
                         }) {
                             let selectedWorkoutCount = viewStore.myRoutine.routines.count

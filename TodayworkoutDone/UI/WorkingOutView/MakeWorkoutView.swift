@@ -20,7 +20,7 @@ struct MakeWorkoutReducer {
         var categories: [WorkoutCategoryState] = []
         var selectionWorkouts: [WorkoutState] = []
         var isEdit: Bool = false
-        var deletedSectionIndex: Int?
+        
         var changedTypes: [Int: EquipmentType] = [:]
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
@@ -76,16 +76,9 @@ struct MakeWorkoutReducer {
                     await send(.dismissMakeWorkout)
                 }
             case .save(let myRoutine):
-                if let sectionIndex = state.deletedSectionIndex {
-                    state.myRoutine
-                        .routines.remove(at: sectionIndex)
-                }
-                if state.changedTypes.isEmpty == false {
-                    for (index, type) in state.changedTypes {
-                        state.myRoutine.routines[index].equipmentType = type
-                    }
-                }
                 return .run { send in
+                    try myRoutineContext.delete(myRoutine.toModel())
+                    try myRoutineContext.add(myRoutine.toModel())
                     try myRoutineContext.save()
                     await send(.dismissMakeWorkout)
                 }
@@ -109,7 +102,16 @@ struct MakeWorkoutReducer {
                     )
                 )
                 return .none
-            case .destination(.presented(.addWorkoutCategory(let action))):
+            case let .destination(.presented(.addWorkoutCategory(.workoutList(.element(_, .dismiss(myRoutine)))))):
+                state.myRoutine = myRoutine
+                state.workingOutSection = IdentifiedArrayOf(
+                    uniqueElements: myRoutine.routines.map {
+                        WorkingOutSectionReducer.State(
+                            routine: $0,
+                            editMode: .active
+                        )
+                    }
+                )
                 return .none
             case .destination:
                 return .none
@@ -173,7 +175,6 @@ struct MakeWorkoutReducer {
                         case .deleteWorkout:
                             if let sectionIndex = state.workingOutSection
                                 .index(id: sectionId) {
-                                state.deletedSectionIndex = sectionIndex
                                 state.workingOutSection.remove(at: sectionIndex)
                             }
                             return .none
@@ -194,7 +195,7 @@ struct MakeWorkoutReducer {
             WorkingOutSectionReducer()
         }
         .ifLet(\.$destination, action: \.destination) {
-          Destination.body
+            Destination.body
         }
     }
 }
@@ -263,6 +264,7 @@ struct MakeWorkoutView: View {
             ) { store in
                 AddWorkoutCategoryView(store: store)
             }
+            .tint(.black)
         }
     }
     

@@ -86,7 +86,7 @@ struct AddWorkoutCategoryView: View {
                     ForEachStore(
                         store.scope(state: \.workoutList, action: \.workoutList)
                     ) { rowStore in
-                        if rowStore.categoryName.hasPrefix(store.keyword) {
+                        if rowStore.categoryName.hasPrefix(viewStore.keyword) {
                             NavigationLink {
                                 WorkoutListView(store: rowStore)
                             } label: {
@@ -112,6 +112,7 @@ struct AddWorkoutCategoryView: View {
                 viewStore.send(.getCategories)
             }
         }
+        .tint(.black)
     }
 }
 

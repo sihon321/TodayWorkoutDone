@@ -108,6 +108,11 @@ struct WorkoutReducer {
                 
             case .fetchMyRoutines(let myRoutines):
                 state.myRoutineReducer.myRoutines = myRoutines
+                state.myRoutineReducer.myRoutineSubview = IdentifiedArrayOf(
+                    uniqueElements: myRoutines.compactMap {
+                        MyRoutineSubviewReducer.State(myRoutine: $0)
+                    }
+                )
                 return .none
                 
             case .tappedDone:
@@ -134,25 +139,33 @@ struct WorkoutReducer {
                 case let .touchedMyRoutine(selectedMyRoutine):
                     state.destination = .alert(.startMyRoutine(selectedMyRoutine))
                     return .none
-                case let .touchedEditMode(myRoutine):
-                    return .send(.createMakeWorkoutView(myRoutine: myRoutine, isEdit: true))
-                case let .touchedDelete(myRoutine):
-                    if let id = myRoutine.persistentModelID {
-                        return .run { send in
-                            let descriptor = FetchDescriptor<MyRoutine>(
-                                predicate: #Predicate { $0.persistentModelID == id }
-                            )
-                            if let routineToDelete = try context.fetch(descriptor).first {
-                                try context.delete(routineToDelete)
-                                try context.save()
+                case let .myRoutineSubview(action):
+                    switch action {
+                    case let .element(_, action):
+                        switch action {
+                        case let .touchedEditMode(myRoutine):
+                            return .send(.createMakeWorkoutView(myRoutine: myRoutine, isEdit: true))
+                        case let .touchedDelete(myRoutine):
+                            if let id = myRoutine.persistentModelID {
+                                return .run { send in
+                                    let descriptor = FetchDescriptor<MyRoutine>(
+                                        predicate: #Predicate { $0.persistentModelID == id }
+                                    )
+                                    if let routineToDelete = try context.fetch(descriptor).first {
+                                        try context.delete(routineToDelete)
+                                    }
+                                    
+                                    await send(.getMyRoutines)
+                                }
+                            } else {
+                                return .none
                             }
-                            
-                            await send(.getMyRoutines)
+                        case .touchedMyRoutine(_):
+                            return .none
                         }
-                    } else {
-                        return .none
                     }
                 }
+                
             // MARK: - workoutList
             case let .workoutCategory(action):
                 switch action {

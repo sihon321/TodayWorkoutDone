@@ -9,10 +9,16 @@ import SwiftUI
 import ComposableArchitecture
 
 @Reducer
-struct MyWorkoutSubviewReducer {
+struct MyRoutineSubviewReducer {
     @ObservableState
-    struct State {
+    struct State: Equatable, Identifiable {
+        let id: UUID
         var myRoutine: MyRoutineState
+        
+        init(myRoutine: MyRoutineState) {
+            self.id = UUID()
+            self.myRoutine = myRoutine
+        }
     }
     
     enum Action {
@@ -20,19 +26,30 @@ struct MyWorkoutSubviewReducer {
         case touchedEditMode(MyRoutineState)
         case touchedDelete(MyRoutineState)
     }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            default:
+                return .none
+            }
+        }
+    }
 }
 
-struct MyWorkoutSubview: View {
-    @Bindable var store: StoreOf<MyWorkoutSubviewReducer>
+struct MyRoutineSubview: View {
+    @Bindable var store: StoreOf<MyRoutineSubviewReducer>
+    @ObservedObject var viewStore: ViewStoreOf<MyRoutineSubviewReducer>
     
-    init(store: StoreOf<MyWorkoutSubviewReducer>) {
+    init(store: StoreOf<MyRoutineSubviewReducer>) {
         self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
     }
 
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(store.myRoutine.name)
+                Text(viewStore.myRoutine.name)
                     .font(.system(size: 18,
                                   weight: .semibold,
                                   design: .default))
@@ -42,12 +59,12 @@ struct MyWorkoutSubview: View {
                 Button(action: {}) {
                     Menu {
                         Button(action: {
-                            store.send(.touchedEditMode(store.myRoutine))
+                            viewStore.send(.touchedEditMode(store.myRoutine))
                         }) {
                             Label("편집", systemImage: "pencil")
                         }
                         Button(action: {
-                            store.send(.touchedDelete(store.myRoutine))
+                            viewStore.send(.touchedDelete(store.myRoutine))
                         }) {
                             Label("삭제", systemImage: "trash")
                         }
@@ -63,7 +80,7 @@ struct MyWorkoutSubview: View {
             .padding(.top, 20)
             .padding(.bottom, 5)
             
-            ForEach(store.myRoutine.routines) { routine in
+            ForEach(viewStore.myRoutine.routines) { routine in
                 Text(routine.workout.name)
                     .font(.system(size: 12,
                                   weight: .light,

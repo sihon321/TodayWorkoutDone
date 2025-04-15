@@ -14,13 +14,36 @@ struct MyRoutineReducer {
     struct State: Equatable {
         var text: String = ""
         var myRoutines: [MyRoutineState] = []
+        var myRoutineSubview: IdentifiedArrayOf<MyRoutineSubviewReducer.State> = []
         var selectedRoutine: MyRoutineState?
+        
+        init(myRoutines: [MyRoutineState] = []) {
+            self.myRoutines = myRoutines
+            self.myRoutineSubview = IdentifiedArrayOf(
+                uniqueElements: myRoutines.compactMap {
+                    MyRoutineSubviewReducer.State(myRoutine: $0)
+                }
+            )
+        }
     }
     
     enum Action {
+        case myRoutineSubview(IdentifiedActionOf<MyRoutineSubviewReducer>)
         case touchedMyRoutine(MyRoutineState)
-        case touchedEditMode(MyRoutineState)
-        case touchedDelete(MyRoutineState)
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .myRoutineSubview:
+                return .none
+            case .touchedMyRoutine:
+                return .none
+            }
+        }
+        .forEach(\.myRoutineSubview, action: \.myRoutineSubview) {
+            MyRoutineSubviewReducer()
+        }
     }
 }
 
@@ -39,17 +62,12 @@ struct MyRoutineView: View {
                 .font(.system(size: 20, weight: .medium))
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(viewStore.myRoutines) { myRoutine in
+                    ForEach(store.scope(state: \.myRoutineSubview,
+                                        action: \.myRoutineSubview)) { store in
                         Button(action: {
-                            store.send(.touchedMyRoutine(myRoutine))
+                            viewStore.send(.touchedMyRoutine(store.myRoutine))
                         }) {
-                            MyWorkoutSubview(
-                                store: Store(
-                                    initialState: MyWorkoutSubviewReducer.State(myRoutine: myRoutine)
-                                ) {
-                                    MyWorkoutSubviewReducer()
-                                }
-                            )
+                            MyRoutineSubview(store: store)
                         }
                     }
                 }

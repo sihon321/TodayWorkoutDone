@@ -56,6 +56,7 @@ extension CategoryDatabase: DependencyKey {
                 let categoryContext = try context()
                 
                 categoryContext.delete(model)
+                try categoryContext.save()
             } catch {
                 throw CategoryError.delete
             }

@@ -14,6 +14,7 @@ struct WorkoutListSubviewReducer {
     struct State: Equatable, Identifiable {
         let id: UUID
         var workout: WorkoutState
+        var myRoutine: MyRoutineState
     }
     
     enum Action {
@@ -33,11 +34,17 @@ struct WorkoutListSubviewReducer {
 
 struct WorkoutListSubview: View {
     @Bindable var store: StoreOf<WorkoutListSubviewReducer>
+    @ObservedObject var viewStore: ViewStoreOf<WorkoutListSubviewReducer>
+    
+    init(store: StoreOf<WorkoutListSubviewReducer>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
+    }
 
     var body: some View {
         VStack {
             Button(action: {
-                store.send(.didTapped)
+                viewStore.send(.didTapped)
             }) {
                 HStack {
                     if let image = UIImage(named: "default") {
@@ -47,11 +54,11 @@ struct WorkoutListSubview: View {
                             .cornerRadius(10)
                             .padding([.leading], 15)
                     }
-                    Text(store.workout.name)
+                    Text(viewStore.workout.name)
                         .font(.system(size: 15, weight: .light))
                         .foregroundStyle(.black)
                     Spacer()
-                    if store.workout.isSelected {
+                    if viewStore.workout.isSelected || viewStore.myRoutine.routines.contains(where: { $0.workout.name == viewStore.workout.name }) {
                         Image(systemName:"checkmark")
                             .foregroundStyle(.black)
                             .padding(.trailing, 15)

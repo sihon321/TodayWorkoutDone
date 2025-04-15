@@ -68,6 +68,7 @@ extension WorkoutRoutineDatabase: DependencyKey {
                 let routineContext = try context()
                 
                 routineContext.delete(model)
+                try routineContext.save()
             } catch {
                 throw WorkoutRoutineError.delete
             }

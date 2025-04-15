@@ -43,7 +43,7 @@
 		F2335417295B4BF9006E12CB /* WorkingOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2335416295B4BF9006E12CB /* WorkingOutView.swift */; };
 		F239B431295761AD00781EF2 /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F239B430295761AD00781EF2 /* WorkoutView.swift */; };
 		F23F4E962957FB250084392B /* MyRoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23F4E952957FB240084392B /* MyRoutineView.swift */; };
-		F23F4E9A295815140084392B /* MyWorkoutSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23F4E99295815140084392B /* MyWorkoutSubview.swift */; };
+		F23F4E9A295815140084392B /* MyRoutineSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23F4E99295815140084392B /* MyRoutineSubview.swift */; };
 		F23F4E9E295826F30084392B /* WorkoutCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23F4E9D295826F30084392B /* WorkoutCategoryView.swift */; };
 		F23F4EA02958271B0084392B /* WorkoutCategorySubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23F4E9F2958271B0084392B /* WorkoutCategorySubview.swift */; };
 		F264949A2A6C066700B0A31C /* NetworkingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26494992A6C066700B0A31C /* NetworkingHelpers.swift */; };
@@ -141,7 +141,7 @@
 		F2335416295B4BF9006E12CB /* WorkingOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingOutView.swift; sourceTree = "<group>"; };
 		F239B430295761AD00781EF2 /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
 		F23F4E952957FB240084392B /* MyRoutineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutineView.swift; sourceTree = "<group>"; };
-		F23F4E99295815140084392B /* MyWorkoutSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWorkoutSubview.swift; sourceTree = "<group>"; };
+		F23F4E99295815140084392B /* MyRoutineSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutineSubview.swift; sourceTree = "<group>"; };
 		F23F4E9D295826F30084392B /* WorkoutCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCategoryView.swift; sourceTree = "<group>"; };
 		F23F4E9F2958271B0084392B /* WorkoutCategorySubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCategorySubview.swift; sourceTree = "<group>"; };
 		F26494992A6C066700B0A31C /* NetworkingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingHelpers.swift; sourceTree = "<group>"; };
@@ -349,7 +349,7 @@
 		F23F4E98295814F90084392B /* Subview */ = {
 			isa = PBXGroup;
 			children = (
-				F23F4E99295815140084392B /* MyWorkoutSubview.swift */,
+				F23F4E99295815140084392B /* MyRoutineSubview.swift */,
 				F23F4E9F2958271B0084392B /* WorkoutCategorySubview.swift */,
 				F2C63E212959F3D200D02F76 /* WorkoutListSubview.swift */,
 			);
@@ -672,7 +672,7 @@
 				F2102C36292BB06D00417789 /* MainContentWorkoutView.swift in Sources */,
 				F2DAA76829E59DB70039CF07 /* WorkingOutFooter.swift in Sources */,
 				F2E74D242922219000BD35F6 /* MainView.swift in Sources */,
-				F23F4E9A295815140084392B /* MyWorkoutSubview.swift in Sources */,
+				F23F4E9A295815140084392B /* MyRoutineSubview.swift in Sources */,
 				F2E2214C29994C3B00B7DCCB /* WorkingOutRow.swift in Sources */,
 				F2102C34292BB06D00417789 /* MainContentStepView.swift in Sources */,
 				F201082A2B6FE03100265F17 /* MainContentEnergyBurn.swift in Sources */,
