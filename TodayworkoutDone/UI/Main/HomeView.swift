@@ -38,9 +38,8 @@ struct HomeReducer {
         case enterRoutineName(name: String)
         case setTabBarOffset(offset: CGFloat)
         case presentedSaveRoutineAlert
-        
-        case getMyRoutines
-        case fetchMyRoutines([MyRoutineState])
+
+        case setDestination(Destination.State)
         
         case workingOut(WorkingOutReducer.Action)
         case tabBar(CustomTabBarReducer.Action)
@@ -89,26 +88,37 @@ struct HomeReducer {
                 return .none
                 
             case .presentedSaveRoutineAlert:
-//                if let routine = state.myRoutine,
-//                    state.myRoutines.contains(routine) == false {
-//                    state.destination = .alert(.saveRoutineAlert(routine))
-//                }
-                return .none
-                
-            case .getMyRoutines:
-                return .run { send in
-                    @Dependency(\.myRoutineData) var context
-                    let myRoutines = try context.fetchAll()
-                    await send(.fetchMyRoutines(
-                            myRoutines
-                                .compactMap({ MyRoutineState(model: $0) })
-                        ))
+                @Dependency(\.myRoutineData) var myRoutineContext
+                if let routine = state.myRoutine {
+                    return .run { send in
+                        let myRoutines = try myRoutineContext.fetchAll()
+                            .compactMap { MyRoutineState(model: $0) }
+                        if myRoutines.contains(routine) == false {
+                            await send(.setDestination(.alert(.saveRoutineAlert(routine))))
+                        }
+                    }
+                } else {
+                    return .none
                 }
-                
-            case .fetchMyRoutines(let myRoutines):
-//                state.myRoutineState.myRoutines = myRoutines
+            case .setDestination(let detination):
+                state.destination = detination
                 return .none
-
+            
+            case let .destination(.presented(.alert(.tappedMyRoutineAlerOk(myRoutine)))):
+                @Dependency(\.myRoutineData) var context
+                return .run { send in
+                    if var myRoutine = myRoutine {
+                        for i in 0..<myRoutine.routines.count {
+                            for j in 0..<myRoutine.routines[i].sets.count {
+                                myRoutine.routines[i].sets[j].isChecked = false
+                            }
+                        }
+                        try context.add(myRoutine.toModel())
+                        try context.save()
+                    } else {
+                        throw MyRoutineDatabase.MyRoutineError.add
+                    }
+                }
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
                 state.isHideTabBar = true
                 state.destination = .none
@@ -138,9 +148,10 @@ struct HomeReducer {
                     await send(.presentedSaveRoutineAlert)
                 }
 
-            case .destination(.presented(.workoutView(.destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine))))))):
+            case .destination(.presented(.workoutView(.destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine))))))),
+                    .destination(.presented(.workoutView(.workoutCategory(.workoutList(.element(_, .destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine)))))))))),
+                    .destination(.presented(.workoutView(.tappedDone(let myRoutine)))):
                 state.myRoutine = myRoutine
-                state.myRoutine?.isRunning = true
                 if let runningRoutine = state.myRoutine {
                     state.workingOut = WorkingOutReducer.State(
                         myRoutine: runningRoutine,
@@ -163,7 +174,7 @@ struct HomeReducer {
                 }
 
                 return .none
-                
+
             case .destination:
               return .none
 
@@ -405,9 +416,6 @@ struct HomeView: View {
                 )
             }
             Spacer()
-        }
-        .onAppear {
-            store.send(.getMyRoutines)
         }
         .overlay(
             VStack {

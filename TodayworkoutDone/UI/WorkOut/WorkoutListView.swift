@@ -117,15 +117,15 @@ struct WorkoutListReducer {
                 return .none
             case let .sortedWorkoutSection(.element(sectionId, action)):
                 switch action {
-                case let .workoutList(.element(rowId, action)):
+                case let .workoutListSubview(.element(rowId, action)):
                     switch action {
                     case .didTapped:
                         if let sectionIndex = state.soretedWorkoutSection
                             .firstIndex(where: { $0.id == sectionId }) {
-                            if let rowIndex = state.soretedWorkoutSection[sectionIndex].workoutList
+                            if let rowIndex = state.soretedWorkoutSection[sectionIndex].workoutListSubview
                                 .firstIndex(where: { $0.id == rowId }) {
                                 let workout = state.soretedWorkoutSection[sectionIndex]
-                                    .workoutList[rowIndex]
+                                    .workoutListSubview[rowIndex]
                                     .workout
 
                                 if workout.isSelected {
@@ -159,7 +159,7 @@ struct SortedWorkoutSectionReducer {
         let index: Int
         let key: String
         var workouts: [WorkoutState]
-        var workoutList: IdentifiedArrayOf<WorkoutListSubviewReducer.State> = []
+        var workoutListSubview: IdentifiedArrayOf<WorkoutListSubviewReducer.State> = []
         
         init(id: UUID,
              myRoutine: MyRoutineState,
@@ -171,7 +171,7 @@ struct SortedWorkoutSectionReducer {
             self.index = index
             self.key = key
             self.workouts = workouts
-            self.workoutList = IdentifiedArray(
+            self.workoutListSubview = IdentifiedArray(
                 uniqueElements: workouts.compactMap {
                     WorkoutListSubviewReducer.State(
                         id: UUID(),
@@ -183,17 +183,17 @@ struct SortedWorkoutSectionReducer {
     }
     
     enum Action {
-        case workoutList(IdentifiedActionOf<WorkoutListSubviewReducer>)
+        case workoutListSubview(IdentifiedActionOf<WorkoutListSubviewReducer>)
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .workoutList:
+            case .workoutListSubview:
                 return .none
             }
         }
-        .forEach(\.workoutList, action: \.workoutList) {
+        .forEach(\.workoutListSubview, action: \.workoutListSubview) {
             WorkoutListSubviewReducer()
         }
     }
@@ -232,8 +232,8 @@ struct WorkoutListView: View {
                                          title: sectionStore.key,
                                          topHeaderIndex: $topHeaderIndex)
                         
-                        ForEach(sectionStore.scope(state: \.workoutList,
-                                                   action: \.workoutList)) { rowStore in
+                        ForEach(sectionStore.scope(state: \.workoutListSubview,
+                                                   action: \.workoutListSubview)) { rowStore in
                             if selectedFilters.isEmpty
                                 || (selectedFilters.isEmpty == false
                                     && selectedFilters.contains(where: { $0 == rowStore.workout.target })) {
@@ -257,6 +257,7 @@ struct WorkoutListView: View {
                         }) {
                             let selectedWorkoutCount = viewStore.myRoutine.routines.count
                             Text("Done(\(selectedWorkoutCount))")
+                                .foregroundStyle(.black)
                         }
                     }
                 }
