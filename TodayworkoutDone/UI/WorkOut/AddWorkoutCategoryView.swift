@@ -16,17 +16,14 @@ struct AddWorkoutCategoryReducer {
     struct State: Equatable {
         var myRoutine: MyRoutineState
         var keyword: String = ""
-        var categories: [WorkoutCategoryState] = []
         
         var workoutList: IdentifiedArrayOf<WorkoutListReducer.State>
 
         init(myRoutine: MyRoutineState,
              keyword: String = "",
-             categories: [WorkoutCategoryState] = [],
-             workoutList: IdentifiedArrayOf<WorkoutListReducer.State>) {
+             workoutList: IdentifiedArrayOf<WorkoutListReducer.State> = []) {
             self.myRoutine = myRoutine
             self.keyword = keyword
-            self.categories = categories
             self.workoutList = workoutList
         }
     }
@@ -51,7 +48,15 @@ struct AddWorkoutCategoryReducer {
                     await send(.updateCategories(categories))
                 }
             case .updateCategories(let categories):
-                state.categories = categories
+                state.workoutList = IdentifiedArrayOf(
+                    uniqueElements: categories.compactMap {
+                        WorkoutListReducer.State(id: UUID(),
+                                                 isAddWorkoutPresented: true,
+                                                 myRoutine: state.myRoutine,
+                                                 categoryName: $0.name,
+                                                 categories: categories)
+                    }
+                )
                 return .none
             case .dismissWorkoutCategory:
                 return .run { _ in
@@ -108,9 +113,7 @@ struct AddWorkoutCategoryView: View {
             .ignoresSafeArea(.container, edges: .bottom)
         }
         .onAppear {
-            if viewStore.categories.isEmpty {
-                viewStore.send(.getCategories)
-            }
+            viewStore.send(.getCategories)
         }
         .tint(.black)
     }

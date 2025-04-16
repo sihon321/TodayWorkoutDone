@@ -38,6 +38,7 @@ struct WorkingOutSectionReducer {
     enum Action {
         case tappedAddFooter
         case setEditMode(EditMode)
+        case deleteWorkout
         
         indirect case workingOutRow(IdentifiedActionOf<WorkingOutRowReducer>)
         case workingOutHeader(WorkingOutHeaderReducer.Action)
@@ -53,6 +54,8 @@ struct WorkingOutSectionReducer {
             case .setEditMode:
                 return .none
             case .workingOutHeader:
+                return .none
+            case .deleteWorkout:
                 return .none
             }
         }
@@ -80,7 +83,7 @@ struct WorkingOutSection: View {
                         .padding(.bottom, 2)
                 }
                 .onDelete { indexSet in
-                    deleteItems(atOffsets: indexSet)
+                    viewStore.send(.deleteWorkout)
                 }
             }
             .frame(minHeight: minRowHeight * CGFloat(store.workingOutRow.count))
@@ -98,11 +101,8 @@ struct WorkingOutSection: View {
                     }
             }
         }
-        .environment(\.editMode, viewStore.binding(get: \.editMode, send: WorkingOutSectionReducer.Action.setEditMode))
-    }
-    
-    func deleteItems(atOffsets offset: IndexSet) {
-//        store.routine.sets.remove(atOffsets: offset)
+        .environment(\.editMode, viewStore.binding(get: \.editMode,
+                                                   send: WorkingOutSectionReducer.Action.setEditMode))
     }
 }
 

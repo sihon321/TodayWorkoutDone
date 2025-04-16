@@ -21,7 +21,7 @@ struct MyRoutineState: MyRoutineData, Codable, Equatable, Identifiable {
     
     var id: UUID
     var name: String
-    var routines: [RoutineState]
+    var routines: [RoutineType]
     var isRunning: Bool = false
     var persistentModelID: PersistentIdentifier?
     
@@ -30,7 +30,7 @@ struct MyRoutineState: MyRoutineData, Codable, Equatable, Identifiable {
     }
 
     init(name: String = "",
-         routines: [RoutineState] = [],
+         routines: [RoutineType] = [],
          isRunning: Bool = false) {
         self.id = UUID()
         self.name = name
@@ -42,7 +42,7 @@ struct MyRoutineState: MyRoutineData, Codable, Equatable, Identifiable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(UUID.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
-        routines = try container.decode([RoutineState].self, forKey: .routines)
+        routines = try container.decode([RoutineType].self, forKey: .routines)
     }
     
     func encode(to encoder: any Encoder) throws {
@@ -78,11 +78,11 @@ class MyRoutine: MyRoutineData, Equatable {
     typealias RoutineType = Routine
     
     var name: String
-    var routines: [Routine]
+    var routines: [RoutineType]
     var isRunning: Bool = false
 
     init(name: String = "",
-         routines: [Routine] = [],
+         routines: [RoutineType] = [],
          isRunning: Bool = false) {
         self.name = name
         self.routines = routines
@@ -93,7 +93,33 @@ class MyRoutine: MyRoutineData, Equatable {
 extension MyRoutine {
     func update(from state: MyRoutineState) {
         name = state.name
-        routines = state.routines.compactMap({ $0.toModel() })
+        isRunning = state.isRunning
         
+        // 기존 routines 매핑용 딕셔너리
+        var existingSetsDict = Dictionary(uniqueKeysWithValues: self.routines.compactMap { ($0.id, $0) })
+        
+        // 새롭게 구성될 sets 배열
+        var updatedRoutines: [RoutineType] = []
+        
+        for newRoutineState in state.routines {
+            if let id = newRoutineState.persistentModelID,
+                let existing = existingSetsDict.removeValue(forKey: id) {
+                // 기존 데이터 업데이트
+                existing.update(from: newRoutineState)
+                updatedRoutines.append(existing)
+            } else {
+                // 없는 경우 새로 생성
+                let newRoutine = Routine.create(from: newRoutineState)
+                updatedRoutines.append(newRoutine)
+            }
+        }
+        
+        // 남은 건 삭제 대상
+        for unused in existingSetsDict.values {
+            modelContext?.delete(unused)
+        }
+        
+        // 업데이트된 배열로 교체
+        self.routines = updatedRoutines
     }
 }

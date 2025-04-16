@@ -59,7 +59,7 @@ struct WorkoutReducer {
         }
     }
     
-    @Dependency(\.myRoutineData) var context
+    @Dependency(\.myRoutineData) var myRoutineContext
     @Dependency(\.categoryAPI) var categoryRepository
     @Dependency(\.workoutAPI) var workoutRepository
     @Dependency(\.dismiss) var dismiss
@@ -101,7 +101,7 @@ struct WorkoutReducer {
                 return .none
             case .getMyRoutines:
                 return .run { send in
-                    let myRoutines = try context.fetchAll()
+                    let myRoutines = try myRoutineContext.fetchAll()
                         .compactMap { MyRoutineState(model: $0) }
                     await send(.fetchMyRoutines(myRoutines))
                 }
@@ -117,10 +117,10 @@ struct WorkoutReducer {
                 
             case .tappedDone:
                 return .send(.dismiss)
+                
             case let .createMakeWorkoutView(myRoutine, isEdit):
                 state.destination = .makeWorkoutView(MakeWorkoutReducer.State(
                     myRoutine: myRoutine ?? state.myRoutine,
-                    categories: state.categories,
                     isEdit: isEdit,
                 ))
                 return .none
@@ -129,7 +129,9 @@ struct WorkoutReducer {
                 return .run { send in
                     await send(.tappedDone(myRoutine))
                 }
-
+            case .destination(.presented(.makeWorkoutView(.save))):
+                return .send(.getMyRoutines)
+                
             case .destination:
                 return .none
 
@@ -151,8 +153,8 @@ struct WorkoutReducer {
                                     let descriptor = FetchDescriptor<MyRoutine>(
                                         predicate: #Predicate { $0.persistentModelID == id }
                                     )
-                                    if let routineToDelete = try context.fetch(descriptor).first {
-                                        try context.delete(routineToDelete)
+                                    if let routineToDelete = try myRoutineContext.fetch(descriptor).first {
+                                        try myRoutineContext.delete(routineToDelete)
                                     }
                                     
                                     await send(.getMyRoutines)

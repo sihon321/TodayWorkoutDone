@@ -27,6 +27,7 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
     var isChecked: Bool
     var endDate: Date?
     var restTime: Int = 0
+    var persistentModelID: PersistentIdentifier?
     
     enum CodingKeys: String, CodingKey {
         case id, prevWeight, weight, prevReps, reps, isChecked, endDate, restTime
@@ -85,6 +86,7 @@ extension WorkoutSetState {
         self.isChecked = model.isChecked
         self.endDate = model.endDate
         self.restTime = model.restTime
+        self.persistentModelID = model.persistentModelID
     }
     
     func toModel() -> WorkoutSet {
@@ -151,6 +153,18 @@ extension WorkoutSet {
         isChecked = state.isChecked
         endDate = state.endDate
         restTime = state.restTime
+    }
+    
+    static func create(from state: WorkoutSetState) -> WorkoutSet {
+        WorkoutSet(
+            prevWeight: state.prevWeight,
+            weight: state.weight,
+            prevReps: state.prevReps,
+            reps: state.reps,
+            isChecked: state.isChecked,
+            endDate: state.endDate,
+            restTime: state.restTime
+        )
     }
 }
 

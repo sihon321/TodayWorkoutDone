@@ -31,6 +31,7 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
     var averageEndDate: Double?
     var calories: Double = 0.0
     var restTime: Int = 0
+    var persistentModelID: PersistentIdentifier?
     
     enum CodingKeys: String, CodingKey {
         case workouts, sets, equipmentType, endDate, calories, restTime
@@ -79,6 +80,7 @@ extension RoutineState {
         self.averageEndDate = model.averageEndDate
         self.calories = model.calories
         self.restTime = model.restTime
+        self.persistentModelID = model.persistentModelID
     }
     
     func toModel() -> Routine {
@@ -115,8 +117,8 @@ class Routine: RoutineData, Equatable {
     var calories: Double = 0.0
     var restTime: Int = 0
 
-    init(workout: Workout,
-         sets: [WorkoutSet] = [WorkoutSet()],
+    init(workout: WorkoutType,
+         sets: [WorkoutSetType] = [WorkoutSet()],
          equipmentType: EquipmentType = .barbel,
          averageEndDate: Double? = nil,
          calories: Double = 0.0,
@@ -132,11 +134,49 @@ class Routine: RoutineData, Equatable {
 
 extension Routine {
     func update(from state: RoutineState) {
-        self.sets = state.sets.map { $0.toModel() }
+        self.workout.update(from: state.workout)
         self.equipmentType = state.equipmentType
         self.averageEndDate = state.averageEndDate
         self.calories = state.calories
         self.restTime = state.restTime
+        
+        // 기존 sets 매핑용 딕셔너리
+        var existingSetsDict = Dictionary(uniqueKeysWithValues: self.sets.map { ($0.id, $0) })
+        
+        // 새롭게 구성될 sets 배열
+        var updatedSets: [WorkoutSetType] = []
+        
+        for newSetState in state.sets {
+            if let id = newSetState.persistentModelID,
+                let existing = existingSetsDict.removeValue(forKey: id) {
+                // 기존 데이터 업데이트
+                existing.update(from: newSetState)
+                updatedSets.append(existing)
+            } else {
+                // 없는 경우 새로 생성
+                let newSet = WorkoutSet.create(from: newSetState)
+                updatedSets.append(newSet)
+            }
+        }
+        
+        // 남은 건 삭제 대상
+        for unused in existingSetsDict.values {
+            modelContext?.delete(unused)
+        }
+        
+        // 업데이트된 배열로 교체
+        self.sets = updatedSets
+    }
+    
+    static func create(from state: RoutineState) -> Routine {
+        Routine(
+            workout: Workout.create(from: state.workout),
+            sets: state.sets.compactMap({ WorkoutSet.create(from: $0) }),
+            equipmentType: state.equipmentType,
+            averageEndDate: state.averageEndDate,
+            calories: state.calories,
+            restTime: state.restTime
+        )
     }
 }
 

@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import Dependencies
+import SwiftData
 
 @Reducer
 struct MakeWorkoutReducer {
@@ -16,19 +17,14 @@ struct MakeWorkoutReducer {
         @Presents var destination: Destination.State?
 
         var myRoutine: MyRoutineState
-        var titleSmall: Bool = false
-        var categories: [WorkoutCategoryState] = []
-        var selectionWorkouts: [WorkoutState] = []
         var isEdit: Bool = false
         
         var changedTypes: [Int: EquipmentType] = [:]
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
         init(myRoutine: MyRoutineState,
-             categories: [WorkoutCategoryState],
              isEdit: Bool) {
             self.myRoutine = myRoutine
-            self.categories = categories
             self.isEdit = isEdit
             workingOutSection = IdentifiedArrayOf(
                 uniqueElements: myRoutine.routines.map {
@@ -77,9 +73,13 @@ struct MakeWorkoutReducer {
                 }
             case .save(let myRoutine):
                 return .run { send in
-                    try myRoutineContext.delete(myRoutine.toModel())
-                    try myRoutineContext.add(myRoutine.toModel())
-                    try myRoutineContext.save()
+                    if let id = myRoutine.persistentModelID {
+                        let descriptor = FetchDescriptor<MyRoutine>(predicate: #Predicate { $0.persistentModelID == id })
+                        if let updateToMyRoutine = try myRoutineContext.fetch(descriptor).first {
+                            updateToMyRoutine.update(from: myRoutine)
+                            try myRoutineContext.save()
+                        }
+                    }
                     await send(.dismissMakeWorkout)
                 }
             case .didUpdateText(let text):
@@ -89,16 +89,7 @@ struct MakeWorkoutReducer {
             case .tappedAdd:
                 state.destination = .addWorkoutCategory(
                     AddWorkoutCategoryReducer.State(
-                        myRoutine: state.myRoutine,
-                        workoutList: IdentifiedArrayOf(
-                            uniqueElements: state.categories.compactMap {
-                                WorkoutListReducer.State(id: UUID(),
-                                                         isAddWorkoutPresented: true,
-                                                         myRoutine: state.myRoutine,
-                                                         categoryName: $0.name,
-                                                         categories: state.categories)
-                            }
-                        )
+                        myRoutine: state.myRoutine
                     )
                 )
                 return .none
@@ -231,7 +222,7 @@ struct MakeWorkoutView: View {
                 .padding([.bottom], 30)
                 
                 Button(action: {
-                    store.send(.tappedAdd)
+                    viewStore.send(.tappedAdd)
                 }) {
                     Text("add")
                         .frame(maxWidth: .infinity, minHeight: 40)
@@ -243,17 +234,17 @@ struct MakeWorkoutView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        store.send(.dismissMakeWorkout)
+                        viewStore.send(.dismissMakeWorkout)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if store.isEdit {
                         Button("Save") {
-                            store.send(.save(store.myRoutine))
+                            viewStore.send(.save(viewStore.myRoutine))
                         }
                     } else {
                         Button("Done") {
-                            store.send(.tappedDone(store.myRoutine))
+                            viewStore.send(.tappedDone(viewStore.myRoutine))
                         }
                     }
                 }

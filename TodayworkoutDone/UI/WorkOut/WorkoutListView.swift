@@ -107,7 +107,6 @@ struct WorkoutListReducer {
                 state.destination = .makeWorkoutView(
                     MakeWorkoutReducer.State(
                         myRoutine: myRoutine ?? state.myRoutine,
-                        categories: state.categories,
                         isEdit: isEdit
                     )
                 )

@@ -98,6 +98,15 @@ extension Workout {
         target = state.target
         isSelected = state.isSelected
     }
+    
+    static func create(from state: WorkoutState) -> Workout {
+        Workout(
+            name: state.name,
+            category: state.category,
+            target: state.target,
+            isSelected: state.isSelected
+        )
+    }
 }
 
 extension Array where Element == Workout {

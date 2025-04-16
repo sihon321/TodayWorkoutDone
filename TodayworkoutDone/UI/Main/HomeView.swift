@@ -66,11 +66,12 @@ struct HomeReducer {
     
     private enum CancelID { case timer }
     
+    @Dependency(\.myRoutineData) var myRoutineContext
+    @Dependency(\.workoutRoutineData) var workoutRoutineContext
     @Dependency(\.continuousClock) var clock
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
-            print(action.description)
             switch action {
             case .enterRoutineName(let name):
                 state.routineName = name
@@ -88,7 +89,7 @@ struct HomeReducer {
                 return .none
                 
             case .presentedSaveRoutineAlert:
-                @Dependency(\.myRoutineData) var myRoutineContext
+                
                 if let routine = state.myRoutine {
                     return .run { send in
                         let myRoutines = try myRoutineContext.fetchAll()
@@ -105,7 +106,6 @@ struct HomeReducer {
                 return .none
             
             case let .destination(.presented(.alert(.tappedMyRoutineAlerOk(myRoutine)))):
-                @Dependency(\.myRoutineData) var context
                 return .run { send in
                     if var myRoutine = myRoutine {
                         for i in 0..<myRoutine.routines.count {
@@ -113,8 +113,8 @@ struct HomeReducer {
                                 myRoutine.routines[i].sets[j].isChecked = false
                             }
                         }
-                        try context.add(myRoutine.toModel())
-                        try context.save()
+                        try myRoutineContext.add(myRoutine.toModel())
+                        try myRoutineContext.save()
                     } else {
                         throw MyRoutineDatabase.MyRoutineError.add
                     }
@@ -332,7 +332,6 @@ struct HomeReducer {
     }
     
     private func insertMyRoutine(myRoutine: MyRoutineState?) {
-        @Dependency(\.myRoutineData) var context
         do {
             if let myRoutineModel = myRoutine?.toModel() {
                 myRoutineModel.routines.forEach {
@@ -340,8 +339,8 @@ struct HomeReducer {
                         $0.isChecked = false
                     }
                 }
-                try context.add(myRoutineModel)
-                try context.save()
+                try myRoutineContext.add(myRoutineModel)
+                try myRoutineContext.save()
             } else {
                 throw MyRoutineDatabase.MyRoutineError.add
             }
@@ -351,20 +350,17 @@ struct HomeReducer {
     }
     
     private func insertWorkoutRoutine(workout routine: WorkoutRoutineState) {
-        @Dependency(\.workoutRoutineData) var context
-        
         do {
-            try context.add(routine.toModel())
-            try context.save()
+            try workoutRoutineContext.add(routine.toModel())
+            try workoutRoutineContext.save()
         } catch {
             print(WorkoutRoutineDatabase.WorkoutRoutineError.add)
         }
     }
     
     private func deleteMyRoutine(_ myRoutine: MyRoutineState) {
-        @Dependency(\.myRoutineData) var context
         do {
-            try context.delete(myRoutine.toModel())
+            try myRoutineContext.delete(myRoutine.toModel())
         } catch {
             print(error.localizedDescription)
         }
