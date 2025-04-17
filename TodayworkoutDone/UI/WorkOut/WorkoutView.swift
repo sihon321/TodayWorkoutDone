@@ -107,7 +107,6 @@ struct WorkoutReducer {
                 }
                 
             case .fetchMyRoutines(let myRoutines):
-                print("sihoon")
                 state.myRoutineReducer.myRoutineSubview = IdentifiedArrayOf(
                     uniqueElements: myRoutines.compactMap {
                         MyRoutineSubviewReducer.State(myRoutine: $0)

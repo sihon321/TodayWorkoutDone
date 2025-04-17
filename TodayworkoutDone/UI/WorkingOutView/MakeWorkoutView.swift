@@ -19,7 +19,6 @@ struct MakeWorkoutReducer {
         var myRoutine: MyRoutineState
         var isEdit: Bool = false
         
-        var changedTypes: [Int: EquipmentType] = [:]
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
         init(myRoutine: MyRoutineState,
@@ -180,13 +179,19 @@ struct MakeWorkoutReducer {
                         case let .tappedWorkoutsType(type):
                             if let sectionIndex = state.workingOutSection
                                 .index(id: sectionId) {
-                                state.changedTypes[sectionIndex] = type
+                                state.myRoutine
+                                    .routines[sectionIndex].equipmentType = type
                             }
                             return .none
                         }
                     case .setEditMode:
                         return .none
-                    case .deleteWorkoutSet:
+                    case let .deleteWorkoutSet(indexSet):
+                        if let sectionIndex = state.workingOutSection.index(id: sectionId) {
+                            state.myRoutine
+                                .routines[sectionIndex]
+                                .sets.remove(atOffsets: indexSet)
+                        }
                         return .none
                     }
                 }

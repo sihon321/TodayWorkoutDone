@@ -38,7 +38,7 @@ struct WorkingOutSectionReducer {
     enum Action {
         case tappedAddFooter
         case setEditMode(EditMode)
-        case deleteWorkoutSet
+        case deleteWorkoutSet(IndexSet)
         
         indirect case workingOutRow(IdentifiedActionOf<WorkingOutRowReducer>)
         case workingOutHeader(WorkingOutHeaderReducer.Action)
@@ -58,7 +58,8 @@ struct WorkingOutSectionReducer {
                 return .none
             case .workingOutHeader:
                 return .none
-            case .deleteWorkoutSet:
+            case let .deleteWorkoutSet(indexSet):
+                state.workingOutRow.remove(atOffsets: indexSet)
                 return .none
             }
         }
@@ -86,7 +87,7 @@ struct WorkingOutSection: View {
                         .padding(.bottom, 2)
                 }
                 .onDelete { indexSet in
-                    viewStore.send(.deleteWorkoutSet)
+                    viewStore.send(.deleteWorkoutSet(indexSet))
                 }
             }
             .frame(minHeight: minRowHeight * CGFloat(store.workingOutRow.count))
