@@ -12,14 +12,17 @@ import ComposableArchitecture
 struct WorkingOutReducer {
     @ObservableState
     struct State: Equatable {
-        var myRoutine: MyRoutineState
-        var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
+        @Presents var destination: Destination.State?
+        var myRoutine: MyRoutineState?
+        var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State> = []
         
         var secondsElapsed = 0
         var isTimerActive = false
     }
     
     enum Action {
+        case destination(PresentationAction<Destination.Action>)
+        
         case tappedToolbarCloseButton(secondsElapsed: Int)
         case tappedEdit
         
@@ -28,15 +31,230 @@ struct WorkingOutReducer {
         case timerTicked
         case toggleTimer
         
+        case presentedSaveRoutineAlert(MyRoutineState?)
+        
         indirect case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
     }
     
+    @Reducer(state: .equatable)
+    enum Destination {
+        case alert(AlertState<Alert>)
+        
+        enum Alert: Equatable {
+            case tappedWorkoutAlertClose
+            case tappedWorkoutAlertCancel
+            case tappedWorkoutAlertOk(secondsElapsed: Int)
+        }
+    }
+    
+    private enum CancelID { case timer }
+    @Dependency(\.continuousClock) var clock
+    @Dependency(\.myRoutineData) var myRoutineContext
+    @Dependency(\.workoutRoutineData) var workoutRoutineContext
+
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            default:
+            case .cancelTimer:
+                return .cancel(id: CancelID.timer)
+                
+            case .resetTimer:
+                state.secondsElapsed = 0
                 return .none
+            case .timerTicked:
+                state.secondsElapsed += 1
+                return .none
+            case .toggleTimer:
+                state.isTimerActive.toggle()
+                return .run { [isTimerActive = state.isTimerActive] send in
+                  guard isTimerActive else { return }
+                    for await _ in self.clock.timer(interval: .seconds(1)) {
+                      await send(.timerTicked, animation: .default)
+                  }
+                }
+                .cancellable(id: CancelID.timer, cancelInFlight: true)
+                
+            case .presentedSaveRoutineAlert:
+                state.myRoutine = nil
+                return .none
+                
+            case let .tappedToolbarCloseButton(secondsElapsed):
+                state.destination = .alert(.saveWorkoutAlert(secondsElapsed))
+                return .none
+            case .tappedEdit:
+                return .none
+            
+
+            case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
+                state.destination = .none
+                state.myRoutine = nil
+                return .none
+                
+            case .destination(.presented(.alert(.tappedWorkoutAlertCancel))):
+                return .run { send in
+                    await send(.toggleTimer)
+                }
+                
+            case .destination(.presented(.alert(.tappedWorkoutAlertOk(let secondsElapsed)))):
+                if let myRoutine = state.myRoutine {
+                    let currentDate = Date()
+                    let startDate = currentDate.addingTimeInterval(TimeInterval(-secondsElapsed))
+                    insertWorkoutRoutine(
+                        workout:  WorkoutRoutineState(
+                            name: myRoutine.name,
+                            startDate: startDate,
+                            routineTime: secondsElapsed,
+                            routines: myRoutine.routines
+                        )
+                    )
+                }
+                state.destination = .none
+                
+                return .send(.presentedSaveRoutineAlert(state.myRoutine))
+
+            case .destination(.dismiss):
+                return .none
+                
+            case let .workingOutSection(action):
+                switch action {
+                case let .element(sectionId, action):
+                    switch action {
+                    case .tappedAddFooter:
+                        if let sectionIndex = state.workingOutSection
+                            .index(id: sectionId) {
+                            let workoutSet = WorkoutSetState()
+                            state.workingOutSection[sectionIndex]
+                                .workingOutRow
+                                .append(
+                                    WorkingOutRowReducer.State(workoutSet: workoutSet,
+                                                               editMode: .active)
+                                )
+                            state.myRoutine?
+                                .routines[sectionIndex]
+                                .sets
+                                .append(workoutSet)
+                        }
+                        return .none
+                    case let .workingOutRow(action):
+                        switch action {
+                        case let .element(rowId, action):
+                            switch action {
+                            case let .toggleCheck(isChecked):
+                                if let sectionIndex = state
+                                    .workingOutSection
+                                    .index(id: sectionId),
+                                   let rowIndex = state
+                                    .workingOutSection[sectionIndex]
+                                    .workingOutRow
+                                    .index(id: rowId) {
+                                    state.myRoutine?
+                                        .routines[sectionIndex]
+                                        .sets[rowIndex]
+                                        .isChecked = isChecked
+                                    state.myRoutine?
+                                        .routines[sectionIndex]
+                                        .sets[rowIndex]
+                                        .endDate = isChecked ? Date() : nil
+                                    state.workingOutSection[sectionIndex]
+                                        .workingOutRow[rowIndex]
+                                        .isChecked = isChecked
+                                    if let isAllTrue = state.myRoutine?
+                                        .routines[sectionIndex]
+                                        .allTrue, isAllTrue {
+                                        let setEndDates = state.myRoutine?
+                                            .routines[sectionIndex].sets.compactMap { $0.endDate }
+                                        state.myRoutine?
+                                            .routines[sectionIndex]
+                                            .averageEndDate = setEndDates?.calculateAverageSecondsBetweenDates()
+                                    }
+                                }
+                                return .none
+                            case let .typeLab(lab):
+                                if let sectionIndex = state
+                                    .workingOutSection
+                                    .index(id: sectionId),
+                                   let rowIndex = state
+                                    .workingOutSection[sectionIndex]
+                                    .workingOutRow
+                                    .index(id: rowId),
+                                   let labValue = Int(lab) {
+                                    state.myRoutine?
+                                        .routines[sectionIndex]
+                                        .sets[rowIndex]
+                                        .reps = labValue
+                                }
+                                return .none
+                            case let .typeWeight(weight):
+                                if let sectionIndex = state
+                                    .workingOutSection
+                                    .index(id: sectionId),
+                                   let rowIndex = state
+                                    .workingOutSection[sectionIndex]
+                                    .workingOutRow
+                                    .index(id: rowId),
+                                   let weightValue = Double(weight) {
+                                    state.myRoutine?
+                                        .routines[sectionIndex]
+                                        .sets[rowIndex]
+                                        .weight = weightValue
+                                }
+                                return .none
+                            }
+                        }
+                    case .setEditMode(let editMode):
+                        for index in state.workingOutSection.indices {
+                            state.workingOutSection[index].editMode = editMode
+                            let rows = state.workingOutSection[index].workingOutRow
+                            for rowIndex in rows.indices {
+                                state.workingOutSection[index].workingOutRow[rowIndex].editMode = editMode
+                            }
+                        }
+                        return .none
+                    case .workingOutHeader:
+                        return .none
+                    case .deleteWorkoutSet:
+                        return .none
+                    }
+                }
             }
+        }
+        .ifLet(\.$destination, action: \.destination) {
+            Destination.body
+        }
+    }
+    
+    private func insertMyRoutine(myRoutine: MyRoutineState?) {
+        do {
+            if let myRoutineModel = myRoutine?.toModel() {
+                myRoutineModel.routines.forEach {
+                    $0.sets.forEach {
+                        $0.isChecked = false
+                    }
+                }
+                try myRoutineContext.add(myRoutineModel)
+                try myRoutineContext.save()
+            } else {
+                throw MyRoutineDatabase.MyRoutineError.add
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    private func insertWorkoutRoutine(workout routine: WorkoutRoutineState) {
+        do {
+            try workoutRoutineContext.add(routine.toModel())
+            try workoutRoutineContext.save()
+        } catch {
+            print(WorkoutRoutineDatabase.WorkoutRoutineError.add)
+        }
+    }
+    
+    private func deleteMyRoutine(_ myRoutine: MyRoutineState) {
+        do {
+            try myRoutineContext.delete(myRoutine.toModel())
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }
@@ -61,32 +279,54 @@ struct WorkingOutView: View {
                 Spacer().frame(height: 100)
             }
             .onAppear {
-                store.send(.toggleTimer)
+                viewStore.send(.toggleTimer)
             }
             .onDisappear {
-                store.send(.cancelTimer)
+                viewStore.send(.cancelTimer)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Close") {
-                        store.send(.tappedToolbarCloseButton(secondsElapsed: store.state.secondsElapsed))
-                        store.send(.toggleTimer)
+                        viewStore.send(.tappedToolbarCloseButton(secondsElapsed: store.state.secondsElapsed))
+                        viewStore.send(.toggleTimer)
                     }
                 }
                 ToolbarItem(placement: .principal) {
                     VStack {
-                        Text(store.state.secondsElapsed.secondToHMS)
+                        Text(viewStore.state.secondsElapsed.secondToHMS)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Edit") {
-                        store.send(.tappedEdit)
+                        viewStore.send(.tappedEdit)
                     }
                 }
             }
-            .navigationTitle(store.myRoutine.name)
+            .navigationTitle(viewStore.myRoutine?.name ?? "")
             .listStyle(.grouped)
             .ignoresSafeArea(.container, edges: .bottom)
+        }
+        .alert($store.scope(state: \.destination?.alert,
+                            action: \.destination.alert))
+    }
+}
+
+extension AlertState where Action == WorkingOutReducer.Destination.Alert {
+    static func saveWorkoutAlert(_ secondsElapsed: Int) -> Self {
+        Self {
+            TextState("워크아웃 저장")
+        } actions: {
+            ButtonState(action: .tappedWorkoutAlertClose) {
+                TextState("Close")
+            }
+            ButtonState(action: .tappedWorkoutAlertCancel) {
+                TextState("Cancel")
+            }
+            ButtonState(action: .tappedWorkoutAlertOk(secondsElapsed: secondsElapsed)) {
+                TextState("Ok")
+            }
+        } message: {
+            TextState("새로운 워크아웃을 저장하시겟습니까?")
         }
     }
 }

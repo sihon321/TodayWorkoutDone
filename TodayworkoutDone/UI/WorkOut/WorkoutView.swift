@@ -15,16 +15,12 @@ struct WorkoutReducer {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
-        var myRoutine: MyRoutineState
+        var myRoutine: MyRoutineState = MyRoutineState()
         var keyword: String = ""
         var categories: [WorkoutCategoryState] = []
         
         var myRoutineReducer = MyRoutineReducer.State()
         var workoutCategory = WorkoutCategoryReducer.State()
-        
-        init(myRoutine: MyRoutineState) {
-            self.myRoutine = myRoutine
-        }
     }
     
     enum Action {

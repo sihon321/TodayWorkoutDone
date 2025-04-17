@@ -44,6 +44,8 @@ struct WorkingOutSectionReducer {
         case workingOutHeader(WorkingOutHeaderReducer.Action)
     }
     
+    @Dependency(\.continuousClock) var clock
+    
     var body: some Reducer<State, Action> {
         Scope(state: \.workingOutHeader, action: \.workingOutHeader) {
             WorkingOutHeaderReducer()
