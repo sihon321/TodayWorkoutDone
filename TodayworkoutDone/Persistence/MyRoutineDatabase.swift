@@ -33,10 +33,9 @@ extension MyRoutineDatabase: DependencyKey {
         fetchAll: {
             do {
                 @Dependency(\.databaseService.context) var context
-                let routineContext = try context()
                 let descriptor = FetchDescriptor<MyRoutine>(sortBy: [SortDescriptor(\.name)])
                 
-                return try routineContext.fetch(descriptor)
+                return try context().fetch(descriptor)
             } catch {
                 return []
             }
@@ -44,8 +43,9 @@ extension MyRoutineDatabase: DependencyKey {
         fetch: { descriptor in
             do {
                 @Dependency(\.databaseService.context) var context
-                let routineContext = try context()
-                return try routineContext.fetch(descriptor)
+                
+                
+                return try context().fetch(descriptor)
             } catch {
                 return []
             }
@@ -53,9 +53,8 @@ extension MyRoutineDatabase: DependencyKey {
         add: { model in
             do {
                 @Dependency(\.databaseService.context) var context
-                let routineContext = try context()
                 
-                routineContext.insert(model)
+                try context().insert(model)
             } catch {
                 throw MyRoutineError.add
             }
@@ -63,9 +62,8 @@ extension MyRoutineDatabase: DependencyKey {
         save: {
             do {
                 @Dependency(\.databaseService.context) var context
-                let routineContext = try context()
                 
-                try routineContext.save()
+                try context().save()
             } catch {
                 throw MyRoutineError.save
             }
@@ -73,10 +71,8 @@ extension MyRoutineDatabase: DependencyKey {
         delete: { model in
             do {
                 @Dependency(\.databaseService.context) var context
-                let routineContext = try context()
                 
-                routineContext.delete(model)
-                try routineContext.save()
+                try context().delete(model)
             } catch {
                 throw MyRoutineError.delete
             }

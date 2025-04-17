@@ -315,6 +315,8 @@ struct HomeReducer {
                             return .none
                         case .workingOutHeader:
                             return .none
+                        case .deleteWorkoutSet:
+                            return .none
                         }
                     }
                 }

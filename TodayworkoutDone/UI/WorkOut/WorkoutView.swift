@@ -107,7 +107,7 @@ struct WorkoutReducer {
                 }
                 
             case .fetchMyRoutines(let myRoutines):
-                state.myRoutineReducer.myRoutines = myRoutines
+                print("sihoon")
                 state.myRoutineReducer.myRoutineSubview = IdentifiedArrayOf(
                     uniqueElements: myRoutines.compactMap {
                         MyRoutineSubviewReducer.State(myRoutine: $0)
@@ -225,7 +225,7 @@ struct WorkoutView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    if viewStore.myRoutineReducer.myRoutines.isEmpty == false {
+                    if viewStore.myRoutineReducer.myRoutineSubview.isEmpty == false {
                         MyRoutineView(
                             store: store.scope(state: \.myRoutineReducer,
                                                action: \.myRoutineReducer)

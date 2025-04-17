@@ -53,7 +53,6 @@ struct MakeWorkoutReducer {
         case addWorkoutCategory(AddWorkoutCategoryReducer)
     }
     
-    @Dependency(\.myRoutineData) var myRoutineContext
     @Dependency(\.dismiss) var dismiss
     
     var body: some Reducer<State, Action> {
@@ -72,16 +71,24 @@ struct MakeWorkoutReducer {
                     await send(.dismissMakeWorkout)
                 }
             case .save(let myRoutine):
-                return .run { send in
-                    if let id = myRoutine.persistentModelID {
-                        let descriptor = FetchDescriptor<MyRoutine>(predicate: #Predicate { $0.persistentModelID == id })
-                        if let updateToMyRoutine = try myRoutineContext.fetch(descriptor).first {
+                @Dependency(\.myRoutineData.fetch) var fetch
+                @Dependency(\.myRoutineData.save) var save
+                
+                if let id = myRoutine.persistentModelID {
+                    let descriptor = FetchDescriptor<MyRoutine>(
+                        predicate: #Predicate { $0.persistentModelID == id }
+                    )
+                    do {
+                        if let updateToMyRoutine = try fetch(descriptor).first {
                             updateToMyRoutine.update(from: myRoutine)
-                            try myRoutineContext.save()
+                            try save()
                         }
+                    } catch {
+                        print(error.localizedDescription)
                     }
-                    await send(.dismissMakeWorkout)
                 }
+                return .send(.dismissMakeWorkout)
+                
             case .didUpdateText(let text):
                 state.myRoutine.name = text
                 return .none
@@ -167,6 +174,7 @@ struct MakeWorkoutReducer {
                             if let sectionIndex = state.workingOutSection
                                 .index(id: sectionId) {
                                 state.workingOutSection.remove(at: sectionIndex)
+                                state.myRoutine.routines.remove(at: sectionIndex)
                             }
                             return .none
                         case let .tappedWorkoutsType(type):
@@ -177,6 +185,8 @@ struct MakeWorkoutReducer {
                             return .none
                         }
                     case .setEditMode:
+                        return .none
+                    case .deleteWorkoutSet:
                         return .none
                     }
                 }

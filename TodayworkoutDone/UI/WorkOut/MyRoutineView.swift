@@ -13,18 +13,8 @@ struct MyRoutineReducer {
     @ObservableState
     struct State: Equatable {
         var text: String = ""
-        var myRoutines: [MyRoutineState] = []
         var myRoutineSubview: IdentifiedArrayOf<MyRoutineSubviewReducer.State> = []
         var selectedRoutine: MyRoutineState?
-        
-        init(myRoutines: [MyRoutineState] = []) {
-            self.myRoutines = myRoutines
-            self.myRoutineSubview = IdentifiedArrayOf(
-                uniqueElements: myRoutines.compactMap {
-                    MyRoutineSubviewReducer.State(myRoutine: $0)
-                }
-            )
-        }
     }
     
     enum Action {

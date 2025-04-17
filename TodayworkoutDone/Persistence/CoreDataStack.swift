@@ -65,7 +65,9 @@ public class SwiftDataConfigurationProvider {
                 Workout.self,
                 WorkoutCategory.self,
                 MyRoutine.self,
-                WorkoutRoutine.self
+                WorkoutRoutine.self,
+                Routine.self,
+                WorkoutSet.self
             ]
         )
         let configuration = ModelConfiguration(
