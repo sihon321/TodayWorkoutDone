@@ -26,8 +26,13 @@ struct WorkoutListReducer {
         var soretedWorkoutSection: IdentifiedArrayOf<SortedWorkoutSectionReducer.State> = []
         
         var groupedNames: [(key: String, value: [WorkoutState])] {
-            let filteredWorkout = workouts.filter { $0.name.hasPrefix(keyword) }
-            let groupedDictionary = Dictionary(grouping: filteredWorkout,
+            let groupedDictionary = Dictionary(grouping: workouts,
+                                               by: { extractFirstCharacter($0.name) })
+            return groupedDictionary.sorted { $0.key < $1.key }
+        }
+        
+        func filteredGroupedNames(_ workouts: [WorkoutState]) -> [(key: String, value: [WorkoutState])] {
+            let groupedDictionary = Dictionary(grouping: workouts,
                                                by: { extractFirstCharacter($0.name) })
             return groupedDictionary.sorted { $0.key < $1.key }
         }
@@ -57,6 +62,7 @@ struct WorkoutListReducer {
         
         case getWorkouts(String)
         case updateWorkouts([WorkoutState])
+        case filteredWorkouts([WorkoutState])
         
         case dismiss(MyRoutineState)
         case createMakeWorkoutView(myRoutine: MyRoutineState?, isEdit: Bool)
@@ -77,7 +83,12 @@ struct WorkoutListReducer {
             switch action {
             case .search(let keyword):
                 state.keyword = keyword
-                return .none
+                if keyword.isEmpty {
+                    return .send(.filteredWorkouts(state.workouts))
+                } else {
+                    let filteredCategories = state.workouts.filter { $0.name.hasPrefix(keyword) }
+                    return .send(.filteredWorkouts(filteredCategories))
+                }
                 
             case let .getWorkouts(categoryName):
                 return .run { send in
@@ -86,18 +97,22 @@ struct WorkoutListReducer {
                 }
             case .updateWorkouts(let workouts):
                 state.workouts = workouts
+                return .send(.filteredWorkouts(workouts))
+                
+            case .filteredWorkouts(let workouts):
                 state.filters = Array(Set(workouts.compactMap(\.target))).sorted()
                 state.soretedWorkoutSection = IdentifiedArrayOf(
-                    uniqueElements: state.groupedNames.enumerated().compactMap { index, element in
-                        SortedWorkoutSectionReducer.State(
-                            id: UUID(),
-                            myRoutine: state.myRoutine,
-                            index: index,
-                            key: element.key,
-                            workouts: element.value
-                        )
-                    }
-                )
+                    uniqueElements: state.filteredGroupedNames(workouts)
+                        .enumerated()
+                        .compactMap { index, element in
+                            SortedWorkoutSectionReducer.State(
+                                id: UUID(),
+                                myRoutine: state.myRoutine,
+                                index: index,
+                                key: element.key,
+                                workouts: element.value
+                            )
+                        })
                 return .none
             case .dismiss:
                 return .run { _ in

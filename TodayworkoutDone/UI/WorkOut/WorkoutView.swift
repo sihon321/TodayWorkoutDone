@@ -31,6 +31,7 @@ struct WorkoutReducer {
 
         case getCategories
         case updateCategories([WorkoutCategoryState])
+        case filteredCategories([WorkoutCategoryState])
         case getMyRoutines
         case fetchMyRoutines([MyRoutineState])
         
@@ -71,7 +72,12 @@ struct WorkoutReducer {
             switch action {
             case .search(let keyword):
                 state.keyword = keyword
-                return .none
+                if keyword.isEmpty {
+                    return .send(.filteredCategories(state.categories))
+                } else {
+                    let filteredCategories = state.categories.filter { $0.name.hasPrefix(keyword) }
+                    return .send(.filteredCategories(filteredCategories))
+                }
             case .dismiss:
                 state.destination = .none
                 return .run { _ in
@@ -85,6 +91,9 @@ struct WorkoutReducer {
                 }
             case .updateCategories(let categories):
                 state.categories = categories
+                return .send(.filteredCategories(categories))
+                
+            case .filteredCategories(let categories):
                 state.workoutCategory.workoutList = IdentifiedArrayOf(
                     uniqueElements: categories.compactMap {
                         WorkoutListReducer.State(id: UUID(),
@@ -150,6 +159,7 @@ struct WorkoutReducer {
                                     )
                                     if let routineToDelete = try myRoutineContext.fetch(descriptor).first {
                                         try myRoutineContext.delete(routineToDelete)
+                                        try myRoutineContext.save()
                                     }
                                     
                                     await send(.getMyRoutines)

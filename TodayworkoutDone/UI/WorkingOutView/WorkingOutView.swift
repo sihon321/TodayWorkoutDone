@@ -61,9 +61,11 @@ struct WorkingOutReducer {
             case .resetTimer:
                 state.secondsElapsed = 0
                 return .none
+                
             case .timerTicked:
                 state.secondsElapsed += 1
                 return .none
+                
             case .toggleTimer:
                 state.isTimerActive.toggle()
                 return .run { [isTimerActive = state.isTimerActive] send in
@@ -81,10 +83,13 @@ struct WorkingOutReducer {
             case let .tappedToolbarCloseButton(secondsElapsed):
                 state.destination = .alert(.saveWorkoutAlert(secondsElapsed))
                 return .none
+                
             case .tappedEdit:
+                for index in state.workingOutSection.indices {
+                    state.workingOutSection[index].toggleEditMode()
+                }
                 return .none
-            
-
+                
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
                 state.destination = .none
                 state.myRoutine = nil
@@ -115,111 +120,83 @@ struct WorkingOutReducer {
             case .destination(.dismiss):
                 return .none
                 
-            case let .workingOutSection(action):
+            case let .workingOutSection(.element(sectionId, .tappedAddFooter)):
+                if let sectionIndex = state.workingOutSection.index(id: sectionId) {
+                    let workoutSet = WorkoutSetState()
+                    state.workingOutSection[sectionIndex]
+                        .workingOutRow
+                        .append(WorkingOutRowReducer.State(workoutSet: workoutSet,
+                                                           editMode: .active))
+                    state.myRoutine?.routines[sectionIndex].sets.append(workoutSet)
+                }
+                return .none
+
+            case let .workingOutSection(.element(sectionId, .workingOutRow(.element(rowId, action)))):
                 switch action {
-                case let .element(sectionId, action):
-                    switch action {
-                    case .tappedAddFooter:
-                        if let sectionIndex = state.workingOutSection
-                            .index(id: sectionId) {
-                            let workoutSet = WorkoutSetState()
-                            state.workingOutSection[sectionIndex]
-                                .workingOutRow
-                                .append(
-                                    WorkingOutRowReducer.State(workoutSet: workoutSet,
-                                                               editMode: .active)
-                                )
-                            state.myRoutine?
-                                .routines[sectionIndex]
-                                .sets
-                                .append(workoutSet)
+                case let .toggleCheck(isChecked):
+                    if let sectionIndex = state.workingOutSection.index(id: sectionId),
+                       let rowIndex = state.workingOutSection[sectionIndex]
+                        .workingOutRow.index(id: rowId) {
+                        
+                        state.myRoutine?.routines[sectionIndex]
+                            .sets[rowIndex].isChecked = isChecked
+                        state.myRoutine?.routines[sectionIndex]
+                            .sets[rowIndex].endDate = isChecked ? Date() : nil
+                        state.workingOutSection[sectionIndex]
+                            .workingOutRow[rowIndex].isChecked = isChecked
+                        
+                        if let isAllTrue = state.myRoutine?.routines[sectionIndex].allTrue,
+                           isAllTrue {
+                            let setEndDates = state.myRoutine?.routines[sectionIndex]
+                                .sets.compactMap { $0.endDate }
+                            state.myRoutine?.routines[sectionIndex]
+                                .averageEndDate = setEndDates?.calculateAverageSecondsBetweenDates()
                         }
-                        return .none
-                    case let .workingOutRow(action):
-                        switch action {
-                        case let .element(rowId, action):
-                            switch action {
-                            case let .toggleCheck(isChecked):
-                                if let sectionIndex = state
-                                    .workingOutSection
-                                    .index(id: sectionId),
-                                   let rowIndex = state
-                                    .workingOutSection[sectionIndex]
-                                    .workingOutRow
-                                    .index(id: rowId) {
-                                    state.myRoutine?
-                                        .routines[sectionIndex]
-                                        .sets[rowIndex]
-                                        .isChecked = isChecked
-                                    state.myRoutine?
-                                        .routines[sectionIndex]
-                                        .sets[rowIndex]
-                                        .endDate = isChecked ? Date() : nil
-                                    state.workingOutSection[sectionIndex]
-                                        .workingOutRow[rowIndex]
-                                        .isChecked = isChecked
-                                    if let isAllTrue = state.myRoutine?
-                                        .routines[sectionIndex]
-                                        .allTrue, isAllTrue {
-                                        let setEndDates = state.myRoutine?
-                                            .routines[sectionIndex].sets.compactMap { $0.endDate }
-                                        state.myRoutine?
-                                            .routines[sectionIndex]
-                                            .averageEndDate = setEndDates?.calculateAverageSecondsBetweenDates()
-                                    }
-                                }
-                                return .none
-                            case let .typeLab(lab):
-                                if let sectionIndex = state
-                                    .workingOutSection
-                                    .index(id: sectionId),
-                                   let rowIndex = state
-                                    .workingOutSection[sectionIndex]
-                                    .workingOutRow
-                                    .index(id: rowId),
-                                   let labValue = Int(lab) {
-                                    state.myRoutine?
-                                        .routines[sectionIndex]
-                                        .sets[rowIndex]
-                                        .reps = labValue
-                                }
-                                return .none
-                            case let .typeWeight(weight):
-                                if let sectionIndex = state
-                                    .workingOutSection
-                                    .index(id: sectionId),
-                                   let rowIndex = state
-                                    .workingOutSection[sectionIndex]
-                                    .workingOutRow
-                                    .index(id: rowId),
-                                   let weightValue = Double(weight) {
-                                    state.myRoutine?
-                                        .routines[sectionIndex]
-                                        .sets[rowIndex]
-                                        .weight = weightValue
-                                }
-                                return .none
-                            }
-                        }
-                    case .setEditMode(let editMode):
-                        for index in state.workingOutSection.indices {
-                            state.workingOutSection[index].editMode = editMode
-                            let rows = state.workingOutSection[index].workingOutRow
-                            for rowIndex in rows.indices {
-                                state.workingOutSection[index].workingOutRow[rowIndex].editMode = editMode
-                            }
-                        }
-                        return .none
-                    case .workingOutHeader:
-                        return .none
-                    case .deleteWorkoutSet:
-                        return .none
+                    }
+                    return .none
+                    
+                case let .typeLab(lab):
+                    if let sectionIndex = state.workingOutSection.index(id: sectionId),
+                       let rowIndex = state.workingOutSection[sectionIndex].workingOutRow.index(id: rowId),
+                       let labValue = Int(lab) {
+                        state.myRoutine?.routines[sectionIndex].sets[rowIndex].reps = labValue
+                    }
+                    return .none
+                    
+                case let .typeWeight(weight):
+                    if let sectionIndex = state.workingOutSection.index(id: sectionId),
+                       let rowIndex = state.workingOutSection[sectionIndex].workingOutRow.index(id: rowId),
+                       let weightValue = Double(weight) {
+                        state.myRoutine?.routines[sectionIndex].sets[rowIndex].weight = weightValue
+                    }
+                    return .none
+                }
+                
+            case let .workingOutSection(.element(_, .setEditMode(editMode))):
+                for index in state.workingOutSection.indices {
+                    state.workingOutSection[index].editMode = editMode
+                    let rows = state.workingOutSection[index].workingOutRow
+                    for rowIndex in rows.indices {
+                        state.workingOutSection[index].workingOutRow[rowIndex].editMode = editMode
                     }
                 }
+                return .none
+            case .workingOutSection(.element(_, .workingOutHeader)):
+                return .none
+                    
+            case let .workingOutSection(.element(sectionId, .deleteWorkoutSet(indexSet))):
+                if let sectionIndex = state.workingOutSection.index(id: sectionId) {
+                    state.myRoutine?.routines[sectionIndex]
+                        .sets.remove(atOffsets: indexSet)
+                }
+                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination) {
             Destination.body
+        }
+        .forEach(\.workingOutSection, action: \.workingOutSection) {
+            WorkingOutSectionReducer()
         }
     }
     
@@ -247,14 +224,6 @@ struct WorkingOutReducer {
             try workoutRoutineContext.save()
         } catch {
             print(WorkoutRoutineDatabase.WorkoutRoutineError.add)
-        }
-    }
-    
-    private func deleteMyRoutine(_ myRoutine: MyRoutineState) {
-        do {
-            try myRoutineContext.delete(myRoutine.toModel())
-        } catch {
-            print(error.localizedDescription)
         }
     }
 }

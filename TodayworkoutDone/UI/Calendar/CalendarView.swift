@@ -17,7 +17,7 @@ struct CalendarReducer {
                                            calendar: .current)
         let dayFormatter = DateFormatter(dateFormat: "d",
                                          calendar: .current)
-        let weekDayFormatter = DateFormatter(dateFormat: "EEEEE",
+        let weekDayFormatter = DateFormatter(dateFormat: "E",
                                              calendar: .current)
         let fullFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy",
                                           calendar: .current)
@@ -149,7 +149,7 @@ struct CalendarView: View {
                 },
                 title: { date in
                     Text(viewStore.monthFormatter.string(from: date))
-                        .font(.title)
+                        .font(.system(size: 24, weight: .bold, design: .default))
                         .padding(.vertical, 8)
                 }
             )

@@ -188,8 +188,7 @@ struct MakeWorkoutReducer {
                         return .none
                     case let .deleteWorkoutSet(indexSet):
                         if let sectionIndex = state.workingOutSection.index(id: sectionId) {
-                            state.myRoutine
-                                .routines[sectionIndex]
+                            state.myRoutine.routines[sectionIndex]
                                 .sets.remove(atOffsets: indexSet)
                         }
                         return .none

@@ -33,6 +33,17 @@ struct WorkingOutSectionReducer {
                 equipmentType: routine.equipmentType
             )
         }
+        
+        mutating func toggleEditMode() {
+            if editMode == .active {
+                editMode = .inactive
+            } else {
+                editMode = .active
+            }
+            for index in workingOutRow.indices {
+                workingOutRow[index].editMode = editMode
+            }
+        }
     }
     
     enum Action {
@@ -101,10 +112,11 @@ struct WorkingOutSection: View {
             
         } footer: {
             if viewStore.editMode == .active {
-                WorkingOutFooter()
-                    .onTapGesture {
-                        store.send(.tappedAddFooter)
-                    }
+                Button(action: {
+                    store.send(.tappedAddFooter)
+                }) {
+                    WorkingOutFooter()
+                }
             }
         }
         .environment(\.editMode, viewStore.binding(get: \.editMode,
