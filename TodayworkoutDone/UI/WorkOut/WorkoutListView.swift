@@ -17,10 +17,9 @@ struct WorkoutListReducer {
         
         let id: UUID
         let isAddWorkoutPresented: Bool
-        var myRoutine: MyRoutineState
         let categoryName: String
-        var categories: [WorkoutCategoryState]
         var workouts: [WorkoutState] = []
+        var routines: [RoutineState] = []
         var keyword: String = ""
         var filters: [String] = []
         var soretedWorkoutSection: IdentifiedArrayOf<SortedWorkoutSectionReducer.State> = []
@@ -53,6 +52,15 @@ struct WorkoutListReducer {
 
             return "#"
         }
+        
+        init(isAddWorkoutPresented: Bool,
+             routines: [RoutineState],
+             categoryName: String) {
+            self.id = UUID()
+            self.isAddWorkoutPresented = isAddWorkoutPresented
+            self.routines = routines
+            self.categoryName = categoryName
+        }
     }
     
     enum Action {
@@ -64,8 +72,8 @@ struct WorkoutListReducer {
         case updateWorkouts([WorkoutState])
         case filteredWorkouts([WorkoutState])
         
-        case dismiss(MyRoutineState)
-        case createMakeWorkoutView(myRoutine: MyRoutineState?, isEdit: Bool)
+        case dismiss([RoutineState])
+        case createMakeWorkoutView(routines: [RoutineState], isEdit: Bool)
         
         case sortedWorkoutSection(IdentifiedActionOf<SortedWorkoutSectionReducer>)
     }
@@ -107,7 +115,6 @@ struct WorkoutListReducer {
                         .compactMap { index, element in
                             SortedWorkoutSectionReducer.State(
                                 id: UUID(),
-                                myRoutine: state.myRoutine,
                                 index: index,
                                 key: element.key,
                                 workouts: element.value
@@ -118,10 +125,10 @@ struct WorkoutListReducer {
                 return .run { _ in
                     await self.dismiss()
                 }
-            case let .createMakeWorkoutView(myRoutine, isEdit):
+            case let .createMakeWorkoutView(routines, isEdit):
                 state.destination = .makeWorkoutView(
                     MakeWorkoutReducer.State(
-                        myRoutine: myRoutine ?? state.myRoutine,
+                        myRoutine: MyRoutineState(routines: routines),
                         isEdit: isEdit
                     )
                 )
@@ -143,9 +150,9 @@ struct WorkoutListReducer {
                                     .workout
 
                                 if workout.isSelected {
-                                    state.myRoutine.routines.append(RoutineState(workout: workout))
+                                    state.routines.append(RoutineState(workout: workout))
                                 } else {
-                                    state.myRoutine.routines.removeAll { $0.workout.name == workout.name }
+                                    state.routines.removeAll { $0.workout.name == workout.name }
                                 }
                             }
                         }
@@ -169,19 +176,16 @@ struct SortedWorkoutSectionReducer {
     @ObservableState
     struct State: Equatable, Identifiable {
         let id: UUID
-        var myRoutine: MyRoutineState
         let index: Int
         let key: String
         var workouts: [WorkoutState]
         var workoutListSubview: IdentifiedArrayOf<WorkoutListSubviewReducer.State> = []
         
         init(id: UUID,
-             myRoutine: MyRoutineState,
              index: Int,
              key: String,
              workouts: [WorkoutState]) {
             self.id = id
-            self.myRoutine = myRoutine
             self.index = index
             self.key = key
             self.workouts = workouts
@@ -189,8 +193,7 @@ struct SortedWorkoutSectionReducer {
                 uniqueElements: workouts.compactMap {
                     WorkoutListSubviewReducer.State(
                         id: UUID(),
-                        workout: $0,
-                        myRoutine: myRoutine
+                        workout: $0
                     )
                 }
             )
@@ -238,7 +241,7 @@ struct WorkoutListView: View {
             }
             ScrollView {
                 VStack(spacing: 0) {
-                    HorizontalFilterView(filters: store.filters,
+                    HorizontalFilterView(filters: viewStore.filters,
                                          selectedFilters: $selectedFilters)
                         .padding(.horizontal)
                     ForEach(store.scope(state: \.soretedWorkoutSection,
@@ -261,16 +264,18 @@ struct WorkoutListView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    if !viewStore.myRoutine.routines.isEmpty {
+                    if !viewStore.routines.isEmpty {
                         Button(action: {
                             if viewStore.isAddWorkoutPresented {
-                                viewStore.send(.dismiss(viewStore.myRoutine))
+                                viewStore.send(.dismiss(viewStore.routines))
                             } else {
-                                viewStore.send(.createMakeWorkoutView(myRoutine: viewStore.myRoutine,
-                                                                      isEdit: false))
+                                viewStore.send(.createMakeWorkoutView(
+                                    routines: viewStore.routines,
+                                    isEdit: false)
+                                )
                             }
                         }) {
-                            let selectedWorkoutCount = viewStore.myRoutine.routines.count
+                            let selectedWorkoutCount = viewStore.routines.count
                             Text("Done(\(selectedWorkoutCount))")
                                 .foregroundStyle(.black)
                         }

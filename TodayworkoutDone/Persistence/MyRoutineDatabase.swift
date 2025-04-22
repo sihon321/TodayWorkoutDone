@@ -44,7 +44,6 @@ extension MyRoutineDatabase: DependencyKey {
             do {
                 @Dependency(\.databaseService.context) var context
                 
-                
                 return try context().fetch(descriptor)
             } catch {
                 return []

@@ -36,7 +36,8 @@ struct WorkoutReducer {
         case fetchMyRoutines([MyRoutineState])
         
         case tappedDone(MyRoutineState)
-        case createMakeWorkoutView(myRoutine: MyRoutineState?, isEdit: Bool)
+        case createMakeWorkoutView(routines: [RoutineState], isEdit: Bool)
+        case updateMakeWorkoutView(myRoutine: MyRoutineState, isEdit: Bool)
         
         case myRoutineReducer(MyRoutineReducer.Action)
         case workoutCategory(WorkoutCategoryReducer.Action)
@@ -96,11 +97,9 @@ struct WorkoutReducer {
             case .filteredCategories(let categories):
                 state.workoutCategory.workoutList = IdentifiedArrayOf(
                     uniqueElements: categories.compactMap {
-                        WorkoutListReducer.State(id: UUID(),
-                                                 isAddWorkoutPresented: false,
-                                                 myRoutine: state.myRoutine,
-                                                 categoryName: $0.name,
-                                                 categories: categories)
+                        WorkoutListReducer.State(isAddWorkoutPresented: false,
+                                                 routines: state.myRoutine.routines,
+                                                 categoryName: $0.name)
                     }
                 )
                 return .none
@@ -122,13 +121,18 @@ struct WorkoutReducer {
             case .tappedDone:
                 return .send(.dismiss)
                 
-            case let .createMakeWorkoutView(myRoutine, isEdit):
+            case let .createMakeWorkoutView(routines, isEdit):
                 state.destination = .makeWorkoutView(MakeWorkoutReducer.State(
-                    myRoutine: myRoutine ?? state.myRoutine,
+                    myRoutine: MyRoutineState(routines: routines),
                     isEdit: isEdit,
                 ))
                 return .none
-            
+            case let .updateMakeWorkoutView(myRoutine, isEdit):
+                state.destination = .makeWorkoutView(MakeWorkoutReducer.State(
+                    myRoutine: myRoutine,
+                    isEdit: isEdit,
+                ))
+                return .none
             case .destination(.presented(.alert(.tappedMyRoutineStart(let myRoutine)))):
                 return .run { send in
                     await send(.tappedDone(myRoutine))
@@ -150,7 +154,7 @@ struct WorkoutReducer {
                     case let .element(_, action):
                         switch action {
                         case let .touchedEditMode(myRoutine):
-                            return .send(.createMakeWorkoutView(myRoutine: myRoutine, isEdit: true))
+                            return .send(.updateMakeWorkoutView(myRoutine: myRoutine, isEdit: true))
                         case let .touchedDelete(myRoutine):
                             if let id = myRoutine.persistentModelID {
                                 return .run { send in
@@ -309,7 +313,7 @@ private struct WorkoutViewToolbar: ViewModifier {
                 if !viewStore.myRoutine.routines.isEmpty {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
-                            viewStore.send(.createMakeWorkoutView(myRoutine: store.myRoutine,
+                            viewStore.send(.createMakeWorkoutView(routines: store.myRoutine.routines,
                                                                   isEdit: false))
                         }) {
                             let selectedWorkoutCount = viewStore.myRoutine.routines.count

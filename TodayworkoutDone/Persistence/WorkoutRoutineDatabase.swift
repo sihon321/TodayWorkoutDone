@@ -18,6 +18,7 @@ extension DependencyValues {
 
 struct WorkoutRoutineDatabase {
     var fetchAll: @Sendable () throws -> [WorkoutRoutine]
+    var fetch: @Sendable (FetchDescriptor<WorkoutRoutine>) throws -> [WorkoutRoutine]
     var add: @Sendable (WorkoutRoutine) throws -> Void
     var save: @Sendable () throws -> Void
     var delete: @Sendable (WorkoutRoutine) throws -> Void
@@ -38,6 +39,15 @@ extension WorkoutRoutineDatabase: DependencyKey {
                 let descriptor = FetchDescriptor<WorkoutRoutine>(sortBy: [SortDescriptor(\.startDate)])
                 
                 return try routineContext.fetch(descriptor)
+            } catch {
+                return []
+            }
+        },
+        fetch: { descriptor in
+            do {
+                @Dependency(\.databaseService.context) var context
+                
+                return try context().fetch(descriptor)
             } catch {
                 return []
             }
@@ -79,6 +89,7 @@ extension WorkoutRoutineDatabase: DependencyKey {
 extension WorkoutRoutineDatabase: TestDependencyKey {
     public static let testValue = Self(
         fetchAll: unimplemented("\(Self.self).fetchAll"),
+        fetch: unimplemented("\(Self.self).fetch"),
         add: unimplemented("\(Self.self).add"),
         save: unimplemented("\(Self.self).save"),
         delete: unimplemented("\(Self.self).delete")

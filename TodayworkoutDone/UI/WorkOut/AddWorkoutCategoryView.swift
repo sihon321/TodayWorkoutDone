@@ -14,15 +14,15 @@ import ComposableArchitecture
 struct AddWorkoutCategoryReducer {
     @ObservableState
     struct State: Equatable {
-        var myRoutine: MyRoutineState
+        var routines: [RoutineState] = []
         var keyword: String = ""
         
         var workoutList: IdentifiedArrayOf<WorkoutListReducer.State>
 
-        init(myRoutine: MyRoutineState,
+        init(routines: [RoutineState],
              keyword: String = "",
              workoutList: IdentifiedArrayOf<WorkoutListReducer.State> = []) {
-            self.myRoutine = myRoutine
+            self.routines = routines
             self.keyword = keyword
             self.workoutList = workoutList
         }
@@ -50,11 +50,9 @@ struct AddWorkoutCategoryReducer {
             case .updateCategories(let categories):
                 state.workoutList = IdentifiedArrayOf(
                     uniqueElements: categories.compactMap {
-                        WorkoutListReducer.State(id: UUID(),
-                                                 isAddWorkoutPresented: true,
-                                                 myRoutine: state.myRoutine,
-                                                 categoryName: $0.name,
-                                                 categories: categories)
+                        WorkoutListReducer.State(isAddWorkoutPresented: true,
+                                                 routines: state.routines,
+                                                 categoryName: $0.name)
                     }
                 )
                 return .none

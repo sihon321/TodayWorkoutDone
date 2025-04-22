@@ -27,6 +27,7 @@ struct WorkoutRoutineState: WorkoutRoutineData, Codable, Equatable, Identifiable
     var endDate: Date?
     var routineTime: Int = 0
     var routines: [RoutineState]
+    var persistentModelID: PersistentIdentifier?
     
     enum CodingKeys: CodingKey {
         case id, name, startDate, endDate, routineTime, routines
@@ -64,10 +65,6 @@ struct WorkoutRoutineState: WorkoutRoutineData, Codable, Equatable, Identifiable
         try container.encode(routineTime, forKey: .routineTime)
         try container.encode(routines, forKey: .routines)
     }
-    
-    static func == (lhs: WorkoutRoutineState, rhs: WorkoutRoutineState) -> Bool {
-        return lhs.id == rhs.id
-    }
 }
 
 extension WorkoutRoutineState {
@@ -78,6 +75,7 @@ extension WorkoutRoutineState {
         self.endDate = model.endDate
         self.routineTime = model.routineTime
         self.routines = model.routines.compactMap { RoutineState(model: $0) }
+        self.persistentModelID = model.persistentModelID
     }
     
     func toModel() -> WorkoutRoutine {
@@ -127,7 +125,32 @@ extension WorkoutRoutine {
         self.name = state.name
         self.startDate = state.startDate
         self.endDate = state.endDate
-        self.routines = state.routines.compactMap({ $0.toModel() })
+        // 기존 routines 매핑용 딕셔너리
+        var existingSetsDict = Dictionary(uniqueKeysWithValues: self.routines.compactMap { ($0.id, $0) })
+        
+        // 새롭게 구성될 sets 배열
+        var updatedRoutines: [RoutineType] = []
+        
+        for newRoutineState in state.routines {
+            if let id = newRoutineState.persistentModelID,
+                let existing = existingSetsDict.removeValue(forKey: id) {
+                // 기존 데이터 업데이트
+                existing.update(from: newRoutineState)
+                updatedRoutines.append(existing)
+            } else {
+                // 없는 경우 새로 생성
+                let newRoutine = Routine.create(from: newRoutineState)
+                updatedRoutines.append(newRoutine)
+            }
+        }
+        
+        // 남은 건 삭제 대상
+        for unused in existingSetsDict.values {
+            modelContext?.delete(unused)
+        }
+        
+        // 업데이트된 배열로 교체
+        self.routines = updatedRoutines
     }
 }
 

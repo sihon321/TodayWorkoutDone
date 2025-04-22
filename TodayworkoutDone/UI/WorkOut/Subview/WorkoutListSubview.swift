@@ -14,7 +14,6 @@ struct WorkoutListSubviewReducer {
     struct State: Equatable, Identifiable {
         let id: UUID
         var workout: WorkoutState
-        var myRoutine: MyRoutineState
     }
     
     enum Action {
@@ -58,7 +57,7 @@ struct WorkoutListSubview: View {
                         .font(.system(size: 15, weight: .light))
                         .foregroundStyle(.black)
                     Spacer()
-                    if viewStore.workout.isSelected || viewStore.myRoutine.routines.contains(where: { $0.workout.name == viewStore.workout.name }) {
+                    if viewStore.workout.isSelected {
                         Image(systemName:"checkmark")
                             .foregroundStyle(.black)
                             .padding(.trailing, 15)

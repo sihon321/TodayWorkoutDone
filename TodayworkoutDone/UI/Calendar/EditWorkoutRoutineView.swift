@@ -1,50 +1,32 @@
 //
-//  MakeWorkoutView.swift
+//  EditWorkoutRoutineView.swift
 //  TodayworkoutDone
 //
-//  Created by ocean on 2023/05/17.
+//  Created by ocean on 4/22/25.
 //
 
 import SwiftUI
 import ComposableArchitecture
-import Dependencies
 import SwiftData
 
 @Reducer
-struct MakeWorkoutReducer {
+struct EditWorkoutRoutineReducer {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
-
-        var myRoutine: MyRoutineState
-        var isEdit: Bool = false
         
+        var workoutRoutine: WorkoutRoutineState
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
-        
-        init(myRoutine: MyRoutineState,
-             isEdit: Bool) {
-            self.myRoutine = myRoutine
-            self.isEdit = isEdit
-            workingOutSection = IdentifiedArrayOf(
-                uniqueElements: myRoutine.routines.map {
-                    WorkingOutSectionReducer.State(
-                        routine: $0,
-                        editMode: .active
-                    )
-                }
-            )
-        }
     }
     
     enum Action {
-        case dismissMakeWorkout
-        case tappedDone(MyRoutineState)
-        case save(MyRoutineState)
-        case didUpdateText(String)
-
         case tappedAdd
-        case destination(PresentationAction<Destination.Action>)
+        case didUpdateText(String)
+        case save(WorkoutRoutineState)
+        case dismiss
+        
         case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
+        case destination(PresentationAction<Destination.Action>)
     }
     
     @Reducer(state: .equatable)
@@ -57,62 +39,39 @@ struct MakeWorkoutReducer {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .dismissMakeWorkout:
-                state.destination = .none
-                return .run { _ in
-                    await self.dismiss()
-                }
-            case .tappedDone(let myRoutine):
-                state.myRoutine = myRoutine
-                state.myRoutine.isRunning = true
-
-                return .run { send in
-                    await send(.dismissMakeWorkout)
-                }
-            case .save(let myRoutine):
-                @Dependency(\.myRoutineData.fetch) var fetch
-                @Dependency(\.myRoutineData.save) var save
+            case .tappedAdd:
+                state.destination = .addWorkoutCategory(
+                    AddWorkoutCategoryReducer.State(
+                        routines: state.workoutRoutine.routines
+                    )
+                )
+                return .none
+            case .didUpdateText(let text):
+                state.workoutRoutine.name = text
+                return .none
+            case .save(let workoutRoutine):
+                @Dependency(\.workoutRoutineData.fetch) var fetch
+                @Dependency(\.workoutRoutineData.save) var save
                 
-                if let id = myRoutine.persistentModelID {
-                    let descriptor = FetchDescriptor<MyRoutine>(
+                if let id = workoutRoutine.persistentModelID {
+                    let descriptor = FetchDescriptor<WorkoutRoutine>(
                         predicate: #Predicate { $0.persistentModelID == id }
                     )
                     do {
                         if let updateToMyRoutine = try fetch(descriptor).first {
-                            updateToMyRoutine.update(from: myRoutine)
+                            updateToMyRoutine.update(from: workoutRoutine)
                             try save()
                         }
                     } catch {
                         print(error.localizedDescription)
                     }
                 }
-                return .send(.dismissMakeWorkout)
-                
-            case .didUpdateText(let text):
-                state.myRoutine.name = text
-                return .none
-
-            case .tappedAdd:
-                state.destination = .addWorkoutCategory(
-                    AddWorkoutCategoryReducer.State(
-                        routines: state.myRoutine.routines
-                    )
-                )
-                return .none
-            case let .destination(.presented(.addWorkoutCategory(.workoutList(.element(_, .dismiss(routines)))))):
-                state.myRoutine.routines = routines
-                state.workingOutSection = IdentifiedArrayOf(
-                    uniqueElements: routines.map {
-                        WorkingOutSectionReducer.State(
-                            routine: $0,
-                            editMode: .active
-                        )
-                    }
-                )
-                return .none
-            case .destination:
-                return .none
-
+                return .send(.dismiss)
+            case .dismiss:
+                state.destination = .none
+                return .run { _ in
+                    await self.dismiss()
+                }
             case let .workingOutSection(action):
                 switch action {
                 case let .element(sectionId, action):
@@ -127,7 +86,7 @@ struct MakeWorkoutReducer {
                                     WorkingOutRowReducer.State(workoutSet: workoutSet,
                                                                editMode: .active)
                                 )
-                            state.myRoutine
+                            state.workoutRoutine
                                 .routines[sectionIndex]
                                 .sets
                                 .append(workoutSet)
@@ -146,7 +105,7 @@ struct MakeWorkoutReducer {
                                     .workingOutRow
                                     .index(id: rowId),
                                    let labValue = Int(lab) {
-                                    state.myRoutine
+                                    state.workoutRoutine
                                         .routines[sectionIndex]
                                         .sets[rowIndex]
                                         .reps = labValue
@@ -159,7 +118,7 @@ struct MakeWorkoutReducer {
                                     .workingOutRow
                                     .index(id: rowId),
                                    let weightValue = Double(weight) {
-                                    state.myRoutine
+                                    state.workoutRoutine
                                         .routines[sectionIndex]
                                         .sets[rowIndex]
                                         .weight = weightValue
@@ -173,13 +132,13 @@ struct MakeWorkoutReducer {
                             if let sectionIndex = state.workingOutSection
                                 .index(id: sectionId) {
                                 state.workingOutSection.remove(at: sectionIndex)
-                                state.myRoutine.routines.remove(at: sectionIndex)
+                                state.workoutRoutine.routines.remove(at: sectionIndex)
                             }
                             return .none
                         case let .tappedWorkoutsType(type):
                             if let sectionIndex = state.workingOutSection
                                 .index(id: sectionId) {
-                                state.myRoutine
+                                state.workoutRoutine
                                     .routines[sectionIndex].equipmentType = type
                             }
                             return .none
@@ -188,28 +147,35 @@ struct MakeWorkoutReducer {
                         return .none
                     case let .deleteWorkoutSet(indexSet):
                         if let sectionIndex = state.workingOutSection.index(id: sectionId) {
-                            state.myRoutine.routines[sectionIndex]
+                            state.workoutRoutine.routines[sectionIndex]
                                 .sets.remove(atOffsets: indexSet)
                         }
                         return .none
                     }
                 }
+            case let .destination(.presented(.addWorkoutCategory(.workoutList(.element(_, .dismiss(routines)))))):
+                state.workoutRoutine.routines = routines
+                state.workingOutSection = IdentifiedArrayOf(
+                    uniqueElements: routines.map {
+                        WorkingOutSectionReducer.State(
+                            routine: $0,
+                            editMode: .active
+                        )
+                    }
+                )
+                return .none
+            case .destination:
+                return .none
             }
-        }
-        .forEach(\.workingOutSection, action: \.workingOutSection) {
-            WorkingOutSectionReducer()
-        }
-        .ifLet(\.$destination, action: \.destination) {
-            Destination.body
         }
     }
 }
 
-struct MakeWorkoutView: View {
-    @Bindable var store: StoreOf<MakeWorkoutReducer>
-    @ObservedObject var viewStore: ViewStoreOf<MakeWorkoutReducer>
+struct EditWorkoutRoutineView: View {
+    @Bindable var store: StoreOf<EditWorkoutRoutineReducer>
+    @ObservedObject var viewStore: ViewStoreOf<EditWorkoutRoutineReducer>
     
-    init(store: StoreOf<MakeWorkoutReducer>) {
+    init(store: StoreOf<EditWorkoutRoutineReducer>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
     }
@@ -219,8 +185,8 @@ struct MakeWorkoutView: View {
             ScrollView {
                 TextField("타이틀을 입력하세요",
                           text: viewStore.binding(
-                            get: \.myRoutine.name,
-                            send: MakeWorkoutReducer.Action.didUpdateText
+                            get: \.workoutRoutine.name,
+                            send: EditWorkoutRoutineReducer.Action.didUpdateText
                           ))
                 .multilineTextAlignment(.leading)
                 .font(.title)
@@ -246,18 +212,12 @@ struct MakeWorkoutView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        viewStore.send(.dismissMakeWorkout)
+                        viewStore.send(.dismiss)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if store.isEdit {
-                        Button("Save") {
-                            viewStore.send(.save(viewStore.myRoutine))
-                        }
-                    } else {
-                        Button("Done") {
-                            viewStore.send(.tappedDone(viewStore.myRoutine))
-                        }
+                    Button("Save") {
+                        viewStore.send(.save(viewStore.workoutRoutine))
                     }
                 }
             }

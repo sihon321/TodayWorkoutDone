@@ -6,26 +6,54 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
+
+@Reducer
+struct CalendarDetailSubViewReducer {
+    @ObservableState
+    struct State: Equatable {
+        var workoutRoutine: WorkoutRoutineState
+    }
+    
+    enum Action {
+        
+    }
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+                
+            }
+        }
+    }
+}
+
 
 struct CalendarDetailSubView: View {
-    var workoutRoutine: WorkoutRoutineState
+    @Bindable var store: StoreOf<CalendarDetailSubViewReducer>
+    @ObservedObject var viewStore: ViewStoreOf<CalendarDetailSubViewReducer>
+    
+    init(store: StoreOf<CalendarDetailSubViewReducer>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("\(workoutRoutine.name)")
+            Text("\(viewStore.workoutRoutine.name)")
                 .font(.title)
-            Text("\(workoutRoutine.startDate.formatToKoreanStyle())")
+            Text("\(viewStore.workoutRoutine.startDate.formatToKoreanStyle())")
             
             HStack {
                 Image(systemName: "timer")
-                Text(workoutRoutine.routineTime.convertSecondsToHMS())
+                Text(viewStore.workoutRoutine.routineTime.convertSecondsToHMS())
                     .padding(.trailing, 10)
                 Image(systemName: "flame")
-                Text("\(Int(workoutRoutine.calories)) kcal")
+                Text("\(Int(viewStore.workoutRoutine.calories)) kcal")
             }
             .padding(.bottom, 5)
             
-            ForEach(workoutRoutine.routines, id: \.id) { routine in
+            ForEach(viewStore.workoutRoutine.routines, id: \.id) { routine in
                 HStack {
                     if let image = UIImage(named: routine.workout.name) ?? UIImage(named: "default") {
                         Image(uiImage: image)
@@ -81,6 +109,11 @@ struct CalendarDetailSubView: View {
 
 #Preview {
     CalendarDetailSubView(
-        workoutRoutine: WorkoutRoutineState(model: WorkoutRoutine.mockedData)
+        store: Store(
+            initialState: CalendarDetailSubViewReducer.State(
+                workoutRoutine: WorkoutRoutineState(model: WorkoutRoutine.mockedData))
+        ) {
+            CalendarDetailSubViewReducer()
+        }
     )
 }
