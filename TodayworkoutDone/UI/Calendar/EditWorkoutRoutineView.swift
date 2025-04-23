@@ -17,6 +17,18 @@ struct EditWorkoutRoutineReducer {
         
         var workoutRoutine: WorkoutRoutineState
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
+        
+        init(workoutRoutine: WorkoutRoutineState) {
+            self.workoutRoutine = workoutRoutine
+            self.workingOutSection = IdentifiedArrayOf(
+                uniqueElements: workoutRoutine.routines.map {
+                    WorkingOutSectionReducer.State(
+                        routine: $0,
+                        editMode: .active
+                    )
+                }
+            )
+        }
     }
     
     enum Action {
@@ -58,8 +70,8 @@ struct EditWorkoutRoutineReducer {
                         predicate: #Predicate { $0.persistentModelID == id }
                     )
                     do {
-                        if let updateToMyRoutine = try fetch(descriptor).first {
-                            updateToMyRoutine.update(from: workoutRoutine)
+                        if let updateToWorkoutRoutine = try fetch(descriptor).first {
+                            updateToWorkoutRoutine.update(from: workoutRoutine)
                             try save()
                         }
                     } catch {

@@ -244,14 +244,14 @@ struct WorkoutListView: View {
                     HorizontalFilterView(filters: viewStore.filters,
                                          selectedFilters: $selectedFilters)
                         .padding(.horizontal)
-                    ForEach(store.scope(state: \.soretedWorkoutSection,
-                                        action: \.sortedWorkoutSection)) { sectionStore in
+                    ForEachStore(store.scope(state: \.soretedWorkoutSection,
+                                             action: \.sortedWorkoutSection)) { sectionStore in
                         StickyHeaderView(index: sectionStore.index,
                                          title: sectionStore.key,
                                          topHeaderIndex: $topHeaderIndex)
                         
-                        ForEach(sectionStore.scope(state: \.workoutListSubview,
-                                                   action: \.workoutListSubview)) { rowStore in
+                        ForEachStore(sectionStore.scope(state: \.workoutListSubview,
+                                                        action: \.workoutListSubview)) { rowStore in
                             if selectedFilters.isEmpty
                                 || (selectedFilters.isEmpty == false
                                     && selectedFilters.contains(where: { $0 == rowStore.workout.target })) {

@@ -7,23 +7,66 @@
 
 import SwiftUI
 import ComposableArchitecture
+import SwiftData
 
 @Reducer
 struct CalendarDetailSubViewReducer {
     @ObservableState
-    struct State: Equatable {
+    struct State: Equatable, Identifiable {
+        @Presents var destination: Destination.State?
+        
+        let id = UUID()
         var workoutRoutine: WorkoutRoutineState
     }
     
     enum Action {
-        
+        case edit
+        case delete
+        case destination(PresentationAction<Destination.Action>)
     }
+    
+    @Reducer(state: .equatable)
+    enum Destination {
+        case editWorkoutRoutine(EditWorkoutRoutineReducer)
+    }
+    
+    @Dependency(\.workoutRoutineData) var workoutRoutineContext
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-                
+            case .edit:
+                state.destination = .editWorkoutRoutine(
+                    EditWorkoutRoutineReducer.State(
+                        workoutRoutine: state.workoutRoutine
+                    )
+                )
+                return .none
+            case .delete:
+                if let id = state.workoutRoutine.persistentModelID {
+                    let descriptor = FetchDescriptor<WorkoutRoutine>(
+                        predicate: #Predicate {
+                            $0.persistentModelID == id
+                        }
+                    )
+                    do {
+                        if let deleteToWorkoutRoutine = try workoutRoutineContext.fetch(descriptor).first {
+                            try workoutRoutineContext.delete(deleteToWorkoutRoutine)
+                        }
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+
+                return .none
+            case .destination(.presented(.editWorkoutRoutine(.save))):
+                return .none
+            case .destination:
+                return .none
             }
+        }
+        .ifLet(\.$destination, action: \.destination) {
+            Destination.body
         }
     }
 }
@@ -40,8 +83,31 @@ struct CalendarDetailSubView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("\(viewStore.workoutRoutine.name)")
-                .font(.title)
+            HStack {
+                Text("\(viewStore.workoutRoutine.name)")
+                    .font(.title)
+                Spacer()
+                Button(action: {}) {
+                    Menu {
+                        Button(action: {
+                            viewStore.send(.edit)
+                        }) {
+                            Label("편집", systemImage: "pencil")
+                        }
+                        Button(action: {
+                            viewStore.send(.delete)
+                        }) {
+                            Label("삭제", systemImage: "trash")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .contentShape(Rectangle())
+                            .frame(minHeight: 20)
+                            .padding(.trailing, 15)
+                            .tint(Color(0x939393))
+                    }
+                }
+            }
             Text("\(viewStore.workoutRoutine.startDate.formatToKoreanStyle())")
             
             HStack {
@@ -104,6 +170,12 @@ struct CalendarDetailSubView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding([.leading, .trailing], 10)
         .padding([.top, .bottom], 5)
+        .fullScreenCover(
+            item: $store.scope(state: \.destination?.editWorkoutRoutine,
+                               action: \.destination.editWorkoutRoutine)
+        ) { store in
+            EditWorkoutRoutineView(store: store)
+        }
     }
 }
 
