@@ -43,6 +43,7 @@ extension MyRoutine {
 extension WorkoutRoutine {
     static let mockedData: WorkoutRoutine = WorkoutRoutine(name: "Test",
                                                            startDate: Date(),
+                                                           endDate: Date(),
                                                            routines: Routine.mockedData)
 }
 

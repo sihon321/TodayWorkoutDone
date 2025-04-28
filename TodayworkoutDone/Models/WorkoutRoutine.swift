@@ -13,7 +13,7 @@ protocol WorkoutRoutineData {
     
     var name: String { get set }
     var startDate: Date { get set }
-    var endDate: Date? { get set }
+    var endDate: Date { get set }
     var routineTime: Int { get set }
     var routines: [RoutineType] { get set }
 }
@@ -24,7 +24,7 @@ struct WorkoutRoutineState: WorkoutRoutineData, Codable, Equatable, Identifiable
     var id: UUID
     var name: String
     var startDate: Date
-    var endDate: Date?
+    var endDate: Date
     var routineTime: Int = 0
     var routines: [RoutineState]
     var persistentModelID: PersistentIdentifier?
@@ -35,7 +35,7 @@ struct WorkoutRoutineState: WorkoutRoutineData, Codable, Equatable, Identifiable
     
     init(name: String,
          startDate: Date,
-         endDate: Date? = nil,
+         endDate: Date,
          routineTime: Int = 0,
          routines: [RoutineState]) {
         self.id = UUID()
@@ -51,7 +51,7 @@ struct WorkoutRoutineState: WorkoutRoutineData, Codable, Equatable, Identifiable
         id = try container.decode(UUID.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         startDate = try container.decode(Date.self, forKey: .startDate)
-        endDate = try container.decode(Date?.self, forKey: .endDate)
+        endDate = try container.decode(Date.self, forKey: .endDate)
         routineTime = try container.decode(Int.self, forKey: .routineTime)
         routines = try container.decode([RoutineState].self, forKey: .routines)
     }
@@ -103,13 +103,13 @@ class WorkoutRoutine: WorkoutRoutineData, Equatable {
     
     var name: String
     var startDate: Date
-    var endDate: Date?
+    var endDate: Date
     var routineTime: Int = 0
     @Relationship(deleteRule: .cascade) var routines: [Routine]
 
     init(name: String,
          startDate: Date,
-         endDate: Date? = nil,
+         endDate: Date,
          routineTime: Int = 0,
          routines: [Routine] = []) {
         self.name = name
@@ -125,6 +125,8 @@ extension WorkoutRoutine {
         self.name = state.name
         self.startDate = state.startDate
         self.endDate = state.endDate
+        self.routineTime = state.routineTime
+        
         // 기존 routines 매핑용 딕셔너리
         var existingSetsDict = Dictionary(uniqueKeysWithValues: self.routines.compactMap { ($0.id, $0) })
         

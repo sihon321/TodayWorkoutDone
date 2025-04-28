@@ -108,6 +108,7 @@ struct WorkingOutReducer {
                         workout:  WorkoutRoutineState(
                             name: myRoutine.name,
                             startDate: startDate,
+                            endDate: currentDate,
                             routineTime: secondsElapsed,
                             routines: myRoutine.routines
                         )

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Foundation
 import SwiftData
 
 @Reducer
@@ -36,6 +37,8 @@ struct EditWorkoutRoutineReducer {
         case didUpdateText(String)
         case save(WorkoutRoutineState)
         case dismiss
+        case editStartDate(Date)
+        case editEndDate(Date)
         
         case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
         case destination(PresentationAction<Destination.Action>)
@@ -84,6 +87,18 @@ struct EditWorkoutRoutineReducer {
                 return .run { _ in
                     await self.dismiss()
                 }
+            case .editStartDate(let date):
+                state.workoutRoutine.startDate = date
+                let endDate = state.workoutRoutine.endDate
+                let difference = endDate.timeIntervalSince(date)
+                state.workoutRoutine.routineTime = Int(difference)
+                return .none
+            case .editEndDate(let date):
+                state.workoutRoutine.endDate = date
+                let startDate = state.workoutRoutine.startDate
+                let difference = date.timeIntervalSince(startDate)
+                state.workoutRoutine.routineTime = Int(difference)
+                return .none
             case let .workingOutSection(action):
                 switch action {
                 case let .element(sectionId, action):
@@ -195,15 +210,28 @@ struct EditWorkoutRoutineView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                TextField("타이틀을 입력하세요",
-                          text: viewStore.binding(
-                            get: \.workoutRoutine.name,
-                            send: EditWorkoutRoutineReducer.Action.didUpdateText
-                          ))
-                .multilineTextAlignment(.leading)
-                .font(.title)
-                .accessibilityAddTraits(.isHeader)
-                .padding([.leading], 15)
+                VStack {
+                    TextField("타이틀을 입력하세요",
+                              text: viewStore.binding(
+                                get: \.workoutRoutine.name,
+                                send: EditWorkoutRoutineReducer.Action.didUpdateText
+                              ))
+                    .multilineTextAlignment(.leading)
+                    .font(.title)
+                    .accessibilityAddTraits(.isHeader)
+                    
+                    Spacer()
+                    DatePicker("시작시간",
+                               selection: viewStore.binding(get: \.workoutRoutine.startDate,
+                                                            send: EditWorkoutRoutineReducer.Action.editStartDate),
+                               displayedComponents: [.date, .hourAndMinute])
+                    DatePicker("종료시간",
+                               selection: viewStore.binding(get: \.workoutRoutine.endDate,
+                                                            send: EditWorkoutRoutineReducer.Action.editEndDate),
+                               displayedComponents: [.date, .hourAndMinute])
+                }
+                .padding([.leading, .trailing], 15)
+                Spacer()
                 
                 ForEach(store.scope(state: \.workingOutSection,
                                     action: \.workingOutSection)) { rowStore in
