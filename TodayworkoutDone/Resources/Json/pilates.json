@@ -1,54 +1,54 @@
 [
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "헌드레드",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "롤업",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "롤오버",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "싱글 레그 서클",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "공처럼 굴리기",
         "target": "유연성",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "싱글 레그 스트레치",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "더블 레그 스트레치",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "척추 스트레치 포워드",
         "target": "유연성",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "오픈 레그 로커",
         "target": "코어",
         "isSelected": false

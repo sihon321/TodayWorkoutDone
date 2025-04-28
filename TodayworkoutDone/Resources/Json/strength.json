@@ -108,55 +108,55 @@
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "덤벨 컬",
         "target": "팔",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "트라이셉스 푸시다운",
         "target": "팔",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "트라이셉스 익스텐션",
         "target": "팔",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "스쿼트",
         "target": "하체",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "레그 프레스",
         "target": "하체",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "런지",
         "target": "하체",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "레그 익스텐션",
         "target": "하체",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "레그 컬",
         "target": "하체",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "카프 레이즈",
         "target": "하체",
         "isSelected": false

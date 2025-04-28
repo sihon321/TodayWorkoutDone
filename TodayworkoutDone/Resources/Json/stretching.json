@@ -1,8 +1,9 @@
 [
     {
-        "category": "stretching",
+        "category": { "name": "stretching" },
         "name": "스트레칭",
         "target": "유연성",
         "isSelected": false
     }
 ]
+

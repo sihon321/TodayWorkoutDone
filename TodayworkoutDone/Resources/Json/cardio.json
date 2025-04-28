@@ -1,36 +1,36 @@
 [
     {
-        "category": "cardio",
+        "category": { "name": "cardio" },
         "name": "걷기",
         "target": "유산소",
         "isSelected": false
     },
     {
-        "category": "cardio",
+        "category": { "name": "cardio" },
         "name": "조깅",
         "target": "유산소",
         "isSelected": false
     },
     {
-        "category": "cardio",
+        "category": { "name": "cardio" },
         "name": "러닝",
         "target": "유산소",
         "isSelected": false
     },
     {
-        "category": "cardio",
+        "category": { "name": "cardio" },
         "name": "사이클",
         "target": "유산소",
         "isSelected": false
     },
     {
-        "category": "cardio",
+        "category": { "name": "cardio" },
         "name": "수영",
         "target": "유산소",
         "isSelected": false
     },
     {
-        "category": "cardio",
+        "category": { "name": "cardio" },
         "name": "로잉",
         "target": "유산소",
         "isSelected": false

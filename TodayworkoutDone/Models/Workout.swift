@@ -9,16 +9,20 @@ import Foundation
 import SwiftData
 
 protocol WorkoutData {
+    associatedtype WorkoutCategoryType
+    
     var name: String { get set }
-    var category: String { get set }
+    var category: WorkoutCategoryType { get set }
     var target: String { get set }
     var isSelected: Bool { get set }
 }
 
 struct WorkoutState: WorkoutData, Codable, Equatable {
+    typealias WorkoutCategoryType = WorkoutCategoryState
+    
     var id: UUID = UUID()
     var name: String
-    var category: String
+    var category: WorkoutCategoryType
     var target: String
     var isSelected: Bool
     
@@ -26,7 +30,7 @@ struct WorkoutState: WorkoutData, Codable, Equatable {
         case name, category, target, isSelected
     }
     
-    init(name: String, category: String, target: String, isSelected: Bool) {
+    init(name: String, category: WorkoutCategoryType, target: String, isSelected: Bool) {
         self.name = name
         self.category = category
         self.target = target
@@ -36,7 +40,7 @@ struct WorkoutState: WorkoutData, Codable, Equatable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
-        category = try container.decode(String.self, forKey: .category)
+        category = try container.decode(WorkoutCategoryType.self, forKey: .category)
         target = try container.decode(String.self, forKey: .target)
         isSelected = try container.decode(Bool.self, forKey: .isSelected)
     }
@@ -78,12 +82,14 @@ extension Array where Element == WorkoutState {
 
 @Model
 class Workout: WorkoutData, Equatable {
+    typealias WorkoutCategoryType = WorkoutCategoryState
+    
     var name: String
-    var category: String
+    var category: WorkoutCategoryType
     var target: String
     var isSelected: Bool
 
-    init(name: String, category: String, target: String, isSelected: Bool) {
+    init(name: String, category: WorkoutCategoryType, target: String, isSelected: Bool) {
         self.name = name
         self.category = category
         self.target = target
