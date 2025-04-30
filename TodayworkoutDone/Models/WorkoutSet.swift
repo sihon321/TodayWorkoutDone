@@ -89,8 +89,9 @@ extension WorkoutSetState {
         self.persistentModelID = model.persistentModelID
     }
     
-    func toModel() -> WorkoutSet {
+    func toModel(_ index: Int) -> WorkoutSet {
         return WorkoutSet(
+            index: index,
             prevWeight: prevWeight,
             weight: weight,
             prevReps: prevReps,
@@ -119,6 +120,7 @@ extension Array where Element == WorkoutSetState {
 // MAKR: - SwiftData
 @Model
 class WorkoutSet: WorkoutSetData, Equatable {
+    var index: Int
     var prevWeight: Double
     var weight: Double
     var prevReps: Int
@@ -127,13 +129,15 @@ class WorkoutSet: WorkoutSetData, Equatable {
     var endDate: Date?
     var restTime: Int = 0
 
-    init(prevWeight: Double = .zero,
+    init(index: Int = 0,
+         prevWeight: Double = .zero,
          weight: Double = .zero,
          prevReps: Int = .zero,
          reps: Int = .zero,
          isChecked: Bool = false,
          endDate: Date? = nil,
          restTime: Int = 0) {
+        self.index = index
         self.prevWeight = prevWeight
         self.weight = weight
         self.prevReps = prevReps
@@ -145,7 +149,8 @@ class WorkoutSet: WorkoutSetData, Equatable {
 }
 
 extension WorkoutSet {
-    func update(from state: WorkoutSetState) {
+    func update(from state: WorkoutSetState, index: Int) {
+        self.index = index
         prevWeight = state.prevWeight
         weight = state.weight
         prevReps = state.prevReps
@@ -155,8 +160,9 @@ extension WorkoutSet {
         restTime = state.restTime
     }
     
-    static func create(from state: WorkoutSetState) -> WorkoutSet {
+    static func create(from state: WorkoutSetState, index: Int) -> WorkoutSet {
         WorkoutSet(
+            index: index,
             prevWeight: state.prevWeight,
             weight: state.weight,
             prevReps: state.prevReps,

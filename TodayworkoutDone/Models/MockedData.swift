@@ -26,6 +26,7 @@ extension Workout {
 extension Routine {
     static let mockedData: [Routine] = Workout.mockedData.compactMap {
         Routine(
+            index: 0,
             workout: $0,
             sets: [
                 WorkoutSet(weight: 50, reps: 12),

@@ -74,7 +74,9 @@ extension WorkoutRoutineState {
         self.startDate = model.startDate
         self.endDate = model.endDate
         self.routineTime = model.routineTime
-        self.routines = model.routines.compactMap { RoutineState(model: $0) }
+        self.routines = model.routines.sorted(by: {
+            $0.index < $1.index
+        }).compactMap { RoutineState(model: $0) }
         self.persistentModelID = model.persistentModelID
     }
     
@@ -84,7 +86,7 @@ extension WorkoutRoutineState {
             startDate: startDate,
             endDate: endDate,
             routineTime: routineTime,
-            routines: routines.compactMap { $0.toModel() }
+            routines: routines.enumerated().compactMap { index, value in value.toModel(index) }
         )
     }
 }
@@ -133,15 +135,15 @@ extension WorkoutRoutine {
         // 새롭게 구성될 sets 배열
         var updatedRoutines: [RoutineType] = []
         
-        for newRoutineState in state.routines {
+        for (index, newRoutineState) in state.routines.enumerated() {
             if let id = newRoutineState.persistentModelID,
                 let existing = existingSetsDict.removeValue(forKey: id) {
                 // 기존 데이터 업데이트
-                existing.update(from: newRoutineState)
+                existing.update(from: newRoutineState, index: index)
                 updatedRoutines.append(existing)
             } else {
                 // 없는 경우 새로 생성
-                let newRoutine = Routine.create(from: newRoutineState)
+                let newRoutine = Routine.create(from: newRoutineState, index: index)
                 updatedRoutines.append(newRoutine)
             }
         }

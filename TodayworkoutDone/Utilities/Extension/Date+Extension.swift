@@ -50,6 +50,16 @@ extension Date {
         dateFormatter.dateFormat = "yyyy년 M월 d일, EEEE, a h:mm"
         return dateFormatter.string(from: self)
     }
+    
+    var dateForDeviceRegion: Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        
+        let dateString = dateFormatter.string(from: self)
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        return dateFormatter.date(from: dateString)!
+    }
 }
 
 extension Array where Element == Date {

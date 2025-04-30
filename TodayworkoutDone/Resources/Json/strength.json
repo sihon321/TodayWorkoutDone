@@ -1,108 +1,108 @@
 [
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "벤치 프레스",
         "target": "가슴",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "플라이",
         "target": "가슴",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "펙댁 플라이",
         "target": "가슴",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "푸쉬업",
         "target": "가슴",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "인클라인 벤치 프레스",
         "target": "가슴",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "디클라인 벤치 프레스",
         "target": "가슴",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "체스트 딥",
         "target": "가슴",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "케이블 크로스 오버",
         "target": "가슴",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "데드리프트",
         "target": "등",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "렛풀다운",
         "target": "등",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "벤트오버 로우",
         "target": "등",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "시티드 로우",
         "target": "등",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "풀업",
         "target": "등",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "숄더 프레스",
         "target": "어깨",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "사이드 레터럴 레이즈",
         "target": "어깨",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "프론트 레이즈",
         "target": "어깨",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "벤트오버 레터럴 레이즈",
         "target": "어깨",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "바벨 컬",
         "target": "팔",
         "isSelected": false
@@ -162,19 +162,19 @@
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "크런치",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "플랭크",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "strength",
+        "category": { "name": "strength" },
         "name": "레그 레이즈",
         "target": "코어",
         "isSelected": false

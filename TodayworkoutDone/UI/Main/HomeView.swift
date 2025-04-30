@@ -23,7 +23,7 @@ struct HomeReducer {
         var tabBarOffset: CGFloat = 0.0
         var bottomEdge: CGFloat = 35
         
-        var workingOut: WorkingOutReducer.State = WorkingOutReducer.State()
+        var workingOut = WorkingOutReducer.State()
         var tabBar: CustomTabBarReducer.State
         var calendar: CalendarReducer.State = CalendarReducer.State()
     }
@@ -70,7 +70,7 @@ struct HomeReducer {
                 return .none
                 
             case .startButtonTapped:
-                state.destination = .workoutView(WorkoutReducer.State())
+                state.destination = .workoutView(WorkoutReducer.State(myRoutine: MyRoutineState()))
                 return .none
                 
             case .setTabBarOffset(let offset):
@@ -159,6 +159,8 @@ struct HomeView: View {
     @Bindable var store: StoreOf<HomeReducer>
     @ObservedObject var viewStore: ViewStoreOf<HomeReducer>
 
+    @State private var isShowingDummyView = false
+    
     init(store: StoreOf<HomeReducer>) {
         UITabBar.appearance().isHidden = true
         self.store = store
@@ -198,7 +200,19 @@ struct HomeView: View {
                     }
                 )
             }
-            Spacer()
+            VStack {
+                HStack {
+                    Spacer()
+                    FloatingButton {
+                        isShowingDummyView.toggle()
+                    }
+                    .padding()
+                }
+                Spacer()
+            }
+        }
+        .sheet(isPresented: $isShowingDummyView) {
+            HealthKitDummyView()
         }
         .overlay(
             VStack {

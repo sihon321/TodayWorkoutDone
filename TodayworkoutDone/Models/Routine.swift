@@ -75,7 +75,9 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
 extension RoutineState {
     init(model: Routine) {
         self.workout = WorkoutState(model: model.workout)
-        self.sets = model.sets.compactMap { WorkoutSetState(model: $0) }
+        self.sets = model.sets.sorted(by: {
+            $0.index < $1.index
+        }).compactMap { WorkoutSetState(model: $0) }
         self.equipmentType = model.equipmentType
         self.averageEndDate = model.averageEndDate
         self.calories = model.calories
@@ -83,10 +85,11 @@ extension RoutineState {
         self.persistentModelID = model.persistentModelID
     }
     
-    func toModel() -> Routine {
+    func toModel(_ index: Int) -> Routine {
         return Routine(
+            index: index,
             workout: workout.toModel(),
-            sets: sets.compactMap { $0.toModel() },
+            sets: sets.enumerated().compactMap { index, value in value.toModel(index) },
             equipmentType: equipmentType,
             averageEndDate: averageEndDate,
             calories: calories,
@@ -110,6 +113,7 @@ class Routine: RoutineData, Equatable {
     typealias WorkoutType = Workout
     typealias WorkoutSetType = WorkoutSet
     
+    var index: Int
     var workout: WorkoutType
     var sets: [WorkoutSetType]
     var equipmentType: EquipmentType
@@ -117,12 +121,14 @@ class Routine: RoutineData, Equatable {
     var calories: Double = 0.0
     var restTime: Int = 0
 
-    init(workout: WorkoutType,
+    init(index: Int,
+         workout: WorkoutType,
          sets: [WorkoutSetType] = [WorkoutSet()],
          equipmentType: EquipmentType = .barbel,
          averageEndDate: Double? = nil,
          calories: Double = 0.0,
          restTime: Int = 0) {
+        self.index = index
         self.workout = workout
         self.sets = sets
         self.equipmentType = equipmentType
@@ -133,7 +139,8 @@ class Routine: RoutineData, Equatable {
 }
 
 extension Routine {
-    func update(from state: RoutineState) {
+    func update(from state: RoutineState, index: Int) {
+        self.index = index
         self.workout.update(from: state.workout)
         self.equipmentType = state.equipmentType
         self.averageEndDate = state.averageEndDate
@@ -146,15 +153,15 @@ extension Routine {
         // 새롭게 구성될 sets 배열
         var updatedSets: [WorkoutSetType] = []
         
-        for newSetState in state.sets {
+        for (index, newSetState) in state.sets.enumerated() {
             if let id = newSetState.persistentModelID,
                 let existing = existingSetsDict.removeValue(forKey: id) {
                 // 기존 데이터 업데이트
-                existing.update(from: newSetState)
+                existing.update(from: newSetState, index: index)
                 updatedSets.append(existing)
             } else {
                 // 없는 경우 새로 생성
-                let newSet = WorkoutSet.create(from: newSetState)
+                let newSet = WorkoutSet.create(from: newSetState, index: index)
                 updatedSets.append(newSet)
             }
         }
@@ -168,10 +175,11 @@ extension Routine {
         self.sets = updatedSets
     }
     
-    static func create(from state: RoutineState) -> Routine {
+    static func create(from state: RoutineState, index: Int) -> Routine {
         Routine(
+            index: index,
             workout: Workout.create(from: state.workout),
-            sets: state.sets.compactMap({ WorkoutSet.create(from: $0) }),
+            sets: state.sets.enumerated().compactMap({ index, value in WorkoutSet.create(from: value, index: index) }),
             equipmentType: state.equipmentType,
             averageEndDate: state.averageEndDate,
             calories: state.calories,

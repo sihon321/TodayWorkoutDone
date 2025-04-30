@@ -78,7 +78,7 @@ struct WorkingOutReducer {
                 
             case .presentedSaveRoutineAlert:
                 state.myRoutine = nil
-                return .none
+                return .send(.resetTimer)
                 
             case let .tappedToolbarCloseButton(secondsElapsed):
                 state.destination = .alert(.saveWorkoutAlert(secondsElapsed))
@@ -93,7 +93,7 @@ struct WorkingOutReducer {
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
                 state.destination = .none
                 state.myRoutine = nil
-                return .none
+                return .send(.resetTimer)
                 
             case .destination(.presented(.alert(.tappedWorkoutAlertCancel))):
                 return .run { send in

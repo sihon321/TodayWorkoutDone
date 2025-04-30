@@ -15,7 +15,7 @@ struct WorkoutReducer {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
-        var myRoutine: MyRoutineState = MyRoutineState()
+        var myRoutine: MyRoutineState
         var keyword: String = ""
         var categories: [WorkoutCategoryState] = []
         
