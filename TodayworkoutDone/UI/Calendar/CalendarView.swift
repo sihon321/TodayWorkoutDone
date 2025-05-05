@@ -60,7 +60,8 @@ struct CalendarReducer {
             switch action {
             case .loadWorkoutRoutines:
                 return .run { send in
-                    let workoutRoutines = try workoutRoutineContext.fetchAll().compactMap { WorkoutRoutineState(model: $0) }
+                    let workoutRoutines = try workoutRoutineContext.fetchAll()
+                        .compactMap { WorkoutRoutineState(model: $0) }
                     await send(.fetchWorkoutRoutines(workoutRoutines))
                 }
             case .fetchWorkoutRoutines(let workoutRoutines):
@@ -125,7 +126,7 @@ struct CalendarView: View {
     var body: some View {
         NavigationView {
             CalendarViewComponent(
-                store: store,
+                workoutRoutines: viewStore.workoutRoutines,
                 content: { date in
                     Button(action: {
                         store.send(.tappedDate(date))
@@ -133,10 +134,10 @@ struct CalendarView: View {
                         CalendarViewCell(
                             store: Store(
                                 initialState: CalendarCellReducer.State(
-                                    dayFormatter: store.dayFormatter,
-                                    selectedDate: store.todayDate,
+                                    dayFormatter: viewStore.dayFormatter,
+                                    selectedDate: viewStore.todayDate,
                                     date: date,
-                                    workoutRoutines: store.state.filterWorkout(date: date)
+                                    workoutRoutines: viewStore.state.filterWorkout(date: date)
                                 )
                             ) {
                                 CalendarCellReducer()

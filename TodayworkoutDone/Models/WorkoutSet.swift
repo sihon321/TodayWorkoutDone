@@ -19,7 +19,7 @@ protocol WorkoutSetData {
 }
 
 struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
-    var id: UUID
+    var id: UUID 
     var prevWeight: Double
     var weight: Double
     var prevReps: Int

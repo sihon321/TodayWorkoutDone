@@ -17,12 +17,18 @@ struct CalendarDetailSubViewReducer {
         
         let id = UUID()
         var workoutRoutine: WorkoutRoutineState
+        var step = StepFeature.State()
+        var exerciseTime = ExerciseTimeFeature.State()
+        var energyBurn = EnergyBurnFeature.State()
     }
     
     enum Action {
         case edit
         case delete
         case destination(PresentationAction<Destination.Action>)
+        case step(StepFeature.Action)
+        case exerciseTime(ExerciseTimeFeature.Action)
+        case energyBurn(EnergyBurnFeature.Action)
     }
     
     @Reducer(state: .equatable)
@@ -33,6 +39,15 @@ struct CalendarDetailSubViewReducer {
     @Dependency(\.workoutRoutineData) var workoutRoutineContext
     
     var body: some Reducer<State, Action> {
+        Scope(state: \.step, action: \.step) {
+            StepFeature()
+        }
+        Scope(state: \.exerciseTime, action: \.exerciseTime) {
+            ExerciseTimeFeature()
+        }
+        Scope(state: \.energyBurn, action: \.energyBurn) {
+            EnergyBurnFeature()
+        }
         Reduce { state, action in
             switch action {
             case .edit:
@@ -58,6 +73,12 @@ struct CalendarDetailSubViewReducer {
                     }
                 }
 
+                return .none
+            case .step:
+                return .none
+            case .exerciseTime:
+                return .none
+            case .energyBurn:
                 return .none
             case .destination(.presented(.editWorkoutRoutine(.save))):
                 return .none
@@ -118,6 +139,53 @@ struct CalendarDetailSubView: View {
                 Text("\(Int(viewStore.workoutRoutine.calories)) kcal")
             }
             .padding(.bottom, 5)
+            HStack {
+                Image(systemName: "heart.fill")
+                    .resizable()
+                    .frame(width: 20, height: 18)
+                    .foregroundStyle(.red)
+                Text("Apple Health")
+            }
+            HStack {
+                HStack {
+                    Image(systemName: "shoeprints.fill")
+                        .resizable()
+                        .frame(width: 15, height: 18)
+                    Text("\(viewStore.step.stepCount) 걸음")
+                }
+                .onAppear {
+                    store.send(.step(.fetchStep(
+                        from: viewStore.workoutRoutine.startDate,
+                        to: viewStore.workoutRoutine.endDate))
+                    )
+                }
+                HStack {
+                    Image(systemName: "figure.strengthtraining.traditional")
+                        .resizable()
+                        .frame(width: 15, height: 18)
+                    Text("\(viewStore.exerciseTime.exerciseTime / 60) 시간 \(viewStore.exerciseTime.exerciseTime % 60) 분")
+                        .foregroundStyle(.black)
+                }
+                .onAppear {
+                    store.send(.exerciseTime(.fetchExerciseTime(
+                        from: viewStore.workoutRoutine.startDate,
+                        to: viewStore.workoutRoutine.endDate))
+                    )
+                }
+                HStack {
+                    Image(systemName: "flame.fill")
+                        .resizable()
+                        .frame(width: 15, height: 18)
+                    Text("\(viewStore.energyBurn.energyBurned) kcal")
+                        .foregroundStyle(.black)
+                }
+                .onAppear {
+                    store.send(.energyBurn(.fetchEnergyBurned(
+                        from: viewStore.workoutRoutine.startDate,
+                        to: viewStore.workoutRoutine.endDate))
+                    )
+                }
+            }
             
             ForEach(viewStore.workoutRoutine.routines, id: \.id) { routine in
                 HStack {
@@ -140,7 +208,6 @@ struct CalendarDetailSubView: View {
                 }
                 .padding(.leading, 5)
                 .padding([.top, .bottom], 10)
-
                 VStack {
                     HStack {
                         Text("세트")
@@ -176,6 +243,10 @@ struct CalendarDetailSubView: View {
         ) { store in
             EditWorkoutRoutineView(store: store)
         }
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color.gray.opacity(0.1))
+        )
     }
 }
 

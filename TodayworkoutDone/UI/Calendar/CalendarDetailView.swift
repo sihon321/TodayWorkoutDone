@@ -100,10 +100,6 @@ struct CalendarDetailView: View {
             ForEachStore(store.scope(state: \.calendarDetailSubView,
                                      action: \.calendarDetailSubView)) { store in
                 CalendarDetailSubView(store: store)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color.gray.opacity(0.1))
-                    )
             }
         }
         .padding([.top], 30)

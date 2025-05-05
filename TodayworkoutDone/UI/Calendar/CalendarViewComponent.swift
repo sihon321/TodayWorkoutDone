@@ -6,13 +6,10 @@
 //
 
 import SwiftUI
-import ComposableArchitecture
 
 struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: View>: View {
-    @Bindable var store: StoreOf<CalendarReducer>
-    @ObservedObject var viewStore: ViewStoreOf<CalendarReducer>
-    
     // Injected dependencies
+    var todayDate = Date()
     private var startDate: Date
     private var months: [Date] = []
     private let content: (Date) -> Day
@@ -27,16 +24,14 @@ struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: Vie
     private let daysInWeek = 7
     
     public init(
-        store: StoreOf<CalendarReducer>,
+        workoutRoutines: [WorkoutRoutineState],
         @ViewBuilder content: @escaping (Date) -> Day,
         @ViewBuilder trailing: @escaping (Date) -> Trailing,
         @ViewBuilder header: @escaping (Date) -> Header,
         @ViewBuilder title: @escaping (Date) -> Title
     ) {
-        self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
-        let dates = store.workoutRoutines.compactMap({ $0.startDate })
-        let sortedDates = dates.sorted(by: >)
+        let dates = workoutRoutines.compactMap({ $0.startDate })
+        let sortedDates = dates.sorted(by: <)
         self.startDate = sortedDates.first ?? Date()
         self.content = content
         self.trailing = trailing
@@ -78,6 +73,7 @@ struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: Vie
                             }
                         }
                     }
+                    .padding([.bottom], 100)
                     .background(
                         GeometryReader { proxy in
                             Color.clear.preference(
@@ -114,7 +110,6 @@ struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: Vie
             .coordinateSpace(name: spaceName)
             .scrollIndicators(.never)
         }
-        .padding([.bottom], 30)
         .background(Color(0xf4f4f4))
     }
 }
@@ -123,7 +118,7 @@ struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: Vie
 
 extension CalendarViewComponent: Equatable {
     public static func == (lhs: CalendarViewComponent<Day, Header, Title, Trailing>, rhs: CalendarViewComponent<Day, Header, Title, Trailing>) -> Bool {
-        lhs.store.todayDate == rhs.store.todayDate
+        lhs.todayDate == rhs.todayDate
     }
 }
 

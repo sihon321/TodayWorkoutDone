@@ -25,7 +25,7 @@ public struct HealthKitDummyView: View {
                 TextField("값", text: $viewModel.valueString)
                     .keyboardType(.decimalPad)
                 
-                DatePicker("날짜", selection: $viewModel.selectedDate, displayedComponents: .date)
+                DatePicker("날짜", selection: $viewModel.selectedDate, displayedComponents: [.date, .hourAndMinute])
             }
             
             Section {

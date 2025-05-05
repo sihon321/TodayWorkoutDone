@@ -16,7 +16,7 @@ struct EnergyBurnFeature {
     }
     
     enum Action {
-        case fetchEnergyBurned
+        case fetchEnergyBurned(from: Date, to: Date)
         case updateEnergyBurned(Int)
     }
     
@@ -25,13 +25,13 @@ struct EnergyBurnFeature {
     var body: Reduce<State, Action> {
         Reduce { state, action in
             switch action {
-                case .fetchEnergyBurned:
+                case let .fetchEnergyBurned(from, to):
                 return .run { send in
                     do {
                         let energy = try await healthKitManager.getHealthQuantityData(
                             type: .activeEnergyBurned,
-                            from: .midnight,
-                            to: .currentDateForDeviceRegion,
+                            from: from,
+                            to: to,
                             unit: .kilocalorie()
                         )
                         await send(.updateEnergyBurned(energy))
@@ -71,7 +71,7 @@ struct MainContentEnergyBurn: View {
                 .padding(.leading, -5)
         }
         .onAppear {
-            store.send(.fetchEnergyBurned)
+            store.send(.fetchEnergyBurned(from: .midnight, to: .currentDateForDeviceRegion))
         }
     }
 }

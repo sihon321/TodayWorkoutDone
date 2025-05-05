@@ -26,11 +26,18 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
     
     var id = UUID()
     var workout: WorkoutType
-    var sets: [WorkoutSetType]
+    var sets: [WorkoutSetType] {
+        didSet {
+            if allTrue {
+                averageEndDate = calculateTimeDifferences(dates: self.sets.compactMap(\.endDate))
+            }
+        }
+    }
     var equipmentType: EquipmentType
     var averageEndDate: Double?
     var calories: Double = 0.0
     var restTime: Int = 0
+
     var persistentModelID: PersistentIdentifier?
     
     enum CodingKeys: String, CodingKey {
@@ -69,6 +76,31 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
         try container.encode(averageEndDate, forKey: .endDate)
         try container.encode(calories, forKey: .calories)
         try container.encode(restTime, forKey: .restTime)
+    }
+    
+    func calculateTimeDifferences(
+        dates: [Date]
+    ) -> Double? {
+        let intervals = zip(dates, dates.dropFirst()).map { later, earlier in
+            let intervalInSeconds = later.timeIntervalSince(earlier)
+            return intervalInSeconds
+        }
+        
+        guard !intervals.isEmpty else {
+            return nil
+        }
+        
+        let sum = intervals.reduce(0, +)
+        return sum / Double(intervals.count)
+    }
+    
+    func getRoutineFromTo() -> (Date, Date)? {
+        guard let firstSetEndDate = sets.first?.endDate,
+              let lastSetEndDate = sets.last?.endDate,
+              let averageEndDate = averageEndDate else {
+            return nil
+        }
+        return (firstSetEndDate - averageEndDate, lastSetEndDate)
     }
 }
 

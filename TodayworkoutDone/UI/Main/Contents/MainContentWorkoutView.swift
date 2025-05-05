@@ -16,7 +16,7 @@ struct ExerciseTimeFeature {
     }
     
     enum Action {
-        case fetchExerciseTime
+        case fetchExerciseTime(from: Date, to: Date)
         case updateExerciseTime(Int)
     }
     
@@ -25,13 +25,13 @@ struct ExerciseTimeFeature {
     var body: Reduce<State, Action> {
         Reduce { state, action in
             switch action {
-                case .fetchExerciseTime:
+                case let .fetchExerciseTime(from, to):
                 return .run { send in
                     do {
                         let time = try await healthKitManager.getHealthQuantityData(
                             type: .appleExerciseTime,
-                            from: .midnight,
-                            to: .currentDateForDeviceRegion,
+                            from: from,
+                            to: to,
                             unit: .minute()
                         )
                         await send(.updateExerciseTime(time))
@@ -58,7 +58,7 @@ struct MainContentWorkoutView: View {
 
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("\(store.exerciseTime / 60)")
+            Text("\(viewStore.exerciseTime / 60)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
@@ -69,7 +69,7 @@ struct MainContentWorkoutView: View {
                               design: .default))
                 .foregroundColor(Color(0x7d7d7d))
                 .padding(.leading, -5)
-            Text("\(store.exerciseTime % 60)")
+            Text("\(viewStore.exerciseTime % 60)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
@@ -83,7 +83,7 @@ struct MainContentWorkoutView: View {
                 .padding(.leading, -5)
         }
         .onAppear {
-            store.send(.fetchExerciseTime)
+            store.send(.fetchExerciseTime(from: .midnight, to: .currentDateForDeviceRegion))
         }
     }
 }

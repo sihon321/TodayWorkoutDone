@@ -54,151 +54,151 @@
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "코크스크류",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "쏘우",
         "target": "유연성",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "스완",
         "target": "등",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "싱글 레그 킥",
         "target": "하체",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "더블 레그 킥",
         "target": "하체",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "넥 풀",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "하이 시저스",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "하이 바이시클",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "숄더 브리지",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "스파인 트위스트",
         "target": "유연성",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "잭나이프",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "사이드 킥",
         "target": "하체",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "티저",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "힙 트위스트",
         "target": "전신",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "스위밍",
         "target": "등",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "레그 풀 프론트",
         "target": "전신",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "레그 풀",
         "target": "전신",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "사이드 킥 니링",
         "target": "하체",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "사이드 벤드",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "부메랑",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "씰",
         "target": "유연성",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "크랩",
         "target": "유연성",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "로킹",
         "target": "코어",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "컨트롤 밸런스",
         "target": "전신",
         "isSelected": false
     },
     {
-        "category": "pilates",
+        "category": { "name": "pilates" },
         "name": "푸시업",
         "target": "가슴",
         "isSelected": false

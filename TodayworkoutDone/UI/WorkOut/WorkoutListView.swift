@@ -243,7 +243,6 @@ struct WorkoutListView: View {
                 VStack(spacing: 0) {
                     HorizontalFilterView(filters: viewStore.filters,
                                          selectedFilters: $selectedFilters)
-                        .padding(.horizontal)
                     ForEachStore(store.scope(state: \.soretedWorkoutSection,
                                              action: \.sortedWorkoutSection)) { sectionStore in
                         StickyHeaderView(index: sectionStore.index,

@@ -12,11 +12,11 @@ import ComposableArchitecture
 struct StepFeature {
     @ObservableState
     struct State: Equatable {
-        var step: Int = 0
+        var stepCount: Int = 0
     }
     
     enum Action {
-        case fetchStep
+        case fetchStep(from: Date, to: Date)
         case updateStep(Int)
     }
     
@@ -25,13 +25,13 @@ struct StepFeature {
     var body: Reduce<State, Action> {
         Reduce { state, action in
             switch action {
-                case .fetchStep:
+                case let .fetchStep(from, to):
                 return .run { send in
                     do {
                         let stepCount = try await healthKitManager.getHealthQuantityData(
                             type: .stepCount,
-                            from: .midnight,
-                            to: .currentDateForDeviceRegion,
+                            from: from,
+                            to: to,
                             unit: .count()
                         )
                         await send(.updateStep(stepCount))
@@ -40,7 +40,7 @@ struct StepFeature {
                     }
                 }
             case .updateStep(let step):
-                state.step = step
+                state.stepCount = step
                 return .none
             }
         }
@@ -58,7 +58,7 @@ struct MainContentStepView: View {
     
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("\(viewStore.step)")
+            Text("\(viewStore.stepCount)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
@@ -71,7 +71,7 @@ struct MainContentStepView: View {
                 .padding(.leading, -5)
         }
         .onAppear {
-            store.send(.fetchStep)
+            store.send(.fetchStep(from: .midnight, to: .currentDateForDeviceRegion))
         }
     }
 }
