@@ -14,6 +14,7 @@ struct WorkingOutHeaderReducer {
     struct State: Equatable {
         var workoutName: String
         var equipmentType: EquipmentType
+        var editMode: EditMode
     }
     
     enum Action {
@@ -40,7 +41,8 @@ struct WorkingOutHeader: View {
     @State private var equipmentType: EquipmentType
     @State private var showingOptions = false
     
-    init(store: StoreOf<WorkingOutHeaderReducer>, equipmentType: State<EquipmentType>) {
+    init(store: StoreOf<WorkingOutHeaderReducer>,
+         equipmentType: State<EquipmentType>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
         self._equipmentType = equipmentType
@@ -50,7 +52,8 @@ struct WorkingOutHeader: View {
         VStack(alignment: .leading) {
             HStack {
                 Text(store.workoutName)
-                    .font(.title2)
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(Color.personal)
                 
                 Button(action: {}) {
                     Menu {
@@ -83,14 +86,20 @@ struct WorkingOutHeader: View {
                             .padding([.leading, .trailing], 5)
                             .padding([.top, .bottom], 3)
                             .font(.system(size: 11))
-                            .foregroundStyle(.black)
-                            .background(.gray)
+                            .foregroundStyle(.white)
+                            .background(Color.personal.opacity(0.6))
                             .cornerRadius(3.0)
-                            .padding(.top, 8)
                     }
                 }
                 Spacer()
                 Image(systemName: "ellipsis")
+                    .resizable()
+                    .frame(width: 15, height: 4)
+                    .padding(.horizontal, 5)
+                    .padding(.vertical, 7)
+                    .foregroundStyle(Color.personal)
+                    .background(Color.personal.opacity(0.3))
+                    .cornerRadius(3.0)
                     .onTapGesture {
                         showingOptions = true
                     }
@@ -103,13 +112,19 @@ struct WorkingOutHeader: View {
             .padding()
             HStack {
                 Text("세트")
-                    .padding(.leading, 17)
-                Text("이전")
-                    .padding(.leading, 70)
+                    .font(.system(size: 17, weight: .medium))
+                    .padding(.leading, 15)
+                if viewStore.editMode == .inactive {
+                    Text("이전")
+                        .font(.system(size: 17, weight: .medium))
+                        .frame(minWidth: 140)
+                }
                 Text("랩")
-                    .padding(.leading, 65)
-                Text("KG")
-                    .padding(.leading, 50)
+                    .font(.system(size: 17, weight: .medium))
+                    .frame(minWidth: viewStore.editMode == .inactive ? 85 : 160)
+                Text("kg")
+                    .font(.system(size: 17, weight: .medium))
+                    .frame(minWidth: viewStore.editMode == .inactive ? 85 : 160)
             }
         }
     }

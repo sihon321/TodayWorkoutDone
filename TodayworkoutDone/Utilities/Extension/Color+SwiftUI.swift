@@ -18,3 +18,7 @@ extension Color {
         )
       }
 }
+
+extension Color {
+    static let personal: Color = Color("personal")
+}

@@ -126,8 +126,8 @@ struct HomeReducer {
                 if let routine = myRoutine {
                     return .run { send in
                         let myRoutines = try myRoutineContext.fetchAll()
-                            .compactMap { MyRoutineState(model: $0) }
-                        if myRoutines.contains(routine) == false {
+                            .compactMap { $0.name }
+                        if myRoutines.contains(routine.name) == false {
                             await send(.setDestination(.alert(.saveRoutineAlert(routine))))
                         }
                     }
@@ -200,16 +200,16 @@ struct HomeView: View {
                     }
                 )
             }
-            VStack {
-                HStack {
-                    Spacer()
-                    FloatingButton {
-                        isShowingDummyView.toggle()
-                    }
-                    .padding()
-                }
-                Spacer()
-            }
+//            VStack {
+//                HStack {
+//                    Spacer()
+//                    FloatingButton {
+//                        isShowingDummyView.toggle()
+//                    }
+//                    .padding()
+//                }
+//                Spacer()
+//            }
         }
         .sheet(isPresented: $isShowingDummyView) {
             HealthKitDummyView()
@@ -242,7 +242,7 @@ extension HomeView {
                 Text("워크아웃 시작")
                     .frame(minWidth: 0, maxWidth: .infinity - 30)
                     .padding([.top, .bottom], 5)
-                    .background(Color(0xfeb548))
+                    .background(Color.personal)
                     .foregroundColor(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 14.0,
                                                 style: .continuous))

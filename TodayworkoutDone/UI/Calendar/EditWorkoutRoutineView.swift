@@ -151,6 +151,8 @@ struct EditWorkoutRoutineReducer {
                                         .weight = weightValue
                                 }
                                 return .none
+                            case .setFocus, .dismissKeyboard:
+                                return .none
                             }
                         }
                     case let .workingOutHeader(action):

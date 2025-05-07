@@ -30,12 +30,10 @@ struct CalendarDetailReducer {
     
     enum Action {
         case updateWorkoutRoutines
-        case dismiss
         case calendarDetailSubView(IdentifiedActionOf<CalendarDetailSubViewReducer>)
     }
     
     @Dependency(\.workoutRoutineData) var workoutRoutineContext
-    @Dependency(\.dismiss) var dismiss
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -69,10 +67,6 @@ struct CalendarDetailReducer {
                 }
 
                 return .none
-            case .dismiss:
-                return .run { _ in
-                    await self.dismiss()
-                }
             case .calendarDetailSubView(.element(_, action: .delete)):
                 
                 return .send(.updateWorkoutRoutines)

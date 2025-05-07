@@ -50,19 +50,23 @@ struct MyRoutineView: View {
         VStack(alignment: .leading) {
             Text("My Routine")
                 .font(.system(size: 20, weight: .medium))
+                .padding(.leading, 15)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(store.scope(state: \.myRoutineSubview,
-                                        action: \.myRoutineSubview)) { store in
+                    ForEach(
+                        store.scope(state: \.myRoutineSubview,
+                                    action: \.myRoutineSubview)
+                    ) { store in
                         Button(action: {
                             viewStore.send(.touchedMyRoutine(store.myRoutine))
                         }) {
                             MyRoutineSubview(store: store)
                         }
                     }
+                    .offset(x: 15)
                 }
+                .padding(.trailing, 25)
             }
         }
-        .padding([.leading, .trailing], 15)
     }
 }

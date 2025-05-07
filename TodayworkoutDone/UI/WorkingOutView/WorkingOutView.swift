@@ -171,6 +171,8 @@ struct WorkingOutReducer {
                         state.myRoutine?.routines[sectionIndex].sets[rowIndex].weight = weightValue
                     }
                     return .none
+                case .setFocus, .dismissKeyboard:
+                    return .none
                 }
                 
             case let .workingOutSection(.element(_, .setEditMode(editMode))):
@@ -243,7 +245,8 @@ struct WorkingOutView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach(store.scope(state: \.workingOutSection, action: \.workingOutSection)) { rowStore in
+                ForEachStore(store.scope(state: \.workingOutSection,
+                                         action: \.workingOutSection)) { rowStore in
                     WorkingOutSection(store: rowStore)
                 }
                 Spacer().frame(height: 100)

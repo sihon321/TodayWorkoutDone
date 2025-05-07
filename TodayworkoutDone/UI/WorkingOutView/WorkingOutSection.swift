@@ -30,7 +30,8 @@ struct WorkingOutSectionReducer {
             )
             self.workingOutHeader = WorkingOutHeaderReducer.State(
                 workoutName: routine.workout.name,
-                equipmentType: routine.equipmentType
+                equipmentType: routine.equipmentType,
+                editMode: editMode
             )
         }
         
@@ -43,6 +44,7 @@ struct WorkingOutSectionReducer {
             for index in workingOutRow.indices {
                 workingOutRow[index].editMode = editMode
             }
+            workingOutHeader.editMode = editMode
         }
     }
     
@@ -125,24 +127,11 @@ struct WorkingOutSection: View {
 }
 
 #Preview {
-    let workingOutRowStores = WorkoutSet.mockedData.map {
-        WorkingOutRowReducer.State(workoutSet: WorkoutSetState(model: $0))
-    }
-    Section {
-        List {
-            ForEach(workingOutRowStores) { state in
-                WorkingOutRow(store: Store(initialState: state){
-                    WorkingOutRowReducer()
-                })
-            }
+    let myRoutine = MyRoutineState(model: MyRoutine.mockedData)
+    WorkingOutSection(
+        store: Store(initialState: WorkingOutSectionReducer.State(routine: myRoutine.routines.first!, editMode: .inactive)) {
+            WorkingOutSectionReducer()
         }
-        .listStyle(PlainListStyle())
-    } header: {
-        WorkingOutHeader(store: Store(
-            initialState: WorkingOutHeaderReducer.State(workoutName: "test",
-                                                        equipmentType: .barbel)
-        ) {
-            WorkingOutHeaderReducer()
-        }, equipmentType: .init(initialValue: .barbel))
-    }
+    )
 }
+

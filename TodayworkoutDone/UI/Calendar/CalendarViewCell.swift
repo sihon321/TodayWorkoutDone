@@ -36,7 +36,7 @@ struct CalendarViewCell: View {
                 .foregroundColor(store.calendar.isDateInToday(store.date) ? Color.white : .primary)
                 .frame(minWidth: 25, maxHeight: .infinity)
                 .background(
-                    store.calendar.isDateInToday(store.date) ? Color(0xfeb548)
+                    store.calendar.isDateInToday(store.date) ? Color(.personal)
                     : .clear
                 )
                 .contentShape(Rectangle())

@@ -101,9 +101,14 @@ struct CalendarReducer {
                     )
                 }
                 return .none
-            case .calendarDetail(.calendarDetailSubView(.element(_, action: .destination(.presented(.editWorkoutRoutine(.save)))))),
-                    .calendarDetail(.calendarDetailSubView(.element(_, action: .delete))):
+            case .calendarDetail(.calendarDetailSubView(.element(_, action: .destination(.presented(.editWorkoutRoutine(.save)))))):
                 return .send(.loadWorkoutRoutines)
+            case .calendarDetail(.calendarDetailSubView(.element(_, action: .delete))):
+                
+                return .run { send in
+                    await send(.loadWorkoutRoutines)
+                    await send(.setSheet(isPresented: false))
+                }
             case .calendarDetail:
                 return .none
             }

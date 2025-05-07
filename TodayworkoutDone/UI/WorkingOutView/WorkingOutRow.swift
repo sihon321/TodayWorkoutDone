@@ -16,6 +16,7 @@ struct WorkingOutRowReducer {
         var workoutSet: WorkoutSetState
         var isChecked: Bool
         var editMode: EditMode
+        var focusedField: Field?
         
         init(workoutSet: WorkoutSetState, editMode: EditMode = .inactive) {
             self.id = workoutSet.id
@@ -29,6 +30,13 @@ struct WorkingOutRowReducer {
         case toggleCheck(isChecked: Bool)
         case typeLab(lab: String)
         case typeWeight(weight: String)
+        case setFocus(Field?)
+        case dismissKeyboard
+    }
+    
+    enum Field: Hashable {
+        case repText
+        case weightText
     }
 
     var body: some Reducer<State, Action> {
@@ -40,6 +48,12 @@ struct WorkingOutRowReducer {
                 return .none
             case .typeWeight:
                 return .none
+            case let .setFocus(field):
+                state.focusedField = field
+                return .none
+            case .dismissKeyboard:
+                state.focusedField = nil
+                return .none
             }
         }
     }
@@ -48,6 +62,7 @@ struct WorkingOutRowReducer {
 struct WorkingOutRow: View {
     @Bindable var store: StoreOf<WorkingOutRowReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkingOutRowReducer>
+    @FocusState private var focusedField: WorkingOutRowReducer.Field?
     
     init(store: StoreOf<WorkingOutRowReducer>) {
         self.store = store
@@ -65,35 +80,59 @@ struct WorkingOutRow: View {
                     )
                 )
                 .toggleStyle(CheckboxToggleStyle(style: .square))
-                Spacer()
+                .padding(.leading, -7)
             }
-            Text("\(viewStore.workoutSet.prevReps) X \(String(format: "%.1f", viewStore.workoutSet.prevWeight))")
-                .frame(minWidth: 40)
-                .background(Color(uiColor: .secondarySystemFill))
-                .cornerRadius(5)
-            Spacer()
+            if viewStore.editMode == .inactive {
+                Text("\(viewStore.workoutSet.prevReps) x \(String(format: "%.1f", viewStore.workoutSet.prevWeight))")
+                    .font(.system(size: 17))
+                    .frame(minWidth: 140)
+                    .foregroundStyle(.secondary)
+            }
+            
             if viewStore.editMode == .active {
                 TextField("count", text: viewStore.binding(
                     get: { String($0.workoutSet.reps) },
                     send: { WorkingOutRowReducer.Action.typeLab(lab: $0) })
                 )
-                .background(Color(uiColor: .secondarySystemBackground))
-                .cornerRadius(5)
+                .font(.system(size: 17))
+                .frame(minWidth: 160)
+                .keyboardType(.numberPad)
+                .textFieldStyle(.roundedBorder)
+                .multilineTextAlignment(.center)
+                .focused($focusedField, equals: .repText)
             } else {
                 Text(String(viewStore.workoutSet.reps))
+                    .font(.system(size: 17))
+                    .frame(minWidth: 85)
+                    .background(Color(uiColor: .secondarySystemFill))
+                    .cornerRadius(5)
             }
-            Spacer()
+            
             if viewStore.editMode == .active {
                 TextField("weight", text: viewStore.binding(
                     get: { String($0.workoutSet.weight) },
                     send: { WorkingOutRowReducer.Action.typeWeight(weight: $0) })
                 )
-                .background(Color(uiColor: .secondarySystemBackground))
-                .cornerRadius(5)
+                .font(.system(size: 17))
+                .frame(minWidth: 160)
+                .keyboardType(.decimalPad)
+                .textFieldStyle(.roundedBorder)
+                .multilineTextAlignment(.center)
+                .focused($focusedField, equals: .weightText)
             } else {
                 Text(String(viewStore.workoutSet.weight))
+                    .font(.system(size: 17))
+                    .frame(minWidth: 85)
+                    .background(Color(uiColor: .secondarySystemFill))
+                    .cornerRadius(5)
             }
-            Spacer()
+            
+        }
+        .onChange(of: focusedField) { _, newValue in
+            viewStore.send(.setFocus(newValue))
+        }
+        .onChange(of: viewStore.focusedField) { _, newValue in
+            focusedField = newValue
         }
     }
 }

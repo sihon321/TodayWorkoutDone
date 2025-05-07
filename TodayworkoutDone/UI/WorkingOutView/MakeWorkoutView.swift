@@ -18,7 +18,7 @@ struct MakeWorkoutReducer {
 
         var myRoutine: MyRoutineState
         var isEdit: Bool = false
-        
+        var isFocused: Bool = false
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
         
         init(myRoutine: MyRoutineState,
@@ -41,7 +41,8 @@ struct MakeWorkoutReducer {
         case tappedDone(MyRoutineState)
         case save(MyRoutineState)
         case didUpdateText(String)
-
+        case setFocus(Bool)
+        case dismissKeyboard
         case tappedAdd
         case destination(PresentationAction<Destination.Action>)
         case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
@@ -91,7 +92,13 @@ struct MakeWorkoutReducer {
             case .didUpdateText(let text):
                 state.myRoutine.name = text
                 return .none
+            case let .setFocus(focus):
+                state.isFocused = focus
+                return .none
 
+            case .dismissKeyboard:
+                state.isFocused = false
+                return .none
             case .tappedAdd:
                 state.destination = .addWorkoutCategory(
                     AddWorkoutCategoryReducer.State(
@@ -165,6 +172,8 @@ struct MakeWorkoutReducer {
                                         .weight = weightValue
                                 }
                                 return .none
+                            case .setFocus, .dismissKeyboard:
+                                return .none
                             }
                         }
                     case let .workingOutHeader(action):
@@ -208,7 +217,8 @@ struct MakeWorkoutReducer {
 struct MakeWorkoutView: View {
     @Bindable var store: StoreOf<MakeWorkoutReducer>
     @ObservedObject var viewStore: ViewStoreOf<MakeWorkoutReducer>
-    
+    @FocusState private var isTextFieldFocused: Bool
+
     init(store: StoreOf<MakeWorkoutReducer>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
@@ -223,9 +233,10 @@ struct MakeWorkoutView: View {
                             send: MakeWorkoutReducer.Action.didUpdateText
                           ))
                 .multilineTextAlignment(.leading)
-                .font(.title)
+                .font(.system(size: 25, weight: .bold))
                 .accessibilityAddTraits(.isHeader)
                 .padding([.leading], 15)
+                .focused($isTextFieldFocused)
                 
                 ForEach(store.scope(state: \.workingOutSection,
                                     action: \.workingOutSection)) { rowStore in
@@ -268,6 +279,28 @@ struct MakeWorkoutView: View {
                 AddWorkoutCategoryView(store: store)
             }
             .tint(.black)
+        }
+        .onChange(of: isTextFieldFocused) { _, newValue in
+            viewStore.send(.setFocus(newValue))
+        }
+        .onChange(of: viewStore.isFocused) { _, newValue in
+            isTextFieldFocused = newValue
+        }
+        .onTapGesture {
+            viewStore.send(.dismissKeyboard)
+            viewStore.workingOutSection.elements.forEach { section in
+                section.workingOutRow.elements.forEach { row in
+                    viewStore.send(
+                        .workingOutSection(
+                            .element(id: section.id,
+                                     action: .workingOutRow(
+                                        .element(id: row.id,
+                                                 action: .dismissKeyboard))
+                                    )
+                        )
+                    )
+                }
+            }
         }
     }
     
