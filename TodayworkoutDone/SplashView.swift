@@ -12,7 +12,7 @@ struct SplashView: View {
     
     var body: some View {
         ZStack {
-            Color(.personal)
+            Color(.primary)
                 .edgesIgnoringSafeArea(.all)
             VStack(alignment: .center) {
                 Image(.splash)

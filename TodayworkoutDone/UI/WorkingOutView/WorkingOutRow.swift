@@ -104,6 +104,7 @@ struct WorkingOutRow: View {
                 Text(String(viewStore.workoutSet.reps))
                     .font(.system(size: 17))
                     .frame(minWidth: 85)
+                    .padding(.vertical, 3)
                     .background(Color(uiColor: .secondarySystemFill))
                     .cornerRadius(5)
             }
@@ -123,11 +124,13 @@ struct WorkingOutRow: View {
                 Text(String(viewStore.workoutSet.weight))
                     .font(.system(size: 17))
                     .frame(minWidth: 85)
+                    .padding(.vertical, 3)
                     .background(Color(uiColor: .secondarySystemFill))
                     .cornerRadius(5)
             }
-            
         }
+        .frame(height: 25)
+        .padding(.vertical, 5)
         .onChange(of: focusedField) { _, newValue in
             viewStore.send(.setFocus(newValue))
         }

@@ -57,7 +57,7 @@ struct SlideOverCardView<Content: View>: View {
                 })
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color("slideCardBackground"))
+        .background(Color.slideCardBackground)
         .cornerRadius(40.0)
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
         .offset(y: self.position + self.dragState.translation.height)

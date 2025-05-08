@@ -33,10 +33,10 @@ struct CalendarViewCell: View {
         VStack {
             Text(store.dayFormatter.string(from: store.date))
                 .padding(2)
-                .foregroundColor(store.calendar.isDateInToday(store.date) ? Color.white : .primary)
+                .foregroundColor(store.calendar.isDateInToday(store.date) ? Color.white : .black)
                 .frame(minWidth: 25, maxHeight: .infinity)
                 .background(
-                    store.calendar.isDateInToday(store.date) ? Color(.personal)
+                    store.calendar.isDateInToday(store.date) ? Color(.primary)
                     : .clear
                 )
                 .contentShape(Rectangle())

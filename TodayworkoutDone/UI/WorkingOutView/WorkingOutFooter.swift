@@ -10,9 +10,15 @@ import SwiftUI
 struct WorkingOutFooter: View {
     var body: some View {
         HStack {
-            Image(systemName: "plus.circle")
-            Text("Add Execercise")
+            Image(systemName: "plus")
+            Text("세트 추가")
+                .font(.system(size: 17))
         }
+        .frame(height: 25)
+        .frame(maxWidth: .infinity)
+        .background(Color.gray88)
+        .padding(.vertical, 5)
+        .cornerRadius(5)
     }
 }
 

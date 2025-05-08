@@ -102,7 +102,7 @@ struct WeeklyChartView: View {
                     x: .value("Weekly", $0.day),
                     y: .value("Profit", $0.profit)
                 )
-                .foregroundStyle(Color.personal)
+                .foregroundStyle(Color.primary)
             }
         }
         .frame(minWidth: 0,
