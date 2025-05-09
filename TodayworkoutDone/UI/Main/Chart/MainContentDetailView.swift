@@ -33,7 +33,7 @@ struct MainContentDetailView: View {
                     x: .value("시간", $0.time),
                     y: .value("걸음", $0.step)
                 )
-                .foregroundStyle(Color.primary)
+                .foregroundStyle(Color.personal)
             }
             .frame(minWidth: 0,
                    maxWidth: .infinity,

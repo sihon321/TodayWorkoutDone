@@ -107,11 +107,16 @@ struct EditWorkoutRoutineReducer {
                         if let sectionIndex = state.workingOutSection
                             .index(id: sectionId) {
                             let workoutSet = WorkoutSetState()
+                            let index = state.workingOutSection[sectionIndex]
+                                .workingOutRow.count
                             state.workingOutSection[sectionIndex]
                                 .workingOutRow
                                 .append(
-                                    WorkingOutRowReducer.State(workoutSet: workoutSet,
-                                                               editMode: .active)
+                                    WorkingOutRowReducer.State(
+                                        index: index + 1,
+                                        workoutSet: workoutSet,
+                                        editMode: .active
+                                    )
                                 )
                             state.workoutRoutine
                                 .routines[sectionIndex]
@@ -210,7 +215,7 @@ struct EditWorkoutRoutineView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack {
                     TextField("타이틀을 입력하세요",

@@ -20,7 +20,7 @@ extension Color {
 }
 
 extension Color {
-    static let primary = Color("primary")
+    static let personal = Color("personal")
     static let gray88 = Color("gray_88")
     static let slideCardBackground = Color("slide_card_background")
 }

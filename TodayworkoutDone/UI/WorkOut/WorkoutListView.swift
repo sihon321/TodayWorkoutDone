@@ -243,13 +243,13 @@ struct WorkoutListView: View {
                 VStack(spacing: 0) {
                     HorizontalFilterView(filters: viewStore.filters,
                                          selectedFilters: $selectedFilters)
-                    ForEachStore(store.scope(state: \.soretedWorkoutSection,
+                    ForEach(store.scope(state: \.soretedWorkoutSection,
                                              action: \.sortedWorkoutSection)) { sectionStore in
                         StickyHeaderView(index: sectionStore.index,
                                          title: sectionStore.key,
                                          topHeaderIndex: $topHeaderIndex)
                         
-                        ForEachStore(sectionStore.scope(state: \.workoutListSubview,
+                        ForEach(sectionStore.scope(state: \.workoutListSubview,
                                                         action: \.workoutListSubview)) { rowStore in
                             if selectedFilters.isEmpty
                                 || (selectedFilters.isEmpty == false
@@ -278,6 +278,12 @@ struct WorkoutListView: View {
                             Text("Done(\(selectedWorkoutCount))")
                                 .foregroundStyle(.black)
                         }
+                        .fullScreenCover(
+                            item: $store.scope(state: \.destination?.makeWorkoutView,
+                                               action: \.destination.makeWorkoutView)
+                        ) { store in
+                            MakeWorkoutView(store: store)
+                        }
                     }
                 }
             }
@@ -289,12 +295,6 @@ struct WorkoutListView: View {
         }
         .onAppear {
             store.send(.getWorkouts(viewStore.categoryName))
-        }
-        .fullScreenCover(
-            item: $store.scope(state: \.destination?.makeWorkoutView,
-                               action: \.destination.makeWorkoutView)
-        ) { store in
-            MakeWorkoutView(store: store)
         }
     }
 }

@@ -23,9 +23,12 @@ struct WorkingOutSectionReducer {
             self.routine = routine
             self.editMode = editMode
             self.workingOutRow = IdentifiedArrayOf(
-                uniqueElements: routine.sets.map {
-                    WorkingOutRowReducer.State(workoutSet: $0,
-                                               editMode: editMode)
+                uniqueElements: routine.sets.enumerated().map {
+                    WorkingOutRowReducer.State(
+                        index: $0.offset + 1,
+                        workoutSet: $0.element,
+                        editMode: editMode
+                    )
                 }
             )
             self.workingOutHeader = WorkingOutHeaderReducer.State(
@@ -75,6 +78,9 @@ struct WorkingOutSectionReducer {
                 return .none
             case let .deleteWorkoutSet(indexSet):
                 state.workingOutRow.remove(atOffsets: indexSet)
+                for (index, _) in state.workingOutRow.enumerated() {
+                    state.workingOutRow[index].index = index + 1
+                }
                 return .none
             }
         }
@@ -95,32 +101,29 @@ struct WorkingOutSection: View {
     }
     
     var body: some View {
-        Section {
-            List {
-                ForEach(store.scope(state: \.workingOutRow, action: \.workingOutRow)) { rowStore in
-                    WorkingOutRow(store: rowStore)
-                        .padding(.bottom, 2)
-                }
-                .onDelete { indexSet in
-                    viewStore.send(.deleteWorkoutSet(indexSet))
-                }
-            }
-            .frame(minHeight: minRowHeight * CGFloat(store.workingOutRow.count))
-            .listStyle(PlainListStyle())
-        } header: {
+        VStack {
             WorkingOutHeader(store: store.scope(state: \.workingOutHeader,
                                                 action: \.workingOutHeader),
                              equipmentType: .init(wrappedValue: store.routine.equipmentType))
-            
-        } footer: {
+            ForEach(store.scope(state: \.workingOutRow, action: \.workingOutRow)) { rowStore in
+                SwipeView(content: {
+                    WorkingOutRow(store: rowStore)
+                }, onDelete: {
+                    if let index = viewStore.workingOutRow
+                        .firstIndex(where: { $0.id == rowStore.id }) {
+                        viewStore.send(.deleteWorkoutSet(IndexSet(integer: index)))
+                    }
+                })
+            }
             if viewStore.editMode == .active {
                 Button(action: {
-                    store.send(.tappedAddFooter)
+                    viewStore.send(.tappedAddFooter)
                 }) {
                     WorkingOutFooter()
                 }
             }
         }
+        .padding(.horizontal, 15)
         .environment(\.editMode, viewStore.binding(get: \.editMode,
                                                    send: WorkingOutSectionReducer.Action.setEditMode))
     }

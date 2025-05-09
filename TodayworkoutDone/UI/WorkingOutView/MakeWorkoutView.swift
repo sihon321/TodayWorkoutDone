@@ -128,11 +128,16 @@ struct MakeWorkoutReducer {
                         if let sectionIndex = state.workingOutSection
                             .index(id: sectionId) {
                             let workoutSet = WorkoutSetState()
+                            let index = state.workingOutSection[sectionIndex]
+                                .workingOutRow.count
                             state.workingOutSection[sectionIndex]
                                 .workingOutRow
                                 .append(
-                                    WorkingOutRowReducer.State(workoutSet: workoutSet,
-                                                               editMode: .active)
+                                    WorkingOutRowReducer.State(
+                                        index: index + 1,
+                                        workoutSet: workoutSet,
+                                        editMode: .active
+                                    )
                                 )
                             state.myRoutine
                                 .routines[sectionIndex]
@@ -225,39 +230,70 @@ struct MakeWorkoutView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
-                TextField("타이틀을 입력하세요",
-                          text: viewStore.binding(
-                            get: \.myRoutine.name,
-                            send: MakeWorkoutReducer.Action.didUpdateText
-                          ))
-                .multilineTextAlignment(.leading)
-                .font(.system(size: 25, weight: .bold))
-                .accessibilityAddTraits(.isHeader)
-                .padding([.leading], 15)
-                .focused($isTextFieldFocused)
-                
-                ForEach(store.scope(state: \.workingOutSection,
-                                    action: \.workingOutSection)) { rowStore in
-                    WorkingOutSection(store: rowStore)
+                VStack {
+                    TextField("타이틀을 입력하세요",
+                              text: viewStore.binding(
+                                get: \.myRoutine.name,
+                                send: MakeWorkoutReducer.Action.didUpdateText
+                              ))
+                    .multilineTextAlignment(.leading)
+                    .font(.system(size: 25, weight: .bold))
+                    .accessibilityAddTraits(.isHeader)
+                    .padding([.leading], 15)
+                    .focused($isTextFieldFocused)
+                    
+                    ForEach(
+                        store.scope(state: \.workingOutSection,
+                                    action: \.workingOutSection)
+                    ) { rowStore in
+                        WorkingOutSection(store: rowStore)
+                    }
+                    .padding([.bottom], 30)
+                    
+                    Button(action: {
+                        viewStore.send(.tappedAdd)
+                    }) {
+                        Text("워크아웃 추가")
+                            .frame(maxWidth: .infinity, minHeight: 40)
+                            .background(Color.personal)
+                            .foregroundStyle(.white)
+                            .cornerRadius(25)
+                            .padding([.leading, .trailing], 15)
+                    }
+                    .fullScreenCover(
+                        item: $store.scope(state: \.destination?.addWorkoutCategory,
+                                           action: \.destination.addWorkoutCategory)
+                    ) { store in
+                        AddWorkoutCategoryView(store: store)
+                    }
+                    Spacer().frame(height: 100)
                 }
-                .padding([.bottom], 30)
-                
-                Button(action: {
-                    viewStore.send(.tappedAdd)
-                }) {
-                    Text("add")
-                        .frame(maxWidth: .infinity, minHeight: 40)
-                        .background(.gray)
-                        .padding([.leading, .trailing], 15)
+                .onTapGesture {
+                    viewStore.send(.dismissKeyboard)
+                    viewStore.workingOutSection.elements.forEach { section in
+                        section.workingOutRow.elements.forEach { row in
+                            viewStore.send(
+                                .workingOutSection(
+                                    .element(id: section.id,
+                                             action: .workingOutRow(
+                                                .element(id: row.id,
+                                                         action: .dismissKeyboard))
+                                            )
+                                )
+                            )
+                        }
+                    }
                 }
-                Spacer().frame(height: 100)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         viewStore.send(.dismissMakeWorkout)
+                    }) {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.black)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -272,35 +308,13 @@ struct MakeWorkoutView: View {
                     }
                 }
             }
-            .fullScreenCover(
-                item: $store.scope(state: \.destination?.addWorkoutCategory,
-                                   action: \.destination.addWorkoutCategory)
-            ) { store in
-                AddWorkoutCategoryView(store: store)
-            }
-            .tint(.black)
         }
+        .tint(.black)
         .onChange(of: isTextFieldFocused) { _, newValue in
             viewStore.send(.setFocus(newValue))
         }
         .onChange(of: viewStore.isFocused) { _, newValue in
             isTextFieldFocused = newValue
-        }
-        .onTapGesture {
-            viewStore.send(.dismissKeyboard)
-            viewStore.workingOutSection.elements.forEach { section in
-                section.workingOutRow.elements.forEach { row in
-                    viewStore.send(
-                        .workingOutSection(
-                            .element(id: section.id,
-                                     action: .workingOutRow(
-                                        .element(id: row.id,
-                                                 action: .dismissKeyboard))
-                                    )
-                        )
-                    )
-                }
-            }
         }
     }
     

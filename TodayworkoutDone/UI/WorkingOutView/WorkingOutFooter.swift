@@ -11,14 +11,16 @@ struct WorkingOutFooter: View {
     var body: some View {
         HStack {
             Image(systemName: "plus")
+                .foregroundStyle(.white)
             Text("세트 추가")
                 .font(.system(size: 17))
+                .foregroundStyle(.white)
         }
-        .frame(height: 25)
+        .frame(height: 30)
         .frame(maxWidth: .infinity)
         .background(Color.gray88)
+        .cornerRadius(10)
         .padding(.vertical, 5)
-        .cornerRadius(5)
     }
 }
 

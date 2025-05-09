@@ -60,7 +60,7 @@ struct WorkoutCategoryView: View {
         VStack(alignment: .leading) {
             Text("category")
                 .font(.system(size: 20, weight: .medium))
-            ForEachStore(
+            ForEach(
                 store.scope(state: \.workoutList, action: \.workoutList)
             ) { rowStore in
                 if rowStore.categoryName.hasPrefix(store.keyword) {

@@ -53,7 +53,6 @@ struct WorkingOutHeader: View {
             HStack {
                 Text(store.workoutName)
                     .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(Color.primary)
                 
                 Button(action: {}) {
                     Menu {
@@ -87,7 +86,7 @@ struct WorkingOutHeader: View {
                             .padding([.top, .bottom], 3)
                             .font(.system(size: 11))
                             .foregroundStyle(.white)
-                            .background(Color.primary.opacity(0.6))
+                            .background(Color.personal.opacity(0.6))
                             .cornerRadius(3.0)
                     }
                 }
@@ -97,8 +96,8 @@ struct WorkingOutHeader: View {
                     .frame(width: 15, height: 4)
                     .padding(.horizontal, 5)
                     .padding(.vertical, 7)
-                    .foregroundStyle(Color.primary)
-                    .background(Color.primary.opacity(0.3))
+                    .foregroundStyle(Color.personal)
+                    .background(Color.personal.opacity(0.3))
                     .cornerRadius(3.0)
                     .onTapGesture {
                         showingOptions = true

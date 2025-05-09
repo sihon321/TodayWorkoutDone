@@ -129,7 +129,7 @@ struct CalendarView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             CalendarViewComponent(
                 workoutRoutines: viewStore.workoutRoutines,
                 content: { date in

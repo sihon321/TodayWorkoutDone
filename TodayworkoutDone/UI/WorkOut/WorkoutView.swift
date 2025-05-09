@@ -231,7 +231,7 @@ struct WorkoutView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack {
                     if viewStore.myRoutineReducer.myRoutineSubview.isEmpty == false {

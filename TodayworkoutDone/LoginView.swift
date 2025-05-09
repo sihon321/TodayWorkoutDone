@@ -39,7 +39,7 @@ struct LoginView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.primary)
+        .background(Color.personal)
         .edgesIgnoringSafeArea(.all)
     }
 }

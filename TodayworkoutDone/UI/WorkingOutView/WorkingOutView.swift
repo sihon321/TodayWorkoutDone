@@ -124,14 +124,21 @@ struct WorkingOutReducer {
             case let .workingOutSection(.element(sectionId, .tappedAddFooter)):
                 if let sectionIndex = state.workingOutSection.index(id: sectionId) {
                     let workoutSet = WorkoutSetState()
+                    let index = state.workingOutSection[sectionIndex]
+                        .workingOutRow.count
                     state.workingOutSection[sectionIndex]
                         .workingOutRow
-                        .append(WorkingOutRowReducer.State(workoutSet: workoutSet,
-                                                           editMode: .active))
+                        .append(
+                            WorkingOutRowReducer.State(
+                                index: index + 1,
+                                workoutSet: workoutSet,
+                                editMode: .active
+                            )
+                        )
                     state.myRoutine?.routines[sectionIndex].sets.append(workoutSet)
                 }
                 return .none
-
+                
             case let .workingOutSection(.element(sectionId, .workingOutRow(.element(rowId, action)))):
                 switch action {
                 case let .toggleCheck(isChecked):
@@ -243,9 +250,9 @@ struct WorkingOutView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
-                ForEachStore(store.scope(state: \.workingOutSection,
+                ForEach(store.scope(state: \.workingOutSection,
                                          action: \.workingOutSection)) { rowStore in
                     WorkingOutSection(store: rowStore)
                 }

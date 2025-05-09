@@ -91,7 +91,7 @@ struct CalendarDetailView: View {
     
     var body: some View {
         ScrollView {
-            ForEachStore(store.scope(state: \.calendarDetailSubView,
+            ForEach(store.scope(state: \.calendarDetailSubView,
                                      action: \.calendarDetailSubView)) { store in
                 CalendarDetailSubView(store: store)
             }

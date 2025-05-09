@@ -13,12 +13,14 @@ struct WorkingOutRowReducer {
     @ObservableState
     struct State: Equatable, Identifiable {
         let id: UUID
+        var index: Int
         var workoutSet: WorkoutSetState
         var isChecked: Bool
         var editMode: EditMode
         var focusedField: Field?
         
-        init(workoutSet: WorkoutSetState, editMode: EditMode = .inactive) {
+        init(index: Int, workoutSet: WorkoutSetState, editMode: EditMode = .inactive) {
+            self.index = index
             self.id = workoutSet.id
             self.editMode = editMode
             self.workoutSet = workoutSet
@@ -71,7 +73,36 @@ struct WorkingOutRow: View {
     
     var body: some View {
         HStack {
-            if viewStore.editMode == .inactive {
+            if viewStore.editMode == .active {
+                Button(action: {}, label: {
+                    Menu {
+                        Button(action: {
+
+                        }) {
+                            Label("워밍업", systemImage: "pencil")
+                        }
+                        Button(action: {
+
+                        }) {
+                            Label("드롭", systemImage: "pencil")
+                        }
+                        Button(action: {
+
+                        }) {
+                            Label("실패", systemImage: "pencil")
+                        }
+                    } label: {
+                        Text("\(viewStore.index)")
+                            .padding([.leading, .trailing], 5)
+                            .padding([.top, .bottom], 3)
+                            .font(.system(size: 17))
+                            .frame(minWidth: 30)
+                            .foregroundStyle(.white)
+                            .background(Color.personal.opacity(0.6))
+                            .cornerRadius(3.0)
+                    }
+                })
+            } else {
                 Toggle(
                     "",
                     isOn: viewStore.binding(
@@ -82,6 +113,7 @@ struct WorkingOutRow: View {
                 .toggleStyle(CheckboxToggleStyle(style: .square))
                 .padding(.leading, -7)
             }
+            
             if viewStore.editMode == .inactive {
                 Text("\(viewStore.workoutSet.prevReps) x \(String(format: "%.1f", viewStore.workoutSet.prevWeight))")
                     .font(.system(size: 17))
@@ -95,7 +127,7 @@ struct WorkingOutRow: View {
                     send: { WorkingOutRowReducer.Action.typeLab(lab: $0) })
                 )
                 .font(.system(size: 17))
-                .frame(minWidth: 160)
+                .frame(minWidth: 140)
                 .keyboardType(.numberPad)
                 .textFieldStyle(.roundedBorder)
                 .multilineTextAlignment(.center)
@@ -115,7 +147,7 @@ struct WorkingOutRow: View {
                     send: { WorkingOutRowReducer.Action.typeWeight(weight: $0) })
                 )
                 .font(.system(size: 17))
-                .frame(minWidth: 160)
+                .frame(minWidth: 140)
                 .keyboardType(.decimalPad)
                 .textFieldStyle(.roundedBorder)
                 .multilineTextAlignment(.center)

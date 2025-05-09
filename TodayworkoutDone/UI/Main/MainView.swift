@@ -24,7 +24,7 @@ struct MainView: View {
     var bottomEdge: CGFloat
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading) {
                     welcomeView()
