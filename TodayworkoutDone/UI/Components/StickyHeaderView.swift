@@ -17,10 +17,8 @@ struct StickyHeaderView: View {
         Text(title)
             .font(.headline)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
+            .padding(.top, 10)
             .background(Color.white)
-            .overlay(Divider(), alignment: .bottom)
-            .zIndex(1)
             .background(
                 GeometryReader { proxy in
                     Color.clear
@@ -37,6 +35,8 @@ struct StickyHeaderView: View {
                     topHeaderIndex = topHeader.index
                 }
             }
+        Divider()
+            .padding(.vertical, 10)
     }
 }
 
@@ -51,4 +51,10 @@ struct StickyHeaderPreferenceKey: PreferenceKey {
     static func reduce(value: inout [StickyHeaderData], nextValue: () -> [StickyHeaderData]) {
         value.append(contentsOf: nextValue())
     }
+}
+
+#Preview {
+    StickyHeaderView(index: 0,
+                     title: "Hello",
+                     topHeaderIndex: .constant(nil))
 }

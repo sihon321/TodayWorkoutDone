@@ -259,6 +259,7 @@ struct WorkoutListView: View {
                             }
                         }
                     }
+                                             .padding([.leading], 15)
                 }
             }
             .toolbar {

@@ -51,7 +51,6 @@ struct WorkoutListSubview: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .cornerRadius(10)
-                            .padding([.leading], 15)
                     }
                     Text(viewStore.workout.name)
                         .font(.system(size: 15, weight: .light))

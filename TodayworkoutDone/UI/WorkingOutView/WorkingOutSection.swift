@@ -106,14 +106,18 @@ struct WorkingOutSection: View {
                                                 action: \.workingOutHeader),
                              equipmentType: .init(wrappedValue: store.routine.equipmentType))
             ForEach(store.scope(state: \.workingOutRow, action: \.workingOutRow)) { rowStore in
-                SwipeView(content: {
+                if viewStore.editMode == .active {
+                    SwipeView(content: {
+                        WorkingOutRow(store: rowStore)
+                    }, onDelete: {
+                        if let index = viewStore.workingOutRow
+                            .firstIndex(where: { $0.id == rowStore.id }) {
+                            viewStore.send(.deleteWorkoutSet(IndexSet(integer: index)))
+                        }
+                    })
+                } else {
                     WorkingOutRow(store: rowStore)
-                }, onDelete: {
-                    if let index = viewStore.workingOutRow
-                        .firstIndex(where: { $0.id == rowStore.id }) {
-                        viewStore.send(.deleteWorkoutSet(IndexSet(integer: index)))
-                    }
-                })
+                }
             }
             if viewStore.editMode == .active {
                 Button(action: {

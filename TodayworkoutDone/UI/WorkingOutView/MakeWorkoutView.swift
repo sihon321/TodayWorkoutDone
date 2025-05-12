@@ -250,7 +250,7 @@ struct MakeWorkoutView: View {
                     ) { rowStore in
                         WorkingOutSection(store: rowStore)
                     }
-                    .padding([.bottom], 30)
+                    .padding(.bottom, 30)
                     
                     Button(action: {
                         viewStore.send(.tappedAdd)

@@ -18,6 +18,7 @@ struct WorkingOutReducer {
         
         var secondsElapsed = 0
         var isTimerActive = false
+        var isEdit = false
     }
     
     enum Action {
@@ -25,6 +26,7 @@ struct WorkingOutReducer {
         
         case tappedToolbarCloseButton(secondsElapsed: Int)
         case tappedEdit
+        case tappedAdd
         
         case cancelTimer
         case resetTimer
@@ -38,6 +40,7 @@ struct WorkingOutReducer {
     
     @Reducer(state: .equatable)
     enum Destination {
+        case addWorkoutCategory(AddWorkoutCategoryReducer)
         case alert(AlertState<Alert>)
         
         enum Alert: Equatable {
@@ -88,6 +91,15 @@ struct WorkingOutReducer {
                 for index in state.workingOutSection.indices {
                     state.workingOutSection[index].toggleEditMode()
                 }
+                state.isEdit = !state.isEdit
+                return .none
+                
+            case .tappedAdd:
+                state.destination = .addWorkoutCategory(
+                    AddWorkoutCategoryReducer.State(
+                        routines: state.myRoutine!.routines
+                    )
+                )
                 return .none
                 
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
@@ -118,7 +130,7 @@ struct WorkingOutReducer {
                 
                 return .send(.presentedSaveRoutineAlert(state.myRoutine))
 
-            case .destination(.dismiss):
+            case .destination:
                 return .none
                 
             case let .workingOutSection(.element(sectionId, .tappedAddFooter)):
@@ -252,11 +264,36 @@ struct WorkingOutView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                ForEach(store.scope(state: \.workingOutSection,
-                                         action: \.workingOutSection)) { rowStore in
-                    WorkingOutSection(store: rowStore)
+                VStack {
+                    ForEach(
+                        store.scope(state: \.workingOutSection,
+                                    action: \.workingOutSection)
+                    ) { rowStore in
+                        WorkingOutSection(store: rowStore)
+                            .padding(.bottom, 15)
+                    }
+                    .padding(.bottom, 30)
+                    
+                    if viewStore.isEdit {
+                        Button(action: {
+                            viewStore.send(.tappedAdd)
+                        }) {
+                            Text("워크아웃 추가")
+                                .frame(maxWidth: .infinity, minHeight: 40)
+                                .background(Color.personal)
+                                .foregroundStyle(.white)
+                                .cornerRadius(25)
+                                .padding([.leading, .trailing], 15)
+                        }
+                        .fullScreenCover(
+                            item: $store.scope(state: \.destination?.addWorkoutCategory,
+                                               action: \.destination.addWorkoutCategory)
+                        ) { store in
+                            AddWorkoutCategoryView(store: store)
+                        }
+                    }
+                    Spacer().frame(height: 100)
                 }
-                Spacer().frame(height: 100)
             }
             .onAppear {
                 viewStore.send(.toggleTimer)
@@ -277,9 +314,7 @@ struct WorkingOutView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Edit") {
-                        viewStore.send(.tappedEdit)
-                    }
+                    toggleButton()
                 }
             }
             .navigationTitle(viewStore.myRoutine?.name ?? "")
@@ -288,6 +323,36 @@ struct WorkingOutView: View {
         }
         .alert($store.scope(state: \.destination?.alert,
                             action: \.destination.alert))
+    }
+    
+    func toggleButton() -> some View {
+        ZStack {
+            Capsule()
+                .frame(width: 60, height: 30)
+                .foregroundColor(Color(!viewStore.isEdit ? .personal : .gray88))
+            ZStack{
+                Circle()
+                    .frame(width: 35, height: 25)
+                    .foregroundColor(.white)
+                if viewStore.isEdit {
+                    Image(systemName: "lock.open.fill")
+                        .resizable()
+                        .frame(width: 15, height: 15)
+                } else {
+                    Image(systemName: "lock.fill")
+                        .resizable()
+                        .frame(width: 10, height: 15)
+                }
+
+            }
+            .shadow(color: .personal.opacity(0.14), radius: 4, x: 0, y: 2)
+            .offset(x: !viewStore.isEdit ? 15 : -15)
+            .padding(24)
+            .animation(.spring(), value: !viewStore.isEdit)
+        }
+        .onTapGesture {
+            viewStore.send(.tappedEdit)
+        }
     }
 }
 
