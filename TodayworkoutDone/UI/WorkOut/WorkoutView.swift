@@ -124,13 +124,13 @@ struct WorkoutReducer {
             case let .createMakeWorkoutView(routines, isEdit):
                 state.destination = .makeWorkoutView(MakeWorkoutReducer.State(
                     myRoutine: MyRoutineState(routines: routines),
-                    isEdit: isEdit,
+                    isEdit: isEdit
                 ))
                 return .none
             case let .updateMakeWorkoutView(myRoutine, isEdit):
                 state.destination = .makeWorkoutView(MakeWorkoutReducer.State(
                     myRoutine: myRoutine,
-                    isEdit: isEdit,
+                    isEdit: isEdit
                 ))
                 return .none
             case .destination(.presented(.alert(.tappedMyRoutineStart(let myRoutine)))):
