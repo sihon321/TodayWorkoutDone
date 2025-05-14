@@ -58,7 +58,7 @@ struct WorkoutListSubview: View {
                     Spacer()
                     if viewStore.workout.isSelected {
                         Image(systemName:"checkmark")
-                            .foregroundStyle(.black)
+                            .foregroundStyle(Color.personal)
                             .padding(.trailing, 15)
                     }
                 }
