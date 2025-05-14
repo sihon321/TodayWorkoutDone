@@ -19,12 +19,18 @@ struct WorkingOutRowReducer {
         var editMode: EditMode
         var focusedField: Field?
         
+        var repText: String = ""
+        var weightText: String = ""
+        
         init(index: Int, workoutSet: WorkoutSetState, editMode: EditMode = .inactive) {
             self.index = index
             self.id = workoutSet.id
             self.editMode = editMode
             self.workoutSet = workoutSet
             self.isChecked = workoutSet.isChecked
+            
+            repText = String(workoutSet.reps)
+            weightText = String(workoutSet.weight)
         }
     }
     
@@ -46,9 +52,17 @@ struct WorkingOutRowReducer {
             switch action {
             case .toggleCheck:
                 return .none
-            case .typeLab:
+            case let .typeLab(rep):
+                if let formattedRep = Int(rep) {
+                    state.workoutSet.reps = formattedRep
+                    state.repText = rep
+                }
                 return .none
-            case .typeWeight:
+            case let .typeWeight(weight):
+                if let formattedWeight = Double(weight) {
+                    state.workoutSet.weight = formattedWeight
+                    state.weightText = weight
+                }
                 return .none
             case let .setFocus(field):
                 state.focusedField = field
@@ -123,7 +137,7 @@ struct WorkingOutRow: View {
             
             if viewStore.editMode == .active {
                 TextField("count", text: viewStore.binding(
-                    get: { String($0.workoutSet.reps) },
+                    get: { $0.repText },
                     send: { WorkingOutRowReducer.Action.typeLab(lab: $0) })
                 )
                 .font(.system(size: 17))
@@ -143,7 +157,7 @@ struct WorkingOutRow: View {
             
             if viewStore.editMode == .active {
                 TextField("weight", text: viewStore.binding(
-                    get: { String($0.workoutSet.weight) },
+                    get: { $0.weightText },
                     send: { WorkingOutRowReducer.Action.typeWeight(weight: $0) })
                 )
                 .font(.system(size: 17))

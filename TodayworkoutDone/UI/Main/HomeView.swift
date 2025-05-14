@@ -102,6 +102,7 @@ struct HomeReducer {
                     .destination(.presented(.workoutView(.workoutCategory(.workoutList(.element(_, .destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine)))))))))),
                     .destination(.presented(.workoutView(.tappedDone(let myRoutine)))):
                 state.workingOut.myRoutine = myRoutine
+                state.workingOut.isEdit = false
                 state.workingOut.workingOutSection = IdentifiedArrayOf(
                     uniqueElements: myRoutine.routines.map {
                         WorkingOutSectionReducer.State(

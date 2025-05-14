@@ -13,7 +13,7 @@ struct WorkingOutReducer {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
-        var myRoutine: MyRoutineState?
+        var myRoutine: MyRoutineState? 
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State> = []
         
         var secondsElapsed = 0
@@ -74,8 +74,8 @@ struct WorkingOutReducer {
                 return .run { [isTimerActive = state.isTimerActive] send in
                   guard isTimerActive else { return }
                     for await _ in self.clock.timer(interval: .seconds(1)) {
-                      await send(.timerTicked, animation: .default)
-                  }
+                        await send(.timerTicked, animation: .default)
+                    }
                 }
                 .cancellable(id: CancelID.timer, cancelInFlight: true)
                 
@@ -91,7 +91,7 @@ struct WorkingOutReducer {
                 for index in state.workingOutSection.indices {
                     state.workingOutSection[index].toggleEditMode()
                 }
-                state.isEdit = !state.isEdit
+                state.isEdit.toggle()
                 return .none
                 
             case .tappedAdd:

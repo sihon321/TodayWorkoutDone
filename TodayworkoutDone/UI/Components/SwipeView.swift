@@ -44,7 +44,7 @@ struct SwipeView<Content: View>: View {
             // 🟦 실제 content 뷰
             content()
                 .offset(x: max(swipeLimit, min(0, offsetX + gestureOffset))) // 스와이프 제한
-                .gesture(
+                .highPriorityGesture(
                     DragGesture()
                         .updating($gestureOffset) { value, state, _ in
                             state = value.translation.width
