@@ -21,15 +21,25 @@ extension DependencyValues {
     }
 }
 protocol HealthKitManager {
-    func authorizeHealthKit(typesToShare: Set<HKSampleType>,
-                            typesToRead: Set<HKObjectType>) async throws -> Bool
+    func authorizeHealthKit(
+        typesToShare: Set<HKSampleType>,
+                            typesToRead: Set<HKObjectType>
+    ) async throws -> Bool
     func requestAuthorization() async throws -> Bool
-    func getHealthQuantityData(type: HKQuantityTypeIdentifier,
-                               from startDate: Date,
-                               to endDate: Date,
-                               unit: HKUnit) async throws -> Int
-    func getWeeklyCalories(from startDate: Date,
-                           to endDate: Date) async throws -> [Date: Double]
+    func getHealthQuantityData(
+        type: HKQuantityTypeIdentifier,
+        from startDate: Date,
+        to endDate: Date,
+        unit: HKUnit
+    ) async throws -> Int
+    
+    func getHealthQuantityTimeSeries(
+        type: HKQuantityTypeIdentifier,
+        from startDate: Date,
+        to endDate: Date,
+        unit: HKUnit,
+        interval: DateComponents
+    ) async throws -> [Date: Double]
 }
 
 class LiveHealthKitManager: HealthKitManager {
@@ -91,39 +101,48 @@ class LiveHealthKitManager: HealthKitManager {
         }
     }
     
-    func getWeeklyCalories(from startDate: Date,
-                           to endDate: Date) async throws -> [Date: Double] {
-        let isAuthorized = try await authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: .activeEnergyBurned)!])
+    func getHealthQuantityTimeSeries(
+        type: HKQuantityTypeIdentifier,
+        from startDate: Date,
+        to endDate: Date,
+        unit: HKUnit,
+        interval: DateComponents
+    ) async throws -> [Date: Double] {
+        let isAuthorized = try await authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: type)!])
         guard isAuthorized else {
             throw HealthDataError.authorizationRequestError
         }
         
         return try await withCheckedThrowingContinuation { continuation in
             let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-            let interval = DateComponents(day: 1)
             
-            let query = HKStatisticsCollectionQuery(quantityType: .quantityType(forIdentifier: .activeEnergyBurned)!,
-                                                    quantitySamplePredicate: predicate,
-                                                    options: .cumulativeSum,
-                                                    anchorDate: startDate,
-                                                    intervalComponents: interval)
+            let query = HKStatisticsCollectionQuery(
+                quantityType: .quantityType(forIdentifier: type)!,
+                quantitySamplePredicate: predicate,
+                options: .cumulativeSum,
+                anchorDate: startDate,
+                intervalComponents: interval
+            )
             
             query.initialResultsHandler = { _, results, error in
                 if let error = error {
                     continuation.resume(throwing: error)
                     return
                 }
+                guard let statsCollection = results else {
+                    continuation.resume(returning: [:])
+                    return
+                }
                 
-                var weeklyCalories: [Date: Double] = [:]
-                results?.enumerateStatistics(from: startDate, to: endDate) { statistics, _ in
-                    if let quantity = statistics.sumQuantity() {
-                        let date = statistics.startDate
-                        let calories = quantity.doubleValue(for: .kilocalorie())
-                        weeklyCalories[date] = calories
+                var resultDict = [Date: Double]()
+                statsCollection.enumerateStatistics(from: startDate, to: endDate) { statistics, _ in
+                    if let value = statistics.sumQuantity()?.doubleValue(for: unit) {
+                        resultDict[statistics.startDate] = value
                     }
                 }
-                continuation.resume(returning: weeklyCalories)
+                continuation.resume(returning: resultDict)
             }
+            
             healthStore.execute(query)
         }
     }

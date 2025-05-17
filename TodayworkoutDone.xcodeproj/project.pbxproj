@@ -27,6 +27,7 @@
 		8ED37AF52AC87E2200B4F206 /* WorkoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED37AF42AC87E2200B4F206 /* WorkoutSet.swift */; };
 		8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */; };
 		8EF871C82DCC8FCE0009CC1A /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF871C72DCC8FC70009CC1A /* SwipeView.swift */; };
+		8EFC66502DD8605C00F32D22 /* AddWorkoutButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFC664F2DD8604F00F32D22 /* AddWorkoutButtonStyle.swift */; };
 		921A4E912D6F514800065C78 /* HorizontalFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A4E902D6F514400065C78 /* HorizontalFilterView.swift */; };
 		923E42CB2D735A37001E28CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923E42CA2D735A34001E28CC /* LoginView.swift */; };
 		9248E2AF2D3800D100D5AF37 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9248E2AE2D3800CF00D5AF37 /* DateManager.swift */; };
@@ -130,6 +131,7 @@
 		8ED37AF42AC87E2200B4F206 /* WorkoutSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSet.swift; sourceTree = "<group>"; };
 		8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWorkoutView.swift; sourceTree = "<group>"; };
 		8EF871C72DCC8FC70009CC1A /* SwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeView.swift; sourceTree = "<group>"; };
+		8EFC664F2DD8604F00F32D22 /* AddWorkoutButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutButtonStyle.swift; sourceTree = "<group>"; };
 		921A4E902D6F514400065C78 /* HorizontalFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalFilterView.swift; sourceTree = "<group>"; };
 		923E42CA2D735A34001E28CC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		9248E2AE2D3800CF00D5AF37 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		8E5E8A1C2A24AED3004A4F33 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8EFC664E2DD8603F00F32D22 /* Style */,
 				F28FBF302A9BBADC0067DEBC /* Calendar */,
 				F2CB39EF295DE1B000CA80D6 /* Components */,
 				F23F4E972958002B0084392B /* WorkOut */,
@@ -286,6 +289,14 @@
 				8EB539722C98152E00F56034 /* APIHelper.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		8EFC664E2DD8603F00F32D22 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				8EFC664F2DD8604F00F32D22 /* AddWorkoutButtonStyle.swift */,
+			);
+			path = Style;
 			sourceTree = "<group>";
 		};
 		8EFE4C9B2D04AF6200CC8305 /* Chart */ = {
@@ -667,6 +678,7 @@
 				F2E221502999555F00B7DCCB /* CheckboxToggleStyle.swift in Sources */,
 				F2335417295B4BF9006E12CB /* WorkingOutView.swift in Sources */,
 				F292A3A72BB3318900B8EDCD /* EquipmentType.swift in Sources */,
+				8EFC66502DD8605C00F32D22 /* AddWorkoutButtonStyle.swift in Sources */,
 				F23264A229DC6A58008649FE /* WorkoutCategory.swift in Sources */,
 				8EB539712C98151100F56034 /* CategoryAPIRepository.swift in Sources */,
 				F27FB6302AD99BE900707379 /* Sequence+Extension.swift in Sources */,

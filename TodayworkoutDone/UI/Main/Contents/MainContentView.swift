@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct MainContentView: View {
     enum MainContentType: String, Identifiable {
@@ -29,7 +30,9 @@ struct MainContentView: View {
             LazyVGrid(columns: gridLayout, spacing: 10) {
                 ForEach(dataList) { data in
                     NavigationLink {
-                        
+                        MainContentDetailView(store: Store(initialState: MainContentDetailViewReducer.State()) {
+                            MainContentDetailViewReducer()
+                        })
                     } label: {
                         MainContentSubView(type: data)
                     }

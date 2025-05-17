@@ -11,16 +11,9 @@ import ComposableArchitecture
 
 @Reducer
 struct WeeklyChart {
-    struct Weekly: Identifiable {
-        var id = UUID()
-        let day: String
-        let profit: Double
-    }
-    
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var dailyActiveEnergyBurnes: [Weekly] = []
-        let dateManager = DateManager()
     }
     
     enum Action {
@@ -28,21 +21,33 @@ struct WeeklyChart {
         case weeklyCaloriesResponse(Result<[Weekly], Error>)
     }
     
+    struct Weekly: Equatable, Identifiable {
+        var id = UUID()
+        let day: String
+        let profit: Double
+    }
+    
     @Dependency(\.healthKitManager) private var healthKitManager
+    @Dependency(\.dateManager) private var dateManager
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .fetchDailyActiveEnergyBurnes:
                 let now = Date()
-                guard let monday = state.dateManager.getMondayOfCurrentWeek(from: now) else {
+                guard let monday = dateManager.getMondayOfCurrentWeek(from: now) else {
                     return .none
                 }
                 
-                return .run { [dateManager = state.dateManager] send in
+                return .run { send in
                     do {
-                        let dailyCalories = try await healthKitManager.getWeeklyCalories(from: monday,
-                                                                                     to: now)
+                        let dailyCalories = try await healthKitManager.getHealthQuantityTimeSeries(
+                            type: .activeEnergyBurned,
+                            from: monday,
+                            to: now,
+                            unit: .kilocalorie(),
+                            interval: DateComponents(day: 1)
+                        )
                         let weekdays = dateManager.createWeekDates(from: monday)
                         let activeEnergyBurnes = weekdays
                             .sorted(by: { $0 < $1 })
@@ -65,13 +70,13 @@ struct WeeklyChart {
                 return .none
             case .weeklyCaloriesResponse(.failure(_)):
                 let now = Date()
-                guard let monday = state.dateManager.getMondayOfCurrentWeek(from: now) else {
+                guard let monday = dateManager.getMondayOfCurrentWeek(from: now) else {
                     return .none
                 }
-                state.dailyActiveEnergyBurnes = state.dateManager.createWeeklyDateDictionary(from: monday)
+                state.dailyActiveEnergyBurnes = dateManager.createWeeklyDateDictionary(from: monday)
                     .sorted(by: { $0 < $1 })
                     .map {
-                        Weekly(day: state.dateManager.getWeekdayString(from: $0.key),
+                        Weekly(day: dateManager.getWeekdayString(from: $0.key),
                                profit: 0.0)
                     }
 
@@ -89,15 +94,17 @@ struct WeeklyChartView: View {
     }
     
     @Bindable var store: StoreOf<WeeklyChart>
+    @ObservedObject var viewStore: ViewStoreOf<WeeklyChart>
     
     init(store: StoreOf<WeeklyChart>) {
         self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             Text("주당 소모 칼로리")
-            Chart(store.dailyActiveEnergyBurnes) {
+            Chart(viewStore.dailyActiveEnergyBurnes) {
                 BarMark(
                     x: .value("Weekly", $0.day),
                     y: .value("Profit", $0.profit)
@@ -110,7 +117,7 @@ struct WeeklyChartView: View {
                minHeight: 165)
         .padding([.leading, .trailing], 15)
         .onAppear {
-            store.send(.fetchDailyActiveEnergyBurnes)
+            viewStore.send(.fetchDailyActiveEnergyBurnes)
         }
     }
 }

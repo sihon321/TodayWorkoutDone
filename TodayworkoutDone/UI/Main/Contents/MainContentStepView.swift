@@ -22,7 +22,7 @@ struct StepFeature {
     
     @Dependency(\.healthKitManager) private var healthKitManager
     
-    var body: Reduce<State, Action> {
+    var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
                 case let .fetchStep(from, to):

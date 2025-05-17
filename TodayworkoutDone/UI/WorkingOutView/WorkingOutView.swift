@@ -275,16 +275,10 @@ struct WorkingOutView: View {
                     .padding(.bottom, 30)
                     
                     if viewStore.isEdit {
-                        Button(action: {
+                        Button("워크아웃 추가") {
                             viewStore.send(.tappedAdd)
-                        }) {
-                            Text("워크아웃 추가")
-                                .frame(maxWidth: .infinity, minHeight: 40)
-                                .background(Color.personal)
-                                .foregroundStyle(.white)
-                                .cornerRadius(25)
-                                .padding([.leading, .trailing], 15)
                         }
+                        .buttonStyle(AddWorkoutButtonStyle())
                         .fullScreenCover(
                             item: $store.scope(state: \.destination?.addWorkoutCategory,
                                                action: \.destination.addWorkoutCategory)

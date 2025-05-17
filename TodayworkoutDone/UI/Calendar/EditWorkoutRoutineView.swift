@@ -246,14 +246,10 @@ struct EditWorkoutRoutineView: View {
                 }
                 .padding([.bottom], 30)
                 
-                Button(action: {
+                Button("워크아웃 추가") {
                     viewStore.send(.tappedAdd)
-                }) {
-                    Text("add")
-                        .frame(maxWidth: .infinity, minHeight: 40)
-                        .background(.gray)
-                        .padding([.leading, .trailing], 15)
                 }
+                .buttonStyle(AddWorkoutButtonStyle())
                 Spacer().frame(height: 100)
             }
             .toolbar {

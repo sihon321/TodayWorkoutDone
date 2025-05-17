@@ -6,6 +6,18 @@
 //
 
 import Foundation
+import ComposableArchitecture
+
+private enum DateManagerKey: DependencyKey {
+    static let liveValue: DateManager = DateManager()
+}
+
+extension DependencyValues {
+    var dateManager: DateManager {
+        get { self[DateManagerKey.self] }
+        set { self[DateManagerKey.self] = newValue }
+    }
+}
 
 class DateManager {
     
@@ -71,6 +83,13 @@ class DateManager {
     // MARK: - 날짜를 문자열로 변환 ("yyyy-MM-dd")
     func formatDateToString(_ date: Date, format: String = "yyyy-MM-dd") -> String {
         formatter.dateFormat = format
+        return formatter.string(from: date)
+    }
+    
+    func hourString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "H시"
         return formatter.string(from: date)
     }
 }

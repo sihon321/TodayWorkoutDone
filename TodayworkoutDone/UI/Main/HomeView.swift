@@ -201,16 +201,16 @@ struct HomeView: View {
                     }
                 )
             }
-//            VStack {
-//                HStack {
-//                    Spacer()
-//                    FloatingButton {
-//                        isShowingDummyView.toggle()
-//                    }
-//                    .padding()
-//                }
-//                Spacer()
-//            }
+            VStack {
+                HStack {
+                    Spacer()
+                    FloatingButton {
+                        isShowingDummyView.toggle()
+                    }
+                    .padding()
+                }
+                Spacer()
+            }
         }
         .sheet(isPresented: $isShowingDummyView) {
             HealthKitDummyView()
@@ -230,6 +230,7 @@ struct HomeView: View {
         }
         .alert($store.scope(state: \.destination?.alert,
                             action: \.destination.alert))
+        .tint(.black)
     }
 }
 
