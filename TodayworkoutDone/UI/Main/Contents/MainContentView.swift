@@ -30,7 +30,9 @@ struct MainContentView: View {
             LazyVGrid(columns: gridLayout, spacing: 10) {
                 ForEach(dataList) { data in
                     NavigationLink {
-                        MainContentDetailView(store: Store(initialState: MainContentDetailViewReducer.State()) {
+                        MainContentDetailView(store: Store(
+                            initialState: MainContentDetailViewReducer.State()
+                        ) {
                             MainContentDetailViewReducer()
                         })
                     } label: {

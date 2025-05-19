@@ -32,8 +32,7 @@ struct WorkingOutSectionReducer {
                 }
             )
             self.workingOutHeader = WorkingOutHeaderReducer.State(
-                workoutName: routine.workout.name,
-                equipmentType: routine.equipmentType,
+                routine: routine,
                 editMode: editMode
             )
         }

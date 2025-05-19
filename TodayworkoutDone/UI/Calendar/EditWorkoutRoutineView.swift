@@ -176,6 +176,17 @@ struct EditWorkoutRoutineReducer {
                                     .routines[sectionIndex].equipmentType = type
                             }
                             return .none
+                        case let .restTimer(.confirmRestTime(workoutTime, setTime)):
+                            if let sectionIndex = state.workingOutSection.index(id: sectionId) {
+                                state.workoutRoutine
+                                    .routines[sectionIndex].restTime = workoutTime
+                                for (index, _) in state.workoutRoutine.routines[sectionIndex].sets.enumerated() {
+                                    state.workoutRoutine.routines[sectionIndex].sets[index].restTime = setTime
+                                }
+                            }
+                            return .none
+                        case .restTimer:
+                            return .none
                         }
                     case .setEditMode:
                         return .none
@@ -201,6 +212,12 @@ struct EditWorkoutRoutineReducer {
             case .destination:
                 return .none
             }
+        }
+        .forEach(\.workingOutSection, action: \.workingOutSection) {
+            WorkingOutSectionReducer()
+        }
+        .ifLet(\.$destination, action: \.destination) {
+            Destination.body
         }
     }
 }

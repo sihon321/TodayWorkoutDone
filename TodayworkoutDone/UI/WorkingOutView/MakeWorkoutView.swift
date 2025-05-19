@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import Dependencies
 import SwiftData
+import PopupView
 
 @Reducer
 struct MakeWorkoutReducer {
@@ -196,6 +197,18 @@ struct MakeWorkoutReducer {
                                 state.myRoutine
                                     .routines[sectionIndex].equipmentType = type
                             }
+                            return .none
+                        case let .restTimer(.confirmRestTime(workoutTime, setTime)):
+                            if let sectionIndex = state.workingOutSection
+                                .index(id: sectionId) {
+                                state.myRoutine
+                                    .routines[sectionIndex].restTime = workoutTime
+                                for (index, _) in state.myRoutine.routines[sectionIndex].sets.enumerated() {
+                                    state.myRoutine.routines[sectionIndex].sets[index].restTime = setTime
+                                }
+                            }
+                            return .none
+                        case .restTimer:
                             return .none
                         }
                     case .setEditMode:

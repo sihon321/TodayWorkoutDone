@@ -7,27 +7,44 @@
 
 import SwiftUI
 import ComposableArchitecture
+import PopupView
 
 @Reducer
 struct WorkingOutHeaderReducer {
     @ObservableState
     struct State: Equatable {
-        var workoutName: String
-        var equipmentType: EquipmentType
+        var routine: RoutineState
         var editMode: EditMode
+        var restTimer: RestTimerViewReducer.State
+        
+        init(routine: RoutineState, editMode: EditMode) {
+            self.routine = routine
+            self.editMode = editMode
+            self.restTimer = RestTimerViewReducer.State(
+                workoutRestTime: routine.restTime,
+                setRestTime: routine.sets.first?.restTime ?? 0
+            )
+        }
     }
     
     enum Action {
         case tappedWorkoutsType(type: EquipmentType)
         case deleteWorkout
+        case restTimer(RestTimerViewReducer.Action)
     }
     
     var body: some Reducer<State, Action> {
+        Scope(state: \.restTimer, action: \.restTimer) {
+            RestTimerViewReducer()
+        }
         Reduce { state, action in
             switch action {
-            case .tappedWorkoutsType:
+            case let .tappedWorkoutsType(type):
+                state.routine.equipmentType = type
                 return .none
             case .deleteWorkout:
+                return .none
+            case .restTimer:
                 return .none
             }
         }
@@ -37,51 +54,45 @@ struct WorkingOutHeaderReducer {
 struct WorkingOutHeader: View {
     @Bindable var store: StoreOf<WorkingOutHeaderReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkingOutHeaderReducer>
-    
-    @State private var equipmentType: EquipmentType
     @State private var showingOptions = false
+    @State var showPopup = false
     
     init(store: StoreOf<WorkingOutHeaderReducer>,
          equipmentType: State<EquipmentType>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
-        self._equipmentType = equipmentType
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(store.workoutName)
+                Text(viewStore.routine.workout.name)
                     .font(.system(size: 20, weight: .semibold))
                 
                 Button(action: {}) {
                     Menu {
                         Button(action: {
-                            store.send(.tappedWorkoutsType(type: .machine))
-                            equipmentType = .machine
+                            viewStore.send(.tappedWorkoutsType(type: .machine))
                         }) {
                             Label("머신", systemImage: "pencil")
                         }
                         Button(action: {
-                            store.send(.tappedWorkoutsType(type: .barbel))
-                            equipmentType = .barbel
+                            viewStore.send(.tappedWorkoutsType(type: .barbel))
                         }) {
                             Label("바벨", systemImage: "pencil")
                         }
                         Button(action: {
-                            store.send(.tappedWorkoutsType(type: .dumbbel))
-                            equipmentType = .dumbbel
+                            viewStore.send(.tappedWorkoutsType(type: .dumbbel))
                         }) {
                             Label("덤벨", systemImage: "pencil")
                         }
                         Button(action: {
-                            store.send(.tappedWorkoutsType(type: .cable))
-                            equipmentType = .cable
+                            viewStore.send(.tappedWorkoutsType(type: .cable))
                         }) {
                             Label("케이블", systemImage: "pencil")
                         }
                     } label: {
-                        Text(equipmentType.kor)
+                        Text(viewStore.routine.equipmentType.kor)
                             .padding([.leading, .trailing], 5)
                             .padding([.top, .bottom], 3)
                             .font(.system(size: 11))
@@ -105,6 +116,19 @@ struct WorkingOutHeader: View {
                     .confirmationDialog("select", isPresented: $showingOptions) {
                         Button("삭제") {
                             store.send(.deleteWorkout)
+                        }
+                        Button("휴식시간 설정") {
+                            showPopup.toggle()
+                        }
+                        .popup(isPresented: $showPopup) {
+                            RestTimerView(store: Store(initialState: viewStore.restTimer) {
+                                RestTimerViewReducer()
+                            })
+                        } customize: {
+                            $0
+                                .closeOnTap(false)
+                                .backgroundColor(.black.opacity(0.4))
+                                .appearFrom(.centerScale)
                         }
                     }
             }
