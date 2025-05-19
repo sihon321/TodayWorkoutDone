@@ -198,6 +198,8 @@ struct MakeWorkoutReducer {
                                     .routines[sectionIndex].equipmentType = type
                             }
                             return .none
+                        case .togglePopup:
+                            return .none
                         case let .restTimer(.confirmRestTime(workoutTime, setTime)):
                             if let sectionIndex = state.workingOutSection
                                 .index(id: sectionId) {

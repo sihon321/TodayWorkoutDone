@@ -55,7 +55,7 @@ struct WorkingOutSectionReducer {
         case setEditMode(EditMode)
         case deleteWorkoutSet(IndexSet)
         
-        indirect case workingOutRow(IdentifiedActionOf<WorkingOutRowReducer>)
+        case workingOutRow(IdentifiedActionOf<WorkingOutRowReducer>)
         case workingOutHeader(WorkingOutHeaderReducer.Action)
     }
     

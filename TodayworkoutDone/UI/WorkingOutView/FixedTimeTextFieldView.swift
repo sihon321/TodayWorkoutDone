@@ -12,9 +12,13 @@ import ComposableArchitecture
 struct FixedTimeInputReducer {
     @ObservableState
     struct State: Equatable {
-        var inputText: String = ""
         var rawInput: String = ""
-        var formattedTime: String {
+        
+        init(rawInput: String) {
+            self.rawInput = formattedTime(rawInput)
+        }
+        
+        func formattedTime(_ raw: String) -> String {
             let digitsOnly = rawInput.filter { $0.isNumber }
             let number = Int(digitsOnly) ?? 0
             let minutes = number / 100
@@ -33,10 +37,10 @@ struct FixedTimeInputReducer {
             switch action {
             case let .textChanged(newValue):
                 let digits = newValue.filter { $0.isNumber }
-                state.inputText = String(digits.prefix(4)) // 최대 4자리 제한
+                state.rawInput = digits
                 return .none
             case .textEditingEnded:
-                state.rawInput = state.inputText
+                state.rawInput = state.formattedTime(state.rawInput) // 최대 4자리 제한
                 return .none
             }
         }
@@ -57,10 +61,7 @@ struct FixedTimeTextFieldView: View {
         VStack {
             TextField(
                 "시간 입력",
-                text: viewStore.binding(
-                    get: \.formattedTime,
-                    send: FixedTimeInputReducer.Action.textChanged
-                )
+                text: $store.rawInput.sending(\.textChanged)
             )
             .focused($isFocused)
             .onChange(of: isFocused) { _, newValue in

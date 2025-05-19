@@ -57,30 +57,25 @@ struct RestTimerView: View {
     }
     
     var body: some View {
-        VStack {
-            Spacer(minLength: 25)
+        VStack(alignment: .center) {
             HStack {
                 Text("워크아웃 휴식")
                     .frame(width: 100)
-                FixedTimeTextFieldView(store: Store(initialState: viewStore.workoutTimeText) {
-                    FixedTimeInputReducer()
-                })
+                FixedTimeTextFieldView(store: store.scope(state: \.workoutTimeText,
+                                                          action: \.workoutTimeText))
             }
             HStack {
                 Text("세트 휴식")
                     .frame(width: 100)
-                FixedTimeTextFieldView(store: Store(initialState: viewStore.setTimeText) {
-                    FixedTimeInputReducer()
-                })
+                FixedTimeTextFieldView(store: store.scope(state: \.setTimeText,
+                                                          action: \.setTimeText))
             }
-            Spacer()
             Button("확인") {
                 let workoutTime = timeStringToSeconds(viewStore.workoutTimeText.rawInput)
                 let setTime = timeStringToSeconds(viewStore.setTimeText.rawInput)
                 viewStore.send(.confirmRestTime(workoutTime, setTime))
             }
             .frame(maxWidth: .infinity, minHeight: 30)
-            
         }
         .padding()
         .frame(width: 300, height: 200)

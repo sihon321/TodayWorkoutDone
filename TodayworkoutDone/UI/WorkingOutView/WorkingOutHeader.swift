@@ -15,6 +15,7 @@ struct WorkingOutHeaderReducer {
     struct State: Equatable {
         var routine: RoutineState
         var editMode: EditMode
+        var showPopup = false
         var restTimer: RestTimerViewReducer.State
         
         init(routine: RoutineState, editMode: EditMode) {
@@ -30,6 +31,7 @@ struct WorkingOutHeaderReducer {
     enum Action {
         case tappedWorkoutsType(type: EquipmentType)
         case deleteWorkout
+        case togglePopup(Bool)
         case restTimer(RestTimerViewReducer.Action)
     }
     
@@ -44,6 +46,11 @@ struct WorkingOutHeaderReducer {
                 return .none
             case .deleteWorkout:
                 return .none
+            case .togglePopup(let isPopup):
+                state.showPopup = isPopup
+                return .none
+            case .restTimer(.confirmRestTime(_, _)):
+                return .send(.togglePopup(false))
             case .restTimer:
                 return .none
             }
@@ -55,7 +62,6 @@ struct WorkingOutHeader: View {
     @Bindable var store: StoreOf<WorkingOutHeaderReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkingOutHeaderReducer>
     @State private var showingOptions = false
-    @State var showPopup = false
     
     init(store: StoreOf<WorkingOutHeaderReducer>,
          equipmentType: State<EquipmentType>) {
@@ -118,17 +124,18 @@ struct WorkingOutHeader: View {
                             store.send(.deleteWorkout)
                         }
                         Button("휴식시간 설정") {
-                            showPopup.toggle()
+                            viewStore.send(.togglePopup(true))
                         }
-                        .popup(isPresented: $showPopup) {
-                            RestTimerView(store: Store(initialState: viewStore.restTimer) {
-                                RestTimerViewReducer()
-                            })
+                        .popup(isPresented: $store.showPopup.sending(\.togglePopup)) {
+                            RestTimerView(store: store.scope(state: \.restTimer, action: \.restTimer))
                         } customize: {
                             $0
                                 .closeOnTap(false)
                                 .backgroundColor(.black.opacity(0.4))
                                 .appearFrom(.centerScale)
+                        }
+                        .onTapGesture {
+                            viewStore.send(.togglePopup(false))
                         }
                     }
             }
