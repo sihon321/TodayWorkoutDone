@@ -9,7 +9,6 @@ import SwiftUI
 import ComposableArchitecture
 import Dependencies
 import SwiftData
-import PopupView
 
 @Reducer
 struct MakeWorkoutReducer {

@@ -25,7 +25,6 @@
 		8EC7725B2C95A4F600C35CE7 /* MyRoutineDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC7725A2C95A4F600C35CE7 /* MyRoutineDatabase.swift */; };
 		8ED37AF32AC87E0700B4F206 /* MyRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED37AF22AC87E0700B4F206 /* MyRoutine.swift */; };
 		8ED37AF52AC87E2200B4F206 /* WorkoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED37AF42AC87E2200B4F206 /* WorkoutSet.swift */; };
-		8EE93FEC2DDAFACD0085F70A /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 8EE93FEB2DDAFACD0085F70A /* PopupView */; };
 		8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */; };
 		8EF871C82DCC8FCE0009CC1A /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF871C72DCC8FC70009CC1A /* SwipeView.swift */; };
 		8EFBD8C62DDC116100EEDD2C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFBD8C52DDC115B00EEDD2C /* String+Extension.swift */; };
@@ -207,7 +206,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EE93FEC2DDAFACD0085F70A /* PopupView in Frameworks */,
 				F29B88402CCAB1C500BBE377 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -533,7 +531,6 @@
 			name = TodayworkoutDone;
 			packageProductDependencies = (
 				F29B883F2CCAB1C500BBE377 /* ComposableArchitecture */,
-				8EE93FEB2DDAFACD0085F70A /* PopupView */,
 			);
 			productName = TodayworkoutDone;
 			productReference = F2E74CE22921F73500BD35F6 /* TodayworkoutDone.app */;
@@ -609,7 +606,6 @@
 			mainGroup = F2E74CD92921F73500BD35F6;
 			packageReferences = (
 				F29B883E2CCAB1C500BBE377 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				8EE93FEA2DDAFACD0085F70A /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			productRefGroup = F2E74CE32921F73500BD35F6 /* Products */;
 			projectDirPath = "";
@@ -1098,14 +1094,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		8EE93FEA2DDAFACD0085F70A /* XCRemoteSwiftPackageReference "PopupView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/exyte/PopupView.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.1.7;
-			};
-		};
 		F29B883E2CCAB1C500BBE377 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -1117,11 +1105,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8EE93FEB2DDAFACD0085F70A /* PopupView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8EE93FEA2DDAFACD0085F70A /* XCRemoteSwiftPackageReference "PopupView" */;
-			productName = PopupView;
-		};
 		F29B883F2CCAB1C500BBE377 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F29B883E2CCAB1C500BBE377 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

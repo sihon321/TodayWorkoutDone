@@ -39,6 +39,7 @@ struct HomeReducer {
         
         case workingOut(WorkingOutReducer.Action)
         case tabBar(CustomTabBarReducer.Action)
+        case calendar(CalendarReducer.Action)
         
         var description: String {
             return "\(self)"
@@ -62,6 +63,9 @@ struct HomeReducer {
     var body: some Reducer<State, Action> {
         Scope(state: \.workingOut, action: \.workingOut) {
             WorkingOutReducer()
+        }
+        Scope(state: \.calendar, action: \.calendar) {
+            CalendarReducer()
         }
         Reduce { state, action in
             switch action {
@@ -148,6 +152,8 @@ struct HomeReducer {
 
             case .workingOut(_):
                 return .none
+            case .calendar:
+                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination) {
@@ -184,9 +190,7 @@ struct HomeView: View {
                 }
                 .tag(0)
                 
-                CalendarView(store: Store(initialState: CalendarReducer.State()) {
-                    CalendarReducer()
-                })
+                CalendarView(store: store.scope(state: \.calendar, action: \.calendar))
                 .tag(1)
             }
             if viewStore.workingOut.myRoutine != nil {

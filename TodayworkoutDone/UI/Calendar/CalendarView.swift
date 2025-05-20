@@ -101,10 +101,18 @@ struct CalendarReducer {
                     )
                 }
                 return .none
-            case .calendarDetail(.calendarDetailSubView(.element(_, action: .destination(.presented(.editWorkoutRoutine(.save)))))):
-                return .send(.loadWorkoutRoutines)
+            case .calendarDetail(.calendarDetailSubView(.element(_, action: .destination(.presented(.editWorkoutRoutine(.save(let workoutRoutine))))))):
+                if let selectedDate = state.selectedDate,
+                   selectedDate.isSameDay(as: workoutRoutine.startDate) {
+                    return .send(.loadWorkoutRoutines)
+                } else {
+                    return .run { send in
+                        await send(.loadWorkoutRoutines)
+                        await send(.setSheet(isPresented: false))
+                    }
+                }
+
             case .calendarDetail(.calendarDetailSubView(.element(_, action: .delete))):
-                
                 return .run { send in
                     await send(.loadWorkoutRoutines)
                     await send(.setSheet(isPresented: false))

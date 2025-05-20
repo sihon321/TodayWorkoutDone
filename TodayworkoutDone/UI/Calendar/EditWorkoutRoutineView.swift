@@ -18,6 +18,7 @@ struct EditWorkoutRoutineReducer {
         
         var workoutRoutine: WorkoutRoutineState
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
+        var isFocused: Bool = false
         
         init(workoutRoutine: WorkoutRoutineState) {
             self.workoutRoutine = workoutRoutine
@@ -39,6 +40,8 @@ struct EditWorkoutRoutineReducer {
         case dismiss
         case editStartDate(Date)
         case editEndDate(Date)
+        case setFocus(Bool)
+        case dismissKeyboard
         
         case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
         case destination(PresentationAction<Destination.Action>)
@@ -99,6 +102,14 @@ struct EditWorkoutRoutineReducer {
                 let difference = date.timeIntervalSince(startDate)
                 state.workoutRoutine.routineTime = Int(difference)
                 return .none
+                
+            case let .setFocus(focus):
+                state.isFocused = focus
+                return .none
+            case .dismissKeyboard:
+                state.isFocused = false
+                return .none
+                
             case let .workingOutSection(action):
                 switch action {
                 case let .element(sectionId, action):
@@ -225,6 +236,7 @@ struct EditWorkoutRoutineReducer {
 struct EditWorkoutRoutineView: View {
     @Bindable var store: StoreOf<EditWorkoutRoutineReducer>
     @ObservedObject var viewStore: ViewStoreOf<EditWorkoutRoutineReducer>
+    @FocusState private var isTextFieldFocused: Bool
     
     init(store: StoreOf<EditWorkoutRoutineReducer>) {
         self.store = store
@@ -253,21 +265,37 @@ struct EditWorkoutRoutineView: View {
                                selection: viewStore.binding(get: \.workoutRoutine.endDate,
                                                             send: EditWorkoutRoutineReducer.Action.editEndDate),
                                displayedComponents: [.date, .hourAndMinute])
+                    Spacer()
+                    
+                    ForEach(store.scope(state: \.workingOutSection,
+                                        action: \.workingOutSection)) { rowStore in
+                        WorkingOutSection(store: rowStore)
+                    }
+                    .padding([.bottom], 30)
+                    
+                    Button("워크아웃 추가") {
+                        viewStore.send(.tappedAdd)
+                    }
+                    .buttonStyle(AddWorkoutButtonStyle())
+                    Spacer().frame(height: 100)
                 }
                 .padding([.leading, .trailing], 15)
-                Spacer()
-                
-                ForEach(store.scope(state: \.workingOutSection,
-                                    action: \.workingOutSection)) { rowStore in
-                    WorkingOutSection(store: rowStore)
+                .onTapGesture {
+                    viewStore.send(.dismissKeyboard)
+                    viewStore.workingOutSection.elements.forEach { section in
+                        section.workingOutRow.elements.forEach { row in
+                            viewStore.send(
+                                .workingOutSection(
+                                    .element(id: section.id,
+                                             action: .workingOutRow(
+                                                .element(id: row.id,
+                                                         action: .dismissKeyboard))
+                                            )
+                                )
+                            )
+                        }
+                    }
                 }
-                .padding([.bottom], 30)
-                
-                Button("워크아웃 추가") {
-                    viewStore.send(.tappedAdd)
-                }
-                .buttonStyle(AddWorkoutButtonStyle())
-                Spacer().frame(height: 100)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

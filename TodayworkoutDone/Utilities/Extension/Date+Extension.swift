@@ -57,6 +57,15 @@ extension Date {
         let dateString = dateFormatter.string(from: self)
         return dateFormatter.date(from: dateString)!
     }
+    
+    func isSameDay(as other: Date) -> Bool {
+        let calendar = Calendar.current
+        let selfComponents = calendar.dateComponents([.year, .month, .day], from: self)
+        let otherComponents = calendar.dateComponents([.year, .month, .day], from: other)
+        return selfComponents.year == otherComponents.year &&
+               selfComponents.month == otherComponents.month &&
+               selfComponents.day == otherComponents.day
+    }
 }
 
 extension Array where Element == Date {
