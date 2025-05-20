@@ -50,4 +50,13 @@ extension Int {
         
         return result
     }
+    
+    func formattedTime() -> String {
+        let number = self
+        var minutes = number / 100
+        let remainder = (number % 100)
+        minutes += remainder / 60
+        let seconds = remainder % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
 }

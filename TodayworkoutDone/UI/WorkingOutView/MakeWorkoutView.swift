@@ -152,7 +152,7 @@ struct MakeWorkoutReducer {
                             switch action {
                             case .toggleCheck:
                                 return .none
-                            case let .typeLab(lab):
+                            case let .typeRep(lab):
                             if let sectionIndex = state.workingOutSection
                                     .index(id: sectionId),
                                    let rowIndex = state.workingOutSection[sectionIndex]
@@ -178,6 +178,17 @@ struct MakeWorkoutReducer {
                                         .weight = weightValue
                                 }
                                 return .none
+                            case .typeRestTime(let restTime):
+                                if let sectionIndex = state.workingOutSection.index(id: sectionId),
+                                   let rowIndex = state.workingOutSection[sectionIndex]
+                                    .workingOutRow
+                                    .index(id: rowId) {
+                                    state.myRoutine
+                                        .routines[sectionIndex]
+                                        .sets[rowIndex]
+                                        .restTime = restTime.timeStringToSeconds()
+                                }
+                                return .none
                             case .setFocus, .dismissKeyboard:
                                 return .none
                             }
@@ -197,20 +208,6 @@ struct MakeWorkoutReducer {
                                 state.myRoutine
                                     .routines[sectionIndex].equipmentType = type
                             }
-                            return .none
-                        case .togglePopup:
-                            return .none
-                        case let .restTimer(.confirmRestTime(workoutTime, setTime)):
-                            if let sectionIndex = state.workingOutSection
-                                .index(id: sectionId) {
-                                state.myRoutine
-                                    .routines[sectionIndex].restTime = workoutTime
-                                for (index, _) in state.myRoutine.routines[sectionIndex].sets.enumerated() {
-                                    state.myRoutine.routines[sectionIndex].sets[index].restTime = setTime
-                                }
-                            }
-                            return .none
-                        case .restTimer:
                             return .none
                         }
                     case .setEditMode:
@@ -299,6 +296,20 @@ struct MakeWorkoutView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
+                        viewStore.send(.dismissKeyboard)
+                        viewStore.workingOutSection.elements.forEach { section in
+                            section.workingOutRow.elements.forEach { row in
+                                viewStore.send(
+                                    .workingOutSection(
+                                        .element(id: section.id,
+                                                 action: .workingOutRow(
+                                                    .element(id: row.id,
+                                                             action: .dismissKeyboard))
+                                                )
+                                    )
+                                )
+                            }
+                        }
                         viewStore.send(.dismissMakeWorkout)
                     }) {
                         Image(systemName: "xmark")

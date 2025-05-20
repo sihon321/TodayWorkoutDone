@@ -7,7 +7,6 @@
 
 import SwiftUI
 import ComposableArchitecture
-import PopupView
 
 @Reducer
 struct WorkingOutHeaderReducer {
@@ -15,43 +14,25 @@ struct WorkingOutHeaderReducer {
     struct State: Equatable {
         var routine: RoutineState
         var editMode: EditMode
-        var showPopup = false
-        var restTimer: RestTimerViewReducer.State
         
         init(routine: RoutineState, editMode: EditMode) {
             self.routine = routine
             self.editMode = editMode
-            self.restTimer = RestTimerViewReducer.State(
-                workoutRestTime: routine.restTime,
-                setRestTime: routine.sets.first?.restTime ?? 0
-            )
         }
     }
     
     enum Action {
         case tappedWorkoutsType(type: EquipmentType)
         case deleteWorkout
-        case togglePopup(Bool)
-        case restTimer(RestTimerViewReducer.Action)
     }
     
     var body: some Reducer<State, Action> {
-        Scope(state: \.restTimer, action: \.restTimer) {
-            RestTimerViewReducer()
-        }
         Reduce { state, action in
             switch action {
             case let .tappedWorkoutsType(type):
                 state.routine.equipmentType = type
                 return .none
             case .deleteWorkout:
-                return .none
-            case .togglePopup(let isPopup):
-                state.showPopup = isPopup
-                return .none
-            case .restTimer(.confirmRestTime(_, _)):
-                return .send(.togglePopup(false))
-            case .restTimer:
                 return .none
             }
         }
@@ -123,20 +104,6 @@ struct WorkingOutHeader: View {
                         Button("삭제") {
                             store.send(.deleteWorkout)
                         }
-                        Button("휴식시간 설정") {
-                            viewStore.send(.togglePopup(true))
-                        }
-                        .popup(isPresented: $store.showPopup.sending(\.togglePopup)) {
-                            RestTimerView(store: store.scope(state: \.restTimer, action: \.restTimer))
-                        } customize: {
-                            $0
-                                .closeOnTap(false)
-                                .backgroundColor(.black.opacity(0.4))
-                                .appearFrom(.centerScale)
-                        }
-                        .onTapGesture {
-                            viewStore.send(.togglePopup(false))
-                        }
                     }
             }
             HStack {
@@ -149,10 +116,16 @@ struct WorkingOutHeader: View {
                 }
                 Text("랩")
                     .font(.system(size: 17, weight: .medium))
-                    .frame(minWidth: viewStore.editMode == .inactive ? 85 : 160)
+                    .frame(minWidth: viewStore.editMode == .inactive ? 85 : 110)
                 Text("kg")
                     .font(.system(size: 17, weight: .medium))
-                    .frame(minWidth: viewStore.editMode == .inactive ? 85 : 160)
+                    .frame(minWidth: viewStore.editMode == .inactive ? 85 : 110)
+                if viewStore.editMode == .active {
+                    Text("휴식시간")
+                        .font(.system(size: 17, weight: .medium))
+                        .frame(minWidth: 80)
+                }
+
             }
         }
         .frame(maxWidth: .infinity)

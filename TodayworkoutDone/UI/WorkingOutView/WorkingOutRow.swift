@@ -20,7 +20,13 @@ struct WorkingOutRowReducer {
         var focusedField: Field?
         
         var repText: String = ""
+        var originalRepText: String = ""
+        
         var weightText: String = ""
+        var originalWeightText: String = ""
+        
+        var restTimeText: String = ""
+        var originalRestTimeText: String = ""
         
         init(index: Int, workoutSet: WorkoutSetState, editMode: EditMode = .inactive) {
             self.index = index
@@ -31,13 +37,15 @@ struct WorkingOutRowReducer {
             
             repText = String(workoutSet.reps)
             weightText = String(workoutSet.weight)
+            restTimeText = workoutSet.restTime.formattedTime()
         }
     }
     
     enum Action {
         case toggleCheck(isChecked: Bool)
-        case typeLab(lab: String)
+        case typeRep(rep: String)
         case typeWeight(weight: String)
+        case typeRestTime(restTime: String)
         case setFocus(Field?)
         case dismissKeyboard
     }
@@ -45,6 +53,7 @@ struct WorkingOutRowReducer {
     enum Field: Hashable {
         case repText
         case weightText
+        case restTimeText
     }
 
     var body: some Reducer<State, Action> {
@@ -52,7 +61,7 @@ struct WorkingOutRowReducer {
             switch action {
             case .toggleCheck:
                 return .none
-            case let .typeLab(rep):
+            case let .typeRep(rep):
                 if let formattedRep = Int(rep) {
                     state.workoutSet.reps = formattedRep
                     state.repText = rep
@@ -64,8 +73,27 @@ struct WorkingOutRowReducer {
                     state.weightText = weight
                 }
                 return .none
+            case let .typeRestTime(restTime):
+                if !restTime.isEmpty {
+                    state.restTimeText = restTime.formattedTime()
+                }
+                
+                return .none
             case let .setFocus(field):
                 state.focusedField = field
+                switch field {
+                case .repText:
+                    state.originalRepText = state.repText
+                    state.repText = ""
+                case .weightText:
+                    state.originalWeightText = state.weightText
+                    state.weightText = ""
+                case .restTimeText:
+                    state.originalRestTimeText = state.restTimeText
+                    state.restTimeText = ""
+                case .none:
+                    break
+                }
                 return .none
             case .dismissKeyboard:
                 state.focusedField = nil
@@ -79,7 +107,7 @@ struct WorkingOutRow: View {
     @Bindable var store: StoreOf<WorkingOutRowReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkingOutRowReducer>
     @FocusState private var focusedField: WorkingOutRowReducer.Field?
-    
+
     init(store: StoreOf<WorkingOutRowReducer>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
@@ -138,10 +166,10 @@ struct WorkingOutRow: View {
             if viewStore.editMode == .active {
                 TextField("count", text: viewStore.binding(
                     get: { $0.repText },
-                    send: { WorkingOutRowReducer.Action.typeLab(lab: $0) })
+                    send: { WorkingOutRowReducer.Action.typeRep(rep: $0) })
                 )
                 .font(.system(size: 17))
-                .frame(minWidth: 140)
+                .frame(minWidth: 100)
                 .keyboardType(.numberPad)
                 .textFieldStyle(.roundedBorder)
                 .multilineTextAlignment(.center)
@@ -161,7 +189,7 @@ struct WorkingOutRow: View {
                     send: { WorkingOutRowReducer.Action.typeWeight(weight: $0) })
                 )
                 .font(.system(size: 17))
-                .frame(minWidth: 140)
+                .frame(minWidth: 100)
                 .keyboardType(.decimalPad)
                 .textFieldStyle(.roundedBorder)
                 .multilineTextAlignment(.center)
@@ -174,11 +202,36 @@ struct WorkingOutRow: View {
                     .background(Color(uiColor: .secondarySystemFill))
                     .cornerRadius(5)
             }
+            
+            if viewStore.editMode == .active {
+                TextField("시간 입력",
+                          text: viewStore.binding(get: \.restTimeText,
+                                                  send: { .typeRestTime(restTime: $0) }))
+                .font(.system(size: 17))
+                .keyboardType(.decimalPad)
+                .textFieldStyle(.roundedBorder)
+                .multilineTextAlignment(.center)
+                .focused($focusedField, equals: .restTimeText)
+            }
         }
         .frame(height: 25)
         .padding(.vertical, 5)
-        .onChange(of: focusedField) { _, newValue in
-            viewStore.send(.setFocus(newValue))
+        .onChange(of: focusedField) { oldValue, newValue in
+            if oldValue == .restTimeText,
+                viewStore.restTimeText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                viewStore.send(.typeRestTime(restTime: store.originalRestTimeText))
+            }
+            if oldValue == .weightText,
+                viewStore.weightText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                viewStore.send(.typeWeight(weight: store.originalWeightText))
+            }
+            if oldValue == .repText,
+                viewStore.repText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                viewStore.send(.typeRep(rep: store.originalRepText))
+            }
+            if newValue != nil {
+                viewStore.send(.setFocus(newValue))
+            }
         }
         .onChange(of: viewStore.focusedField) { _, newValue in
             focusedField = newValue

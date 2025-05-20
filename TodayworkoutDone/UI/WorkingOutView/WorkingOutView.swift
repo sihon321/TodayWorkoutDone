@@ -175,7 +175,7 @@ struct WorkingOutReducer {
                     }
                     return .none
                     
-                case let .typeLab(lab):
+                case let .typeRep(lab):
                     if let sectionIndex = state.workingOutSection.index(id: sectionId),
                        let rowIndex = state.workingOutSection[sectionIndex].workingOutRow.index(id: rowId),
                        let labValue = Int(lab) {
@@ -188,6 +188,17 @@ struct WorkingOutReducer {
                        let rowIndex = state.workingOutSection[sectionIndex].workingOutRow.index(id: rowId),
                        let weightValue = Double(weight) {
                         state.myRoutine?.routines[sectionIndex].sets[rowIndex].weight = weightValue
+                    }
+                    return .none
+                case .typeRestTime(restTime: let restTime):
+                    if let sectionIndex = state.workingOutSection.index(id: sectionId),
+                       let rowIndex = state.workingOutSection[sectionIndex]
+                        .workingOutRow
+                        .index(id: rowId) {
+                        state.myRoutine?
+                            .routines[sectionIndex]
+                            .sets[rowIndex]
+                            .restTime = restTime.timeStringToSeconds()
                     }
                     return .none
                 case .setFocus, .dismissKeyboard:

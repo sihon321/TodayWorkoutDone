@@ -80,7 +80,7 @@ struct WorkoutReducer {
                     return .send(.filteredCategories(filteredCategories))
                 }
             case .dismiss:
-                state.destination = .none
+                state.destination = nil
                 return .run { _ in
                     await self.dismiss()
                 }

@@ -130,8 +130,8 @@ struct EditWorkoutRoutineReducer {
                             switch action {
                             case .toggleCheck:
                                 return .none
-                            case let .typeLab(lab):
-                            if let sectionIndex = state.workingOutSection
+                            case let .typeRep(lab):
+                                if let sectionIndex = state.workingOutSection
                                     .index(id: sectionId),
                                    let rowIndex = state.workingOutSection[sectionIndex]
                                     .workingOutRow
@@ -156,6 +156,17 @@ struct EditWorkoutRoutineReducer {
                                         .weight = weightValue
                                 }
                                 return .none
+                            case .typeRestTime(let restTime):
+                                if let sectionIndex = state.workingOutSection.index(id: sectionId),
+                                   let rowIndex = state.workingOutSection[sectionIndex]
+                                    .workingOutRow
+                                    .index(id: rowId) {
+                                    state.workoutRoutine
+                                        .routines[sectionIndex]
+                                        .sets[rowIndex]
+                                        .restTime = restTime.timeStringToSeconds()
+                                }
+                                return .none
                             case .setFocus, .dismissKeyboard:
                                 return .none
                             }
@@ -175,19 +186,6 @@ struct EditWorkoutRoutineReducer {
                                 state.workoutRoutine
                                     .routines[sectionIndex].equipmentType = type
                             }
-                            return .none
-                        case .togglePopup:
-                            return .none
-                        case let .restTimer(.confirmRestTime(workoutTime, setTime)):
-                            if let sectionIndex = state.workingOutSection.index(id: sectionId) {
-                                state.workoutRoutine
-                                    .routines[sectionIndex].restTime = workoutTime
-                                for (index, _) in state.workoutRoutine.routines[sectionIndex].sets.enumerated() {
-                                    state.workoutRoutine.routines[sectionIndex].sets[index].restTime = setTime
-                                }
-                            }
-                            return .none
-                        case .restTimer:
                             return .none
                         }
                     case .setEditMode:
