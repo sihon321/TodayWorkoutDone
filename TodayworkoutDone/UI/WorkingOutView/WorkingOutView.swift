@@ -264,6 +264,7 @@ struct WorkingOutReducer {
 struct WorkingOutView: View {
     @Bindable var store: StoreOf<WorkingOutReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkingOutReducer>
+    @State private var offsetY: CGFloat = .zero
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
@@ -273,9 +274,28 @@ struct WorkingOutView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        VStack {
+            HStack(alignment: .center) {
+                Button("Close") {
+                    viewStore.send(.tappedToolbarCloseButton(secondsElapsed: store.state.secondsElapsed))
+                    viewStore.send(.toggleTimer)
+                }
+                .font(.system(size: 17))
+                Spacer()
+                Text(viewStore.state.secondsElapsed.secondToHMS)
+                    .font(.system(size: 17, design: .monospaced))
+                Spacer()
+                toggleButton()
+            }
+            .frame(height: 70)
+            .padding(.horizontal, 15)
+            .background(offsetY >= 0 ? .slideCardBackground: Color.gray88)
             ScrollView {
-                VStack {
+                VStack(alignment: .leading) {
+                    Text(viewStore.myRoutine?.name ?? "")
+                        .font(.system(size: 25, weight: .bold))
+                        .multilineTextAlignment(.center)
+                        .padding(.leading, 15)
                     ForEach(
                         store.scope(state: \.workingOutSection,
                                     action: \.workingOutSection)
@@ -300,32 +320,14 @@ struct WorkingOutView: View {
                     Spacer().frame(height: 100)
                 }
             }
-            .onAppear {
-                viewStore.send(.toggleTimer)
-            }
-            .onDisappear {
-                viewStore.send(.cancelTimer)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Close") {
-                        viewStore.send(.tappedToolbarCloseButton(secondsElapsed: store.state.secondsElapsed))
-                        viewStore.send(.toggleTimer)
-                    }
-                }
-                ToolbarItem(placement: .principal) {
-                    VStack {
-                        Text(viewStore.state.secondsElapsed.secondToHMS)
-                    }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    toggleButton()
-                }
-            }
-            .navigationTitle(viewStore.myRoutine?.name ?? "")
-            .listStyle(.grouped)
-            .ignoresSafeArea(.container, edges: .bottom)
         }
+        .onAppear {
+            viewStore.send(.toggleTimer)
+        }
+        .onDisappear {
+            viewStore.send(.cancelTimer)
+        }
+        .ignoresSafeArea(.container, edges: .bottom)
         .alert($store.scope(state: \.destination?.alert,
                             action: \.destination.alert))
     }
@@ -359,6 +361,16 @@ struct WorkingOutView: View {
             viewStore.send(.tappedEdit)
         }
     }
+    
+    private var hiddenView: some View {
+        GeometryReader { proxy in
+            let offsetY = proxy.frame(in: .global).minY
+            Color.clear
+                .preference(key: ScrollOffsetPreferenceKey.self, value: offsetY)
+                .frame(height: 0)
+        }
+    }
+
 }
 
 extension AlertState where Action == WorkingOutReducer.Destination.Alert {
@@ -378,5 +390,12 @@ extension AlertState where Action == WorkingOutReducer.Destination.Alert {
         } message: {
             TextState("새로운 워크아웃을 저장하시겟습니까?")
         }
+    }
+}
+
+struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = .zero
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
     }
 }

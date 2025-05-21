@@ -67,29 +67,13 @@ struct SlideOverCardView<Content: View>: View {
                                                                           initialVelocity: 10.0),
                    value: 1.0)
         .gesture(drag)
-        .overlay(
-            GeometryReader { proxy -> Color in
-                let minY = position
-                let durationOffset: CGFloat = 25
-                DispatchQueue.main.async {
-                    if self.dragState.translation.height < 0 && minY > (lastOffset + durationOffset) {
-                        lastOffset = -self.dragState.translation.height
-                    }
-                    
-                    if 0 < self.dragState.translation.height && -minY < (lastOffset - durationOffset) {
-                        lastOffset = -self.dragState.translation.height
-                    }
-                }
-                return Color.clear
-            }
-        )
     }
     
     private func onDragEnded(drag: DragGesture.Value) {
         let verticalDirection = drag.predictedEndLocation.y - drag.location.y
         let cardTopEdgeLocation = self.position + drag.translation.height
         let positionAbove: CGFloat = abovePosition
-        let positionBelow: CGFloat = UIScreen.main.bounds.size.height / 1.5
+        let positionBelow: CGFloat = UIScreen.main.bounds.size.height - 200
         let closestPosition: CGFloat
 
         if (cardTopEdgeLocation - positionAbove) < (positionBelow - cardTopEdgeLocation) {

@@ -154,6 +154,7 @@ struct WorkingOutRow: View {
                 )
                 .toggleStyle(CheckboxToggleStyle(style: .square))
                 .padding(.leading, -7)
+                .foregroundStyle(Color.personal)
             }
             
             if viewStore.editMode == .inactive {

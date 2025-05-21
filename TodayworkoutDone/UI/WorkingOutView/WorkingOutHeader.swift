@@ -117,13 +117,15 @@ struct WorkingOutHeader: View {
                 Text("랩")
                     .font(.system(size: 17, weight: .medium))
                     .frame(minWidth: viewStore.editMode == .inactive ? 85 : 110)
+                    
                 Text("kg")
                     .font(.system(size: 17, weight: .medium))
-                    .frame(minWidth: viewStore.editMode == .inactive ? 85 : 110)
+                    .frame(minWidth: viewStore.editMode == .inactive ? 85 : 100)
+                    
                 if viewStore.editMode == .active {
                     Text("휴식시간")
                         .font(.system(size: 17, weight: .medium))
-                        .frame(minWidth: 80)
+                        .frame(minWidth: 100)
                 }
 
             }
