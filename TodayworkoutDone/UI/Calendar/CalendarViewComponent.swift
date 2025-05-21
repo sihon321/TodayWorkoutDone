@@ -73,7 +73,7 @@ struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: Vie
                             }
                         }
                     }
-                    .padding([.bottom], 100)
+                    .padding([.bottom], 150)
                     .background(
                         GeometryReader { proxy in
                             Color.clear.preference(

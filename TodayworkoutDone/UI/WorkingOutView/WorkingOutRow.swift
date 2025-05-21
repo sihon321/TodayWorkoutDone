@@ -55,6 +55,9 @@ struct WorkingOutRowReducer {
         case weightText
         case restTimeText
     }
+    
+    private enum CancelID { case timer }
+    @Dependency(\.continuousClock) var clock
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -107,7 +110,8 @@ struct WorkingOutRow: View {
     @Bindable var store: StoreOf<WorkingOutRowReducer>
     @ObservedObject var viewStore: ViewStoreOf<WorkingOutRowReducer>
     @FocusState private var focusedField: WorkingOutRowReducer.Field?
-
+    @State private var progressOffset: CGFloat = 100
+    
     init(store: StoreOf<WorkingOutRowReducer>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
@@ -158,10 +162,17 @@ struct WorkingOutRow: View {
             }
             
             if viewStore.editMode == .inactive {
-                Text("\(viewStore.workoutSet.prevReps) x \(String(format: "%.1f", viewStore.workoutSet.prevWeight))")
-                    .font(.system(size: 17))
-                    .frame(minWidth: 140)
-                    .foregroundStyle(.secondary)
+                if viewStore.isChecked {
+                    CountdownTimerView(totalTime: store.workoutSet.restTime)
+                        .frame(minWidth: 100, minHeight: 20)
+                        .background(.white)
+                } else {
+                    Text("\(viewStore.workoutSet.prevReps) x \(String(format: "%.1f", viewStore.workoutSet.prevWeight))")
+                        .font(.system(size: 17))
+                        .frame(minWidth: 140)
+                        .foregroundStyle(.secondary)
+                }
+
             }
             
             if viewStore.editMode == .active {

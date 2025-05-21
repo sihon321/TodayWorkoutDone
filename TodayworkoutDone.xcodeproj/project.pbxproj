@@ -10,6 +10,7 @@
 		8E0C49672DC0695F00DDBF6A /* HealthKitDummyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C49662DC0695500DDBF6A /* HealthKitDummyView.swift */; };
 		8E0C49692DC06A1400DDBF6A /* HealthKitDummyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C49682DC06A1300DDBF6A /* HealthKitDummyManager.swift */; };
 		8E0C496B2DC09BC600DDBF6A /* FloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C496A2DC09BC200DDBF6A /* FloatingView.swift */; };
+		8E0C8C792DDDBD970051BDB8 /* CountdownTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C8C782DDDBD950051BDB8 /* CountdownTimerView.swift */; };
 		8E2A89062C96E332009C9032 /* WorkoutRoutineDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A89052C96E332009C9032 /* WorkoutRoutineDatabase.swift */; };
 		8E2A89082C96E78E009C9032 /* CategoryDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A89072C96E78E009C9032 /* CategoryDatabase.swift */; };
 		8E33A8792DB7309800BAE2CF /* EditWorkoutRoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E33A8782DB7308E00BAE2CF /* EditWorkoutRoutineView.swift */; };
@@ -114,6 +115,7 @@
 		8E0C49662DC0695500DDBF6A /* HealthKitDummyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitDummyView.swift; sourceTree = "<group>"; };
 		8E0C49682DC06A1300DDBF6A /* HealthKitDummyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitDummyManager.swift; sourceTree = "<group>"; };
 		8E0C496A2DC09BC200DDBF6A /* FloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingView.swift; sourceTree = "<group>"; };
+		8E0C8C782DDDBD950051BDB8 /* CountdownTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerView.swift; sourceTree = "<group>"; };
 		8E2A89052C96E332009C9032 /* WorkoutRoutineDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRoutineDatabase.swift; sourceTree = "<group>"; };
 		8E2A89072C96E78E009C9032 /* CategoryDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDatabase.swift; sourceTree = "<group>"; };
 		8E33A8782DB7308E00BAE2CF /* EditWorkoutRoutineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutRoutineView.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 		F2E221462999089300B7DCCB /* WorkingOutView */ = {
 			isa = PBXGroup;
 			children = (
+				8E0C8C782DDDBD950051BDB8 /* CountdownTimerView.swift */,
 				8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */,
 				F2335416295B4BF9006E12CB /* WorkingOutView.swift */,
 				F2E2214929994BB500B7DCCB /* WorkingOutSection.swift */,
@@ -664,6 +667,7 @@
 				F23F4E962957FB250084392B /* MyRoutineView.swift in Sources */,
 				8EB47E0A2CAFF86B0063C1EA /* WorkoutRoutine.swift in Sources */,
 				8EC7725B2C95A4F600C35CE7 /* MyRoutineDatabase.swift in Sources */,
+				8E0C8C792DDDBD970051BDB8 /* CountdownTimerView.swift in Sources */,
 				8E0C496B2DC09BC600DDBF6A /* FloatingView.swift in Sources */,
 				F2007DA72A8A8AC300833AF0 /* HealthKitManager.swift in Sources */,
 				F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */,

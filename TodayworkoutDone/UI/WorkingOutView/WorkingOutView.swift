@@ -281,9 +281,10 @@ struct WorkingOutView: View {
                     viewStore.send(.toggleTimer)
                 }
                 .font(.system(size: 17))
+                .frame(width: 60, height: 20)
                 Spacer()
                 Text(viewStore.state.secondsElapsed.secondToHMS)
-                    .font(.system(size: 17, design: .monospaced))
+                    .font(.system(size: 17))
                 Spacer()
                 toggleButton()
             }
@@ -354,7 +355,7 @@ struct WorkingOutView: View {
             }
             .shadow(color: .personal.opacity(0.14), radius: 4, x: 0, y: 2)
             .offset(x: !viewStore.isEdit ? 15 : -15)
-            .padding(24)
+            .padding(15)
             .animation(.spring(), value: !viewStore.isEdit)
         }
         .onTapGesture {
