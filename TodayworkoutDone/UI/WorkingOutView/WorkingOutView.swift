@@ -116,11 +116,7 @@ struct WorkingOutReducer {
                 if let myRoutine = state.myRoutine {
                     let routines = myRoutine.routines
                     for (routineIndex, routine) in routines.enumerated() {
-                        for (workoutIndex, workoutSet) in routine.sets.enumerated() {
-                            if workoutSet.isChecked == false {
-                                state.myRoutine?.routines[routineIndex].sets.remove(at: workoutIndex)
-                            }
-                        }
+                        state.myRoutine?.routines[routineIndex].sets = routine.sets.filter { $0.isChecked }
                     }
                     let currentDate = Date()
                     let startDate = currentDate.addingTimeInterval(TimeInterval(-secondsElapsed))
@@ -327,7 +323,10 @@ struct WorkingOutView: View {
         }
         .onDisappear {
             viewStore.send(.cancelTimer)
-            for section in store.workingOutSection {
+            for sectionStore in store.workingOutSection {
+                for row in sectionStore.workingOutRow {
+                    viewStore.send(.workingOutSection(.element(id: sectionStore.id, action: .workingOutRow(.element(id: row.id, action: .timerView(.stop))))))
+                }
             }
         }
         .ignoresSafeArea(.container, edges: .bottom)

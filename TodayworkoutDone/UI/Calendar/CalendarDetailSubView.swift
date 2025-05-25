@@ -204,6 +204,9 @@ struct CalendarDetailSubView: View {
                             Image(systemName: "flame")
                             Text("\(Int(routine.calories)) kcal")
                         }
+                        if let averageEndDate = routine.averageEndDate {
+                            Text("세트 수행 시간 \(String(format: "%.2f", averageEndDate)) 초")
+                        }
                     }
                 }
                 .padding(.leading, 5)

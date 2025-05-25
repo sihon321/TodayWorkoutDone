@@ -30,7 +30,12 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
     var sets: [WorkoutSetType] {
         didSet {
             if allTrue {
-                averageEndDate = calculateTimeDifferences(dates: self.sets.compactMap(\.endDate))
+                averageEndDate = calculateTimeDifferences(dates: self.sets.compactMap({
+                    guard let endDate = $0.endDate else {
+                        return nil
+                    }
+                    return endDate - Double($0.restTime)
+                }))
                 endDate = self.sets.last?.endDate
             }
         }
@@ -88,7 +93,8 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
     func calculateTimeDifferences(
         dates: [Date]
     ) -> Double? {
-        let intervals = zip(dates, dates.dropFirst()).map { later, earlier in
+        let sortedDates = dates.reversed()
+        let intervals = zip(sortedDates, sortedDates.dropFirst()).map { later, earlier in
             let intervalInSeconds = later.timeIntervalSince(earlier)
             return intervalInSeconds
         }
@@ -156,7 +162,7 @@ class Routine: RoutineData, Equatable {
     
     var index: Int
     var workout: WorkoutType
-    var sets: [WorkoutSetType]
+    @Relationship(deleteRule: .cascade) var sets: [WorkoutSetType]
     var equipmentType: EquipmentType
     var averageEndDate: Double?
     var calories: Double = 0.0
@@ -198,7 +204,7 @@ extension Routine {
         // 새롭게 구성될 sets 배열
         var updatedSets: [WorkoutSetType] = []
         
-        for (index, newSetState) in state.sets.enumerated() {
+        for (_, newSetState) in state.sets.enumerated() {
             if let id = newSetState.persistentModelID,
                 let existing = existingSetsDict.removeValue(forKey: id) {
                 // 기존 데이터 업데이트

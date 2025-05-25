@@ -128,11 +128,6 @@ struct WorkingOutSection: View {
         .padding(.horizontal, 15)
         .environment(\.editMode, viewStore.binding(get: \.editMode,
                                                    send: WorkingOutSectionReducer.Action.setEditMode))
-        .onDisappear {
-            for row in viewStore.workingOutRow {
-                viewStore.send(.workingOutRow(.element(id: row.id, action: .timerView(.stop))))
-            }
-        }
     }
 }
 
