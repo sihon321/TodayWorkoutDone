@@ -125,16 +125,35 @@ struct MakeWorkoutReducer {
                 case let .element(sectionId, action):
                     switch action {
                     case .tappedAddFooter:
+                        @Dependency(\.routineData.fetch) var fetch
+
                         if let sectionIndex = state.workingOutSection
                             .index(id: sectionId) {
-                            let workoutSet = WorkoutSetState()
                             let index = state.workingOutSection[sectionIndex]
                                 .workingOutRow.count
+                            let name = state.myRoutine.routines[sectionIndex].workout.name
+                            var descriptor = FetchDescriptor<Routine>(
+                                predicate: #Predicate {
+                                    $0.workout.name == name
+                                },
+                                sortBy: [SortDescriptor(\.endDate, order: .reverse)]
+                            )
+                            descriptor.fetchLimit = 1
+                            var workoutSet = WorkoutSetState(order: index + 1)
+                            do {
+                                if let prevRoutine = try fetch(descriptor).first,
+                                   let prevWeight = prevRoutine.sets.first(where: { $0.order == index + 1 })?.weight,
+                                   let prevReps = prevRoutine.sets.first(where: { $0.order == index + 1 })?.reps {
+                                    workoutSet.prevWeight = prevWeight
+                                    workoutSet.prevReps = prevReps
+                                }
+                            } catch {
+                                print(error.localizedDescription)
+                            }
                             state.workingOutSection[sectionIndex]
                                 .workingOutRow
                                 .append(
                                     WorkingOutRowReducer.State(
-                                        index: index + 1,
                                         workoutSet: workoutSet,
                                         editMode: .active
                                     )
@@ -188,7 +207,7 @@ struct MakeWorkoutReducer {
                                         .restTime = restTime.timeStringToSeconds()
                                 }
                                 return .none
-                            case .setFocus, .dismissKeyboard:
+                            case .setFocus, .dismissKeyboard, .timerView:
                                 return .none
                             }
                         }

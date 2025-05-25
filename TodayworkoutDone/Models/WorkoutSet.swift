@@ -9,6 +9,7 @@ import Foundation
 import SwiftData
 
 protocol WorkoutSetData {
+    var order: Int { get }
     var prevWeight: Double { get set }
     var weight: Double { get set }
     var prevReps: Int { get set }
@@ -19,7 +20,8 @@ protocol WorkoutSetData {
 }
 
 struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
-    var id: UUID 
+    var id: UUID
+    var order: Int
     var prevWeight: Double
     var weight: Double
     var prevReps: Int
@@ -30,16 +32,18 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
     var persistentModelID: PersistentIdentifier?
     
     enum CodingKeys: String, CodingKey {
-        case id, prevWeight, weight, prevReps, reps, isChecked, endDate, restTime
+        case id, order, prevWeight, weight, prevReps, reps, isChecked, endDate, restTime
     }
     
     init(id: UUID = UUID(),
+         order: Int,
          prevWeight: Double = .zero,
          weight: Double = .zero,
          prevReps: Int = .zero,
          reps: Int = .zero,
          isChecked: Bool = false) {
         self.id = id
+        self.order = order
         self.prevWeight = prevWeight
         self.weight = weight
         self.prevReps = prevReps
@@ -50,6 +54,7 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(UUID.self, forKey: .id)
+        order = try container.decode(Int.self, forKey: .order)
         prevWeight = try container.decode(Double.self, forKey: .prevWeight)
         weight = try container.decode(Double.self, forKey: .weight)
         prevReps = try container.decode(Int.self, forKey: .prevReps)
@@ -62,6 +67,7 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
     func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
+        try container.encode(order, forKey: .order)
         try container.encode(prevWeight, forKey: .prevWeight)
         try container.encode(weight, forKey: .weight)
         try container.encode(prevReps, forKey: .prevReps)
@@ -79,6 +85,7 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
 extension WorkoutSetState {
     init(model: WorkoutSet) {
         self.id = UUID()
+        self.order = model.order
         self.prevWeight = model.prevWeight
         self.weight = model.weight
         self.prevReps = model.prevReps
@@ -89,9 +96,9 @@ extension WorkoutSetState {
         self.persistentModelID = model.persistentModelID
     }
     
-    func toModel(_ index: Int) -> WorkoutSet {
+    func toModel() -> WorkoutSet {
         return WorkoutSet(
-            index: index,
+            order: order,
             prevWeight: prevWeight,
             weight: weight,
             prevReps: prevReps,
@@ -120,7 +127,7 @@ extension Array where Element == WorkoutSetState {
 // MAKR: - SwiftData
 @Model
 class WorkoutSet: WorkoutSetData, Equatable {
-    var index: Int
+    var order: Int
     var prevWeight: Double
     var weight: Double
     var prevReps: Int
@@ -129,7 +136,7 @@ class WorkoutSet: WorkoutSetData, Equatable {
     var endDate: Date?
     var restTime: Int = 0
 
-    init(index: Int = 0,
+    init(order: Int = 0,
          prevWeight: Double = .zero,
          weight: Double = .zero,
          prevReps: Int = .zero,
@@ -137,7 +144,7 @@ class WorkoutSet: WorkoutSetData, Equatable {
          isChecked: Bool = false,
          endDate: Date? = nil,
          restTime: Int = 0) {
-        self.index = index
+        self.order = order
         self.prevWeight = prevWeight
         self.weight = weight
         self.prevReps = prevReps
@@ -149,8 +156,8 @@ class WorkoutSet: WorkoutSetData, Equatable {
 }
 
 extension WorkoutSet {
-    func update(from state: WorkoutSetState, index: Int) {
-        self.index = index
+    func update(from state: WorkoutSetState) {
+        order = state.order
         prevWeight = state.prevWeight
         weight = state.weight
         prevReps = state.prevReps
@@ -160,9 +167,9 @@ extension WorkoutSet {
         restTime = state.restTime
     }
     
-    static func create(from state: WorkoutSetState, index: Int) -> WorkoutSet {
+    static func create(from state: WorkoutSetState) -> WorkoutSet {
         WorkoutSet(
-            index: index,
+            order: state.order,
             prevWeight: state.prevWeight,
             weight: state.weight,
             prevReps: state.prevReps,

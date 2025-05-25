@@ -6,55 +6,102 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
+
+@Reducer
+struct CountdownTimerReducer {
+    @ObservableState
+    struct State: Equatable {
+        var totalTime: Int = 0
+        var timeRemaining: Int = 0
+        var isRunning: Bool = false
+        
+        init(totalTime: Int) {
+            self.totalTime = totalTime
+            self.timeRemaining = totalTime
+        }
+    }
+    
+    enum Action {
+        case start
+        case stop
+        case tick
+        case onAppear
+    }
+    
+    private enum CancelID { case restTimer }
+    @Dependency(\.continuousClock) var clock
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                state.isRunning = true
+                return .send(.start)
+
+            case .start:
+                return .run { send in
+                    for await _ in self.clock.timer(interval: .seconds(1)) {
+                        await send(.tick, animation: .default)
+                    }
+                }
+                .cancellable(id: CancelID.restTimer, cancelInFlight: true)
+
+            case .stop:
+                state.isRunning = false
+                return .cancel(id: CancelID.restTimer)
+
+            case .tick:
+                guard state.isRunning else { return .none }
+                if state.timeRemaining > 0 {
+                    state.timeRemaining -= 1
+                } else {
+                    state.isRunning = false
+                    return .cancel(id: CancelID.restTimer)
+                }
+                return .none
+            }
+        }
+    }
+}
 
 struct CountdownTimerView: View {
-    @State private var timeRemaining: Int
-    @State private var isRunning = false
-    let totalTime: Int
+    @Bindable var store: StoreOf<CountdownTimerReducer>
+    @ObservedObject var viewStore: ViewStoreOf<CountdownTimerReducer>
     
-    let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
-    
-    init(totalTime: Int = 10) {
-        self.totalTime = totalTime
-        _timeRemaining = State(initialValue: totalTime)
+    init(store: StoreOf<CountdownTimerReducer>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
     }
-    
-    var progress: CGFloat {
-        CGFloat(timeRemaining) / CGFloat(totalTime)
-    }
-    
+
     var body: some View {
         VStack {
-            ZStack(alignment: .center) {
-                Capsule()
-                    .fill(Color.personal.opacity(0.3))
-                    .frame(width: 100, height: 20)
-                Capsule()
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .fill(Color(uiColor: .secondarySystemFill))
+                    .frame(width: 100, height: 25)
+                Rectangle()
+                    .fill(Color.personal.opacity(0.6))
+                    .frame(width: 100, height: 25)
+                    .cornerRadius(6.5)
+                Rectangle()
                     .fill(Color.personal)
-                    .frame(width: progressBarWidth(), height: 20)
-                    .animation(.linear(duration: 1.0), value: timeRemaining)
-                Text("\(timeRemaining.secondToHMS)")
+                    .frame(
+                        width: CGFloat(viewStore.timeRemaining) / CGFloat(viewStore.totalTime) * 100,
+                        height: 25
+                    )
+                    .cornerRadius(6.5)
+                    .animation(.linear(duration: 1.0), value: viewStore.timeRemaining)
+                Text("\(viewStore.timeRemaining.secondToHMS)")
                     .font(.system(size: 13))
                     .foregroundStyle(.white)
                     .monospacedDigit()
-            }
-        }
-        .onReceive(timer) { _ in
-            guard isRunning else { return }
-            if timeRemaining > 0 {
-                timeRemaining -= 1
-            } else {
-                isRunning = false
+                    .frame(width: 100)
             }
         }
         .onAppear {
-            isRunning.toggle()
+            viewStore.send(.onAppear)
         }
     }
-    
-    private func progressBarWidth() -> CGFloat {
-        // 전체 너비 기준으로 비율을 조정할 수도 있지만, 여기선 고정값 사용
-        let maxWidth: CGFloat = 100
-        return maxWidth * progress
-    }
 }
+

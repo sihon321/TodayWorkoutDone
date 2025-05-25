@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import SwiftData
 
 @Reducer
 struct HomeReducer {
@@ -105,15 +106,39 @@ struct HomeReducer {
             case .destination(.presented(.workoutView(.destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine))))))),
                     .destination(.presented(.workoutView(.workoutCategory(.workoutList(.element(_, .destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine)))))))))),
                     .destination(.presented(.workoutView(.tappedDone(let myRoutine)))):
+                @Dependency(\.routineData.fetch) var fetch
                 state.workingOut.myRoutine = myRoutine
+                for (routineIndex, routine) in myRoutine.routines.enumerated() {
+                    var descriptor = FetchDescriptor<Routine>(
+                        predicate: #Predicate {
+                            $0.workout.name == routine.workout.name
+                        },
+                        sortBy: [SortDescriptor(\.endDate, order: .forward)]
+                    )
+                    descriptor.fetchLimit = 1
+                    for (setIndex, _) in routine.sets.enumerated() {
+                        do {
+                            if let prevRoutine = try fetch(descriptor).first,
+                               let prevWeight = prevRoutine.sets.first(where: { $0.order == setIndex + 1 })?.weight,
+                               let prevReps = prevRoutine.sets.first(where: { $0.order == setIndex + 1 })?.reps {
+                                state.workingOut.myRoutine?.routines[routineIndex]
+                                    .sets[setIndex].prevWeight = prevWeight
+                                state.workingOut.myRoutine?.routines[routineIndex]
+                                    .sets[setIndex].prevReps = prevReps
+                            }
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
                 state.workingOut.isEdit = false
                 state.workingOut.workingOutSection = IdentifiedArrayOf(
-                    uniqueElements: myRoutine.routines.map {
+                    uniqueElements: state.workingOut.myRoutine?.routines.map {
                         WorkingOutSectionReducer.State(
                             routine: $0,
                             editMode: .inactive
                         )
-                    }
+                    } ?? []
                 )
 
                 return .none
@@ -205,16 +230,16 @@ struct HomeView: View {
                     }
                 )
             }
-            VStack {
-                HStack {
-                    Spacer()
-                    FloatingButton {
-                        isShowingDummyView.toggle()
-                    }
-                    .padding()
-                }
-                Spacer()
-            }
+//            VStack {
+//                HStack {
+//                    Spacer()
+//                    FloatingButton {
+//                        isShowingDummyView.toggle()
+//                    }
+//                    .padding()
+//                }
+//                Spacer()
+//            }
         }
         .sheet(isPresented: $isShowingDummyView) {
             HealthKitDummyView()

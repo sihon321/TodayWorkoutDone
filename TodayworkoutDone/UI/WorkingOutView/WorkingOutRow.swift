@@ -13,7 +13,6 @@ struct WorkingOutRowReducer {
     @ObservableState
     struct State: Equatable, Identifiable {
         let id: UUID
-        var index: Int
         var workoutSet: WorkoutSetState
         var isChecked: Bool
         var editMode: EditMode
@@ -28,8 +27,9 @@ struct WorkingOutRowReducer {
         var restTimeText: String = ""
         var originalRestTimeText: String = ""
         
-        init(index: Int, workoutSet: WorkoutSetState, editMode: EditMode = .inactive) {
-            self.index = index
+        var timerView: CountdownTimerReducer.State
+        
+        init(workoutSet: WorkoutSetState, editMode: EditMode = .inactive) {
             self.id = workoutSet.id
             self.editMode = editMode
             self.workoutSet = workoutSet
@@ -38,6 +38,7 @@ struct WorkingOutRowReducer {
             repText = String(workoutSet.reps)
             weightText = String(workoutSet.weight)
             restTimeText = workoutSet.restTime.formattedTime()
+            timerView = CountdownTimerReducer.State(totalTime: workoutSet.restTime)
         }
     }
     
@@ -48,6 +49,7 @@ struct WorkingOutRowReducer {
         case typeRestTime(restTime: String)
         case setFocus(Field?)
         case dismissKeyboard
+        case timerView(CountdownTimerReducer.Action)
     }
     
     enum Field: Hashable {
@@ -55,14 +57,17 @@ struct WorkingOutRowReducer {
         case weightText
         case restTimeText
     }
-    
-    private enum CancelID { case timer }
-    @Dependency(\.continuousClock) var clock
 
     var body: some Reducer<State, Action> {
+        Scope(state: \.timerView, action: \.timerView) {
+            CountdownTimerReducer()
+        }
         Reduce { state, action in
             switch action {
-            case .toggleCheck:
+            case let .toggleCheck(isChecked):
+                if !isChecked {
+                    state.timerView.timeRemaining = state.workoutSet.restTime
+                }
                 return .none
             case let .typeRep(rep):
                 if let formattedRep = Int(rep) {
@@ -101,6 +106,8 @@ struct WorkingOutRowReducer {
             case .dismissKeyboard:
                 state.focusedField = nil
                 return .none
+            case .timerView:
+                return .none
             }
         }
     }
@@ -138,7 +145,7 @@ struct WorkingOutRow: View {
                             Label("실패", systemImage: "pencil")
                         }
                     } label: {
-                        Text("\(viewStore.index)")
+                        Text("\(viewStore.workoutSet.order)")
                             .padding([.leading, .trailing], 5)
                             .padding([.top, .bottom], 3)
                             .font(.system(size: 17))
@@ -163,9 +170,11 @@ struct WorkingOutRow: View {
             
             if viewStore.editMode == .inactive {
                 if viewStore.isChecked {
-                    CountdownTimerView(totalTime: store.workoutSet.restTime)
-                        .frame(minWidth: 100, minHeight: 20)
-                        .background(.white)
+                    CountdownTimerView(store: store.scope(state: \.timerView,
+                                                          action: \.timerView))
+                        .frame(maxWidth: 140, minHeight: 25)
+                        .background(.clear)
+                        .transition(.opacity.animation(.easeIn))
                 } else {
                     Text("\(viewStore.workoutSet.prevReps) x \(String(format: "%.1f", viewStore.workoutSet.prevWeight))")
                         .font(.system(size: 17))

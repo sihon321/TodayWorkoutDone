@@ -114,6 +114,14 @@ struct WorkingOutReducer {
                 
             case .destination(.presented(.alert(.tappedWorkoutAlertOk(let secondsElapsed)))):
                 if let myRoutine = state.myRoutine {
+                    let routines = myRoutine.routines
+                    for (routineIndex, routine) in routines.enumerated() {
+                        for (workoutIndex, workoutSet) in routine.sets.enumerated() {
+                            if workoutSet.isChecked == false {
+                                state.myRoutine?.routines[routineIndex].sets.remove(at: workoutIndex)
+                            }
+                        }
+                    }
                     let currentDate = Date()
                     let startDate = currentDate.addingTimeInterval(TimeInterval(-secondsElapsed))
                     insertWorkoutRoutine(
@@ -122,7 +130,7 @@ struct WorkingOutReducer {
                             startDate: startDate,
                             endDate: currentDate,
                             routineTime: secondsElapsed,
-                            routines: myRoutine.routines
+                            routines: state.myRoutine?.routines ?? []
                         )
                     )
                 }
@@ -135,14 +143,13 @@ struct WorkingOutReducer {
                 
             case let .workingOutSection(.element(sectionId, .tappedAddFooter)):
                 if let sectionIndex = state.workingOutSection.index(id: sectionId) {
-                    let workoutSet = WorkoutSetState()
                     let index = state.workingOutSection[sectionIndex]
                         .workingOutRow.count
+                    let workoutSet = WorkoutSetState(order: index + 1)
                     state.workingOutSection[sectionIndex]
                         .workingOutRow
                         .append(
                             WorkingOutRowReducer.State(
-                                index: index + 1,
                                 workoutSet: workoutSet,
                                 editMode: .active
                             )
@@ -164,14 +171,6 @@ struct WorkingOutReducer {
                             .sets[rowIndex].endDate = isChecked ? Date() : nil
                         state.workingOutSection[sectionIndex]
                             .workingOutRow[rowIndex].isChecked = isChecked
-                        
-                        if let isAllTrue = state.myRoutine?.routines[sectionIndex].allTrue,
-                           isAllTrue {
-                            let setEndDates = state.myRoutine?.routines[sectionIndex]
-                                .sets.compactMap { $0.endDate }
-                            state.myRoutine?.routines[sectionIndex]
-                                .averageEndDate = setEndDates?.calculateAverageSecondsBetweenDates()
-                        }
                     }
                     return .none
                     
@@ -201,7 +200,7 @@ struct WorkingOutReducer {
                             .restTime = restTime.timeStringToSeconds()
                     }
                     return .none
-                case .setFocus, .dismissKeyboard:
+                case .setFocus, .dismissKeyboard, .timerView:
                     return .none
                 }
                 
@@ -285,6 +284,7 @@ struct WorkingOutView: View {
                 Spacer()
                 Text(viewStore.state.secondsElapsed.secondToHMS)
                     .font(.system(size: 17))
+                    .monospacedDigit()
                 Spacer()
                 toggleButton()
             }
@@ -327,6 +327,8 @@ struct WorkingOutView: View {
         }
         .onDisappear {
             viewStore.send(.cancelTimer)
+            for section in store.workingOutSection {
+            }
         }
         .ignoresSafeArea(.container, edges: .bottom)
         .alert($store.scope(state: \.destination?.alert,

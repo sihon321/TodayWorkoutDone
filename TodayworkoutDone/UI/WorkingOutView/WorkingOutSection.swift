@@ -25,7 +25,6 @@ struct WorkingOutSectionReducer {
             self.workingOutRow = IdentifiedArrayOf(
                 uniqueElements: routine.sets.enumerated().map {
                     WorkingOutRowReducer.State(
-                        index: $0.offset + 1,
                         workoutSet: $0.element,
                         editMode: editMode
                     )
@@ -78,7 +77,7 @@ struct WorkingOutSectionReducer {
             case let .deleteWorkoutSet(indexSet):
                 state.workingOutRow.remove(atOffsets: indexSet)
                 for (index, _) in state.workingOutRow.enumerated() {
-                    state.workingOutRow[index].index = index + 1
+                    state.workingOutRow[index].workoutSet.order = index + 1
                 }
                 return .none
             }
@@ -129,6 +128,11 @@ struct WorkingOutSection: View {
         .padding(.horizontal, 15)
         .environment(\.editMode, viewStore.binding(get: \.editMode,
                                                    send: WorkingOutSectionReducer.Action.setEditMode))
+        .onDisappear {
+            for row in viewStore.workingOutRow {
+                viewStore.send(.workingOutRow(.element(id: row.id, action: .timerView(.stop))))
+            }
+        }
     }
 }
 

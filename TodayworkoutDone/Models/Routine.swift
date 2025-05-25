@@ -18,6 +18,7 @@ protocol RoutineData {
     var averageEndDate: Double? { get set }
     var calories: Double { get set }
     var restTime: Int { get set }
+    var endDate: Date? { get set }
 }
 
 struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
@@ -30,6 +31,7 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
         didSet {
             if allTrue {
                 averageEndDate = calculateTimeDifferences(dates: self.sets.compactMap(\.endDate))
+                endDate = self.sets.last?.endDate
             }
         }
     }
@@ -37,25 +39,28 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
     var averageEndDate: Double?
     var calories: Double = 0.0
     var restTime: Int = 0
+    var endDate: Date?
 
     var persistentModelID: PersistentIdentifier?
     
     enum CodingKeys: String, CodingKey {
-        case workouts, sets, equipmentType, endDate, calories, restTime
+        case workouts, sets, equipmentType, averageEndDate, endDate, calories, restTime
     }
     
     init(workout: WorkoutState,
-         sets: [WorkoutSetState] = [WorkoutSetState()],
+         sets: [WorkoutSetState] = [],
          equipmentType: EquipmentType = .barbel,
          averageEndDate: Double? = nil,
          calories: Double = 0.0,
-         restTime: Int = 0) {
+         restTime: Int = 0,
+         endDate: Date? = nil) {
         self.workout = workout
         self.sets = sets
         self.equipmentType = equipmentType
         self.averageEndDate = averageEndDate
         self.calories = calories
         self.restTime = restTime
+        self.endDate = endDate
     }
     
     init(from decoder: Decoder) throws {
@@ -63,9 +68,10 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
         workout = try container.decode(WorkoutState.self, forKey: .workouts)
         sets = try container.decode([WorkoutSetState].self, forKey: .sets)
         equipmentType = try container.decode(EquipmentType.self, forKey: .equipmentType)
-        averageEndDate = try container.decode(Double?.self, forKey: .endDate)
+        averageEndDate = try container.decode(Double?.self, forKey: .averageEndDate)
         calories = try container.decode(Double.self, forKey: .calories)
         restTime = try container.decode(Int.self, forKey: .restTime)
+        endDate = try container.decodeIfPresent(Date.self, forKey: .endDate)
     }
     
     func encode(to encoder: any Encoder) throws {
@@ -73,9 +79,10 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
         try container.encode(workout, forKey: .workouts)
         try container.encode(sets, forKey: .sets)
         try container.encode(equipmentType, forKey: .equipmentType)
-        try container.encode(averageEndDate, forKey: .endDate)
+        try container.encode(averageEndDate, forKey: .averageEndDate)
         try container.encode(calories, forKey: .calories)
         try container.encode(restTime, forKey: .restTime)
+        try container.encode(endDate, forKey: .endDate)
     }
     
     func calculateTimeDifferences(
@@ -108,24 +115,26 @@ extension RoutineState {
     init(model: Routine) {
         self.workout = WorkoutState(model: model.workout)
         self.sets = model.sets.sorted(by: {
-            $0.index < $1.index
+            $0.order < $1.order
         }).compactMap { WorkoutSetState(model: $0) }
         self.equipmentType = model.equipmentType
         self.averageEndDate = model.averageEndDate
         self.calories = model.calories
         self.restTime = model.restTime
         self.persistentModelID = model.persistentModelID
+        self.endDate = model.endDate
     }
     
     func toModel(_ index: Int) -> Routine {
         return Routine(
             index: index,
             workout: workout.toModel(),
-            sets: sets.enumerated().compactMap { index, value in value.toModel(index) },
+            sets: sets.enumerated().compactMap { index, value in value.toModel() },
             equipmentType: equipmentType,
             averageEndDate: averageEndDate,
             calories: calories,
-            restTime: restTime
+            restTime: restTime,
+            endDate: endDate
         )
     }
 }
@@ -152,14 +161,16 @@ class Routine: RoutineData, Equatable {
     var averageEndDate: Double?
     var calories: Double = 0.0
     var restTime: Int = 0
+    var endDate: Date?
 
     init(index: Int,
          workout: WorkoutType,
-         sets: [WorkoutSetType] = [WorkoutSet()],
+         sets: [WorkoutSetType] = [],
          equipmentType: EquipmentType = .barbel,
          averageEndDate: Double? = nil,
          calories: Double = 0.0,
-         restTime: Int = 0) {
+         restTime: Int = 0,
+         endDate: Date? = nil) {
         self.index = index
         self.workout = workout
         self.sets = sets
@@ -167,6 +178,7 @@ class Routine: RoutineData, Equatable {
         self.averageEndDate = averageEndDate
         self.calories = calories
         self.restTime = restTime
+        self.endDate = endDate
     }
 }
 
@@ -178,6 +190,7 @@ extension Routine {
         self.averageEndDate = state.averageEndDate
         self.calories = state.calories
         self.restTime = state.restTime
+        self.endDate = state.endDate
         
         // 기존 sets 매핑용 딕셔너리
         var existingSetsDict = Dictionary(uniqueKeysWithValues: self.sets.map { ($0.id, $0) })
@@ -189,11 +202,11 @@ extension Routine {
             if let id = newSetState.persistentModelID,
                 let existing = existingSetsDict.removeValue(forKey: id) {
                 // 기존 데이터 업데이트
-                existing.update(from: newSetState, index: index)
+                existing.update(from: newSetState)
                 updatedSets.append(existing)
             } else {
                 // 없는 경우 새로 생성
-                let newSet = WorkoutSet.create(from: newSetState, index: index)
+                let newSet = WorkoutSet.create(from: newSetState)
                 updatedSets.append(newSet)
             }
         }
@@ -211,11 +224,12 @@ extension Routine {
         Routine(
             index: index,
             workout: Workout.create(from: state.workout),
-            sets: state.sets.enumerated().compactMap({ index, value in WorkoutSet.create(from: value, index: index) }),
+            sets: state.sets.enumerated().compactMap({ index, value in WorkoutSet.create(from: value) }),
             equipmentType: state.equipmentType,
             averageEndDate: state.averageEndDate,
             calories: state.calories,
-            restTime: state.restTime
+            restTime: state.restTime,
+            endDate: state.endDate
         )
     }
 }

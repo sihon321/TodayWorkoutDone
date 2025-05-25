@@ -117,6 +117,7 @@ struct WorkoutListReducer {
                                 id: UUID(),
                                 index: index,
                                 key: element.key,
+                                routines: state.routines,
                                 workouts: element.value
                             )
                         })
@@ -178,19 +179,27 @@ struct SortedWorkoutSectionReducer {
         let id: UUID
         let index: Int
         let key: String
+        var routines: [RoutineState]
         var workouts: [WorkoutState]
         var workoutListSubview: IdentifiedArrayOf<WorkoutListSubviewReducer.State> = []
         
         init(id: UUID,
              index: Int,
              key: String,
+             routines: [RoutineState],
              workouts: [WorkoutState]) {
             self.id = id
             self.index = index
             self.key = key
+            self.routines = routines
             self.workouts = workouts
+            for (index, value) in workouts.enumerated() {
+                if routines.contains(where: { $0.workout.name == value.name }) {
+                    self.workouts[index].isSelected = true
+                }
+            }
             self.workoutListSubview = IdentifiedArray(
-                uniqueElements: workouts.compactMap {
+                uniqueElements: self.workouts.compactMap {
                     WorkoutListSubviewReducer.State(
                         id: UUID(),
                         workout: $0
@@ -244,13 +253,13 @@ struct WorkoutListView: View {
                     HorizontalFilterView(filters: viewStore.filters,
                                          selectedFilters: $selectedFilters)
                     ForEach(store.scope(state: \.soretedWorkoutSection,
-                                             action: \.sortedWorkoutSection)) { sectionStore in
+                                        action: \.sortedWorkoutSection)) { sectionStore in
                         StickyHeaderView(index: sectionStore.index,
                                          title: sectionStore.key,
                                          topHeaderIndex: $topHeaderIndex)
                         
                         ForEach(sectionStore.scope(state: \.workoutListSubview,
-                                                        action: \.workoutListSubview)) { rowStore in
+                                                   action: \.workoutListSubview)) { rowStore in
                             if selectedFilters.isEmpty
                                 || (selectedFilters.isEmpty == false
                                     && selectedFilters.contains(where: { $0 == rowStore.workout.target })) {

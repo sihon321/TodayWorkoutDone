@@ -117,14 +117,13 @@ struct EditWorkoutRoutineReducer {
                     case .tappedAddFooter:
                         if let sectionIndex = state.workingOutSection
                             .index(id: sectionId) {
-                            let workoutSet = WorkoutSetState()
                             let index = state.workingOutSection[sectionIndex]
                                 .workingOutRow.count
+                            let workoutSet = WorkoutSetState(order: index + 1)
                             state.workingOutSection[sectionIndex]
                                 .workingOutRow
                                 .append(
                                     WorkingOutRowReducer.State(
-                                        index: index + 1,
                                         workoutSet: workoutSet,
                                         editMode: .active
                                     )
@@ -178,7 +177,7 @@ struct EditWorkoutRoutineReducer {
                                         .restTime = restTime.timeStringToSeconds()
                                 }
                                 return .none
-                            case .setFocus, .dismissKeyboard:
+                            case .setFocus, .dismissKeyboard, .timerView:
                                 return .none
                             }
                         }
@@ -255,16 +254,19 @@ struct EditWorkoutRoutineView: View {
                     .multilineTextAlignment(.leading)
                     .font(.title)
                     .accessibilityAddTraits(.isHeader)
+                    .padding(.horizontal, 15)
                     
                     Spacer()
                     DatePicker("시작시간",
                                selection: viewStore.binding(get: \.workoutRoutine.startDate,
                                                             send: EditWorkoutRoutineReducer.Action.editStartDate),
                                displayedComponents: [.date, .hourAndMinute])
+                    .padding(.horizontal, 15)
                     DatePicker("종료시간",
                                selection: viewStore.binding(get: \.workoutRoutine.endDate,
                                                             send: EditWorkoutRoutineReducer.Action.editEndDate),
                                displayedComponents: [.date, .hourAndMinute])
+                    .padding(.horizontal, 15)
                     Spacer()
                     
                     ForEach(store.scope(state: \.workingOutSection,
@@ -279,7 +281,6 @@ struct EditWorkoutRoutineView: View {
                     .buttonStyle(AddWorkoutButtonStyle())
                     Spacer().frame(height: 100)
                 }
-                .padding([.leading, .trailing], 15)
                 .onTapGesture {
                     viewStore.send(.dismissKeyboard)
                     viewStore.workingOutSection.elements.forEach { section in

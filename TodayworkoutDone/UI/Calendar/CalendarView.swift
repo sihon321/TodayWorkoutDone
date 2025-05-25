@@ -51,7 +51,7 @@ struct CalendarReducer {
     }
     
     @Dependency(\.workoutRoutineData) var workoutRoutineContext
-    @Dependency(\.continuousClock) var clock
+
     private enum CancelID { case load }
     
     var body: some Reducer<State, Action> {
