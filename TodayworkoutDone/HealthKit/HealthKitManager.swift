@@ -73,11 +73,21 @@ class LiveHealthKitManager: HealthKitManager {
     
     func requestAuthorization() async throws -> Bool {
         let typesToRead: Set<HKObjectType> = [
-            HKQuantityType.quantityType(forIdentifier: .stepCount)!,
-            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-            HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-            HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
+            .quantityType(forIdentifier: .stepCount)!,
+            .quantityType(forIdentifier: .distanceWalkingRunning)!,
+            .quantityType(forIdentifier: .walkingSpeed)!,
+            .quantityType(forIdentifier: .walkingAsymmetryPercentage)!,
+            .quantityType(forIdentifier: .walkingStepLength)!,
+            .quantityType(forIdentifier: .walkingDoubleSupportPercentage)!,
+            
+            .quantityType(forIdentifier: .activeEnergyBurned)!,
+            .quantityType(forIdentifier: .basalEnergyBurned)!,
+            .quantityType(forIdentifier: .heartRate)!,
+            .quantityType(forIdentifier: .restingHeartRate)!,
+            
+            .quantityType(forIdentifier: .appleMoveTime)!,
+            .quantityType(forIdentifier: .appleStandTime)!,
+            
             HKObjectType.activitySummaryType()
         ]
         

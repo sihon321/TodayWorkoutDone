@@ -102,7 +102,7 @@ struct MainContentDetailViewReducer {
                             )
                             
                             await send(.updateListRecords(id, value))
-                        case .walkingSpeed:
+                        default:
                             let value = try await healthKitManager.getAverageHealthSampleData(
                                 type: id,
                                 from: .midnight,
@@ -111,8 +111,6 @@ struct MainContentDetailViewReducer {
                             )
                             
                             await send(.updateListRecords(id, value))
-                        default:
-                            break
                         }
                     } catch {
                         print(error.localizedDescription)
