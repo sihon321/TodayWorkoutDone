@@ -34,7 +34,7 @@ struct EnergyBurnFeature {
                             to: to,
                             unit: .kilocalorie()
                         )
-                        await send(.updateEnergyBurned(energy))
+                        await send(.updateEnergyBurned(Int(energy)))
                     } catch {
                         print(error.localizedDescription)
                     }

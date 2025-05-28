@@ -25,13 +25,15 @@ protocol HealthKitManager {
         typesToShare: Set<HKSampleType>,
                             typesToRead: Set<HKObjectType>
     ) async throws -> Bool
+    
     func requestAuthorization() async throws -> Bool
+    
     func getHealthQuantityData(
         type: HKQuantityTypeIdentifier,
         from startDate: Date,
         to endDate: Date,
         unit: HKUnit
-    ) async throws -> Int
+    ) async throws -> Double
     
     func getHealthQuantityTimeSeries(
         type: HKQuantityTypeIdentifier,
@@ -40,6 +42,13 @@ protocol HealthKitManager {
         unit: HKUnit,
         interval: DateComponents
     ) async throws -> [Date: Double]
+    
+    func getAverageHealthSampleData(
+        type: HKQuantityTypeIdentifier,
+        from startDate: Date,
+        to endDate: Date,
+        unit: HKUnit
+    ) async throws -> Double
 }
 
 class LiveHealthKitManager: HealthKitManager {
@@ -78,7 +87,7 @@ class LiveHealthKitManager: HealthKitManager {
     func getHealthQuantityData(type: HKQuantityTypeIdentifier,
                                from startDate: Date,
                                to endDate: Date,
-                               unit: HKUnit) async throws -> Int {
+                               unit: HKUnit) async throws -> Double {
         let isAuthorized = try await authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: type)!])
         guard isAuthorized else {
             throw HealthDataError.authorizationRequestError
@@ -92,7 +101,7 @@ class LiveHealthKitManager: HealthKitManager {
                 if let error = error {
                     continuation.resume(throwing: error)
                 } else if let sumQuantity = result?.sumQuantity() {
-                    continuation.resume(returning: Int(sumQuantity.doubleValue(for: unit)))
+                    continuation.resume(returning: sumQuantity.doubleValue(for: unit))
                 } else {
                     continuation.resume(returning: 0)
                 }
@@ -146,10 +155,54 @@ class LiveHealthKitManager: HealthKitManager {
             healthStore.execute(query)
         }
     }
+    
+    func getAverageHealthSampleData(type: HKQuantityTypeIdentifier,
+                                    from startDate: Date,
+                                    to endDate: Date,
+                                    unit: HKUnit) async throws -> Double {
+        let isAuthorized = try await authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: type)!])
+        guard isAuthorized else {
+            throw HealthDataError.authorizationRequestError
+        }
+
+        return try await withCheckedThrowingContinuation { continuation in
+            guard let quantityType = HKQuantityType.quantityType(forIdentifier: type) else {
+                continuation.resume(throwing: HealthDataError.invalidType)
+                return
+            }
+
+            let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+
+            let query = HKSampleQuery(sampleType: quantityType,
+                                      predicate: predicate,
+                                      limit: HKObjectQueryNoLimit,
+                                      sortDescriptors: nil) { _, results, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+
+                guard let samples = results as? [HKQuantitySample], !samples.isEmpty else {
+                    continuation.resume(returning: 0)
+                    return
+                }
+
+                let total = samples.reduce(0.0) { partialResult, sample in
+                    partialResult + sample.quantity.doubleValue(for: unit)
+                }
+
+                let average = total / Double(samples.count)
+                continuation.resume(returning: average)
+            }
+
+            healthStore.execute(query)
+        }
+    }
 }
 
 enum HealthDataError: Error {
     case unavailableOnDevice
     case authorizationRequestError
     case dataSaveError
+    case invalidType
 }

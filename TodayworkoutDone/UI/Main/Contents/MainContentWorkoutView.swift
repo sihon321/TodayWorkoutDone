@@ -34,7 +34,7 @@ struct ExerciseTimeFeature {
                             to: to,
                             unit: .minute()
                         )
-                        await send(.updateExerciseTime(time))
+                        await send(.updateExerciseTime(Int(time)))
                     } catch {
                         print(error.localizedDescription)
                     }

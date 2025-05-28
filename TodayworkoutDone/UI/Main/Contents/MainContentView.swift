@@ -31,7 +31,7 @@ struct MainContentView: View {
                 ForEach(dataList) { data in
                     NavigationLink {
                         MainContentDetailView(store: Store(
-                            initialState: MainContentDetailViewReducer.State()
+                            initialState: MainContentDetailViewReducer.State(contentType: data)
                         ) {
                             MainContentDetailViewReducer()
                         })

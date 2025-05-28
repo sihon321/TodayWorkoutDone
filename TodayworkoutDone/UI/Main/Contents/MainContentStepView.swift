@@ -34,7 +34,7 @@ struct StepFeature {
                             to: to,
                             unit: .count()
                         )
-                        await send(.updateStep(stepCount))
+                        await send(.updateStep(Int(stepCount)))
                     } catch {
                         print(error.localizedDescription)
                     }
