@@ -6,9 +6,36 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
+
+@Reducer
+struct LoginFeature {
+    @ObservableState
+    struct State: Equatable {
+        
+    }
+    
+    enum Action {
+        case login
+    }
+    
+    
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .login:
+                return .none
+            }
+        }
+    }
+}
 
 struct LoginView: View {
-    @Binding var isLogin: Bool
+    @Bindable var store: StoreOf<LoginFeature>
+    
+    init(store: StoreOf<LoginFeature>) {
+        self.store = store
+    }
     
     var body: some View {
         VStack {
@@ -20,7 +47,7 @@ struct LoginView: View {
             Spacer()
             
             Button(action: {
-                isLogin = true
+                store.send(.login)
             }) {
                 Text("Google Login")
             }
@@ -29,7 +56,7 @@ struct LoginView: View {
             .cornerRadius(10)
             
             Button(action: {
-                isLogin = true
+                store.send(.login)
             }) {
                 Text("Apple Login")
             }
