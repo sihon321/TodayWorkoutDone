@@ -20,6 +20,7 @@ struct MainContentDetailViewReducer {
     }
     
     enum Action {
+        case requestAuthorization([(HKQuantityTypeIdentifier, HKUnit)])
         case fetchChartRecords
         case updateRecords([ChartRecord])
         
@@ -39,6 +40,25 @@ struct MainContentDetailViewReducer {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case let .requestAuthorization(ids):
+                return .run { @Sendable send in
+                    do {
+                        let typesToRead = Set(ids.map({ HKObjectType.quantityType(forIdentifier: $0.0)! }))
+                        let isSuccess = try await healthKitManager.authorizeHealthKit(
+                            typesToShare: [],
+                            typesToRead: typesToRead
+                        )
+                        if isSuccess {
+                            for (id, unit) in ids {
+                                await send(.fetchListRecords(id, unit))
+                            }
+                        }
+                        print("HealthKit authorization" + isSuccess.description)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                
             case .fetchChartRecords:
                 return .run { [contentType = state.contentType] send in
                     var type: HKQuantityTypeIdentifier = .stepCount
@@ -141,11 +161,12 @@ struct MainContentDetailView: View {
                         viewStore.send(.fetchChartRecords)
                     }
                 Spacer(minLength: 30)
-                ForEach(listIdentifiers(viewStore.contentType), id: \.0) { (id, unit) in
+                let listData = listIdentifiers(viewStore.contentType)
+                ForEach(listData, id: \.0) { (id, unit) in
                     listView(id)
-                        .onAppear {
-                            viewStore.send(.fetchListRecords(id, unit))
-                        }
+                }
+                .onAppear {
+                    viewStore.send(.requestAuthorization(listData))
                 }
                 Spacer()
             }

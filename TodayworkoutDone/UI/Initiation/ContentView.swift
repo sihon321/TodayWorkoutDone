@@ -28,7 +28,13 @@ struct ContentReducer {
             case .requestAuthorization:
                 return .run { send in
                     do {
-                        let isSuccess = try await healthKitManager.requestAuthorization()
+                        let isSuccess = try await healthKitManager.authorizeHealthKit(
+                            typesToShare: [],
+                            typesToRead: [
+                                .quantityType(forIdentifier: .stepCount)!,
+                                .quantityType(forIdentifier: .activeEnergyBurned)!,
+                                .quantityType(forIdentifier: .appleExerciseTime)!,
+                            ])
                         print("HealthKit authorization" + isSuccess.description)
                     } catch {
                         print(error.localizedDescription)

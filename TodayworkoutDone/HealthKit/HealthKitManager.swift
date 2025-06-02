@@ -20,10 +20,20 @@ extension DependencyValues {
         set { self[HealthKitManagerKey.self] = newValue }
     }
 }
+
+struct HealthProfile {
+    let age: Int?
+    let biologicalSex: HKBiologicalSex?
+    let height: Double?
+    let weight: Double?
+}
+
 protocol HealthKitManager {
+    func fetchUserProfile() async throws -> HealthProfile
+    
     func authorizeHealthKit(
         typesToShare: Set<HKSampleType>,
-                            typesToRead: Set<HKObjectType>
+        typesToRead: Set<HKObjectType>
     ) async throws -> Bool
     
     func requestAuthorization() async throws -> Bool
@@ -49,6 +59,8 @@ protocol HealthKitManager {
         to endDate: Date,
         unit: HKUnit
     ) async throws -> Double
+    
+    func saveHeightAndWeight(height: Double, weight: Double) async throws
 }
 
 class LiveHealthKitManager: HealthKitManager {
@@ -206,6 +218,90 @@ class LiveHealthKitManager: HealthKitManager {
             }
 
             healthStore.execute(query)
+        }
+    }
+    
+    func fetchUserProfile() async throws -> HealthProfile {
+        var age: Int?
+        var sex: HKBiologicalSex?
+        var height: Double?
+        var weight: Double?
+
+        let birthday = try? healthStore.dateOfBirthComponents()
+        if let year = birthday?.year {
+            age = Calendar.current.component(.year, from: Date()) - year
+        }
+
+        sex = try? healthStore.biologicalSex().biologicalSex
+
+        let heightType = HKQuantityType.quantityType(forIdentifier: .height)!
+        let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass)!
+        let unit = HKUnit.meter()
+        let kg = HKUnit.gramUnit(with: .kilo)
+
+        let h = try await self.queryMostRecentSample(of: heightType, unit: unit)
+        let w = try await self.queryMostRecentSample(of: weightType, unit: kg)
+
+        height = h
+        weight = w
+
+        return HealthProfile(age: age, biologicalSex: sex, height: height, weight: weight)
+    }
+
+    private func queryMostRecentSample(of type: HKQuantityType, unit: HKUnit) async throws -> Double? {
+        return try await withCheckedThrowingContinuation { continuation in
+            let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+            let query = HKSampleQuery(
+                sampleType: type,
+                predicate: nil,
+                limit: 1,
+                sortDescriptors: [sortDescriptor]
+            ) { _, samples, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+
+                guard
+                    let quantitySample = samples?.first as? HKQuantitySample
+                else {
+                    continuation.resume(returning: nil)
+                    return
+                }
+
+                let value = quantitySample.quantity.doubleValue(for: unit)
+                continuation.resume(returning: value)
+            }
+
+            healthStore.execute(query)
+        }
+    }
+    
+    func saveHeightAndWeight(height: Double, weight: Double) async throws {
+        let now = Date()
+
+        let heightType = HKQuantityType.quantityType(forIdentifier: .height)!
+        let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass)!
+
+        let heightQuantity = HKQuantity(unit: .meter(), doubleValue: height)
+        let weightQuantity = HKQuantity(unit: .gramUnit(with: .kilo), doubleValue: weight)
+
+        let heightSample = HKQuantitySample(type: heightType, quantity: heightQuantity, start: now, end: now, metadata: [
+            HKMetadataKeyWasUserEntered: true
+        ])
+        
+        let weightSample = HKQuantitySample(type: weightType, quantity: weightQuantity, start: now, end: now, metadata: [
+            HKMetadataKeyWasUserEntered: true
+        ])
+
+        return try await withCheckedThrowingContinuation { continuation in
+            healthStore.save([heightSample, weightSample]) { success, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
+            }
         }
     }
 }
