@@ -32,7 +32,8 @@ extension Routine {
                 WorkoutSet(prevWeight: 4000, weight: 5000, prevReps: 1200, reps: 1200),
                 WorkoutSet(prevWeight: 5000, weight: 6000, prevReps: 1200, reps: 1200),
                 WorkoutSet(prevWeight: 6000, weight: 7000, prevReps: 1200, reps: 1200)
-            ]
+            ],
+            averageEndDate: 43
         )
     }
 }

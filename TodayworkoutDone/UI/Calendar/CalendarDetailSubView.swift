@@ -103,7 +103,37 @@ struct CalendarDetailSubView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 16) {
+            headerSectionView()
+            
+            healthSummaryView()
+            
+            ForEach(viewStore.workoutRoutine.routines, id: \.id) { routine in
+
+                exerciseSummaryView(routine)
+                Divider()
+                setDetailTableView(routine)
+            }
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding([.leading, .trailing], 10)
+        .padding([.top, .bottom], 15)
+        .fullScreenCover(
+            item: $store.scope(state: \.destination?.editWorkoutRoutine,
+                               action: \.destination.editWorkoutRoutine)
+        ) { store in
+            EditWorkoutRoutineView(store: store)
+        }
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color.gray.opacity(0.1))
+        )
+    }
+    
+    func headerSectionView() -> some View {
+        VStack(alignment: .leading, spacing: 4) {
             HStack {
                 Text("\(viewStore.workoutRoutine.name)")
                     .font(.title)
@@ -139,6 +169,11 @@ struct CalendarDetailSubView: View {
                 Text("\(Int(viewStore.workoutRoutine.calories)) kcal")
             }
             .padding(.bottom, 5)
+        }
+    }
+    
+    func healthSummaryView() -> some View {
+        VStack(alignment: .leading, spacing: 4) {
             HStack {
                 Image(systemName: "heart.fill")
                     .resizable()
@@ -186,80 +221,70 @@ struct CalendarDetailSubView: View {
                     )
                 }
             }
-            
-            ForEach(viewStore.workoutRoutine.routines, id: \.id) { routine in
-                HStack {
-                    if let image = UIImage(named: routine.workout.name) ?? UIImage(named: "default") {
-                        Image(uiImage: image)
-                            .resizable()
-                            .frame(maxWidth: 45, maxHeight: 45)
-                            .cornerRadius(10)
-                    }
-                    VStack(alignment: .leading) {
-                        Text(routine.workout.name)
-                        HStack {
-                            Image(systemName: "dumbbell")
-                            Text("\(String(format: "%.2f", routine.sets.reduce(0) { $0 + $1.weight })) kg")
-                                .padding(.trailing, 10)
-                            Image(systemName: "flame")
-                            Text("\(Int(routine.calories)) kcal")
-                        }
-                        if let averageEndDate = routine.averageEndDate {
-                            Text("세트 수행 시간 \(String(format: "%.2f", averageEndDate)) 초")
-                        }
-                    }
-                }
-                .padding(.leading, 5)
-                .padding([.top, .bottom], 10)
-                VStack {
-                    HStack {
-                        Text("세트")
-                        Spacer()
-                        Text("무게")
-                        Spacer()
-                        Text("횟수")
-                        Spacer()
-                    }
-                    ForEach(routine.sets.indices, id: \.self) { index in
-                        HStack {
-                            Text("\(index + 1)")
-                                .frame(width: 20, height: 20)
-                            Spacer()
-                            Text("\(String(format: "%.2f", routine.sets[index].weight)) kg")
-                            Spacer()
-                            Text("\(routine.sets[index].reps) reps")
-                            Spacer()
-                        }
-                    }
-                }
-                .padding(.leading, 20)
-            }
-
-            Spacer()
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding([.leading, .trailing], 10)
-        .padding([.top, .bottom], 5)
-        .fullScreenCover(
-            item: $store.scope(state: \.destination?.editWorkoutRoutine,
-                               action: \.destination.editWorkoutRoutine)
-        ) { store in
-            EditWorkoutRoutineView(store: store)
-        }
-        .background(
-            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color.gray.opacity(0.1))
-        )
     }
-}
-
-#Preview {
-    CalendarDetailSubView(
-        store: Store(
-            initialState: CalendarDetailSubViewReducer.State(
-                workoutRoutine: WorkoutRoutineState(model: WorkoutRoutine.mockedData))
-        ) {
-            CalendarDetailSubViewReducer()
+    
+    func exerciseSummaryView(_ routine: RoutineState) -> some View {
+        VStack(alignment: .leading) {
+            HStack(alignment: .top) {
+                if let image = UIImage(named: routine.workout.name) ?? UIImage(named: "default") {
+                    Image(uiImage: image)
+                        .resizable()
+                        .frame(width: 45, height: 45)
+                        .cornerRadius(10)
+                }
+                VStack(alignment: .leading) {
+                    Text(routine.workout.name)
+                        .font(.system(size: 20, weight: .medium, design: .default))
+                    HStack {
+                        Image(systemName: "dumbbell")
+                        Text("\(String(format: "%.2f", routine.sets.reduce(0) { $0 + $1.weight })) kg")
+                            .padding(.trailing, 10)
+                        Image(systemName: "flame")
+                        Text("\(Int(routine.calories)) kcal")
+                    }
+                }
+            }
+            HStack {
+                if let averageEndDate = routine.averageEndDate {
+                    VStack {
+                        Text("세트 수행 시간")
+                        Text("\(String(format: "%.2f", averageEndDate)) 초")
+                    }
+                }
+                if let maxSets = routine.sets.sorted(by: { $0.weight > $1.weight }).first {
+                    VStack {
+                        Text("추청 1RM")
+                        Text("\(String(format: "%.2f kg", maxSets.weight * (1 + 0.0333 * Double(maxSets.reps))))")
+                    }
+                }
+            }
         }
-    )
+        .padding([.top, .bottom], 5)
+    }
+    
+    func setDetailTableView(_ routine: RoutineState) -> some View {
+        VStack {
+            HStack {
+                Text("세트")
+                Spacer()
+                Text("무게")
+                Spacer()
+                Text("횟수")
+                Spacer()
+            }
+            ForEach(routine.sets.indices, id: \.self) { index in
+                HStack {
+                    Text("\(index + 1)")
+                        .frame(width: 20, height: 20)
+                    Spacer()
+                    Text("\(String(format: "%.2f", routine.sets[index].weight)) kg")
+                    Spacer()
+                    Text("\(routine.sets[index].reps) reps")
+                    Spacer()
+                }
+            }
+        }
+        .padding(.leading, 20)
+    }
 }

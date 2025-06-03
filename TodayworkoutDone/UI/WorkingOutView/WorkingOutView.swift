@@ -120,8 +120,9 @@ struct WorkingOutReducer {
                     }
                     let currentDate = Date()
                     let startDate = currentDate.addingTimeInterval(TimeInterval(-secondsElapsed))
+                    
                     insertWorkoutRoutine(
-                        workout:  WorkoutRoutineState(
+                        workout: WorkoutRoutineState(
                             name: myRoutine.name,
                             startDate: startDate,
                             endDate: currentDate,
@@ -167,6 +168,13 @@ struct WorkingOutReducer {
                             .sets[rowIndex].endDate = isChecked ? Date() : nil
                         state.workingOutSection[sectionIndex]
                             .workingOutRow[rowIndex].isChecked = isChecked
+                        state.myRoutine?.routines[sectionIndex].endDate = Date()
+                        let dates = state.myRoutine?.routines[sectionIndex].sets.filter({ $0.endDate != nil }).map({
+                            return $0.endDate! - Double($0.restTime)
+                        }) ?? []
+                        state.myRoutine?.routines[sectionIndex].averageEndDate = self.calculateTimeDifferences(
+                            dates: dates
+                        )
                     }
                     return .none
                     
@@ -253,6 +261,23 @@ struct WorkingOutReducer {
         } catch {
             print(WorkoutRoutineDatabase.WorkoutRoutineError.add)
         }
+    }
+    
+    private func calculateTimeDifferences(
+        dates: [Date]
+    ) -> Double? {
+        let sortedDates = dates.reversed()
+        let intervals = zip(sortedDates, sortedDates.dropFirst()).map { later, earlier in
+            let intervalInSeconds = later.timeIntervalSince(earlier)
+            return intervalInSeconds
+        }
+        
+        guard !intervals.isEmpty else {
+            return nil
+        }
+        
+        let sum = intervals.reduce(0, +)
+        return sum / Double(intervals.count)
     }
 }
 

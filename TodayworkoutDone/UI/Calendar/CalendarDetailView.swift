@@ -100,3 +100,16 @@ struct CalendarDetailView: View {
         .padding([.leading, .bottom, .trailing], 15)
     }
 }
+
+#Preview {
+    CalendarDetailView(
+        store: Store(
+            initialState: CalendarDetailReducer.State(
+                date: Date(),
+                workoutRoutines: [WorkoutRoutineState(model: WorkoutRoutine.mockedData),
+                                  WorkoutRoutineState(model: WorkoutRoutine.mockedData)])
+        ) {
+            CalendarDetailReducer()
+        }
+    )
+}
