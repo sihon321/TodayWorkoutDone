@@ -29,9 +29,10 @@ extension Routine {
             index: 0,
             workout: $0,
             sets: [
-                WorkoutSet(prevWeight: 4000, weight: 5000, prevReps: 1200, reps: 1200),
-                WorkoutSet(prevWeight: 5000, weight: 6000, prevReps: 1200, reps: 1200),
-                WorkoutSet(prevWeight: 6000, weight: 7000, prevReps: 1200, reps: 1200)
+                WorkoutSet(prevWeight: 30, weight: 40, prevReps: 12, reps: 12),
+                WorkoutSet(prevWeight: 40, weight: 50, prevReps: 12, reps: 12),
+                WorkoutSet(prevWeight: 50, weight: 60, prevReps: 12, reps: 10),
+                WorkoutSet(prevWeight: 60, weight: 80, prevReps: 10, reps: 5)
             ],
             averageEndDate: 43
         )

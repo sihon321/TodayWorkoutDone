@@ -105,6 +105,7 @@ struct CalendarDetailSubView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             headerSectionView()
+                .padding(.top, 10)
             
             healthSummaryView()
             
@@ -238,7 +239,9 @@ struct CalendarDetailSubView: View {
                         .font(.system(size: 20, weight: .medium, design: .default))
                     HStack {
                         Image(systemName: "dumbbell")
-                        Text("\(String(format: "%.2f", routine.sets.reduce(0) { $0 + $1.weight })) kg")
+                        let totalWeight = routine.sets.reduce(0) { $0 + $1.weight }
+                        let totalRepCount = routine.sets.reduce(0) { $0 + $1.reps }
+                        Text("\(String(format: "%.2f", totalWeight * Double(totalRepCount))) kg")
                             .padding(.trailing, 10)
                         Image(systemName: "flame")
                         Text("\(Int(routine.calories)) kcal")
@@ -246,7 +249,7 @@ struct CalendarDetailSubView: View {
                 }
             }
             HStack {
-                if let averageEndDate = routine.averageEndDate {
+                if let averageEndDate = routine.avgSetDuration {
                     VStack {
                         Text("세트 수행 시간")
                         Text("\(String(format: "%.2f", averageEndDate)) 초")
@@ -287,4 +290,15 @@ struct CalendarDetailSubView: View {
         }
         .padding(.leading, 20)
     }
+}
+
+#Preview {
+    CalendarDetailSubView(
+        store: Store(
+            initialState: CalendarDetailSubViewReducer.State(
+                workoutRoutine: WorkoutRoutineState(model: WorkoutRoutine.mockedData))
+        ) {
+            CalendarDetailSubViewReducer()
+        }
+    )
 }

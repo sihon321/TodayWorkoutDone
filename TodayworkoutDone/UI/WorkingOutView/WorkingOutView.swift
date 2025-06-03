@@ -54,7 +54,8 @@ struct WorkingOutReducer {
     @Dependency(\.continuousClock) var clock
     @Dependency(\.myRoutineData) var myRoutineContext
     @Dependency(\.workoutRoutineData) var workoutRoutineContext
-
+    @Dependency(\.healthKitManager) var healthKitManager
+    
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
@@ -115,11 +116,31 @@ struct WorkingOutReducer {
             case .destination(.presented(.alert(.tappedWorkoutAlertOk(let secondsElapsed)))):
                 if let myRoutine = state.myRoutine {
                     let routines = myRoutine.routines
-                    for (routineIndex, routine) in routines.enumerated() {
-                        state.myRoutine?.routines[routineIndex].sets = routine.sets.filter { $0.isChecked }
-                    }
                     let currentDate = Date()
                     let startDate = currentDate.addingTimeInterval(TimeInterval(-secondsElapsed))
+                    
+                    for (routineIndex, routine) in routines.enumerated() {
+                        state.myRoutine?.routines[routineIndex].sets = routine.sets.filter { $0.isChecked }
+                        let mets: Double = 5.0
+                        // healthkit에서 불러와야 함
+                        let weight: Double = 70.0
+                        var dates = myRoutine.routines[routineIndex].sets
+                            .filter({ $0.endDate != nil })
+                            .map({
+                                return $0.endDate! - Double($0.restTime)
+                            })
+                        if routineIndex == 0 {
+                            dates.insert(startDate, at: 0)
+                        } else if let prevSetEndDate = myRoutine.routines[routineIndex - 1].sets
+                            .filter({ $0.endDate != nil })
+                            .last?.endDate {
+                            dates.insert(prevSetEndDate, at: 0)
+                        }
+                        if let avgSetDuration = self.calculateTimeDifferences(dates: dates) {
+                            state.myRoutine?.routines[routineIndex].avgSetDuration = avgSetDuration
+                            state.myRoutine?.routines[routineIndex].calories = mets * 3.5 * weight / (avgSetDuration / 60)
+                        }
+                    }
                     
                     insertWorkoutRoutine(
                         workout: WorkoutRoutineState(
@@ -169,12 +190,6 @@ struct WorkingOutReducer {
                         state.workingOutSection[sectionIndex]
                             .workingOutRow[rowIndex].isChecked = isChecked
                         state.myRoutine?.routines[sectionIndex].endDate = Date()
-                        let dates = state.myRoutine?.routines[sectionIndex].sets.filter({ $0.endDate != nil }).map({
-                            return $0.endDate! - Double($0.restTime)
-                        }) ?? []
-                        state.myRoutine?.routines[sectionIndex].averageEndDate = self.calculateTimeDifferences(
-                            dates: dates
-                        )
                     }
                     return .none
                     
