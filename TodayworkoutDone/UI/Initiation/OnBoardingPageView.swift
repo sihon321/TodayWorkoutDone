@@ -20,14 +20,14 @@ struct OnBoardingFeature {
     
     @ObservableState
     struct State: Equatable {
+        @Shared(.appStorage("height")) var height: Double?
+        @Shared(.appStorage("weight")) var weight: Double?
+        @Shared(.appStorage("birthDay")) var birthDayTimeStamp: Double?
+        
         var currentStep: Step = .intro
         var isHealthKitAuthorized: Bool = false
-        
         var birthDay: Date = Date()
-        var height: Double?
-        var weight: Double?
         
-        @Shared(.appStorage("birthDay")) var birthDayTimeStamp: Double?
         var manualHeight: String = ""
         var manualWeight: String = ""
     }
@@ -116,6 +116,9 @@ struct OnBoardingFeature {
                 return .none
                 
             case let .saveProfile(height, weight):
+                state.height = height
+                state.weight = weight
+                
                 return .run { send in
                     do {
                         try await healthKitManager.saveHeightAndWeight(height: height,
@@ -209,6 +212,7 @@ struct OnBoardingView: View {
                     viewStore.send(.nextTapped)
                 }
                 .buttonStyle(.bordered)
+                .disabled(viewStore.currentStep == .healthKit ? !viewStore.isHealthKitAuthorized : false)
             }
         }
         .padding()

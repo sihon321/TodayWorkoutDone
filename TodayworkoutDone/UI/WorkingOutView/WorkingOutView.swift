@@ -12,6 +12,7 @@ import ComposableArchitecture
 struct WorkingOutReducer {
     @ObservableState
     struct State: Equatable {
+        @Shared(.appStorage("weight")) var weight: Double?
         @Presents var destination: Destination.State?
         var myRoutine: MyRoutineState? 
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State> = []
@@ -54,7 +55,6 @@ struct WorkingOutReducer {
     @Dependency(\.continuousClock) var clock
     @Dependency(\.myRoutineData) var myRoutineContext
     @Dependency(\.workoutRoutineData) var workoutRoutineContext
-    @Dependency(\.healthKitManager) var healthKitManager
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -121,9 +121,6 @@ struct WorkingOutReducer {
                     
                     for (routineIndex, routine) in routines.enumerated() {
                         state.myRoutine?.routines[routineIndex].sets = routine.sets.filter { $0.isChecked }
-                        let mets: Double = 5.0
-                        // healthkit에서 불러와야 함
-                        let weight: Double = 70.0
                         var dates = myRoutine.routines[routineIndex].sets
                             .filter({ $0.endDate != nil })
                             .map({
@@ -137,8 +134,16 @@ struct WorkingOutReducer {
                             dates.insert(prevSetEndDate, at: 0)
                         }
                         if let avgSetDuration = self.calculateTimeDifferences(dates: dates) {
+                            let mets: Double = 5.0
+                            let restMets : Double = 1.5
                             state.myRoutine?.routines[routineIndex].avgSetDuration = avgSetDuration
-                            state.myRoutine?.routines[routineIndex].calories = mets * 3.5 * weight / (avgSetDuration / 60)
+                            if let weight = state.weight {
+                                let totalActivityTime = avgSetDuration * Double(routine.sets.count)
+                                let activityCalories = (mets * 3.5 * weight / 200) * (totalActivityTime / 60)
+                                let restDuration = routine.sets.reduce(0) { $0 + $1.restTime }
+                                let restCalories = (restMets * 3.5 * weight / 200) * (Double(restDuration) / 60)
+                                state.myRoutine?.routines[routineIndex].calories = activityCalories + restCalories
+                            }
                         }
                     }
                     

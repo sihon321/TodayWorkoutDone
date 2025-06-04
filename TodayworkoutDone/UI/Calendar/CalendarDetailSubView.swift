@@ -110,7 +110,6 @@ struct CalendarDetailSubView: View {
             healthSummaryView()
             
             ForEach(viewStore.workoutRoutine.routines, id: \.id) { routine in
-
                 exerciseSummaryView(routine)
                 Divider()
                 setDetailTableView(routine)

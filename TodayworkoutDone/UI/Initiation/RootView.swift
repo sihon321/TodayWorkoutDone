@@ -14,7 +14,7 @@ struct RootFeature {
     @ObservableState
     struct State: Equatable {
         var isActive: Bool = false
-        var isOnBoarding: Bool = false
+        @Shared(.appStorage("isOnBoarding")) var isOnBoarding: Bool = false
         var isLogin: Bool = false
         var onBoarding = OnBoardingFeature.State()
         var login = LoginFeature.State()
