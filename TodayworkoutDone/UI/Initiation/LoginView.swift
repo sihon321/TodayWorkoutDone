@@ -46,24 +46,32 @@ struct LoginView: View {
                 .frame(width: 242, height: 100)
             Spacer()
             
-            Button(action: {
-                store.send(.login)
-            }) {
-                Text("Google Login")
+            VStack {
+                Button(action: {
+                    store.send(.login)
+                }) {
+                    Text("Google Login")
+                }
+                .frame(width: 330, height: 55)
+                .background(Color.white)
+                .cornerRadius(10)
+                
+                Button(action: {
+                    store.send(.login)
+                }) {
+                    Text("Apple Login")
+                }
+                .frame(width: 330, height: 55)
+                .background(Color.white)
+                .cornerRadius(10)
+                
+                Button("로그인 없이 바로 시작") {
+                    store.send(.login)
+                }
+                .buttonStyle(.borderless)
+                .padding()
             }
-            .frame(width: 330, height: 55)
-            .background(Color.white)
-            .cornerRadius(10)
-            
-            Button(action: {
-                store.send(.login)
-            }) {
-                Text("Apple Login")
-            }
-            .frame(width: 330, height: 55)
-            .background(Color.white)
-            .cornerRadius(10)
-            Spacer()
+            .padding(.bottom, 30)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.personal)

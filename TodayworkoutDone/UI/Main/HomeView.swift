@@ -230,16 +230,16 @@ struct HomeView: View {
                     }
                 )
             }
-//            VStack {
-//                HStack {
-//                    Spacer()
-//                    FloatingButton {
-//                        isShowingDummyView.toggle()
-//                    }
-//                    .padding()
-//                }
-//                Spacer()
-//            }
+            VStack {
+                HStack {
+                    Spacer()
+                    FloatingButton {
+                        isShowingDummyView.toggle()
+                    }
+                    .padding()
+                }
+                Spacer()
+            }
         }
         .sheet(isPresented: $isShowingDummyView) {
             HealthKitDummyView()

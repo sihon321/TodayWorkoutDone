@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Lottie
 
 @Reducer
 struct OnBoardingFeature {
@@ -14,8 +15,8 @@ struct OnBoardingFeature {
         case intro
         case healthKit
         case inputProfile
-        case goal
         case summary
+        case premium
     }
     
     @ObservableState
@@ -105,9 +106,8 @@ struct OnBoardingFeature {
 
                 if height == nil || weight == nil {
                     state.currentStep = .inputProfile
-                } else {
-                    state.currentStep = .goal
                 }
+                
                 return .none
                 
             case let .editBirth(date):
@@ -145,77 +145,135 @@ struct OnBoardingView: View {
     }
 
     var body: some View {
-        VStack(spacing: 40) {
+        VStack {
             Spacer()
 
             switch viewStore.currentStep {
             case .intro:
-                Text("👋 TOD에 오신 걸 환영합니다.\n운동 기록을 쉽고 정확하게 관리하세요.")
-                    .multilineTextAlignment(.center)
-
+                VStack(spacing: 20) {
+                    Text("당신의 운동 여정, 이제 시작입니다!")
+                        .font(.system(size: 30, weight: .bold))
+                        .multilineTextAlignment(.center)
+                    Text("나만을 위한 맞춤형 운동 기록으로, 건강한 변화를 만들어보세요.")
+                        .foregroundStyle(.secondary)
+                        .font(.callout)
+                        .multilineTextAlignment(.center)
+                    LottieView(filename: "dumbel", loopMode: .loop)
+                        .frame(width: 200, height: 300)
+                }
             case .healthKit:
                 VStack(spacing: 20) {
-                    Text("📲 건강 앱과 연동하기")
-                        .font(.title2)
-                    Text("운동 기록을 자동으로 불러오려면\nApple 건강 앱과의 연동이 필요합니다.")
+                    Text("더 정확한 맞춤 운동을 위해, 건강 데이터를 연동해주세요!")
+                        .font(.system(size: 30, weight: .bold))
                         .multilineTextAlignment(.center)
-                    Button("HealthKit 권한 요청") {
-                        viewStore.send(.requestHealthKit)
+                    Text("운동 기록을 자동으로 불러오려면 Apple 건강 앱과의 연동이 필요합니다.")
+                        .foregroundStyle(.secondary)
+                        .font(.callout)
+                        .multilineTextAlignment(.center)
+                    HStack {
+                        Image("app_icon")
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                        Image(systemName: "xmark")
+                        Image("apple_health")
+                            .padding(.leading, 8)
                     }
-                    .buttonStyle(.borderedProminent)
+                    .frame(width: 200, height: 300)
+                    
                     if viewStore.isHealthKitAuthorized {
                         Text("✅ 권한이 허용되었습니다.")
                             .foregroundColor(.green)
                     }
                 }
-
-            case .goal:
-                Text("🏃 하루 목표를 설정해보세요!\n목표 걸음 수, 운동시간을 설정하면\n더 나은 분석이 가능해요.")
-                    .multilineTextAlignment(.center)
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        viewStore.send(.requestHealthKit)
+                    }
+                }
                 
             case .inputProfile:
-                VStack(spacing: 16) {
-                    Text("💡 건강 정보를 입력해주세요")
-                    DatePicker("생년월일",
-                               selection: viewStore.binding(get: \.birthDay,
-                                                            send: OnBoardingFeature.Action.editBirth),
-                               displayedComponents: .date
-                    )
-                    TextField("키 (cm)", text: $store.manualHeight)
-                        .keyboardType(.decimalPad)
-                    TextField("몸무게 (kg)", text: $store.manualWeight)
-                        .keyboardType(.decimalPad)
+                VStack(spacing: 20) {
+                    Text("걱정 마세요! 몇 가지 정보만 알려주시면 돼요.")
+                        .font(.system(size: 30, weight: .bold))
+                        .multilineTextAlignment(.center)
+                    Text("입력해주신 정보는 오직 당신만을 위한 맞춤 운동 분석에 활용됩니다.")
+                        .foregroundStyle(.secondary)
+                        .font(.callout)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 16)
+                    
+                    VStack {
+                        DatePicker("생년월일",
+                                   selection: viewStore.binding(get: \.birthDay,
+                                                                send: OnBoardingFeature.Action.editBirth),
+                                   displayedComponents: .date
+                        )
+                        TextField("키 (cm)", text: $store.manualHeight)
+                            .keyboardType(.decimalPad)
+                        TextField("몸무게 (kg)", text: $store.manualWeight)
+                            .keyboardType(.decimalPad)
+                    }
+                    .frame(width: 200, height: 300)
                 }
                 
             case .summary:
-                VStack {
-                    Text("📊 TOD가 준비되었습니다!")
-                        .font(.title2)
-                    Text("이제 운동 기록을 시작해보세요.")
+                VStack(spacing: 20) {
+                    Text("나만의 루틴을 만들어 운동을 시작해볼까요?")
+                        .font(.system(size: 30, weight: .bold))
                         .multilineTextAlignment(.center)
-                    Button("TOD 시작하기") {
-                        viewStore.send(.doneTapped)
+                    Text("자주 하는 운동들을 '나만의 루틴'으로 저장하고, 손쉽게 운동을 기록하고 관리해보세요.")
+                        .foregroundStyle(.secondary)
+                        .font(.callout)
+                        .multilineTextAlignment(.center)
+                    LottieView(filename: "archive", loopMode: .loop)
+                        .frame(width: 300, height: 400)
+                }
+                
+            case .premium:
+                VStack(spacing: 20) {
+                    Text("프리미엄으로 당신의 운동 잠재력을 최대로 끌어올리세요!")
+                        .font(.system(size: 30, weight: .bold))
+                        .multilineTextAlignment(.center)
+                    Text("더 깊이 있는 운동 분석, 광고 없는 환경, 지금 바로 업그레이드하고, 차원이 다른 운동 관리를 시작해보세요!")
+                        .foregroundStyle(.secondary)
+                        .font(.callout)
+                        .multilineTextAlignment(.center)
+                    
+                    VStack {
+                        LottieView(filename: "pro", loopMode: .loop)
+                            .frame(width: 50, height: 50)
+                            .padding(.bottom, -20)
+                        LottieView(filename: "premium", loopMode: .loop)
+                            .frame(width: 150, height: 150)
                     }
-                    .buttonStyle(.borderedProminent)
                 }
             }
 
             Spacer()
 
-            if viewStore.currentStep != .summary {
-                Button("다음") {
-                    if viewStore.currentStep == .inputProfile,
-                       let height = Double(viewStore.manualHeight),
-                       let weight = Double(viewStore.manualWeight) {
-                        viewStore.send(.saveProfile(height: height * 0.01, weight: weight))
-                    }
+            Button(action: {
+                if viewStore.currentStep == .inputProfile,
+                   let height = Double(viewStore.manualHeight),
+                   let weight = Double(viewStore.manualWeight) {
+                    viewStore.send(.saveProfile(height: height * 0.01, weight: weight))
+                    viewStore.send(.nextTapped)
+                } else if viewStore.currentStep == .premium {
+                    viewStore.send(.doneTapped)
+                } else {
                     viewStore.send(.nextTapped)
                 }
-                .buttonStyle(.bordered)
-                .disabled(viewStore.currentStep == .healthKit ? !viewStore.isHealthKitAuthorized : false)
+            }) {
+                Text(viewStore.currentStep == .premium ? "시작하기" : "다음")
+                    .frame(maxWidth: .infinity, minHeight: 45)
+                    .background(Color.personal)
+                    .foregroundStyle(.white)
+                    .cornerRadius(20)
+                    .padding(.horizontal, 15)
             }
+            .disabled(viewStore.currentStep == .healthKit ? !viewStore.isHealthKitAuthorized : false)
+            .padding(.bottom, 30)
         }
-        .padding()
+        .padding(.horizontal, 15)
     }
 }
 
