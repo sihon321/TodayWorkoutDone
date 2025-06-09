@@ -138,7 +138,7 @@ struct SettingsView: View {
                 }
                 
                 Section(header: Text("단위 설정")) {
-                    Picker("길이 단위", selection: viewStore.binding(
+                    Picker("길이", selection: viewStore.binding(
                         get: \.distanceUnit,
                         send: SettingsReducer.Action.distanceUnitChanged
                     )) {
@@ -147,7 +147,7 @@ struct SettingsView: View {
                         }
                     }
 
-                    Picker("중량 단위", selection: viewStore.binding(
+                    Picker("중량", selection: viewStore.binding(
                         get: \.weightUnit,
                         send: SettingsReducer.Action.weightUnitChanged
                     )) {

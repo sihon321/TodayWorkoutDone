@@ -14,7 +14,8 @@ struct OnBoardingFeature {
     enum Step: Int, CaseIterable {
         case intro
         case healthKit
-        case inputProfile
+        case unit
+        case profile
         case summary
         case premium
     }
@@ -24,6 +25,8 @@ struct OnBoardingFeature {
         @Shared(.appStorage("height")) var height: Double?
         @Shared(.appStorage("weight")) var weight: Double?
         @Shared(.appStorage("birthDay")) var birthDayTimeStamp: Double?
+        @Shared(.appStorage("distanceUnit")) var distanceUnit: SettingsReducer.DistanceUnit = .meter
+        @Shared(.appStorage("weightUnit")) var weightUnit: SettingsReducer.WeightUnit = .meter
         
         var currentStep: Step = .intro
         var isHealthKitAuthorized: Bool = false
@@ -105,7 +108,7 @@ struct OnBoardingFeature {
                 state.weight = weight
 
                 if height == nil || weight == nil {
-                    state.currentStep = .inputProfile
+                    state.currentStep = .profile
                 }
                 
                 return .none
@@ -190,8 +193,34 @@ struct OnBoardingView: View {
                         viewStore.send(.requestHealthKit)
                     }
                 }
-                
-            case .inputProfile:
+            
+            case .unit:
+                VStack(spacing: 20) {
+                    Text("어떤 단위를 사용하시겠어요?")
+                        .font(.system(size: 30, weight: .bold))
+                        .multilineTextAlignment(.center)
+                    Text("더욱 정확하고 익숙한 운동 기록을 위해, 주로 사용하시는 단위를 선택해주세요.")
+                        .foregroundStyle(.secondary)
+                        .font(.callout)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 16)
+                    
+                    Picker("Unit", selection: $store.distanceUnit) {
+                        ForEach(SettingsReducer.DistanceUnit.allCases, id: \.rawValue) { unit in
+                            Text(unit.rawValue).tag(unit)
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    
+                    Picker("Unit", selection: $store.weightUnit) {
+                        ForEach(SettingsReducer.WeightUnit.allCases, id: \.rawValue) { unit in
+                            Text(unit.rawValue).tag(unit)
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    
+                }
+            case .profile:
                 VStack(spacing: 20) {
                     Text("걱정 마세요! 몇 가지 정보만 알려주시면 돼요.")
                         .font(.system(size: 30, weight: .bold))
@@ -208,10 +237,18 @@ struct OnBoardingView: View {
                                                                 send: OnBoardingFeature.Action.editBirth),
                                    displayedComponents: .date
                         )
-                        TextField("키 (cm)", text: $store.manualHeight)
-                            .keyboardType(.decimalPad)
-                        TextField("몸무게 (kg)", text: $store.manualWeight)
-                            .keyboardType(.decimalPad)
+                        HStack {
+                            Text("키")
+                            TextField("(cm)", text: $store.manualHeight)
+                                .keyboardType(.decimalPad)
+                                .multilineTextAlignment(.trailing)
+                        }
+                        HStack {
+                            Text("몸무게")
+                            TextField("(kg)", text: $store.manualWeight)
+                                .keyboardType(.decimalPad)
+                                .multilineTextAlignment(.trailing)
+                        }
                     }
                     .frame(width: 200, height: 300)
                 }
@@ -252,7 +289,7 @@ struct OnBoardingView: View {
             Spacer()
 
             Button(action: {
-                if viewStore.currentStep == .inputProfile,
+                if viewStore.currentStep == .profile,
                    let height = Double(viewStore.manualHeight),
                    let weight = Double(viewStore.manualWeight) {
                     viewStore.send(.saveProfile(height: height, weight: weight))
