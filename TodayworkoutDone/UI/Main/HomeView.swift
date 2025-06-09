@@ -27,6 +27,7 @@ struct HomeReducer {
         var workingOut = WorkingOutReducer.State()
         var tabBar: CustomTabBarReducer.State
         var calendar: CalendarReducer.State = CalendarReducer.State()
+        var setting: SettingsReducer.State = SettingsReducer.State()
     }
     
     enum Action {
@@ -41,6 +42,7 @@ struct HomeReducer {
         case workingOut(WorkingOutReducer.Action)
         case tabBar(CustomTabBarReducer.Action)
         case calendar(CalendarReducer.Action)
+        case setting(SettingsReducer.Action)
         
         var description: String {
             return "\(self)"
@@ -67,6 +69,9 @@ struct HomeReducer {
         }
         Scope(state: \.calendar, action: \.calendar) {
             CalendarReducer()
+        }
+        Scope(state: \.setting, action: \.setting) {
+            SettingsReducer()
         }
         Reduce { state, action in
             switch action {
@@ -177,7 +182,7 @@ struct HomeReducer {
 
             case .workingOut(_):
                 return .none
-            case .calendar:
+            case .calendar, .setting:
                 return .none
             }
         }
@@ -216,7 +221,10 @@ struct HomeView: View {
                 .tag(0)
                 
                 CalendarView(store: store.scope(state: \.calendar, action: \.calendar))
-                .tag(1)
+                    .tag(1)
+                
+                SettingsView(store: store.scope(state: \.setting, action: \.setting))
+                    .tag(2)
             }
             if viewStore.workingOut.myRoutine != nil {
                 SlideOverCardView(
@@ -230,16 +238,16 @@ struct HomeView: View {
                     }
                 )
             }
-            VStack {
-                HStack {
-                    Spacer()
-                    FloatingButton {
-                        isShowingDummyView.toggle()
-                    }
-                    .padding()
-                }
-                Spacer()
-            }
+//            VStack {
+//                HStack {
+//                    Spacer()
+//                    FloatingButton {
+//                        isShowingDummyView.toggle()
+//                    }
+//                    .padding()
+//                }
+//                Spacer()
+//            }
         }
         .sheet(isPresented: $isShowingDummyView) {
             HealthKitDummyView()

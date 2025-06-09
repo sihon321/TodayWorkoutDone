@@ -33,7 +33,7 @@ struct CustomTabBarReducer {
 struct CustomTabBar: View {
     @Bindable var store: StoreOf<CustomTabBarReducer>
     
-    let tab: [String] = ["dumbbell.fill", "calendar"]
+    let tab: [String] = ["dumbbell.fill", "calendar", "gearshape.fill"]
     
     var body: some View {
         HStack(spacing: 0) {

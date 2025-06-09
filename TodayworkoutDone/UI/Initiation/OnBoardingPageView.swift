@@ -121,7 +121,7 @@ struct OnBoardingFeature {
                 
                 return .run { send in
                     do {
-                        try await healthKitManager.saveHeightAndWeight(height: height,
+                        try await healthKitManager.saveHeightAndWeight(height: height ,
                                                                        weight: weight)
                     } catch {
                         print(error.localizedDescription)
@@ -255,7 +255,7 @@ struct OnBoardingView: View {
                 if viewStore.currentStep == .inputProfile,
                    let height = Double(viewStore.manualHeight),
                    let weight = Double(viewStore.manualWeight) {
-                    viewStore.send(.saveProfile(height: height * 0.01, weight: weight))
+                    viewStore.send(.saveProfile(height: height, weight: weight))
                     viewStore.send(.nextTapped)
                 } else if viewStore.currentStep == .premium {
                     viewStore.send(.doneTapped)
