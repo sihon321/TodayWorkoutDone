@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import PopupView
 
 @Reducer
 struct WorkoutListSubviewReducer {
@@ -14,10 +15,12 @@ struct WorkoutListSubviewReducer {
     struct State: Equatable, Identifiable {
         let id: UUID
         var workout: WorkoutState
+        var isPopupShown: Bool = false
     }
     
     enum Action {
         case didTapped
+        case popUpShown(Bool)
     }
     
     var body: some Reducer<State, Action> {
@@ -25,6 +28,9 @@ struct WorkoutListSubviewReducer {
             switch action {
             case .didTapped:
                 state.workout.isSelected = !state.workout.isSelected
+                return .none
+            case .popUpShown(let isShown):
+                state.isPopupShown = isShown
                 return .none
             }
         }
@@ -57,9 +63,14 @@ struct WorkoutListSubview: View {
                         .foregroundStyle(.black)
                     Spacer()
                     if viewStore.workout.isSelected {
-                        Image(systemName:"checkmark")
+                        Image(systemName: "checkmark")
                             .foregroundStyle(Color.personal)
-                            .padding(.trailing, 15)
+                    } else {
+                        Button(action: {
+                            viewStore.send(.popUpShown(true))
+                        }) {
+                            Image(systemName: "info.circle")
+                        }
                     }
                 }
             }
@@ -68,5 +79,15 @@ struct WorkoutListSubview: View {
                maxWidth: .infinity,
                maxHeight: 60,
                alignment: .leading)
+        .popup(isPresented: viewStore.binding(get: \.isPopupShown,
+                                       send: WorkoutListSubviewReducer.Action.popUpShown)) {
+            WorkoutInfoView(workout: store.workout)
+        } customize: {
+            $0
+            .appearFrom(.centerScale)
+            .closeOnTap(true)
+            .allowTapThroughBG(false)
+            .backgroundColor(.black.opacity(0.4))
+        }
     }
 }

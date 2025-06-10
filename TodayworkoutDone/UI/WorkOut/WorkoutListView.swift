@@ -159,6 +159,8 @@ struct WorkoutListReducer {
                         }
 
                         return .none
+                    case .popUpShown:
+                        return .none
                     }
                 }
             }
@@ -257,7 +259,7 @@ struct WorkoutListView: View {
                         StickyHeaderView(index: sectionStore.index,
                                          title: sectionStore.key,
                                          topHeaderIndex: $topHeaderIndex)
-                        
+                        .padding(.horizontal, 15)
                         ForEach(sectionStore.scope(state: \.workoutListSubview,
                                                    action: \.workoutListSubview)) { rowStore in
                             if selectedFilters.isEmpty
@@ -265,10 +267,10 @@ struct WorkoutListView: View {
                                     && selectedFilters.contains(where: { $0 == rowStore.workout.target })) {
                                 WorkoutListSubview(store: rowStore)
                                     .padding(.vertical, 3)
+                                    .padding(.horizontal, 15)
                             }
                         }
                     }
-                                             .padding([.leading], 15)
                 }
             }
             .toolbar {

@@ -40,6 +40,7 @@
 		8ED37AF52AC87E2200B4F206 /* WorkoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED37AF42AC87E2200B4F206 /* WorkoutSet.swift */; };
 		8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */; };
 		8EF871C82DCC8FCE0009CC1A /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF871C72DCC8FC70009CC1A /* SwipeView.swift */; };
+		8EFA58F12DF8047900706B60 /* WorkoutInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA58F02DF8047200706B60 /* WorkoutInfoView.swift */; };
 		8EFBD8C62DDC116100EEDD2C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFBD8C52DDC115B00EEDD2C /* String+Extension.swift */; };
 		8EFC66502DD8605C00F32D22 /* AddWorkoutButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFC664F2DD8604F00F32D22 /* AddWorkoutButtonStyle.swift */; };
 		921A4E912D6F514800065C78 /* HorizontalFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A4E902D6F514400065C78 /* HorizontalFilterView.swift */; };
@@ -156,6 +157,7 @@
 		8ED37AF42AC87E2200B4F206 /* WorkoutSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSet.swift; sourceTree = "<group>"; };
 		8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWorkoutView.swift; sourceTree = "<group>"; };
 		8EF871C72DCC8FC70009CC1A /* SwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeView.swift; sourceTree = "<group>"; };
+		8EFA58F02DF8047200706B60 /* WorkoutInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutInfoView.swift; sourceTree = "<group>"; };
 		8EFBD8C52DDC115B00EEDD2C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8EFC664F2DD8604F00F32D22 /* AddWorkoutButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutButtonStyle.swift; sourceTree = "<group>"; };
 		921A4E902D6F514400065C78 /* HorizontalFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalFilterView.swift; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 		F23F4E98295814F90084392B /* Subview */ = {
 			isa = PBXGroup;
 			children = (
+				8EFA58F02DF8047200706B60 /* WorkoutInfoView.swift */,
 				F23F4E99295815140084392B /* MyRoutineSubview.swift */,
 				F23F4E9F2958271B0084392B /* WorkoutCategorySubview.swift */,
 				F2C63E212959F3D200D02F76 /* WorkoutListSubview.swift */,
@@ -786,6 +789,7 @@
 				8EB539732C98152E00F56034 /* APIHelper.swift in Sources */,
 				F2E2214A29994BB500B7DCCB /* WorkingOutSection.swift in Sources */,
 				F2E74D262922219000BD35F6 /* MainContentView.swift in Sources */,
+				8EFA58F12DF8047900706B60 /* WorkoutInfoView.swift in Sources */,
 				8EECCF442A14FF7600BD99DB /* MakeWorkoutView.swift in Sources */,
 				8EC563652A6D206600A8DCD5 /* MockedData.swift in Sources */,
 				8E0CFD6C2DE89E3800385CF6 /* OnBoardingPageView.swift in Sources */,
