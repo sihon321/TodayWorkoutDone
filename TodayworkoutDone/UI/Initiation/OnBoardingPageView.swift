@@ -149,8 +149,6 @@ struct OnBoardingView: View {
 
     var body: some View {
         VStack {
-            Spacer()
-
             switch viewStore.currentStep {
             case .intro:
                 VStack(spacing: 20) {
@@ -164,6 +162,7 @@ struct OnBoardingView: View {
                     LottieView(filename: "dumbel", loopMode: .loop)
                         .frame(width: 200, height: 300)
                 }
+                .padding(.top, 100)
             case .healthKit:
                 VStack(spacing: 20) {
                     Text("더 정확한 맞춤 운동을 위해, 건강 데이터를 연동해주세요!")
@@ -188,6 +187,7 @@ struct OnBoardingView: View {
                             .foregroundColor(.green)
                     }
                 }
+                .padding(.top, 100)
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         viewStore.send(.requestHealthKit)
@@ -203,23 +203,29 @@ struct OnBoardingView: View {
                         .foregroundStyle(.secondary)
                         .font(.callout)
                         .multilineTextAlignment(.center)
-                        .padding(.bottom, 16)
+                        
+                    Spacer()
                     
                     Picker("Unit", selection: $store.distanceUnit) {
                         ForEach(SettingsReducer.DistanceUnit.allCases, id: \.rawValue) { unit in
-                            Text(unit.rawValue).tag(unit)
+                            Text(unit.rawValue)
+                                .tag(unit)
                         }
                     }
-                    .pickerStyle(SegmentedPickerStyle())
+                    .pickerStyle(.segmented)
+                    .foregroundStyle(Color.personal)
                     
                     Picker("Unit", selection: $store.weightUnit) {
                         ForEach(SettingsReducer.WeightUnit.allCases, id: \.rawValue) { unit in
-                            Text(unit.rawValue).tag(unit)
+                            Text(unit.rawValue)
+                                .tag(unit)
                         }
                     }
-                    .pickerStyle(SegmentedPickerStyle())
+                    .pickerStyle(.segmented)
                     
+                    Spacer()
                 }
+                .padding(.top, 100)
             case .profile:
                 VStack(spacing: 20) {
                     Text("걱정 마세요! 몇 가지 정보만 알려주시면 돼요.")
@@ -239,20 +245,20 @@ struct OnBoardingView: View {
                         )
                         HStack {
                             Text("키")
-                            TextField("(cm)", text: $store.manualHeight)
+                            TextField("(\(viewStore.distanceUnit.unit))", text: $store.manualHeight)
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
                         }
                         HStack {
                             Text("몸무게")
-                            TextField("(kg)", text: $store.manualWeight)
+                            TextField("(\(viewStore.weightUnit.unit))", text: $store.manualWeight)
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
                         }
                     }
                     .frame(width: 200, height: 300)
                 }
-                
+                .padding(.top, 100)
             case .summary:
                 VStack(spacing: 20) {
                     Text("나만의 루틴을 만들어 운동을 시작해볼까요?")
@@ -265,7 +271,7 @@ struct OnBoardingView: View {
                     LottieView(filename: "archive", loopMode: .loop)
                         .frame(width: 300, height: 400)
                 }
-                
+                .padding(.top, 100)
             case .premium:
                 VStack(spacing: 20) {
                     Text("프리미엄으로 당신의 운동 잠재력을 최대로 끌어올리세요!")
@@ -284,6 +290,7 @@ struct OnBoardingView: View {
                             .frame(width: 150, height: 150)
                     }
                 }
+                .padding(.top, 100)
             }
 
             Spacer()

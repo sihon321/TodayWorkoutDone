@@ -13,11 +13,29 @@ struct SettingsReducer {
     enum DistanceUnit: String, CaseIterable, Equatable {
         case meter = "미터법(cm)"
         case yardpound = "야드파운드(in)"
+        
+        var unit: String {
+            switch self {
+            case .meter:
+                return "cm"
+            case .yardpound:
+                return "in"
+            }
+        }
     }
 
     enum WeightUnit: String, CaseIterable, Equatable {
         case meter = "미터법(kg)"
         case yardpound = "파운드(lb)"
+        
+        var unit: String {
+            switch self {
+            case .meter:
+                return "kg"
+            case .yardpound:
+                return "lb"
+            }
+        }
     }
 
     enum AppTheme: String, CaseIterable, Equatable {
@@ -79,10 +97,24 @@ struct SettingsReducer {
                 return .none
                 
             case let .distanceUnitChanged(unit):
+                if state.distanceUnit != unit, let height = Double(state.manualHeight) {
+                    if unit == .meter {
+                        state.manualHeight = String(format: "%.2f", height * 2.54)
+                    } else {
+                        state.manualHeight = String(format: "%.2f", height * 0.3937)
+                    }
+                }
                 state.distanceUnit = unit
                 return .none
 
             case let .weightUnitChanged(unit):
+                if state.weightUnit != unit, let weight = Double(state.manualWeight) {
+                    if unit == .meter {
+                        state.manualWeight = String(format: "%.2f", weight * 0.4536)
+                    } else {
+                        state.manualWeight = String(format: "%.2f", weight * 2.2046)
+                    }
+                }
                 state.weightUnit = unit
                 return .none
 
@@ -125,13 +157,13 @@ struct SettingsView: View {
                     )
                     HStack {
                         Text("키")
-                        TextField("(cm)", text: $store.manualHeight)
+                        TextField("(\(viewStore.distanceUnit.unit))", text: $store.manualHeight)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                     }
                     HStack {
                         Text("몸무게")
-                        TextField("(kg)", text: $store.manualWeight)
+                        TextField("(\(viewStore.weightUnit.unit))", text: $store.manualWeight)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                     }
