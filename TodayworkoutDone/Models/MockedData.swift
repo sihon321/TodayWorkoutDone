@@ -17,9 +17,78 @@ extension WorkoutCategory {
 
 extension Workout {
     static let mockedData: [Workout] = [
-        Workout(name: "벤치프레스", category: WorkoutCategoryState(name: "gym"), target: "하체", isSelected: false),
-        Workout(name: "데드리프트", category: WorkoutCategoryState(name: "gym"), target: "하체", isSelected: false),
-        Workout(name: "스쿼트", category: WorkoutCategoryState(name: "gym"), target: "하체", isSelected: false)
+        Workout(
+            name: "스쿼트",
+            category: WorkoutCategoryState(name: "하체"),
+            target: "대퇴사두근, 햄스트링, 둔근",
+            isSelected: false,
+            summary: "대표적인 하체 복합 운동으로, 하체 근육 강화와 코어 안정성 향상에 효과적입니다.",
+            instructions: [
+                "어깨너비로 다리를 벌리고 선다.",
+                "엉덩이를 뒤로 빼며 천천히 앉는다.",
+                "무릎이 발끝을 넘지 않게 조심한다.",
+                "발뒤꿈치로 지면을 밀어 올라온다."
+            ],
+            cautions: [
+                "무릎이 안쪽으로 모이지 않도록 주의",
+                "허리가 굽지 않도록 코어에 힘주기"
+            ],
+            difficulty: 2,
+            mets: 5.0,
+            caloriesPer30Min: 120,
+            recommendedReps: "12~15회 × 3세트",
+            restInterval: "30~60초",
+            equipment: ["바벨", "덤벨", "스미스 머신"],
+            animationName: "squat_animation"
+        ),
+        Workout(
+            name: "스쿼트",
+            category: WorkoutCategoryState(name: "하체"),
+            target: "대퇴사두근, 햄스트링, 둔근",
+            isSelected: false,
+            summary: "대표적인 하체 복합 운동으로, 하체 근육 강화와 코어 안정성 향상에 효과적입니다.",
+            instructions: [
+                "어깨너비로 다리를 벌리고 선다.",
+                "엉덩이를 뒤로 빼며 천천히 앉는다.",
+                "무릎이 발끝을 넘지 않게 조심한다.",
+                "발뒤꿈치로 지면을 밀어 올라온다."
+            ],
+            cautions: [
+                "무릎이 안쪽으로 모이지 않도록 주의",
+                "허리가 굽지 않도록 코어에 힘주기"
+            ],
+            difficulty: 2,
+            mets: 5.0,
+            caloriesPer30Min: 120,
+            recommendedReps: "12~15회 × 3세트",
+            restInterval: "30~60초",
+            equipment: ["바벨", "덤벨", "스미스 머신"],
+            animationName: "squat_animation"
+        ),
+        Workout(
+            name: "스쿼트",
+            category: WorkoutCategoryState(name: "하체"),
+            target: "대퇴사두근, 햄스트링, 둔근",
+            isSelected: false,
+            summary: "대표적인 하체 복합 운동으로, 하체 근육 강화와 코어 안정성 향상에 효과적입니다.",
+            instructions: [
+                "어깨너비로 다리를 벌리고 선다.",
+                "엉덩이를 뒤로 빼며 천천히 앉는다.",
+                "무릎이 발끝을 넘지 않게 조심한다.",
+                "발뒤꿈치로 지면을 밀어 올라온다."
+            ],
+            cautions: [
+                "무릎이 안쪽으로 모이지 않도록 주의",
+                "허리가 굽지 않도록 코어에 힘주기"
+            ],
+            difficulty: 2,
+            mets: 5.0,
+            caloriesPer30Min: 120,
+            recommendedReps: "12~15회 × 3세트",
+            restInterval: "30~60초",
+            equipment: ["바벨", "덤벨", "스미스 머신"],
+            animationName: "squat_animation"
+        )
     ]
 }
 
