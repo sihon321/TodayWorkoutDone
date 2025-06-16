@@ -14,6 +14,7 @@ protocol MyRoutineData {
     var name: String { get set }
     var routines: [RoutineType] { get set }
     var isRunning: Bool { get set }
+    var secondsElapsed: Int { get set }
 }
 
 struct MyRoutineState: MyRoutineData, Codable, Equatable, Identifiable {
@@ -23,19 +24,22 @@ struct MyRoutineState: MyRoutineData, Codable, Equatable, Identifiable {
     var name: String
     var routines: [RoutineType]
     var isRunning: Bool = false
+    var secondsElapsed = 0
     var persistentModelID: PersistentIdentifier?
     
     enum CodingKeys: CodingKey {
-        case id, name, routines
+        case id, name, routines, secondsElapsed
     }
 
     init(name: String = "",
          routines: [RoutineType] = [],
-         isRunning: Bool = false) {
+         isRunning: Bool = false,
+         secondElapsed: Int = 0) {
         self.id = UUID()
         self.name = name
         self.routines = routines
         self.isRunning = isRunning
+        self.secondsElapsed = secondElapsed
     }
     
     init(from decoder: Decoder) throws {
@@ -43,6 +47,7 @@ struct MyRoutineState: MyRoutineData, Codable, Equatable, Identifiable {
         id = try container.decode(UUID.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         routines = try container.decode([RoutineType].self, forKey: .routines)
+        secondsElapsed = try container.decode(Int.self, forKey: .secondsElapsed)
     }
     
     func encode(to encoder: any Encoder) throws {
@@ -50,6 +55,7 @@ struct MyRoutineState: MyRoutineData, Codable, Equatable, Identifiable {
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
         try container.encode(routines, forKey: .routines)
+        try container.encode(secondsElapsed, forKey: .secondsElapsed)
     }
 }
 
@@ -61,6 +67,7 @@ extension MyRoutineState {
             $0.index < $1.index
         }).compactMap { RoutineState(model: $0) }
         self.isRunning = model.isRunning
+        self.secondsElapsed = model.secondsElapsed
         self.persistentModelID = model.persistentModelID
     }
     
@@ -68,7 +75,8 @@ extension MyRoutineState {
         return MyRoutine(
             name: name,
             routines: routines.enumerated().compactMap { index, value in value.toModel(index) },
-            isRunning: isRunning
+            isRunning: isRunning,
+            secondsElapsed: secondsElapsed
         )
     }
 }
@@ -92,13 +100,16 @@ class MyRoutine: MyRoutineData, Equatable {
     var name: String
     var routines: [RoutineType]
     var isRunning: Bool = false
+    var secondsElapsed: Int = 0
 
     init(name: String = "",
          routines: [RoutineType] = [],
-         isRunning: Bool = false) {
+         isRunning: Bool = false,
+         secondsElapsed: Int = 0) {
         self.name = name
         self.routines = routines
         self.isRunning = isRunning
+        self.secondsElapsed = secondsElapsed
     }
 }
 
@@ -133,5 +144,7 @@ extension MyRoutine {
         
         // 업데이트된 배열로 교체
         self.routines = updatedRoutines
+        
+        self.secondsElapsed = state.secondsElapsed
     }
 }

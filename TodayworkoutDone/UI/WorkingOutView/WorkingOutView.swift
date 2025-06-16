@@ -14,10 +14,9 @@ struct WorkingOutReducer {
     struct State: Equatable {
         @Shared(.appStorage("weight")) var weight: Double?
         @Presents var destination: Destination.State?
-        var myRoutine: MyRoutineState? 
+        var myRoutine: MyRoutineState?
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State> = []
         
-        var secondsElapsed = 0
         var isTimerActive = false
         var isEdit = false
     }
@@ -33,6 +32,7 @@ struct WorkingOutReducer {
         case resetTimer
         case timerTicked
         case toggleTimer
+        case addTimer(Int)
         
         case presentedSaveRoutineAlert(MyRoutineState?)
         
@@ -63,11 +63,11 @@ struct WorkingOutReducer {
                 return .cancel(id: CancelID.timer)
                 
             case .resetTimer:
-                state.secondsElapsed = 0
+                state.myRoutine?.secondsElapsed = 0
                 return .none
                 
             case .timerTicked:
-                state.secondsElapsed += 1
+                state.myRoutine?.secondsElapsed += 1
                 return .none
                 
             case .toggleTimer:
@@ -79,6 +79,10 @@ struct WorkingOutReducer {
                     }
                 }
                 .cancellable(id: CancelID.timer, cancelInFlight: true)
+                
+            case .addTimer(let seconds):
+                state.myRoutine?.secondsElapsed += seconds
+                return .none
                 
             case .presentedSaveRoutineAlert:
                 state.myRoutine = nil
@@ -152,7 +156,7 @@ struct WorkingOutReducer {
                             name: myRoutine.name,
                             startDate: startDate,
                             endDate: currentDate,
-                            routineTime: secondsElapsed,
+                            routineTime: myRoutine.secondsElapsed,
                             routines: state.myRoutine?.routines ?? []
                         )
                     )
@@ -317,13 +321,13 @@ struct WorkingOutView: View {
         VStack {
             HStack(alignment: .center) {
                 Button("Close") {
-                    viewStore.send(.tappedToolbarCloseButton(secondsElapsed: store.state.secondsElapsed))
+                    viewStore.send(.tappedToolbarCloseButton(secondsElapsed: store.state.myRoutine?.secondsElapsed ?? 0))
                     viewStore.send(.toggleTimer)
                 }
                 .font(.system(size: 17))
                 .frame(width: 60, height: 20)
                 Spacer()
-                Text(viewStore.state.secondsElapsed.secondToHMS)
+                Text(viewStore.state.myRoutine?.secondsElapsed.secondToHMS ?? "")
                     .font(.system(size: 17))
                     .monospacedDigit()
                 Spacer()

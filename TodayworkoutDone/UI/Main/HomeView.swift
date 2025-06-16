@@ -19,6 +19,7 @@ struct HomeReducer {
     struct State: Equatable {
         @Presents var destination: Destination.State?
         @Shared(.appStorage("runningMyRoutine")) var runningMyRoutine: Data?
+        var lastBackgroundEnterTime: Date?
         
         var routineName = ""
         var isHideTabBar = false
@@ -42,6 +43,8 @@ struct HomeReducer {
         
         case saveMyRoutine
         case loadMyRoutine
+        case setBackground(date: Date?)
+        case makeWorkingOutView(myRoutine: MyRoutineState)
         
         case workingOut(WorkingOutReducer.Action)
         case tabBar(CustomTabBarReducer.Action)
@@ -109,14 +112,17 @@ struct HomeReducer {
             case .loadMyRoutine:
                 do {
                     if let runningMyRoutineData = state.runningMyRoutine {
-                        state.workingOut.myRoutine = try MyRoutineState.decodeFromData(runningMyRoutineData)
+                        let myRoutine = try MyRoutineState.decodeFromData(runningMyRoutineData)
+                        return .send(.makeWorkingOutView(myRoutine: myRoutine))
                     }
+                    return .none
                 } catch {
                     print(error.localizedDescription)
+                    return .none
                 }
-                
+            case .setBackground(let date):
+                state.lastBackgroundEnterTime = date
                 return .none
-
             case let .destination(.presented(.alert(.tappedMyRoutineAlerOk(myRoutine)))):
                 return .run { send in
                     if var myRoutine = myRoutine {
@@ -134,10 +140,12 @@ struct HomeReducer {
             case .destination(.presented(.alert(.tappedMyRoutineAlertCancel))):
                 return .none
 
-            case .destination(.presented(.workoutView(.destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine))))))),
+            case .makeWorkingOutView(let myRoutine),
+                    .destination(.presented(.workoutView(.destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine))))))),
                     .destination(.presented(.workoutView(.workoutCategory(.workoutList(.element(_, .destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine)))))))))),
                     .destination(.presented(.workoutView(.tappedDone(let myRoutine)))):
                 @Dependency(\.routineData.fetch) var fetch
+                state.destination = nil
                 state.workingOut.myRoutine = myRoutine
                 for (routineIndex, routine) in myRoutine.routines.enumerated() {
                     var descriptor = FetchDescriptor<Routine>(
@@ -204,7 +212,7 @@ struct HomeReducer {
                     await send(.setTabBarOffset(offset: 0.0))
                 }
                 
-            case .workingOut(_):
+            case .workingOut:
                 return .none
             case .calendar, .setting:
                 return .none
@@ -283,24 +291,31 @@ struct HomeView: View {
         .alert($store.scope(state: \.destination?.alert,
                             action: \.destination.alert))
         .tint(.black)
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                if viewStore.workingOut.myRoutine == nil {
+                    viewStore.send(.loadMyRoutine)
+                }
+            }
+        }
         .onChange(of: scenePhase) { oldPhase, newPhase in
             switch newPhase {
             case .active:
                 print("App is active (foreground and interactive)")
-                if viewStore.workingOut.myRoutine == nil {
-                    viewStore.send(.loadMyRoutine)
+                if let enterTime = viewStore.lastBackgroundEnterTime {
+                    let timeInBackground = Date().timeIntervalSince(enterTime)
+                    print("백그라운드 경과 시간: \(timeInBackground) 초")
+                    viewStore.send(.workingOut(.addTimer(Int(timeInBackground))))
                 }
-                
+                viewStore.send(.setBackground(date: nil))
             case .inactive:
                 print("App is inactive (foreground but not interactive, e.g., during app switcher transition or call)")
-                
-            case .background:
-                print("App is in background (not visible, may be terminated soon)")
-                
                 if viewStore.workingOut.myRoutine != nil {
                     viewStore.send(.saveMyRoutine)
                 }
-                
+            case .background:
+                print("App is in background (not visible, may be terminated soon)")
+                viewStore.send(.setBackground(date: Date()))
             @unknown default:
                 print("Unknown scene phase")
             }

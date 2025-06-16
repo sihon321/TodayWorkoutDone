@@ -18,12 +18,14 @@ struct RootFeature {
         var isLogin: Bool = false
         var onBoarding = OnBoardingFeature.State()
         var login = LoginFeature.State()
+        var content = ContentReducer.State()
     }
     
     enum Action {
         case toggleActive(Bool)
         case onBoarding(OnBoardingFeature.Action)
         case login(LoginFeature.Action)
+        case content(ContentReducer.Action)
     }
     
     var body: some Reducer<State, Action> {
@@ -42,6 +44,8 @@ struct RootFeature {
                 return .none
             case .login(.login):
                 state.isLogin = true
+                return .none
+            case .content:
                 return .none
             }
         }
@@ -63,9 +67,7 @@ struct RootView: View {
             if viewStore.isActive {
                 if viewStore.isOnBoarding {
                     if viewStore.isLogin {
-                        ContentView(store: Store(initialState: ContentReducer.State()) {
-                            ContentReducer()
-                        })
+                        ContentView(store: store.scope(state: \.content, action: \.content))
                     } else {
                         LoginView(store: store.scope(state: \.login,
                                                      action: \.login))
