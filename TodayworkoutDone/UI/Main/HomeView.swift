@@ -18,6 +18,7 @@ struct HomeReducer {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
+        @Shared(.appStorage("runningMyRoutine")) var runningMyRoutine: Data?
         
         var routineName = ""
         var isHideTabBar = false
@@ -39,6 +40,9 @@ struct HomeReducer {
         
         case setDestination(Destination.State)
         
+        case saveMyRoutine
+        case loadMyRoutine
+        
         case workingOut(WorkingOutReducer.Action)
         case tabBar(CustomTabBarReducer.Action)
         case calendar(CalendarReducer.Action)
@@ -48,6 +52,7 @@ struct HomeReducer {
             return "\(self)"
         }
     }
+
     
     @Reducer(state: .equatable)
     enum Destination {
@@ -89,6 +94,27 @@ struct HomeReducer {
                 
             case .setDestination(let detination):
                 state.destination = detination
+                return .none
+                
+            case .saveMyRoutine:
+                do {
+                    if let myRoutine = try state.workingOut.myRoutine?.encodeToData() {
+                        state.runningMyRoutine = myRoutine
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+                return .none
+            case .loadMyRoutine:
+                do {
+                    if let runningMyRoutineData = state.runningMyRoutine {
+                        state.workingOut.myRoutine = try MyRoutineState.decodeFromData(runningMyRoutineData)
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
                 return .none
 
             case let .destination(.presented(.alert(.tappedMyRoutineAlerOk(myRoutine)))):
@@ -169,17 +195,15 @@ struct HomeReducer {
                 } else {
                     return .none
                 }
-            case .workingOut(.destination(.presented(.alert(.tappedWorkoutAlertClose)))):
-                state.isHideTabBar = true
-                return .run { send in
-                    await send(.setTabBarOffset(offset: 0.0))
-                }
-            case .workingOut(.destination(.presented(.alert(.tappedWorkoutAlertOk(_))))):
-                state.isHideTabBar = true
-                return .run { send in
-                    await send(.setTabBarOffset(offset: 0.0))
-                }
 
+            case .workingOut(.destination(.presented(.alert(.tappedWorkoutAlertClose)))),
+                    .workingOut(.destination(.presented(.alert(.tappedWorkoutAlertOk)))):
+                state.isHideTabBar = true
+                state.runningMyRoutine = nil
+                return .run { send in
+                    await send(.setTabBarOffset(offset: 0.0))
+                }
+                
             case .workingOut(_):
                 return .none
             case .calendar, .setting:
@@ -193,6 +217,7 @@ struct HomeReducer {
 }
 
 struct HomeView: View {
+    @Environment(\.scenePhase) private var scenePhase // scenePhase 환경값 주입
     @Bindable var store: StoreOf<HomeReducer>
     @ObservedObject var viewStore: ViewStoreOf<HomeReducer>
 
@@ -238,16 +263,6 @@ struct HomeView: View {
                     }
                 )
             }
-//            VStack {
-//                HStack {
-//                    Spacer()
-//                    FloatingButton {
-//                        isShowingDummyView.toggle()
-//                    }
-//                    .padding()
-//                }
-//                Spacer()
-//            }
         }
         .sheet(isPresented: $isShowingDummyView) {
             HealthKitDummyView()
@@ -268,6 +283,28 @@ struct HomeView: View {
         .alert($store.scope(state: \.destination?.alert,
                             action: \.destination.alert))
         .tint(.black)
+        .onChange(of: scenePhase) { oldPhase, newPhase in
+            switch newPhase {
+            case .active:
+                print("App is active (foreground and interactive)")
+                if viewStore.workingOut.myRoutine == nil {
+                    viewStore.send(.loadMyRoutine)
+                }
+                
+            case .inactive:
+                print("App is inactive (foreground but not interactive, e.g., during app switcher transition or call)")
+                
+            case .background:
+                print("App is in background (not visible, may be terminated soon)")
+                
+                if viewStore.workingOut.myRoutine != nil {
+                    viewStore.send(.saveMyRoutine)
+                }
+                
+            @unknown default:
+                print("Unknown scene phase")
+            }
+        }
     }
 }
 

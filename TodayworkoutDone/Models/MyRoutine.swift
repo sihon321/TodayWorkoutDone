@@ -73,6 +73,16 @@ extension MyRoutineState {
     }
 }
 
+extension MyRoutineState {
+    func encodeToData() throws -> Data {
+        return try JSONEncoder().encode(self)
+    }
+    
+    static func decodeFromData(_ data: Data) throws -> MyRoutineState {
+        return try JSONDecoder().decode(MyRoutineState.self, from: data)
+    }
+}
+
 // MARK: - SwiftData
 
 @Model
