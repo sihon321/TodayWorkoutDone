@@ -68,7 +68,7 @@ struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: Vie
                                         }
                                     }
                                 }
-                                .background(Color(0xf4f4f4))
+                                .background(.clear)
                                 .frame(height: days.count == 42 ? 300 : 270)
                             }
                         }
@@ -82,7 +82,7 @@ struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: Vie
                             )
                         }
                     )
-                    .background(Color(0xf4f4f4))
+                    .background(.clear)
                     .onPreferenceChange(
                         ViewOffsetKey.self,
                         perform: { value in
@@ -110,7 +110,7 @@ struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: Vie
             .coordinateSpace(name: spaceName)
             .scrollIndicators(.never)
         }
-        .background(Color(0xf4f4f4))
+        .background(.clear)
     }
 }
 

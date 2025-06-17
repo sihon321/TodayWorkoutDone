@@ -14,7 +14,7 @@ import HealthKit
 struct MainContentDetailViewReducer {
     @ObservableState
     struct State: Equatable {
-        let contentType: MainContentView.MainContentType
+        let contentType: MainContentFeature.MainContentType
         var chartRecords: [ChartRecord] = []
         var listRecords: [HKQuantityTypeIdentifier: Double] = [:]
     }
@@ -175,7 +175,7 @@ struct MainContentDetailView: View {
         .background(Color(0xf4f4f4))
     }
     
-    func listIdentifiers(_ type: MainContentView.MainContentType) -> [(HKQuantityTypeIdentifier, HKUnit)] {
+    func listIdentifiers(_ type: MainContentFeature.MainContentType) -> [(HKQuantityTypeIdentifier, HKUnit)] {
         let stepListIdentifiers: [(HKQuantityTypeIdentifier, HKUnit)] = [
             (.distanceWalkingRunning, .meter()),
             (.walkingSpeed, .meter().unitDivided(by: HKUnit.second())),

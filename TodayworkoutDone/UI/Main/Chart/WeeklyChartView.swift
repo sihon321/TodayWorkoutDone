@@ -116,8 +116,5 @@ struct WeeklyChartView: View {
                maxWidth: .infinity,
                minHeight: 165)
         .padding([.leading, .trailing], 15)
-        .onAppear {
-            viewStore.send(.fetchDailyActiveEnergyBurnes)
-        }
     }
 }

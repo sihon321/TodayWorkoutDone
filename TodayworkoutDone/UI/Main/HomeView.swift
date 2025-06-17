@@ -228,8 +228,6 @@ struct HomeView: View {
     @Environment(\.scenePhase) private var scenePhase // scenePhase 환경값 주입
     @Bindable var store: StoreOf<HomeReducer>
     @ObservedObject var viewStore: ViewStoreOf<HomeReducer>
-
-    @State private var isShowingDummyView = false
     
     init(store: StoreOf<HomeReducer>) {
         UITabBar.appearance().isHidden = true
@@ -271,9 +269,6 @@ struct HomeView: View {
                     }
                 )
             }
-        }
-        .sheet(isPresented: $isShowingDummyView) {
-            HealthKitDummyView()
         }
         .overlay(
             VStack {

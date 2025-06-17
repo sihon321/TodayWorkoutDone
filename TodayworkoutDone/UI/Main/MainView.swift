@@ -28,17 +28,15 @@ struct MainView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading) {
                     welcomeView()
-                    WeeklyChartView(
-                        store: Store(initialState: WeeklyChart.State()) {
-                            WeeklyChart()
+                    MainContentView(
+                        store: Store(initialState: MainContentFeature.State()) {
+                            MainContentFeature()
                         }
                     )
-                    Spacer(minLength: 15)
-                    MainContentView()
-                        .padding(.bottom, 15 + bottomEdge + 35)
+                    .padding(.bottom, 15 + bottomEdge + 35)
                 }
             }
-            .background(Color(0xf4f4f4))
+            .background(Color(UIColor.systemGroupedBackground))
         }
     }
     

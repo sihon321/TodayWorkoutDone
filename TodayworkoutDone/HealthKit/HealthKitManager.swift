@@ -66,8 +66,10 @@ protocol HealthKitManager {
 class LiveHealthKitManager: HealthKitManager {
     let healthStore = HKHealthStore()
     
-    func authorizeHealthKit(typesToShare: Set<HKSampleType> = .init(),
-                            typesToRead: Set<HKObjectType> = .init()) async throws -> Bool {
+    func authorizeHealthKit(
+        typesToShare: Set<HKSampleType> = .init(),
+        typesToRead: Set<HKObjectType> = .init()
+    ) async throws -> Bool {
         guard HKHealthStore.isHealthDataAvailable() else {
             throw HealthDataError.unavailableOnDevice
         }
@@ -106,15 +108,13 @@ class LiveHealthKitManager: HealthKitManager {
         return try await authorizeHealthKit(typesToRead: typesToRead)
     }
     
-    func getHealthQuantityData(type: HKQuantityTypeIdentifier,
-                               from startDate: Date,
-                               to endDate: Date,
-                               unit: HKUnit) async throws -> Double {
-        let isAuthorized = try await authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: type)!])
-        guard isAuthorized else {
-            throw HealthDataError.authorizationRequestError
-        }
-        
+    func getHealthQuantityData(
+        type: HKQuantityTypeIdentifier,
+        from startDate: Date,
+        to endDate: Date,
+        unit: HKUnit
+    ) async throws -> Double {
+
         return try await withCheckedThrowingContinuation { continuation in
             let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
             let query = HKStatisticsQuery(quantityType: .quantityType(forIdentifier: type)!,
@@ -139,13 +139,10 @@ class LiveHealthKitManager: HealthKitManager {
         unit: HKUnit,
         interval: DateComponents
     ) async throws -> [Date: Double] {
-        let isAuthorized = try await authorizeHealthKit(typesToShare: [], typesToRead: [.quantityType(forIdentifier: type)!])
-        guard isAuthorized else {
-            throw HealthDataError.authorizationRequestError
-        }
-        
         return try await withCheckedThrowingContinuation { continuation in
-            let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+            let predicate = HKQuery.predicateForSamples(withStart: startDate,
+                                                        end: endDate,
+                                                        options: .strictStartDate)
             
             let query = HKStatisticsCollectionQuery(
                 quantityType: .quantityType(forIdentifier: type)!,

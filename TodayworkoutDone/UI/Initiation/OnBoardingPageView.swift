@@ -289,6 +289,7 @@ struct OnBoardingView: View {
                         LottieView(filename: "premium", loopMode: .loop)
                             .frame(width: 150, height: 150)
                     }
+                    .padding(.top, 30)
                 }
                 .padding(.top, 100)
             }
