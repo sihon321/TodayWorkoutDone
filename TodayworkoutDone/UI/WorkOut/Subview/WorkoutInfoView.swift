@@ -80,9 +80,9 @@ struct WorkoutInfoView: View {
                 .cornerRadius(8)
             }
         }
-        .padding(EdgeInsets(top: 50, leading: 15, bottom: 50, trailing: 15))
+        .padding(15)
         .background(Color.white.cornerRadius(20))
-        .padding(.horizontal, 20)
+        .padding(20)
     }
 }
 

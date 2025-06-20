@@ -79,8 +79,10 @@ struct WorkoutListSubview: View {
                maxWidth: .infinity,
                maxHeight: 60,
                alignment: .leading)
-        .popup(isPresented: viewStore.binding(get: \.isPopupShown,
-                                       send: WorkoutListSubviewReducer.Action.popUpShown)) {
+        .popup(isPresented: viewStore.binding(
+            get: \.isPopupShown,
+            send: WorkoutListSubviewReducer.Action.popUpShown
+        )) {
             WorkoutInfoView(workout: store.workout)
         } customize: {
             $0

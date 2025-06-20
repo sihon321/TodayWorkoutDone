@@ -20,6 +20,7 @@
 		8E0C8C792DDDBD970051BDB8 /* CountdownTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C8C782DDDBD950051BDB8 /* CountdownTimerView.swift */; };
 		8E0CFD6C2DE89E3800385CF6 /* OnBoardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFD6B2DE89E2D00385CF6 /* OnBoardingPageView.swift */; };
 		8E0CFD6E2DE8A2CA00385CF6 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFD6D2DE8A2C700385CF6 /* RootView.swift */; };
+		8E1495CD2E0390ED008FBB06 /* SteopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1495CC2E0390E2008FBB06 /* SteopWatchView.swift */; };
 		8E1F53AF2DF69F9C00D04278 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F53AE2DF69F9900D04278 /* SettingView.swift */; };
 		8E2A89062C96E332009C9032 /* WorkoutRoutineDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A89052C96E332009C9032 /* WorkoutRoutineDatabase.swift */; };
 		8E2A89082C96E78E009C9032 /* CategoryDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A89072C96E78E009C9032 /* CategoryDatabase.swift */; };
@@ -136,6 +137,7 @@
 		8E0C8C782DDDBD950051BDB8 /* CountdownTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerView.swift; sourceTree = "<group>"; };
 		8E0CFD6B2DE89E2D00385CF6 /* OnBoardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageView.swift; sourceTree = "<group>"; };
 		8E0CFD6D2DE8A2C700385CF6 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		8E1495CC2E0390E2008FBB06 /* SteopWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteopWatchView.swift; sourceTree = "<group>"; };
 		8E1F53AE2DF69F9900D04278 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		8E2A89052C96E332009C9032 /* WorkoutRoutineDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRoutineDatabase.swift; sourceTree = "<group>"; };
 		8E2A89072C96E78E009C9032 /* CategoryDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDatabase.swift; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 		F2E221462999089300B7DCCB /* WorkingOutView */ = {
 			isa = PBXGroup;
 			children = (
+				8E1495CC2E0390E2008FBB06 /* SteopWatchView.swift */,
 				8E0C8C782DDDBD950051BDB8 /* CountdownTimerView.swift */,
 				8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */,
 				F2335416295B4BF9006E12CB /* WorkingOutView.swift */,
@@ -804,6 +807,7 @@
 				F2C63E222959F3D200D02F76 /* WorkoutListSubview.swift in Sources */,
 				8E6362A92DE0017D00CE233C /* RoutineDatabase.swift in Sources */,
 				8EC0B0E329CC4E7600C3278C /* Workout.swift in Sources */,
+				8E1495CD2E0390ED008FBB06 /* SteopWatchView.swift in Sources */,
 				8EF871C82DCC8FCE0009CC1A /* SwipeView.swift in Sources */,
 				923E42CB2D735A37001E28CC /* LoginView.swift in Sources */,
 				9255A3692D731EE400399723 /* SplashView.swift in Sources */,
