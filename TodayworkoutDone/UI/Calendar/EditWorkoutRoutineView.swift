@@ -14,7 +14,7 @@ import SwiftData
 struct EditWorkoutRoutineReducer {
     @ObservableState
     struct State: Equatable {
-        @Presents var destination: Destination.State?
+        @Presents var addWorkoutCategory: AddWorkoutCategoryReducer.State?
         
         var workoutRoutine: WorkoutRoutineState
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
@@ -44,12 +44,7 @@ struct EditWorkoutRoutineReducer {
         case dismissKeyboard
         
         case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
-        case destination(PresentationAction<Destination.Action>)
-    }
-    
-    @Reducer(state: .equatable)
-    enum Destination {
-        case addWorkoutCategory(AddWorkoutCategoryReducer)
+        case addWorkoutCategory(PresentationAction<AddWorkoutCategoryReducer.Action>)
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -58,10 +53,8 @@ struct EditWorkoutRoutineReducer {
         Reduce { state, action in
             switch action {
             case .tappedAdd:
-                state.destination = .addWorkoutCategory(
-                    AddWorkoutCategoryReducer.State(
-                        routines: state.workoutRoutine.routines
-                    )
+                state.addWorkoutCategory = AddWorkoutCategoryReducer.State(
+                    routines: state.workoutRoutine.routines
                 )
                 return .none
             case .didUpdateText(let text):
@@ -86,7 +79,6 @@ struct EditWorkoutRoutineReducer {
                 }
                 return .send(.dismiss)
             case .dismiss:
-                state.destination = .none
                 return .run { _ in
                     await self.dismiss()
                 }
@@ -212,7 +204,7 @@ struct EditWorkoutRoutineReducer {
                         return .none
                     }
                 }
-            case let .destination(.presented(.addWorkoutCategory(.workoutList(.element(_, .dismiss(routines)))))):
+            case let .addWorkoutCategory(.presented(.workoutList(.element(_, .dismiss(routines))))):
                 state.workoutRoutine.routines = routines
                 state.workingOutSection = IdentifiedArrayOf(
                     uniqueElements: routines.map {
@@ -223,15 +215,49 @@ struct EditWorkoutRoutineReducer {
                     }
                 )
                 return .none
-            case .destination:
+            case let .addWorkoutCategory(.presented(.workoutList(.element(categoryId, action: .sortedWorkoutSection(.element(sectionId, action: .workoutListSubview(.element(rowId, action: .didTapped)))))))):
+
+                if let categoryIndex = state.addWorkoutCategory?
+                    .workoutList
+                    .firstIndex(where: { $0.id == categoryId }) {
+                    if let addWorkoutCategory = state.addWorkoutCategory,
+                        let sectionIndex = addWorkoutCategory
+                        .workoutList[categoryIndex]
+                        .soretedWorkoutSection
+                        .firstIndex(where: { $0.id == sectionId }) {
+                        if let rowIndex = addWorkoutCategory
+                            .workoutList[categoryIndex]
+                            .soretedWorkoutSection[sectionIndex]
+                            .workoutListSubview
+                            .firstIndex(where: { $0.id == rowId }) {
+                            let workout = addWorkoutCategory.workoutList[categoryIndex]
+                                .soretedWorkoutSection[sectionIndex]
+                                .workoutListSubview[rowIndex]
+                                .workout
+                            if workout.isSelected {
+                                state.workoutRoutine.routines.append(RoutineState(workout: workout))
+                                for index in 0..<addWorkoutCategory.workoutList.count {
+                                    state.addWorkoutCategory?.workoutList[index].routines.append(RoutineState(workout: workout))
+                                }
+                            } else {
+                                state.workoutRoutine.routines.removeAll { $0.workout.name == workout.name }
+                                for index in 0..<addWorkoutCategory.workoutList.count {
+                                    state.addWorkoutCategory?.workoutList[index].routines.removeAll { $0.workout.name == workout.name }
+                                }
+                            }
+                        }
+                    }
+                }
+                return .none
+            case .addWorkoutCategory:
                 return .none
             }
         }
         .forEach(\.workingOutSection, action: \.workingOutSection) {
             WorkingOutSectionReducer()
         }
-        .ifLet(\.$destination, action: \.destination) {
-            Destination.body
+        .ifLet(\.$addWorkoutCategory, action: \.addWorkoutCategory) {
+            AddWorkoutCategoryReducer()
         }
     }
 }
@@ -318,8 +344,8 @@ struct EditWorkoutRoutineView: View {
                 }
             }
             .fullScreenCover(
-                item: $store.scope(state: \.destination?.addWorkoutCategory,
-                                   action: \.destination.addWorkoutCategory)
+                item:  $store.scope(state: \.addWorkoutCategory,
+                                    action: \.addWorkoutCategory)
             ) { store in
                 AddWorkoutCategoryView(store: store)
             }

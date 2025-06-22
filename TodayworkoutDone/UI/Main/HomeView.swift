@@ -145,7 +145,6 @@ struct HomeReducer {
                     .destination(.presented(.workoutView(.workoutCategory(.workoutList(.element(_, .destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine)))))))))),
                     .destination(.presented(.workoutView(.tappedDone(let myRoutine)))):
                 @Dependency(\.routineData.fetch) var fetch
-                state.destination = nil
                 state.workingOut.myRoutine = myRoutine
                 for (routineIndex, routine) in myRoutine.routines.enumerated() {
                     var descriptor = FetchDescriptor<Routine>(
@@ -180,6 +179,10 @@ struct HomeReducer {
                     } ?? []
                 )
 
+                return .none
+                
+            case .destination(.presented(.workoutView(.dismiss))):
+                state.destination = .none
                 return .none
 
             case .destination:
