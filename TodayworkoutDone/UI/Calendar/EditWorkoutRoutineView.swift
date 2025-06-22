@@ -206,6 +206,10 @@ struct EditWorkoutRoutineReducer {
                                 .sets.remove(atOffsets: indexSet)
                         }
                         return .none
+                    case .stopwatch:
+                        return .none
+                    case .destination(_):
+                        return .none
                     }
                 }
             case let .destination(.presented(.addWorkoutCategory(.workoutList(.element(_, .dismiss(routines)))))):

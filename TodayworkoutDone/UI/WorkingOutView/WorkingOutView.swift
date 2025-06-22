@@ -250,6 +250,10 @@ struct WorkingOutReducer {
                         .sets.remove(atOffsets: indexSet)
                 }
                 return .none
+            case .workingOutSection(.element(_, action: .stopwatch)):
+                return .none
+            case .workingOutSection(.element(_, action: .destination(_))):
+                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination) {

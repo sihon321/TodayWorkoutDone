@@ -1,5 +1,5 @@
 //
-//  SteopWatchView.swift
+//  StopWatchView.swift
 //  TodayworkoutDone
 //
 //  Created by ocean on 6/19/25.
@@ -8,7 +8,7 @@ import SwiftUI
 import ComposableArchitecture
 
 @Reducer
-struct StopwatchFeature {
+struct StopWatchFeature {
     struct State: Equatable {
         var elapsedTime: TimeInterval = 0
         var isRunning = false
@@ -21,11 +21,13 @@ struct StopwatchFeature {
         case reset
         case recordLap
         case ticked
+        case close
     }
 
     enum CancelID { case timer }
 
     @Dependency(\.continuousClock) var clock
+    @Dependency(\.dismiss) var dismiss
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -55,13 +57,17 @@ struct StopwatchFeature {
                 guard state.isRunning else { return .none }
                 state.elapsedTime += 0.01
                 return .none
+            case .close:
+                return .run { _ in
+                    await self.dismiss()
+                }
             }
         }
     }
 }
 
-struct StopwatchView: View {
-    let store: StoreOf<StopwatchFeature>
+struct StopWatchView: View {
+    let store: StoreOf<StopWatchFeature>
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
@@ -94,6 +100,13 @@ struct StopwatchView: View {
                 }
             }
             .padding()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("close") {
+                        viewStore.send(.close)
+                    }
+                }
+            }
         }
     }
 
@@ -106,7 +119,7 @@ struct StopwatchView: View {
 }
 
 #Preview {
-    StopwatchView(store: .init(initialState: StopwatchFeature.State()) {
-        StopwatchFeature()
+    StopWatchView(store: .init(initialState: StopWatchFeature.State()) {
+        StopWatchFeature()
     })
 }

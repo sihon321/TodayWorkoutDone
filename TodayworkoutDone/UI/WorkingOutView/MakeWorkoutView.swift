@@ -236,6 +236,10 @@ struct MakeWorkoutReducer {
                                 .sets.remove(atOffsets: indexSet)
                         }
                         return .none
+                    case .stopwatch:
+                        return .none
+                    case .destination(_):
+                        return .none
                     }
                 }
             }
