@@ -103,9 +103,12 @@ struct AddWorkoutCategoryView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
+                    Button(action: {
                         viewStore.send(.dismissWorkoutCategory)
-                    }
+                    }, label: {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.black)
+                    })
                 }
             }
             .ignoresSafeArea(.container, edges: .bottom)

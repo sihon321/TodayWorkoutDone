@@ -71,39 +71,44 @@ struct StopWatchView: View {
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            VStack(spacing: 20) {
-                Text(formatted(time: viewStore.elapsedTime))
-                    .font(.system(size: 48, weight: .bold, design: .monospaced))
-                    .padding(.top, 40)
+            NavigationStack {
+                ScrollView {
+                    Text(formatted(time: viewStore.elapsedTime))
+                        .font(.system(size: 48, weight: .bold, design: .monospaced))
+                        .padding(.top, 40)
 
-                HStack(spacing: 20) {
-                    Button("Reset") {
-                        viewStore.send(.reset)
-                    }
-                    .disabled(viewStore.elapsedTime == 0)
+                    HStack(spacing: 20) {
+                        Button("Reset") {
+                            viewStore.send(.reset)
+                        }
+                        .disabled(viewStore.elapsedTime == 0)
 
-                    Button(viewStore.isRunning ? "Pause" : "Start") {
-                        viewStore.send(viewStore.isRunning ? .pause : .start)
-                    }
+                        Button(viewStore.isRunning ? "Pause" : "Start") {
+                            viewStore.send(viewStore.isRunning ? .pause : .start)
+                        }
 
-                    Button("Lap") {
-                        viewStore.send(.recordLap)
+                        Button("Lap") {
+                            viewStore.send(.recordLap)
+                        }
+                        .disabled(!viewStore.isRunning)
                     }
-                    .disabled(!viewStore.isRunning)
+                    .font(.title2)
+
+                    List(viewStore.laps.indices.reversed(), id: \.self) { index in
+                        let lapTime = viewStore.laps[index]
+                        Text("Lap \(viewStore.laps.count - index): \(formatted(time: lapTime))")
+                            .font(.system(.body, design: .monospaced))
+                    }
                 }
-                .font(.title2)
-
-                List(viewStore.laps.indices.reversed(), id: \.self) { index in
-                    let lapTime = viewStore.laps[index]
-                    Text("Lap \(viewStore.laps.count - index): \(formatted(time: lapTime))")
-                        .font(.system(.body, design: .monospaced))
-                }
-            }
-            .padding()
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("close") {
-                        viewStore.send(.close)
+                .padding()
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            viewStore.send(.close)
+                        }) {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.black)
+                        }
                     }
                 }
             }

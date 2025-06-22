@@ -304,9 +304,12 @@ struct EditWorkoutRoutineView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
+                    Button(action: {
                         viewStore.send(.dismiss)
-                    }
+                    }, label: {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.black)
+                    })
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {

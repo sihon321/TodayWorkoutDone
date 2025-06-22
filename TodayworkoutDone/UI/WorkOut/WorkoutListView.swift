@@ -137,32 +137,8 @@ struct WorkoutListReducer {
                 return .none
             case .destination:
                 return .none
-            case let .sortedWorkoutSection(.element(sectionId, action)):
-                switch action {
-                case let .workoutListSubview(.element(rowId, action)):
-                    switch action {
-                    case .didTapped:
-                        if let sectionIndex = state.soretedWorkoutSection
-                            .firstIndex(where: { $0.id == sectionId }) {
-                            if let rowIndex = state.soretedWorkoutSection[sectionIndex].workoutListSubview
-                                .firstIndex(where: { $0.id == rowId }) {
-                                let workout = state.soretedWorkoutSection[sectionIndex]
-                                    .workoutListSubview[rowIndex]
-                                    .workout
-
-                                if workout.isSelected {
-                                    state.routines.append(RoutineState(workout: workout))
-                                } else {
-                                    state.routines.removeAll { $0.workout.name == workout.name }
-                                }
-                            }
-                        }
-
-                        return .none
-                    case .popUpShown:
-                        return .none
-                    }
-                }
+            case .sortedWorkoutSection:
+                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination) {

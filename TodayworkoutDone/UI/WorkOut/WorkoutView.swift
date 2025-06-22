@@ -80,7 +80,7 @@ struct WorkoutReducer {
                     return .send(.filteredCategories(filteredCategories))
                 }
             case .dismiss:
-                state.destination = nil
+                state.destination = .none
                 return .run { _ in
                     await self.dismiss()
                 }
@@ -200,8 +200,14 @@ struct WorkoutReducer {
 
                                 if workout.isSelected {
                                     state.myRoutine.routines.append(RoutineState(workout: workout))
+                                    for index in 0..<state.workoutCategory.workoutList.count {
+                                        state.workoutCategory.workoutList[index].routines.append(RoutineState(workout: workout))
+                                    }
                                 } else {
                                     state.myRoutine.routines.removeAll { $0.workout.name == workout.name }
+                                    for index in 0..<state.workoutCategory.workoutList.count {
+                                        state.workoutCategory.workoutList[index].routines.removeAll { $0.workout.name == workout.name }
+                                    }
                                 }
                             }
                         }

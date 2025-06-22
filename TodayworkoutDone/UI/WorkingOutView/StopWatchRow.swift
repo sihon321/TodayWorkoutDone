@@ -21,13 +21,17 @@ struct StopWatchRow: View {
         VStack(alignment: .leading) {
             Text(viewStore.routine.workout.name)
                 .font(.system(size: 20, weight: .semibold))
-                .padding()
             HStack {
                 Button(action: {
                     viewStore.send(.stopwatch)
                 }) {
                     Text("스탑와치 시작")
+                        .frame(height: 30)
                         .frame(maxWidth: .infinity)
+                        .background(Color.personal)
+                        .foregroundStyle(.white)
+                        .cornerRadius(10)
+                        .padding(.vertical, 5)
                 }
             }
         }
