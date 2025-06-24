@@ -13,6 +13,7 @@ struct WorkingOutRowReducer {
     @ObservableState
     struct State: Equatable, Identifiable {
         let id: UUID
+        var category: WorkoutCategoryState
         var workoutSet: WorkoutSetState
         var isChecked: Bool
         var editMode: EditMode
@@ -28,8 +29,12 @@ struct WorkingOutRowReducer {
         var originalRestTimeText: String = ""
         
         var timerView: CountdownTimerReducer.State
+        @Presents var stopwatch: StopWatchFeature.State?
         
-        init(workoutSet: WorkoutSetState, editMode: EditMode = .inactive) {
+        init(category: WorkoutCategoryState,
+             workoutSet: WorkoutSetState,
+             editMode: EditMode = .inactive) {
+            self.category = category
             self.id = workoutSet.id
             self.editMode = editMode
             self.workoutSet = workoutSet
@@ -50,6 +55,9 @@ struct WorkingOutRowReducer {
         case setFocus(Field?)
         case dismissKeyboard
         case timerView(CountdownTimerReducer.Action)
+        
+        case presentStopWatch
+        case stopwatch(PresentationAction<StopWatchFeature.Action>)
     }
     
     enum Field: Hashable {
@@ -108,7 +116,16 @@ struct WorkingOutRowReducer {
                 return .none
             case .timerView:
                 return .none
+                
+            case .presentStopWatch:
+                state.stopwatch = StopWatchFeature.State()
+                return .none
+            case .stopwatch:
+                return .none
             }
+        }
+        .ifLet(\.$stopwatch, action: \.stopwatch) {
+            StopWatchFeature()
         }
     }
 }
@@ -126,113 +143,19 @@ struct WorkingOutRow: View {
     
     var body: some View {
         HStack {
-            if viewStore.editMode == .active {
-                Button(action: {}, label: {
-                    Menu {
-                        Button(action: {
-
-                        }) {
-                            Label("워밍업", systemImage: "pencil")
-                        }
-                        Button(action: {
-
-                        }) {
-                            Label("드롭", systemImage: "pencil")
-                        }
-                        Button(action: {
-
-                        }) {
-                            Label("실패", systemImage: "pencil")
-                        }
-                    } label: {
-                        Text("\(viewStore.workoutSet.order)")
-                            .padding([.leading, .trailing], 5)
-                            .padding([.top, .bottom], 3)
-                            .font(.system(size: 17))
-                            .frame(minWidth: 30)
-                            .foregroundStyle(.white)
-                            .background(Color.personal.opacity(0.6))
-                            .cornerRadius(3.0)
-                    }
-                })
-            } else {
-                Toggle(
-                    "",
-                    isOn: viewStore.binding(
-                        get: { $0.isChecked },
-                        send: { WorkingOutRowReducer.Action.toggleCheck(isChecked: $0) }
-                    )
-                )
-                .toggleStyle(CheckboxToggleStyle(style: .square))
-                .padding(.leading, -7)
-                .foregroundStyle(Color.personal)
-            }
-            
-            if viewStore.editMode == .inactive {
-                if viewStore.isChecked {
-                    CountdownTimerView(store: store.scope(state: \.timerView,
-                                                          action: \.timerView))
-                        .frame(maxWidth: 140, minHeight: 25)
-                        .background(.clear)
-                        .transition(.opacity.animation(.easeIn))
-                } else {
-                    Text("\(viewStore.workoutSet.prevReps) x \(String(format: "%.1f", viewStore.workoutSet.prevWeight))")
-                        .font(.system(size: 17))
-                        .frame(minWidth: 140)
-                        .foregroundStyle(.secondary)
-                }
-
-            }
-            
-            if viewStore.editMode == .active {
-                TextField("count", text: viewStore.binding(
-                    get: { $0.repText },
-                    send: { WorkingOutRowReducer.Action.typeRep(rep: $0) })
-                )
-                .font(.system(size: 17))
-                .frame(minWidth: 100)
-                .keyboardType(.numberPad)
-                .textFieldStyle(.roundedBorder)
-                .multilineTextAlignment(.center)
-                .focused($focusedField, equals: .repText)
-            } else {
-                Text(String(viewStore.workoutSet.reps))
-                    .font(.system(size: 17))
-                    .frame(minWidth: 85)
-                    .padding(.vertical, 3)
-                    .background(Color(uiColor: .secondarySystemFill))
-                    .cornerRadius(5)
-            }
-            
-            if viewStore.editMode == .active {
-                TextField("weight", text: viewStore.binding(
-                    get: { $0.weightText },
-                    send: { WorkingOutRowReducer.Action.typeWeight(weight: $0) })
-                )
-                .font(.system(size: 17))
-                .frame(minWidth: 100)
-                .keyboardType(.decimalPad)
-                .textFieldStyle(.roundedBorder)
-                .multilineTextAlignment(.center)
-                .focused($focusedField, equals: .weightText)
-            } else {
-                Text(String(viewStore.workoutSet.weight))
-                    .font(.system(size: 17))
-                    .frame(minWidth: 85)
-                    .padding(.vertical, 3)
-                    .background(Color(uiColor: .secondarySystemFill))
-                    .cornerRadius(5)
-            }
-            
-            if viewStore.editMode == .active {
-                TextField("시간 입력",
-                          text: viewStore.binding(get: \.restTimeText,
-                                                  send: { .typeRestTime(restTime: $0) }))
-                .font(.system(size: 17))
-                .keyboardType(.decimalPad)
-                .textFieldStyle(.roundedBorder)
-                .multilineTextAlignment(.center)
-                .focused($focusedField, equals: .restTimeText)
+            switch viewStore.category.categoryType {
+            case .strength:
+                orderView()
+                prevAndTimerView()
+                repsAndWeightView()
+                restTimeView()
+            case .pilates, .yoga, .cardio:
+                orderView()
+                prevAndTimerView()
+                durationView()
+                restTimeView()
+            case .stretching:
+                stopWatchView()
             }
         }
         .frame(height: 25)
@@ -256,6 +179,170 @@ struct WorkingOutRow: View {
         }
         .onChange(of: viewStore.focusedField) { _, newValue in
             focusedField = newValue
+        }
+        .fullScreenCover(
+            item: $store.scope(state: \.stopwatch,
+                               action: \.stopwatch)
+        ) { store in
+            StopWatchView(store: store)
+        }
+    }
+    
+    @ViewBuilder
+    private func orderView() -> some View {
+        if viewStore.editMode == .active {
+            Menu {
+                Button(action: {
+
+                }) {
+                    Label("워밍업", systemImage: "pencil")
+                }
+                Button(action: {
+
+                }) {
+                    Label("드롭", systemImage: "pencil")
+                }
+                Button(action: {
+
+                }) {
+                    Label("실패", systemImage: "pencil")
+                }
+            } label: {
+                Text("\(viewStore.workoutSet.order)")
+                    .padding([.leading, .trailing], 5)
+                    .padding([.top, .bottom], 3)
+                    .font(.system(size: 17))
+                    .frame(minWidth: 30)
+                    .foregroundStyle(.white)
+                    .background(Color.personal.opacity(0.6))
+                    .cornerRadius(3.0)
+            }
+        } else {
+            Toggle(
+                "",
+                isOn: viewStore.binding(
+                    get: { $0.isChecked },
+                    send: { WorkingOutRowReducer.Action.toggleCheck(isChecked: $0) }
+                )
+            )
+            .toggleStyle(CheckboxToggleStyle(style: .square))
+            .padding(.leading, -7)
+            .foregroundStyle(Color.personal)
+        }
+    }
+    
+    @ViewBuilder
+    private func prevAndTimerView() -> some View {
+        if viewStore.editMode == .inactive {
+            if viewStore.isChecked {
+                CountdownTimerView(store: store.scope(state: \.timerView,
+                                                      action: \.timerView))
+                    .frame(maxWidth: 140, minHeight: 25)
+                    .background(.clear)
+                    .transition(.opacity.animation(.easeIn))
+            } else {
+                Text("\(viewStore.workoutSet.prevReps) x \(String(format: "%.1f", viewStore.workoutSet.prevWeight))")
+                    .font(.system(size: 17))
+                    .frame(minWidth: 140)
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func repsAndWeightView() -> some View {
+        if viewStore.editMode == .active {
+            TextField("count", text: viewStore.binding(
+                get: { $0.repText },
+                send: { WorkingOutRowReducer.Action.typeRep(rep: $0) })
+            )
+            .font(.system(size: 17))
+            .frame(minWidth: 100)
+            .keyboardType(.numberPad)
+            .textFieldStyle(.roundedBorder)
+            .multilineTextAlignment(.center)
+            .focused($focusedField, equals: .repText)
+        } else {
+            Text(String(viewStore.workoutSet.reps))
+                .font(.system(size: 17))
+                .frame(minWidth: 85)
+                .padding(.vertical, 3)
+                .background(Color(uiColor: .secondarySystemFill))
+                .cornerRadius(5)
+        }
+        
+        if viewStore.editMode == .active {
+            TextField("weight", text: viewStore.binding(
+                get: { $0.weightText },
+                send: { WorkingOutRowReducer.Action.typeWeight(weight: $0) })
+            )
+            .font(.system(size: 17))
+            .frame(minWidth: 100)
+            .keyboardType(.decimalPad)
+            .textFieldStyle(.roundedBorder)
+            .multilineTextAlignment(.center)
+            .focused($focusedField, equals: .weightText)
+        } else {
+            Text(String(viewStore.workoutSet.weight))
+                .font(.system(size: 17))
+                .frame(minWidth: 85)
+                .padding(.vertical, 3)
+                .background(Color(uiColor: .secondarySystemFill))
+                .cornerRadius(5)
+        }
+    }
+    
+    @ViewBuilder
+    private func durationView() -> some View {
+        if viewStore.editMode == .active {
+            TextField("진행 시간",
+                      text: viewStore.binding(get: \.restTimeText,
+                                              send: { .typeRestTime(restTime: $0) }))
+            .font(.system(size: 17))
+            .keyboardType(.decimalPad)
+            .textFieldStyle(.roundedBorder)
+            .multilineTextAlignment(.center)
+            .focused($focusedField, equals: .restTimeText)
+        } else {
+            Text(String(viewStore.workoutSet.duration))
+                .font(.system(size: 17))
+                .frame(minWidth: 85)
+                .padding(.vertical, 3)
+                .background(Color(uiColor: .secondarySystemFill))
+                .cornerRadius(5)
+        }
+    }
+    
+    @ViewBuilder
+    private func restTimeView() -> some View {
+        if viewStore.editMode == .active {
+            TextField("시간 입력",
+                      text: viewStore.binding(get: \.restTimeText,
+                                              send: { .typeRestTime(restTime: $0) }))
+            .font(.system(size: 17))
+            .keyboardType(.decimalPad)
+            .textFieldStyle(.roundedBorder)
+            .multilineTextAlignment(.center)
+            .focused($focusedField, equals: .restTimeText)
+        }
+    }
+    
+    @ViewBuilder
+    private func stopWatchView() -> some View {
+        if viewStore.editMode == .inactive {
+            prevAndTimerView()
+        }
+        durationView()
+        Button(action: {
+            viewStore.send(.presentStopWatch)
+        }) {
+            Text("스탑와치 시작")
+                .frame(height: 30)
+                .frame(maxWidth: .infinity)
+                .background(Color.personal)
+                .foregroundStyle(.white)
+                .cornerRadius(10)
+                .padding(.vertical, 5)
         }
     }
 }

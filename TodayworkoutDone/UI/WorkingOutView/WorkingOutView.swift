@@ -173,10 +173,12 @@ struct WorkingOutReducer {
                     let index = state.workingOutSection[sectionIndex]
                         .workingOutRow.count
                     let workoutSet = WorkoutSetState(order: index + 1)
+                    let category = state.workingOutSection[sectionIndex].routine.workout.category
                     state.workingOutSection[sectionIndex]
                         .workingOutRow
                         .append(
                             WorkingOutRowReducer.State(
+                                category: category,
                                 workoutSet: workoutSet,
                                 editMode: .active
                             )
@@ -228,7 +230,9 @@ struct WorkingOutReducer {
                             .restTime = restTime.timeStringToSeconds()
                     }
                     return .none
-                case .setFocus, .dismissKeyboard, .timerView:
+                case .setFocus, .dismissKeyboard, .timerView, .presentStopWatch:
+                    return .none
+                case .stopwatch:
                     return .none
                 }
                 
@@ -249,10 +253,6 @@ struct WorkingOutReducer {
                     state.myRoutine?.routines[sectionIndex]
                         .sets.remove(atOffsets: indexSet)
                 }
-                return .none
-            case .workingOutSection(.element(_, action: .stopwatch)):
-                return .none
-            case .workingOutSection(.element(_, action: .destination(_))):
                 return .none
             }
         }

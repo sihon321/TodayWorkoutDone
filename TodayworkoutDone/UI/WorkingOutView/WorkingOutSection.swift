@@ -12,7 +12,6 @@ import ComposableArchitecture
 struct WorkingOutSectionReducer {
     @ObservableState
     struct State: Equatable, Identifiable {
-        @Presents var destination: Destination.State?
         let id: UUID
         var editMode: EditMode
         var routine: RoutineState
@@ -26,6 +25,7 @@ struct WorkingOutSectionReducer {
             self.workingOutRow = IdentifiedArrayOf(
                 uniqueElements: routine.sets.enumerated().map {
                     WorkingOutRowReducer.State(
+                        category: routine.workout.category,
                         workoutSet: $0.element,
                         editMode: editMode
                     )
@@ -57,18 +57,9 @@ struct WorkingOutSectionReducer {
         
         case workingOutRow(IdentifiedActionOf<WorkingOutRowReducer>)
         case workingOutHeader(WorkingOutHeaderReducer.Action)
-        
-        // MARK: - Streching
-        case stopwatch
-        case destination(PresentationAction<Destination.Action>)
     }
     
     @Dependency(\.continuousClock) var clock
-    
-    @Reducer(state: .equatable)
-    enum Destination {
-        case stopwatch(StopWatchFeature)
-    }
     
     var body: some Reducer<State, Action> {
         Scope(state: \.workingOutHeader, action: \.workingOutHeader) {
@@ -90,22 +81,10 @@ struct WorkingOutSectionReducer {
                     state.workingOutRow[index].workoutSet.order = index + 1
                 }
                 return .none
-                
-            // MARK: - Streching
-            case .stopwatch:
-                state.destination = .stopwatch(StopWatchFeature.State())
-                return .none
-            case .destination(.presented(.stopwatch(.close))):
-                return .none
-            case .destination:
-                return .none
             }
         }
         .forEach(\.workingOutRow, action: \.workingOutRow) {
             WorkingOutRowReducer()
-        }
-        .ifLet(\.$destination, action: \.destination) {
-            Destination.body
         }
     }
 }
@@ -122,32 +101,28 @@ struct WorkingOutSection: View {
     
     var body: some View {
         VStack {
-            if store.routine.workout.name == "스트레칭" {
-                StopWatchRow(store: store)
-            } else {
-                WorkingOutHeader(store: store.scope(state: \.workingOutHeader,
-                                                    action: \.workingOutHeader),
-                                 equipmentType: .init(wrappedValue: store.routine.equipmentType))
-                ForEach(store.scope(state: \.workingOutRow, action: \.workingOutRow)) { rowStore in
-                    if viewStore.editMode == .active {
-                        SwipeView(content: {
-                            WorkingOutRow(store: rowStore)
-                        }, onDelete: {
-                            if let index = viewStore.workingOutRow
-                                .firstIndex(where: { $0.id == rowStore.id }) {
-                                viewStore.send(.deleteWorkoutSet(IndexSet(integer: index)))
-                            }
-                        })
-                    } else {
-                        WorkingOutRow(store: rowStore)
-                    }
-                }
+            WorkingOutHeader(store: store.scope(state: \.workingOutHeader,
+                                                action: \.workingOutHeader),
+                             equipmentType: .init(wrappedValue: store.routine.equipmentType))
+            ForEach(store.scope(state: \.workingOutRow, action: \.workingOutRow)) { rowStore in
                 if viewStore.editMode == .active {
-                    Button(action: {
-                        viewStore.send(.tappedAddFooter)
-                    }) {
-                        WorkingOutFooter()
-                    }
+                    SwipeView(content: {
+                        WorkingOutRow(store: rowStore)
+                    }, onDelete: {
+                        if let index = viewStore.workingOutRow
+                            .firstIndex(where: { $0.id == rowStore.id }) {
+                            viewStore.send(.deleteWorkoutSet(IndexSet(integer: index)))
+                        }
+                    })
+                } else {
+                    WorkingOutRow(store: rowStore)
+                }
+            }
+            if viewStore.editMode == .active {
+                Button(action: {
+                    viewStore.send(.tappedAddFooter)
+                }) {
+                    WorkingOutFooter()
                 }
             }
         }

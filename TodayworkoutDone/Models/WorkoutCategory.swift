@@ -40,8 +40,8 @@ struct WorkoutCategoryState: WorkoutCategoryData, Equatable, Codable {
 
     var name: String
     
-    var categoryType: WorkoutCategoryType? {
-        return WorkoutCategoryType(rawValue: name.lowercased())
+    var categoryType: WorkoutCategoryType {
+        return WorkoutCategoryType(rawValue: name.lowercased()) ?? .strength
     }
     
     enum CodingKeys: String, CodingKey {

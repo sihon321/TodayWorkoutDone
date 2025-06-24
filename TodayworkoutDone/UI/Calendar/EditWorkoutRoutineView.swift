@@ -112,10 +112,12 @@ struct EditWorkoutRoutineReducer {
                             let index = state.workingOutSection[sectionIndex]
                                 .workingOutRow.count
                             let workoutSet = WorkoutSetState(order: index + 1)
+                            let category = state.workingOutSection[sectionIndex].routine.workout.category
                             state.workingOutSection[sectionIndex]
                                 .workingOutRow
                                 .append(
                                     WorkingOutRowReducer.State(
+                                        category: category,
                                         workoutSet: workoutSet,
                                         editMode: .active
                                     )
@@ -132,17 +134,17 @@ struct EditWorkoutRoutineReducer {
                             switch action {
                             case .toggleCheck:
                                 return .none
-                            case let .typeRep(lab):
+                            case let .typeRep(rep):
                                 if let sectionIndex = state.workingOutSection
                                     .index(id: sectionId),
                                    let rowIndex = state.workingOutSection[sectionIndex]
                                     .workingOutRow
                                     .index(id: rowId),
-                                   let labValue = Int(lab) {
+                                   let repValue = Int(rep) {
                                     state.workoutRoutine
                                         .routines[sectionIndex]
                                         .sets[rowIndex]
-                                        .reps = labValue
+                                        .reps = repValue
                                 }
                                 return .none
                             case let .typeWeight(weight):
@@ -169,7 +171,9 @@ struct EditWorkoutRoutineReducer {
                                         .restTime = restTime.timeStringToSeconds()
                                 }
                                 return .none
-                            case .setFocus, .dismissKeyboard, .timerView:
+                            case .setFocus, .dismissKeyboard, .timerView, .presentStopWatch:
+                                return .none
+                            case .stopwatch:
                                 return .none
                             }
                         }
@@ -197,10 +201,6 @@ struct EditWorkoutRoutineReducer {
                             state.workoutRoutine.routines[sectionIndex]
                                 .sets.remove(atOffsets: indexSet)
                         }
-                        return .none
-                    case .stopwatch:
-                        return .none
-                    case .destination(_):
                         return .none
                     }
                 }

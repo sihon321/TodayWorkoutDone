@@ -20,6 +20,7 @@
 		8E0C8C792DDDBD970051BDB8 /* CountdownTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C8C782DDDBD950051BDB8 /* CountdownTimerView.swift */; };
 		8E0CFD6C2DE89E3800385CF6 /* OnBoardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFD6B2DE89E2D00385CF6 /* OnBoardingPageView.swift */; };
 		8E0CFD6E2DE8A2CA00385CF6 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFD6D2DE8A2C700385CF6 /* RootView.swift */; };
+		8E132D902E0A699600570A51 /* DurationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E132D8F2E0A699200570A51 /* DurationRow.swift */; };
 		8E1495CD2E0390ED008FBB06 /* StopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1495CC2E0390E2008FBB06 /* StopWatchView.swift */; };
 		8E1F53AF2DF69F9C00D04278 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F53AE2DF69F9900D04278 /* SettingView.swift */; };
 		8E2A89062C96E332009C9032 /* WorkoutRoutineDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A89052C96E332009C9032 /* WorkoutRoutineDatabase.swift */; };
@@ -138,6 +139,7 @@
 		8E0C8C782DDDBD950051BDB8 /* CountdownTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerView.swift; sourceTree = "<group>"; };
 		8E0CFD6B2DE89E2D00385CF6 /* OnBoardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageView.swift; sourceTree = "<group>"; };
 		8E0CFD6D2DE8A2C700385CF6 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		8E132D8F2E0A699200570A51 /* DurationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationRow.swift; sourceTree = "<group>"; };
 		8E1495CC2E0390E2008FBB06 /* StopWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchView.swift; sourceTree = "<group>"; };
 		8E1F53AE2DF69F9900D04278 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		8E2A89052C96E332009C9032 /* WorkoutRoutineDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRoutineDatabase.swift; sourceTree = "<group>"; };
@@ -484,6 +486,7 @@
 		F2E221462999089300B7DCCB /* WorkingOutView */ = {
 			isa = PBXGroup;
 			children = (
+				8E132D8F2E0A699200570A51 /* DurationRow.swift */,
 				927E3D7E2E0556C80035A051 /* StopWatchRow.swift */,
 				8E1495CC2E0390E2008FBB06 /* StopWatchView.swift */,
 				8E0C8C782DDDBD950051BDB8 /* CountdownTimerView.swift */,
@@ -786,6 +789,7 @@
 				F2102C36292BB06D00417789 /* MainContentWorkoutView.swift in Sources */,
 				F2DAA76829E59DB70039CF07 /* WorkingOutFooter.swift in Sources */,
 				F2E74D242922219000BD35F6 /* MainView.swift in Sources */,
+				8E132D902E0A699600570A51 /* DurationRow.swift in Sources */,
 				F23F4E9A295815140084392B /* MyRoutineSubview.swift in Sources */,
 				F2E2214C29994C3B00B7DCCB /* WorkingOutRow.swift in Sources */,
 				8E0743032DF53E5A00F2DD7F /* LottieView.swift in Sources */,

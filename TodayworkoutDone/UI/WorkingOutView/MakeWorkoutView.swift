@@ -176,10 +176,12 @@ struct MakeWorkoutReducer {
                             } catch {
                                 print(error.localizedDescription)
                             }
+                            let category = state.workingOutSection[sectionIndex].routine.workout.category
                             state.workingOutSection[sectionIndex]
                                 .workingOutRow
                                 .append(
                                     WorkingOutRowReducer.State(
+                                        category: category,
                                         workoutSet: workoutSet,
                                         editMode: .active
                                     )
@@ -233,7 +235,9 @@ struct MakeWorkoutReducer {
                                         .restTime = restTime.timeStringToSeconds()
                                 }
                                 return .none
-                            case .setFocus, .dismissKeyboard, .timerView:
+                            case .setFocus, .dismissKeyboard, .timerView, .presentStopWatch:
+                                return .none
+                            case .stopwatch:
                                 return .none
                             }
                         }
@@ -261,10 +265,6 @@ struct MakeWorkoutReducer {
                             state.myRoutine.routines[sectionIndex]
                                 .sets.remove(atOffsets: indexSet)
                         }
-                        return .none
-                    case .stopwatch:
-                        return .none
-                    case .destination(_):
                         return .none
                     }
                 }
