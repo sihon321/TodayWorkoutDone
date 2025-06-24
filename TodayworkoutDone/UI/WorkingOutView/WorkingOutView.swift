@@ -230,6 +230,17 @@ struct WorkingOutReducer {
                             .restTime = restTime.timeStringToSeconds()
                     }
                     return .none
+                case .typeDuration(let duration):
+                    if let sectionIndex = state.workingOutSection.index(id: sectionId),
+                       let rowIndex = state.workingOutSection[sectionIndex]
+                        .workingOutRow
+                        .index(id: rowId) {
+                        state.myRoutine?
+                            .routines[sectionIndex]
+                            .sets[rowIndex]
+                            .duration = duration.timeStringToSeconds()
+                    }
+                    return .none
                 case .setFocus, .dismissKeyboard, .timerView, .presentStopWatch:
                     return .none
                 case .stopwatch:

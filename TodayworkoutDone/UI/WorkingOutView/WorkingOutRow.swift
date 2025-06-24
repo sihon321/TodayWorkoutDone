@@ -28,6 +28,9 @@ struct WorkingOutRowReducer {
         var restTimeText: String = ""
         var originalRestTimeText: String = ""
         
+        var durationText: String = ""
+        var originalDurationText: String = ""
+        
         var timerView: CountdownTimerReducer.State
         @Presents var stopwatch: StopWatchFeature.State?
         
@@ -52,6 +55,7 @@ struct WorkingOutRowReducer {
         case typeRep(rep: String)
         case typeWeight(weight: String)
         case typeRestTime(restTime: String)
+        case typeDuration(duration: String)
         case setFocus(Field?)
         case dismissKeyboard
         case timerView(CountdownTimerReducer.Action)
@@ -64,6 +68,7 @@ struct WorkingOutRowReducer {
         case repText
         case weightText
         case restTimeText
+        case durationText
     }
 
     var body: some Reducer<State, Action> {
@@ -95,6 +100,11 @@ struct WorkingOutRowReducer {
                 }
                 
                 return .none
+            case let .typeDuration(duration):
+                if !duration.isEmpty {
+                    state.durationText = duration.formattedTime()
+                }
+                return .none
             case let .setFocus(field):
                 state.focusedField = field
                 switch field {
@@ -107,6 +117,9 @@ struct WorkingOutRowReducer {
                 case .restTimeText:
                     state.originalRestTimeText = state.restTimeText
                     state.restTimeText = ""
+                case .durationText:
+                    state.originalDurationText = state.durationText
+                    state.durationText = ""
                 case .none:
                     break
                 }
@@ -296,13 +309,13 @@ struct WorkingOutRow: View {
     private func durationView() -> some View {
         if viewStore.editMode == .active {
             TextField("진행 시간",
-                      text: viewStore.binding(get: \.restTimeText,
-                                              send: { .typeRestTime(restTime: $0) }))
+                      text: viewStore.binding(get: \.durationText,
+                                              send: { .typeDuration(duration: $0) }))
             .font(.system(size: 17))
             .keyboardType(.decimalPad)
             .textFieldStyle(.roundedBorder)
             .multilineTextAlignment(.center)
-            .focused($focusedField, equals: .restTimeText)
+            .focused($focusedField, equals: .durationText)
         } else {
             Text(String(viewStore.workoutSet.duration))
                 .font(.system(size: 17))
@@ -344,5 +357,6 @@ struct WorkingOutRow: View {
                 .cornerRadius(10)
                 .padding(.vertical, 5)
         }
+        .disabled(viewStore.editMode == .active)
     }
 }

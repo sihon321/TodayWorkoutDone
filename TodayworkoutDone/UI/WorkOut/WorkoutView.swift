@@ -211,8 +211,8 @@ struct WorkoutReducer {
                     }
 
                     return .none
-                case .workoutList(.element(_, .destination(.presented(.makeWorkoutView(.tappedDone))))):
-                    return .send(.dismiss)
+                case let .workoutList(.element(_, .createMakeWorkoutView(routines, isEdit))):
+                    return .send(.createMakeWorkoutView(routines: routines, isEdit: isEdit))
                 default:
                     return .none
                 }

@@ -13,8 +13,6 @@ import Combine
 struct WorkoutListReducer {
     @ObservableState
     struct State: Equatable, Identifiable {
-        @Presents var destination: Destination.State?
-        
         let id: UUID
         let isAddWorkoutPresented: Bool
         let categoryName: String
@@ -64,8 +62,6 @@ struct WorkoutListReducer {
     }
     
     enum Action {
-        case destination(PresentationAction<Destination.Action>)
-        
         case search(keyword: String)
         
         case getWorkouts(String)
@@ -76,11 +72,6 @@ struct WorkoutListReducer {
         case createMakeWorkoutView(routines: [RoutineState], isEdit: Bool)
         
         case sortedWorkoutSection(IdentifiedActionOf<SortedWorkoutSectionReducer>)
-    }
-    
-    @Reducer(state: .equatable)
-    enum Destination {
-        case makeWorkoutView(MakeWorkoutReducer)
     }
     
     @Dependency(\.workoutAPI) var workoutRepository
@@ -126,23 +117,11 @@ struct WorkoutListReducer {
                 return .run { _ in
                     await self.dismiss()
                 }
-            case let .createMakeWorkoutView(routines, isEdit):
-                state.destination = .makeWorkoutView(
-                    MakeWorkoutReducer.State(
-                        myRoutine: MyRoutineState(routines: routines),
-                        isEdit: isEdit
-                    )
-                )
-                
-                return .none
-            case .destination:
+            case .createMakeWorkoutView:
                 return .none
             case .sortedWorkoutSection:
                 return .none
             }
-        }
-        .ifLet(\.$destination, action: \.destination) {
-            Destination.body
         }
         .forEach(\.soretedWorkoutSection, action: \.sortedWorkoutSection) {
             SortedWorkoutSectionReducer()
@@ -265,12 +244,6 @@ struct WorkoutListView: View {
                             let selectedWorkoutCount = viewStore.routines.count
                             Text("Done(\(selectedWorkoutCount))")
                                 .foregroundStyle(.black)
-                        }
-                        .fullScreenCover(
-                            item: $store.scope(state: \.destination?.makeWorkoutView,
-                                               action: \.destination.makeWorkoutView)
-                        ) { store in
-                            MakeWorkoutView(store: store)
                         }
                     }
                 }

@@ -142,7 +142,6 @@ struct HomeReducer {
 
             case .makeWorkingOutView(let myRoutine),
                     .destination(.presented(.workoutView(.destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine))))))),
-                    .destination(.presented(.workoutView(.workoutCategory(.workoutList(.element(_, .destination(.presented(.makeWorkoutView(.tappedDone(let myRoutine)))))))))),
                     .destination(.presented(.workoutView(.tappedDone(let myRoutine)))):
                 @Dependency(\.routineData.fetch) var fetch
                 state.workingOut.myRoutine = myRoutine
@@ -184,7 +183,11 @@ struct HomeReducer {
             case .destination(.presented(.workoutView(.dismiss))):
                 state.destination = .none
                 return .none
-
+                
+            case .destination(.presented(.workoutView(.destination(.presented(.makeWorkoutView(.dismissMakeWorkout)))))):
+                state.destination = .none
+                return .none
+                
             case .destination:
               return .none
                 
