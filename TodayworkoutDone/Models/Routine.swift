@@ -41,7 +41,7 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
     }
     
     init(workout: WorkoutState,
-         sets: [WorkoutSetState] = [],
+         sets: [WorkoutSetState] = [WorkoutSetState(order: 1)],
          equipmentType: EquipmentType = .barbel,
          averageEndDate: Double? = nil,
          calories: Double = 0.0,

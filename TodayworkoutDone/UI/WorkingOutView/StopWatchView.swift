@@ -72,7 +72,7 @@ struct StopWatchView: View {
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationStack {
-                ScrollView {
+                VStack {
                     Text(formatted(time: viewStore.elapsedTime))
                         .font(.system(size: 48, weight: .bold, design: .monospaced))
                         .padding(.top, 40)

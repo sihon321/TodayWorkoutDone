@@ -55,7 +55,6 @@
 		926B74AF2D4A3AD60006E8CB /* pilates.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74A92D4A3AD60006E8CB /* pilates.json */; };
 		926B74B02D4A3AD60006E8CB /* stretching.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AB2D4A3AD60006E8CB /* stretching.json */; };
 		926B74B12D4A3AD60006E8CB /* yoga.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AC2D4A3AD60006E8CB /* yoga.json */; };
-		927E3D7F2E0556DA0035A051 /* StopWatchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E3D7E2E0556C80035A051 /* StopWatchRow.swift */; };
 		F2007DA72A8A8AC300833AF0 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */; };
 		F2007DAA2A8AA27E00833AF0 /* HealthKit+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */; };
 		F201082A2B6FE03100265F17 /* MainContentEnergyBurn.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20108292B6FE03100265F17 /* MainContentEnergyBurn.swift */; };
@@ -175,7 +174,6 @@
 		926B74AA2D4A3AD60006E8CB /* strength.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = strength.json; sourceTree = "<group>"; };
 		926B74AB2D4A3AD60006E8CB /* stretching.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = stretching.json; sourceTree = "<group>"; };
 		926B74AC2D4A3AD60006E8CB /* yoga.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = yoga.json; sourceTree = "<group>"; };
-		927E3D7E2E0556C80035A051 /* StopWatchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchRow.swift; sourceTree = "<group>"; };
 		F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthKit+Combine.swift"; sourceTree = "<group>"; };
 		F20108292B6FE03100265F17 /* MainContentEnergyBurn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentEnergyBurn.swift; sourceTree = "<group>"; };
@@ -487,7 +485,6 @@
 			isa = PBXGroup;
 			children = (
 				8E132D8F2E0A699200570A51 /* DurationRow.swift */,
-				927E3D7E2E0556C80035A051 /* StopWatchRow.swift */,
 				8E1495CC2E0390E2008FBB06 /* StopWatchView.swift */,
 				8E0C8C782DDDBD950051BDB8 /* CountdownTimerView.swift */,
 				8EECCF432A14FF7600BD99DB /* MakeWorkoutView.swift */,
@@ -795,7 +792,6 @@
 				8E0743032DF53E5A00F2DD7F /* LottieView.swift in Sources */,
 				F2102C34292BB06D00417789 /* MainContentStepView.swift in Sources */,
 				F201082A2B6FE03100265F17 /* MainContentEnergyBurn.swift in Sources */,
-				927E3D7F2E0556DA0035A051 /* StopWatchRow.swift in Sources */,
 				F2E74CE62921F73500BD35F6 /* TodayworkoutDoneApp.swift in Sources */,
 				8EB539732C98152E00F56034 /* APIHelper.swift in Sources */,
 				F2E2214A29994BB500B7DCCB /* WorkingOutSection.swift in Sources */,

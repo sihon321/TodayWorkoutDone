@@ -105,7 +105,7 @@ struct WorkingOutSection: View {
                                                 action: \.workingOutHeader),
                              equipmentType: .init(wrappedValue: store.routine.equipmentType))
             ForEach(store.scope(state: \.workingOutRow, action: \.workingOutRow)) { rowStore in
-                if viewStore.editMode == .active {
+                if viewStore.editMode == .active && viewStore.routine.workout.category.categoryType != .stretching {
                     SwipeView(content: {
                         WorkingOutRow(store: rowStore)
                     }, onDelete: {
@@ -118,12 +118,14 @@ struct WorkingOutSection: View {
                     WorkingOutRow(store: rowStore)
                 }
             }
-            if viewStore.editMode == .active {
+            if viewStore.editMode == .active && viewStore.routine.workout.category.categoryType != .stretching {
                 Button(action: {
                     viewStore.send(.tappedAddFooter)
                 }) {
                     WorkingOutFooter()
                 }
+            } else {
+                Spacer()
             }
         }
         .padding(.horizontal, 15)

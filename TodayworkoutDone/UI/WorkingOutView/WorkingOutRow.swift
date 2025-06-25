@@ -133,6 +133,11 @@ struct WorkingOutRowReducer {
             case .presentStopWatch:
                 state.stopwatch = StopWatchFeature.State()
                 return .none
+            case .stopwatch(.presented(.close)):
+                if let stopwatch = state.stopwatch {
+                    state.workoutSet.duration = Int(stopwatch.elapsedTime)
+                }
+                return .none
             case .stopwatch:
                 return .none
             }
@@ -171,7 +176,7 @@ struct WorkingOutRow: View {
                 stopWatchView()
             }
         }
-        .frame(height: 25)
+        .frame(minHeight: 25)
         .padding(.vertical, 5)
         .onChange(of: focusedField) { oldValue, newValue in
             if oldValue == .restTimeText,
@@ -250,13 +255,13 @@ struct WorkingOutRow: View {
             if viewStore.isChecked {
                 CountdownTimerView(store: store.scope(state: \.timerView,
                                                       action: \.timerView))
-                    .frame(maxWidth: 140, minHeight: 25)
-                    .background(.clear)
-                    .transition(.opacity.animation(.easeIn))
+                .frame(maxWidth: .infinity, minHeight: 25)
+                .background(.clear)
+                .transition(.opacity.animation(.easeIn))
             } else {
                 Text("\(viewStore.workoutSet.prevReps) x \(String(format: "%.1f", viewStore.workoutSet.prevWeight))")
                     .font(.system(size: 17))
-                    .frame(minWidth: 140)
+                    .frame(maxWidth: .infinity)
                     .foregroundStyle(.secondary)
             }
         }
@@ -315,11 +320,12 @@ struct WorkingOutRow: View {
             .keyboardType(.decimalPad)
             .textFieldStyle(.roundedBorder)
             .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
             .focused($focusedField, equals: .durationText)
         } else {
             Text(String(viewStore.workoutSet.duration))
                 .font(.system(size: 17))
-                .frame(minWidth: 85)
+                .frame(maxWidth: .infinity)
                 .padding(.vertical, 3)
                 .background(Color(uiColor: .secondarySystemFill))
                 .cornerRadius(5)
@@ -343,14 +349,22 @@ struct WorkingOutRow: View {
     @ViewBuilder
     private func stopWatchView() -> some View {
         if viewStore.editMode == .inactive {
-            prevAndTimerView()
+            Text("\()")
+                .font(.system(size: 17))
+                .frame(maxWidth: .infinity)
+                .foregroundStyle(.secondary)
         }
-        durationView()
+        Text(String(viewStore.workoutSet.duration.formattedTime()))
+            .font(.system(size: 17))
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 3)
+            .background(Color(uiColor: .secondarySystemFill))
+            .cornerRadius(5)
         Button(action: {
             viewStore.send(.presentStopWatch)
         }) {
             Text("스탑와치 시작")
-                .frame(height: 30)
+                .frame(minHeight: 30)
                 .frame(maxWidth: .infinity)
                 .background(Color.personal)
                 .foregroundStyle(.white)

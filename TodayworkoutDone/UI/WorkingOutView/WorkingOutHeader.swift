@@ -62,7 +62,7 @@ struct WorkingOutHeader: View {
                 case .pilates:
                     pilatesEquipmentButton()
                 default:
-                    EmptyView()
+                    Spacer()
                 }
                 Spacer()
                 Image(systemName: "ellipsis")
@@ -136,32 +136,32 @@ struct WorkingOutHeader: View {
         Button(action: {}) {
             Menu {
                 Button(action: {
-                    viewStore.send(.tappedWorkoutsType(type: .machine))
+                    viewStore.send(.tappedWorkoutsType(type: .mat))
                 }) {
                     Label("매트", systemImage: "pencil")
                 }
                 Button(action: {
-                    viewStore.send(.tappedWorkoutsType(type: .barbel))
+                    viewStore.send(.tappedWorkoutsType(type: .reformer))
                 }) {
                     Label("리포머", systemImage: "pencil")
                 }
                 Button(action: {
-                    viewStore.send(.tappedWorkoutsType(type: .dumbbel))
+                    viewStore.send(.tappedWorkoutsType(type: .cadillac))
                 }) {
                     Label("캐딜락", systemImage: "pencil")
                 }
                 Button(action: {
-                    viewStore.send(.tappedWorkoutsType(type: .cable))
+                    viewStore.send(.tappedWorkoutsType(type: .chair))
                 }) {
                     Label("체어", systemImage: "pencil")
                 }
                 Button(action: {
-                    viewStore.send(.tappedWorkoutsType(type: .cable))
+                    viewStore.send(.tappedWorkoutsType(type: .barrel))
                 }) {
                     Label("바렐", systemImage: "pencil")
                 }
                 Button(action: {
-                    viewStore.send(.tappedWorkoutsType(type: .cable))
+                    viewStore.send(.tappedWorkoutsType(type: .springboard))
                 }) {
                     Label("스프링보드", systemImage: "pencil")
                 }
@@ -211,16 +211,16 @@ struct WorkingOutHeader: View {
             if viewStore.editMode == .inactive {
                 Text("이전")
                     .font(.system(size: 17, weight: .medium))
-                    .frame(minWidth: 140)
+                    .frame(minWidth: 190)
             }
             Text("진행시간")
                 .font(.system(size: 17, weight: .medium))
-                .frame(minWidth: viewStore.editMode == .inactive ? 85 : 110)
+                .frame(maxWidth: .infinity)
                 
             if viewStore.editMode == .active {
                 Text("휴식시간")
                     .font(.system(size: 17, weight: .medium))
-                    .frame(minWidth: 100)
+                    .frame(maxWidth: .infinity)
             }
         }
     }
@@ -231,11 +231,13 @@ struct WorkingOutHeader: View {
             if viewStore.editMode == .inactive {
                 Text("이전")
                     .font(.system(size: 17, weight: .medium))
-                    .frame(minWidth: 140)
+                    .frame(maxWidth: .infinity)
             }
             Text("진행시간")
                 .font(.system(size: 17, weight: .medium))
-                .frame(minWidth: viewStore.editMode == .inactive ? 85 : 110)
+                .frame(maxWidth: .infinity)
+            Spacer()
+                .frame(maxWidth: .infinity)
         }
     }
 }
