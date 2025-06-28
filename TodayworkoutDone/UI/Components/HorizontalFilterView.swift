@@ -27,6 +27,7 @@ struct HorizontalFilterView: View {
             }
             .padding(.vertical, 1)
         }
+        .background(.clear)
     }
 }
 
@@ -40,12 +41,12 @@ struct FilterButton: View {
             .font(.system(size: 12, weight: .medium))
             .padding(.horizontal, 15)
             .padding(.vertical, 5)
-            .background(isSelected ? Color(.personal).opacity(0.7) : Color.white)
-            .foregroundColor(isSelected ? .white : .black)
+            .background(isSelected ? Color(.personal) : Color.contentBackground)
+            .foregroundColor(isSelected ? .white : .todBlack)
             .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous)) // Squircle 효과
             .overlay(
                 RoundedRectangle(cornerRadius: 15, style: .continuous)
-                    .stroke(isSelected ? Color(.personal) : Color.gray.opacity(0.5), lineWidth: 1)
+                    .stroke(isSelected ? Color(.personal) : Color.workoutListBorder, lineWidth: 1)
             )
             .onTapGesture {
                 action()

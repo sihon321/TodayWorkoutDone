@@ -60,7 +60,7 @@ struct WorkoutListSubview: View {
                     }
                     Text(viewStore.workout.name)
                         .font(.system(size: 15, weight: .light))
-                        .foregroundStyle(.black)
+                        .foregroundStyle(Color.todBlack)
                     Spacer()
                     if viewStore.workout.isSelected {
                         Image(systemName: "checkmark")
@@ -70,6 +70,7 @@ struct WorkoutListSubview: View {
                             viewStore.send(.popUpShown(true))
                         }) {
                             Image(systemName: "info.circle")
+                                .foregroundStyle(Color.todBlack)
                         }
                     }
                 }

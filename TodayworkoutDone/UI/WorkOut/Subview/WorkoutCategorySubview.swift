@@ -24,6 +24,7 @@ struct WorkoutCategorySubview: View {
                                   weight: .bold,
                                   design: .default))
                     .padding(.top, 15)
+                    .foregroundColor(Color.todBlack)
                 Spacer()
             }
         }

@@ -277,7 +277,6 @@ struct WorkoutView: View {
             .navigationBarTitle("workout", displayMode: .inline)
             .workoutViewToolbar(store: store, viewStore: viewStore)
         }
-        .tint(Color.todBlack)
         .searchable(text: viewStore.binding(
             get: { $0.keyword },
             send: { WorkoutReducer.Action.search(keyword: $0) }
@@ -294,6 +293,7 @@ struct WorkoutView: View {
             viewStore.send(.getMyRoutines)
             viewStore.send(.getCategories)
         }
+        .tint(.todBlack)
     }
 }
 
@@ -343,7 +343,7 @@ private struct WorkoutViewToolbar: ViewModifier {
                         }) {
                             let selectedWorkoutCount = viewStore.myRoutine.routines.count
                             Text("Done(\(selectedWorkoutCount))")
-                                .foregroundStyle(.black)
+                                .foregroundStyle(Color.todBlack)
                         }
                     }
                 }
@@ -352,7 +352,7 @@ private struct WorkoutViewToolbar: ViewModifier {
                         viewStore.send(.dismiss)
                     }, label: {
                         Image(systemName: "xmark")
-                            .foregroundColor(.black)
+                            .foregroundColor(Color.todBlack)
                     })
                 }
             })

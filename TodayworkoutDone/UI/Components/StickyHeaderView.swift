@@ -18,7 +18,6 @@ struct StickyHeaderView: View {
             .font(.headline)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 10)
-            .background(Color.white)
             .background(
                 GeometryReader { proxy in
                     Color.clear
@@ -37,6 +36,7 @@ struct StickyHeaderView: View {
             }
         Divider()
             .padding(.vertical, 10)
+            .foregroundStyle(Color.workoutListBorder)
     }
 }
 

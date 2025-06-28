@@ -201,7 +201,7 @@ struct WorkoutListView: View {
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
-                    .background(Color.white)
+                    .background(.clear)
                     .overlay(Divider(), alignment: .bottom)
                     .zIndex(1) // 항상 앞에 있도록 설정
             }
@@ -243,7 +243,7 @@ struct WorkoutListView: View {
                         }) {
                             let selectedWorkoutCount = viewStore.routines.count
                             Text("Done(\(selectedWorkoutCount))")
-                                .foregroundStyle(.black)
+                                .foregroundStyle(Color.todBlack)
                         }
                     }
                 }
@@ -257,5 +257,6 @@ struct WorkoutListView: View {
         .onAppear {
             store.send(.getWorkouts(viewStore.categoryName))
         }
+        .tint(.todBlack)
     }
 }

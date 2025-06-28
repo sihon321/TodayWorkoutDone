@@ -345,7 +345,7 @@ struct EditWorkoutRoutineView: View {
                         viewStore.send(.dismiss)
                     }, label: {
                         Image(systemName: "xmark")
-                            .foregroundColor(.black)
+                            .foregroundStyle(.black)
                     })
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {

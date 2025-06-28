@@ -29,4 +29,5 @@ extension Color {
     static let todBlack = Color("tod_black")
     static let contentBackground = Color("content_background")
     static let todWhite = Color("tod_white")
+    static let workoutListBorder = Color("workout_list_border")
 }

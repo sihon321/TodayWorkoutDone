@@ -184,7 +184,7 @@ struct OnBoardingView: View {
                     
                     if viewStore.isHealthKitAuthorized {
                         Text("✅ 권한이 허용되었습니다.")
-                            .foregroundColor(.green)
+                            .foregroundStyle(.green)
                     }
                 }
                 .padding(.top, 100)
