@@ -42,7 +42,7 @@ struct FilterButton: View {
             .padding(.horizontal, 15)
             .padding(.vertical, 5)
             .background(isSelected ? Color(.personal) : Color.contentBackground)
-            .foregroundColor(isSelected ? .white : .todBlack)
+            .foregroundStyle(isSelected ? .white : .todBlack)
             .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous)) // Squircle 효과
             .overlay(
                 RoundedRectangle(cornerRadius: 15, style: .continuous)

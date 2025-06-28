@@ -17,7 +17,7 @@ struct WorkoutInfoView: View {
             VStack(alignment: .leading, spacing: 12) {
                 VStack(alignment: .center) {
                     Text(workout.name)
-                        .foregroundColor(.black)
+                        .foregroundStyle(.black)
                         .font(.system(size: 20, weight: .bold))
                         .padding(.top, 12)
                     

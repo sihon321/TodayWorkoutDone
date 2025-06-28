@@ -106,7 +106,7 @@ struct AddWorkoutCategoryView: View {
                         viewStore.send(.dismissWorkoutCategory)
                     }, label: {
                         Image(systemName: "xmark")
-                            .foregroundColor(.black)
+                            .foregroundStyle(.black)
                     })
                 }
             }

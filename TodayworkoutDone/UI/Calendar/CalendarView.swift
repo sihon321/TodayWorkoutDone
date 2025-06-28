@@ -160,7 +160,7 @@ struct CalendarView: View {
                 },
                 trailing: { date in
                     Rectangle()
-                        .foregroundColor(.clear)
+                        .foregroundStyle(.clear)
                 },
                 header: { date in
                     Text(viewStore.weekDayFormatter.string(from: date))

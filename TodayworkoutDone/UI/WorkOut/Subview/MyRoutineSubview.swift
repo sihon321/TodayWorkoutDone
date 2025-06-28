@@ -54,7 +54,7 @@ struct MyRoutineSubview: View {
                                   weight: .semibold,
                                   design: .default))
                     .padding(.leading, 15)
-                    .foregroundColor(Color.todBlack)
+                    .foregroundStyle(Color.todBlack)
                 Spacer()
                 Button(action: {}) {
                     Menu {
@@ -62,13 +62,13 @@ struct MyRoutineSubview: View {
                             viewStore.send(.touchedEditMode(store.myRoutine))
                         }) {
                             Label("편집", systemImage: "pencil")
-                                .foregroundColor(Color.todBlack)
+                                .foregroundStyle(Color.todBlack)
                         }
                         Button(action: {
                             viewStore.send(.touchedDelete(store.myRoutine))
                         }) {
                             Label("삭제", systemImage: "trash")
-                                .foregroundColor(Color.todBlack)
+                                .foregroundStyle(Color.todBlack)
                         }
                     } label: {
                         Image(systemName: "ellipsis")
@@ -88,7 +88,7 @@ struct MyRoutineSubview: View {
                                   weight: .light,
                                   design: .default))
                     .padding(.leading, 15)
-                    .foregroundColor(Color.todBlack)
+                    .foregroundStyle(Color.todBlack)
             }
             
             Spacer()

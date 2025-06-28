@@ -373,7 +373,7 @@ struct MakeWorkoutView: View {
                         viewStore.send(.dismissMakeWorkout)
                     }) {
                         Image(systemName: "xmark")
-                            .foregroundColor(.black)
+                            .foregroundStyle(.black)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {

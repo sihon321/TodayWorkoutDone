@@ -317,7 +317,7 @@ extension MainContentDetailView {
                     .font(.system(size: 12,
                                   weight: .semibold,
                                   design: .default))
-                    .foregroundColor(Color(0x7d7d7d))
+                    .foregroundStyle(Color(0x7d7d7d))
                     .padding(.leading, -5)
                     .padding(.top, 2)
             }

@@ -107,7 +107,7 @@ struct StopWatchView: View {
                             viewStore.send(.close)
                         }) {
                             Image(systemName: "xmark")
-                                .foregroundColor(.black)
+                                .foregroundStyle(.black)
                         }
                     }
                 }

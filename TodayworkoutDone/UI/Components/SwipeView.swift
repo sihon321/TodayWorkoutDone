@@ -32,7 +32,7 @@ struct SwipeView<Content: View>: View {
                     }
                 } label: {
                     Image(systemName: "trash")
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .frame(width: imageWidth, height: imageHeight)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 8)

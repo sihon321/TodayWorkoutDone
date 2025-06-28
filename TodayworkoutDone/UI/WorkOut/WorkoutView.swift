@@ -352,7 +352,7 @@ private struct WorkoutViewToolbar: ViewModifier {
                         viewStore.send(.dismiss)
                     }, label: {
                         Image(systemName: "xmark")
-                            .foregroundColor(Color.todBlack)
+                            .foregroundStyle(Color.todBlack)
                     })
                 }
             })

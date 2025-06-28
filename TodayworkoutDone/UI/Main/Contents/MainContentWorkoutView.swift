@@ -67,7 +67,7 @@ struct MainContentWorkoutView: View {
                 .font(.system(size: 12,
                               weight: .semibold,
                               design: .default))
-                .foregroundColor(Color(0x7d7d7d))
+                .foregroundStyle(Color(0x7d7d7d))
                 .padding(.leading, -5)
             Text("\(viewStore.exerciseTime % 60)")
                 .font(.system(size: 22,
@@ -79,7 +79,7 @@ struct MainContentWorkoutView: View {
                 .font(.system(size: 12,
                               weight: .semibold,
                               design: .default))
-                .foregroundColor(Color(0x7d7d7d))
+                .foregroundStyle(Color(0x7d7d7d))
                 .padding(.leading, -5)
         }
         .onAppear {

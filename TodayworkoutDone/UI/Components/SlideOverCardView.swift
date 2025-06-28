@@ -32,7 +32,7 @@ struct SlideOverCardView<Content: View>: View {
         return Group {
             RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.5)
                 .frame(width: 40, height: UIScreen.main.bounds.size.height - 50)
-                .foregroundColor(Color.secondary)
+                .foregroundStyle(Color.secondary)
             self.content()
                 .background(
                     GeometryReader { proxy in

@@ -335,7 +335,7 @@ extension HomeView {
                     .frame(minWidth: 0, maxWidth: .infinity - 30)
                     .padding([.top, .bottom], 5)
                     .background(Color.personal)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 14.0,
                                                 style: .continuous))
             }
