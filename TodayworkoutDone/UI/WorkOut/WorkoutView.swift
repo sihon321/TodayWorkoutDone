@@ -119,6 +119,28 @@ struct WorkoutReducer {
                 return .send(.dismiss)
                 
             case let .createMakeWorkoutView(routines, isEdit):
+                @Dependency(\.routineData.fetch) var fetch
+                var routines = routines
+                for (index, routine) in routines.enumerated() {
+                    var descriptor = FetchDescriptor<Routine>(
+                        predicate: #Predicate {
+                            $0.workout.name == routine.workout.name
+                        },
+                        sortBy: [SortDescriptor(\.endDate, order: .reverse)]
+                    )
+                    descriptor.fetchLimit = 1
+                    do {
+                        if let prevRoutine = try fetch(descriptor).first {
+                            for (setIndex, prevSet) in prevRoutine.sets.enumerated() where setIndex < routine.sets.count {
+                                routines[index].sets[setIndex].prevReps = prevSet.prevReps
+                                routines[index].sets[setIndex].prevWeight = prevSet.prevWeight
+                                routines[index].sets[setIndex].prevDuration = prevSet.prevDuration
+                            }
+                        }
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
                 state.destination = .makeWorkoutView(MakeWorkoutReducer.State(
                     myRoutine: MyRoutineState(routines: routines),
                     isEdit: isEdit

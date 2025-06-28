@@ -169,9 +169,11 @@ struct MakeWorkoutReducer {
                             do {
                                 if let prevRoutine = try fetch(descriptor).first,
                                    let prevWeight = prevRoutine.sets.first(where: { $0.order == index + 1 })?.weight,
-                                   let prevReps = prevRoutine.sets.first(where: { $0.order == index + 1 })?.reps {
+                                   let prevReps = prevRoutine.sets.first(where: { $0.order == index + 1 })?.reps,
+                                   let prevDuration = prevRoutine.sets.first(where: { $0.order == index + 1 })?.duration {
                                     workoutSet.prevWeight = prevWeight
                                     workoutSet.prevReps = prevReps
+                                    workoutSet.duration = prevDuration
                                 }
                             } catch {
                                 print(error.localizedDescription)

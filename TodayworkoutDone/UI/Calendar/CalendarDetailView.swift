@@ -97,7 +97,7 @@ struct CalendarDetailView: View {
             }
         }
         .padding([.top], 30)
-        .padding([.leading, .bottom, .trailing], 15)
+        .padding([.leading, .trailing], 15)
     }
 }
 

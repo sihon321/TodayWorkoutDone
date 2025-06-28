@@ -29,6 +29,7 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
     var reps: Int
     
     var duration: Int
+    var prevDuration: Int
     
     var isChecked: Bool
     var endDate: Date?
@@ -38,7 +39,7 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
     enum CodingKeys: String, CodingKey {
         case id, order,
              prevWeight, weight, prevReps, reps,
-             duration,
+             duration, prevDuration,
              isChecked, endDate, restTime
     }
     
@@ -49,6 +50,7 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
          prevReps: Int = .zero,
          reps: Int = .zero,
          duration: Int = .zero,
+         prevDuration: Int = .zero,
          isChecked: Bool = false) {
         self.id = id
         self.order = order
@@ -57,6 +59,7 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
         self.prevReps = prevReps
         self.reps = reps
         self.duration = duration
+        self.prevDuration = prevDuration
         self.isChecked = isChecked
     }
     
@@ -71,6 +74,7 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
         reps = try container.decode(Int.self, forKey: .reps)
         
         duration = try container.decode(Int.self, forKey: .duration)
+        prevDuration = try container.decode(Int.self, forKey: .prevDuration)
         
         isChecked = try container.decode(Bool.self, forKey: .isChecked)
         endDate = try container.decode(Date?.self, forKey: .endDate)
@@ -88,6 +92,7 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
         try container.encode(reps, forKey: .reps)
         
         try container.encode(duration, forKey: .duration)
+        try container.encode(prevDuration, forKey: .prevDuration)
         
         try container.encode(isChecked, forKey: .isChecked)
         try container.encode(endDate, forKey: .endDate)
@@ -110,6 +115,7 @@ extension WorkoutSetState {
         self.reps = model.reps
         
         self.duration = model.duration
+        self.prevDuration = model.prevDuration
         
         self.isChecked = model.isChecked
         self.endDate = model.endDate
@@ -126,6 +132,7 @@ extension WorkoutSetState {
             prevReps: prevReps,
             reps: reps,
             duration: duration,
+            prevDuration: prevDuration,
             isChecked: isChecked,
             endDate: endDate,
             restTime: restTime
@@ -158,6 +165,7 @@ class WorkoutSet: WorkoutSetData, Equatable {
     var reps: Int
     
     var duration: Int
+    var prevDuration: Int
     
     var isChecked: Bool
     var endDate: Date?
@@ -169,6 +177,7 @@ class WorkoutSet: WorkoutSetData, Equatable {
          prevReps: Int = .zero,
          reps: Int = .zero,
          duration: Int = .zero,
+         prevDuration: Int = .zero,
          isChecked: Bool = false,
          endDate: Date? = nil,
          restTime: Int = 0) {
@@ -178,6 +187,7 @@ class WorkoutSet: WorkoutSetData, Equatable {
         self.prevReps = prevReps
         self.reps = reps
         self.duration = duration
+        self.prevDuration = prevDuration
         self.isChecked = isChecked
         self.endDate = endDate
         self.restTime = restTime
@@ -192,6 +202,7 @@ extension WorkoutSet {
         prevReps = state.prevReps
         reps = state.reps
         duration = state.duration
+        prevDuration = state.prevDuration
         isChecked = state.isChecked
         endDate = state.endDate
         restTime = state.restTime
@@ -205,6 +216,7 @@ extension WorkoutSet {
             prevReps: state.prevReps,
             reps: state.reps,
             duration: state.duration,
+            prevDuration: state.prevDuration,
             isChecked: state.isChecked,
             endDate: state.endDate,
             restTime: state.restTime

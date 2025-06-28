@@ -244,7 +244,7 @@ struct WorkingOutRow: View {
                 )
             )
             .toggleStyle(CheckboxToggleStyle(style: .square))
-            .padding(.leading, -7)
+            .padding(.leading, 7)
             .foregroundStyle(Color.personal)
         }
     }
@@ -349,7 +349,7 @@ struct WorkingOutRow: View {
     @ViewBuilder
     private func stopWatchView() -> some View {
         if viewStore.editMode == .inactive {
-            Text("\()")
+            Text("\(viewStore.workoutSet.prevDuration)")
                 .font(.system(size: 17))
                 .frame(maxWidth: .infinity)
                 .foregroundStyle(.secondary)
