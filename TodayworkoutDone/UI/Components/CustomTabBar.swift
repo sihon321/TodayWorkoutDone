@@ -50,7 +50,7 @@ struct CustomTabBar: View {
         .overlay(
             Rectangle()
                 .frame(height: 1) // 보더의 두께
-                .foregroundStyle(.tabBarBorder) // 보더 색상
+                .foregroundStyle(Color.tabBarBorder) // 보더 색상
             , alignment: .top // 위에만 오버레이
         )
     }
