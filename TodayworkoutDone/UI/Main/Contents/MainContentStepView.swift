@@ -62,7 +62,7 @@ struct MainContentStepView: View {
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
-                .foregroundStyle(.black)
+                .foregroundStyle(Color.todBlack)
             Text("걸음")
                 .font(.system(size: 12,
                               weight: .semibold,

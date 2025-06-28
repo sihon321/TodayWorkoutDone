@@ -57,12 +57,12 @@ struct MainContentSubView: View {
         VStack(alignment: .leading) {
             HStack(alignment: .firstTextBaseline) {
                 Image(systemName: viewStore.iconName)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color.todBlack)
                 Text(viewStore.headerTitle)
                     .font(.system(size: 15,
                                   weight: .semibold,
                                   design: .default))
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color.todBlack)
                     .padding(.leading, -5)
             }
             .padding([.leading], 15)
@@ -96,7 +96,7 @@ struct MainContentSubView: View {
                maxWidth: .infinity,
                minHeight: 80,
                alignment: .leading)
-        .background(Color.white)
+        .background(Color.contentBackground)
         .cornerRadius(15)
     }
 }

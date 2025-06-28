@@ -36,7 +36,7 @@ struct MainView: View {
                     .padding(.bottom, 15 + bottomEdge + 35)
                 }
             }
-            .background(Color(UIColor.systemGroupedBackground))
+            .background(Color.background)
         }
     }
     

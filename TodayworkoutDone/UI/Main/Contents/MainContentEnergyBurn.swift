@@ -62,13 +62,14 @@ struct MainContentEnergyBurn: View {
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
-                .foregroundStyle(.black)
+                .foregroundStyle(Color.todBlack)
             Text("kcal")
                 .font(.system(size: 12,
                               weight: .semibold,
                               design: .default))
                 .foregroundColor(Color(0x7d7d7d))
                 .padding(.leading, -5)
+                .padding(.top, 2)
         }
         .onAppear {
             store.send(.fetchEnergyBurned(from: .midnight, to: .currentDateForDeviceRegion))

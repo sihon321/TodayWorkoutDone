@@ -46,7 +46,13 @@ struct CustomTabBar: View {
         }
         .padding(.top, 15)
         .padding(.bottom, store.state.bottomEdge)
-        .background(.white)
+        .background(Color.tabBarBackground)
+        .overlay(
+            Rectangle()
+                .frame(height: 1) // 보더의 두께
+                .foregroundColor(.tabBarBorder) // 보더 색상
+            , alignment: .top // 위에만 오버레이
+        )
     }
 }
 

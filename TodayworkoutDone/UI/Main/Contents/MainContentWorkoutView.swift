@@ -62,7 +62,7 @@ struct MainContentWorkoutView: View {
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
-                .foregroundStyle(.black)
+                .foregroundStyle(Color.todBlack)
             Text("시간")
                 .font(.system(size: 12,
                               weight: .semibold,
@@ -73,7 +73,7 @@ struct MainContentWorkoutView: View {
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
-                .foregroundStyle(.black)
+                .foregroundStyle(Color.todBlack)
                 .padding(.leading, -5)
             Text("분")
                 .font(.system(size: 12,

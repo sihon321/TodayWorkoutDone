@@ -23,4 +23,10 @@ extension Color {
     static let personal = Color("personal")
     static let gray88 = Color("gray_88")
     static let slideCardBackground = Color("slide_card_background")
+    static let background = Color("background")
+    static let tabBarBackground = Color("tab_bar_background")
+    static let tabBarBorder = Color("tab_bar_border")
+    static let todBlack = Color("tod_black")
+    static let contentBackground = Color("content_background")
+    static let todWhite = Color("tod_white")
 }
