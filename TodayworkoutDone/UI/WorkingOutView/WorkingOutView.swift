@@ -119,12 +119,12 @@ struct WorkingOutReducer {
                 
             case .destination(.presented(.alert(.tappedWorkoutAlertOk(let secondsElapsed)))):
                 if let myRoutine = state.myRoutine {
-                    let routines = myRoutine.routines
+                    var routines = myRoutine.routines
                     let currentDate = Date()
                     let startDate = currentDate.addingTimeInterval(TimeInterval(-secondsElapsed))
                     
                     for (routineIndex, routine) in routines.enumerated() {
-                        state.myRoutine?.routines[routineIndex].sets = routine.sets.filter { $0.isChecked }
+                       routines[routineIndex].sets = routine.sets.filter { $0.isChecked }
                         var dates = myRoutine.routines[routineIndex].sets
                             .filter({ $0.endDate != nil })
                             .map({
@@ -157,7 +157,7 @@ struct WorkingOutReducer {
                             startDate: startDate,
                             endDate: currentDate,
                             routineTime: myRoutine.secondsElapsed,
-                            routines: state.myRoutine?.routines ?? []
+                            routines: routines
                         )
                     )
                 }
@@ -275,24 +275,6 @@ struct WorkingOutReducer {
         }
     }
     
-    private func insertMyRoutine(myRoutine: MyRoutineState?) {
-        do {
-            if let myRoutineModel = myRoutine?.toModel() {
-                myRoutineModel.routines.forEach {
-                    $0.sets.forEach {
-                        $0.isChecked = false
-                    }
-                }
-                try myRoutineContext.add(myRoutineModel)
-                try myRoutineContext.save()
-            } else {
-                throw MyRoutineDatabase.MyRoutineError.add
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    
     private func insertWorkoutRoutine(workout routine: WorkoutRoutineState) {
         do {
             try workoutRoutineContext.add(routine.toModel())
@@ -350,7 +332,7 @@ struct WorkingOutView: View {
             }
             .frame(height: 70)
             .padding(.horizontal, 15)
-            .background(offsetY >= 0 ? .slideCardBackground: Color.gray88)
+            
             ScrollView {
                 VStack(alignment: .leading) {
                     Text(viewStore.myRoutine?.name ?? "")
@@ -396,6 +378,7 @@ struct WorkingOutView: View {
         .ignoresSafeArea(.container, edges: .bottom)
         .alert($store.scope(state: \.destination?.alert,
                             action: \.destination.alert))
+        .tint(.todBlack)
     }
     
     func toggleButton() -> some View {
