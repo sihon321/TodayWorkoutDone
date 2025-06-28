@@ -273,11 +273,11 @@ struct WorkoutView: View {
                     .padding(.top, 10)
                 }
             }
-            .background(Color(0xf4f4f4))
+            .background(Color.background)
             .navigationBarTitle("workout", displayMode: .inline)
             .workoutViewToolbar(store: store, viewStore: viewStore)
         }
-        .tint(.black)
+        .tint(Color.todBlack)
         .searchable(text: viewStore.binding(
             get: { $0.keyword },
             send: { WorkoutReducer.Action.search(keyword: $0) }

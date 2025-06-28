@@ -54,7 +54,6 @@ struct MyRoutineSubview: View {
                                   weight: .semibold,
                                   design: .default))
                     .padding(.leading, 15)
-                    .foregroundColor(.black)
                 Spacer()
                 Button(action: {}) {
                     Menu {
@@ -73,7 +72,7 @@ struct MyRoutineSubview: View {
                             .contentShape(Rectangle())
                             .frame(minHeight: 20)
                             .padding(.trailing, 15)
-                            .tint(Color(0x939393))
+                            .tint(Color.todBlack)
                     }
                 }
             }
@@ -86,7 +85,6 @@ struct MyRoutineSubview: View {
                                   weight: .light,
                                   design: .default))
                     .padding(.leading, 15)
-                    .foregroundColor(Color(0x939393))
             }
             
             Spacer()
@@ -94,7 +92,7 @@ struct MyRoutineSubview: View {
         .frame(width: 150,
                height: 120,
                alignment: .leading)
-        .background(Color.white)
+        .background(Color.contentBackground)
         .cornerRadius(15)
     }
 }

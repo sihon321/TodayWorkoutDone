@@ -23,7 +23,6 @@ struct WorkoutCategorySubview: View {
                     .font(.system(size: 18,
                                   weight: .bold,
                                   design: .default))
-                    .foregroundColor(.black)
                     .padding(.top, 15)
                 Spacer()
             }
@@ -32,7 +31,7 @@ struct WorkoutCategorySubview: View {
                maxWidth: .infinity,
                maxHeight: 120,
                alignment: .leading)
-        .background(Color.white)
+        .background(Color.contentBackground)
         .cornerRadius(15)
     }
 }
