@@ -115,6 +115,5 @@ struct WeeklyChartView: View {
         .frame(minWidth: 0,
                maxWidth: .infinity,
                minHeight: 165)
-        .padding([.leading, .trailing], 15)
     }
 }

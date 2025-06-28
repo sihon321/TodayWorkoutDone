@@ -185,7 +185,7 @@ struct HomeReducer {
                 return .none
                 
             case .destination(.presented(.workoutView(.destination(.presented(.makeWorkoutView(.dismissMakeWorkout)))))):
-                state.destination = .none
+//                state.destination = .none
                 return .none
                 
             case .destination:

@@ -336,6 +336,7 @@ struct MakeWorkoutView: View {
                     }
                     Spacer().frame(height: 100)
                 }
+                .background(Color.background)
                 .onTapGesture {
                     viewStore.send(.dismissKeyboard)
                     viewStore.workingOutSection.elements.forEach { section in
@@ -373,7 +374,6 @@ struct MakeWorkoutView: View {
                         viewStore.send(.dismissMakeWorkout)
                     }) {
                         Image(systemName: "xmark")
-                            .foregroundStyle(.black)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -388,8 +388,8 @@ struct MakeWorkoutView: View {
                     }
                 }
             }
+            .background(Color.background)
         }
-        .tint(.black)
         .onChange(of: isTextFieldFocused) { _, newValue in
             viewStore.send(.setFocus(newValue))
         }

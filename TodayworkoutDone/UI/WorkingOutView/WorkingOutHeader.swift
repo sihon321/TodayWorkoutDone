@@ -81,6 +81,7 @@ struct WorkingOutHeader: View {
                             store.send(.deleteWorkout)
                         }
                     }
+                    .tint(Color.todBlack)
             }
             
             switch viewStore.routine.workout.category.categoryType {

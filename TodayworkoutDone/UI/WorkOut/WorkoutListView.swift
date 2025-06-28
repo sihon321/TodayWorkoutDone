@@ -228,6 +228,7 @@ struct WorkoutListView: View {
                     }
                 }
             }
+            .background(Color.background)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     if !viewStore.routines.isEmpty {
