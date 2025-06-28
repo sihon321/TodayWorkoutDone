@@ -80,8 +80,9 @@ struct WorkoutReducer {
                     return .send(.filteredCategories(filteredCategories))
                 }
             case .dismiss:
-                return .none
-
+                return .run { _ in
+                    await dismiss()
+                }
             case .getCategories:
                 return .run { send in
                     let categories = categoryRepository.loadCategories()

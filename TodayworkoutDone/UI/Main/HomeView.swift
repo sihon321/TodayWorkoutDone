@@ -177,15 +177,12 @@ struct HomeReducer {
                         )
                     } ?? []
                 )
-
-                return .none
+                return .send(.destination(.presented(.workoutView(.dismiss))))
                 
             case .destination(.presented(.workoutView(.dismiss))):
-                state.destination = .none
                 return .none
                 
             case .destination(.presented(.workoutView(.destination(.presented(.makeWorkoutView(.dismissMakeWorkout)))))):
-//                state.destination = .none
                 return .none
                 
             case .destination:
@@ -291,7 +288,7 @@ struct HomeView: View {
         }
         .alert($store.scope(state: \.destination?.alert,
                             action: \.destination.alert))
-        .tint(.black)
+        .tint(.todBlack)
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 if viewStore.workingOut.myRoutine == nil {
