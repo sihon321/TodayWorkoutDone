@@ -322,6 +322,7 @@ struct EditWorkoutRoutineView: View {
                     .buttonStyle(AddWorkoutButtonStyle())
                     Spacer().frame(height: 100)
                 }
+                .background(Color.background)
                 .onTapGesture {
                     viewStore.send(.dismissKeyboard)
                     viewStore.workingOutSection.elements.forEach { section in
@@ -339,13 +340,13 @@ struct EditWorkoutRoutineView: View {
                     }
                 }
             }
+            .background(Color.background)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
                         viewStore.send(.dismiss)
                     }, label: {
                         Image(systemName: "xmark")
-                            .foregroundStyle(.black)
                     })
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -360,7 +361,7 @@ struct EditWorkoutRoutineView: View {
             ) { store in
                 AddWorkoutCategoryView(store: store)
             }
-            .tint(.black)
+            .tint(Color.todBlack)
         }
     }
     

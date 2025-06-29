@@ -144,11 +144,13 @@ struct CalendarDetailSubView: View {
                             viewStore.send(.edit)
                         }) {
                             Label("편집", systemImage: "pencil")
+                                .foregroundStyle(Color.todBlack)
                         }
                         Button(action: {
                             viewStore.send(.delete)
                         }) {
                             Label("삭제", systemImage: "trash")
+                                .foregroundStyle(Color.todBlack)
                         }
                     } label: {
                         Image(systemName: "ellipsis")
@@ -165,8 +167,10 @@ struct CalendarDetailSubView: View {
                 Image(systemName: "timer")
                 Text(viewStore.workoutRoutine.routineTime.convertSecondsToHMS())
                     .padding(.trailing, 10)
+                    .foregroundStyle(Color.todBlack)
                 Image(systemName: "flame")
                 Text("\(Int(viewStore.workoutRoutine.calories)) kcal")
+                    .foregroundStyle(Color.todBlack)
             }
             .padding(.bottom, 5)
         }
@@ -180,6 +184,7 @@ struct CalendarDetailSubView: View {
                     .frame(width: 20, height: 18)
                     .foregroundStyle(.red)
                 Text("Apple Health")
+                    .foregroundStyle(Color.todBlack)
             }
             HStack {
                 HStack {
@@ -187,6 +192,7 @@ struct CalendarDetailSubView: View {
                         .resizable()
                         .frame(width: 15, height: 18)
                     Text("\(viewStore.step.stepCount) 걸음")
+                        .foregroundStyle(Color.todBlack)
                 }
                 .onAppear {
                     store.send(.step(.fetchStep(
@@ -199,7 +205,7 @@ struct CalendarDetailSubView: View {
                         .resizable()
                         .frame(width: 15, height: 18)
                     Text("\(viewStore.exerciseTime.exerciseTime / 60) 시간 \(viewStore.exerciseTime.exerciseTime % 60) 분")
-                        .foregroundStyle(.black)
+                        .foregroundStyle(Color.todBlack)
                 }
                 .onAppear {
                     store.send(.exerciseTime(.fetchExerciseTime(
@@ -212,7 +218,7 @@ struct CalendarDetailSubView: View {
                         .resizable()
                         .frame(width: 15, height: 18)
                     Text("\(viewStore.energyBurn.energyBurned) kcal")
-                        .foregroundStyle(.black)
+                        .foregroundStyle(Color.todBlack)
                 }
                 .onAppear {
                     store.send(.energyBurn(.fetchEnergyBurned(
@@ -236,14 +242,17 @@ struct CalendarDetailSubView: View {
                 VStack(alignment: .leading) {
                     Text(routine.workout.name)
                         .font(.system(size: 20, weight: .medium, design: .default))
+                        .foregroundStyle(Color.todBlack)
                     HStack {
                         Image(systemName: "dumbbell")
                         let totalWeight = routine.sets.reduce(0) { $0 + $1.weight }
                         let totalRepCount = routine.sets.reduce(0) { $0 + $1.reps }
                         Text("\(String(format: "%.2f", totalWeight * Double(totalRepCount))) kg")
                             .padding(.trailing, 10)
+                            .foregroundStyle(Color.todBlack)
                         Image(systemName: "flame")
                         Text("\(Int(routine.calories)) kcal")
+                            .foregroundStyle(Color.todBlack)
                     }
                 }
             }
@@ -251,13 +260,17 @@ struct CalendarDetailSubView: View {
                 if let averageEndDate = routine.avgSetDuration {
                     VStack {
                         Text("세트 수행 시간")
+                            .foregroundStyle(Color.todBlack)
                         Text("\(String(format: "%.2f", averageEndDate)) 초")
+                            .foregroundStyle(Color.todBlack)
                     }
                 }
                 if let maxSets = routine.sets.sorted(by: { $0.weight > $1.weight }).first {
                     VStack {
                         Text("추청 1RM")
+                            .foregroundStyle(Color.todBlack)
                         Text("\(String(format: "%.2f kg", maxSets.weight * (1 + 0.0333 * Double(maxSets.reps))))")
+                            .foregroundStyle(Color.todBlack)
                     }
                 }
             }
@@ -269,20 +282,26 @@ struct CalendarDetailSubView: View {
         VStack {
             HStack {
                 Text("세트")
+                    .foregroundStyle(Color.todBlack)
                 Spacer()
                 Text("무게")
+                    .foregroundStyle(Color.todBlack)
                 Spacer()
                 Text("횟수")
+                    .foregroundStyle(Color.todBlack)
                 Spacer()
             }
             ForEach(routine.sets.indices, id: \.self) { index in
                 HStack {
                     Text("\(index + 1)")
                         .frame(width: 20, height: 20)
+                        .foregroundStyle(Color.todBlack)
                     Spacer()
                     Text("\(String(format: "%.2f", routine.sets[index].weight)) kg")
+                        .foregroundStyle(Color.todBlack)
                     Spacer()
                     Text("\(routine.sets[index].reps) reps")
+                        .foregroundStyle(Color.todBlack)
                     Spacer()
                 }
             }
