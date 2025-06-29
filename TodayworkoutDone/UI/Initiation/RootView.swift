@@ -13,8 +13,10 @@ import SwiftData
 struct RootFeature {
     @ObservableState
     struct State: Equatable {
-        var isActive: Bool = false
+        @Shared(.appStorage("theme")) var theme: SettingsReducer.AppTheme = .system
         @Shared(.appStorage("isOnBoarding")) var isOnBoarding: Bool = false
+        
+        var isActive: Bool = false
         var isLogin: Bool = false
         var onBoarding = OnBoardingFeature.State()
         var login = LoginFeature.State()
@@ -84,5 +86,6 @@ struct RootView: View {
             }
         }
         .modelContainer(SwiftDataConfigurationProvider.shared.container)
+        .preferredColorScheme(viewStore.theme == .dark ? .dark : viewStore.theme == .light ? .light : nil)
     }
 }
