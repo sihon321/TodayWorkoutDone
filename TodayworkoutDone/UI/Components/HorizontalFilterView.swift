@@ -25,6 +25,7 @@ struct HorizontalFilterView: View {
                 }
                 .offset(x: 15)
             }
+            .padding(.trailing, 30)
             .padding(.vertical, 1)
         }
         .background(.clear)

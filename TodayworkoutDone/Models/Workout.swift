@@ -13,7 +13,7 @@ protocol WorkoutData {
     
     var name: String { get set }
     var category: WorkoutCategoryType { get set }
-    var target: String { get set }
+    var target: [String] { get set }
     var isSelected: Bool { get set }
     var summary: String { get set }                    // 운동 설명
     var instructions: [String] { get set }             // 운동 방법 (단계별)
@@ -33,7 +33,7 @@ struct WorkoutState: WorkoutData, Codable, Equatable {
     var id: UUID = UUID()
     var name: String
     var category: WorkoutCategoryType
-    var target: String
+    var target: [String]
     var isSelected: Bool
     var summary: String
     var instructions: [String]
@@ -90,7 +90,7 @@ class Workout: WorkoutData, Equatable {
     
     var name: String
     var category: WorkoutCategoryType
-    var target: String
+    var target: [String]
     var isSelected: Bool
     var summary: String
     var instructions: [String]
@@ -105,7 +105,7 @@ class Workout: WorkoutData, Equatable {
 
     init(name: String,
          category: WorkoutCategoryType,
-         target: String,
+         target: [String],
          isSelected: Bool,
          summary: String,
          instructions: [String],

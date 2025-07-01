@@ -294,7 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				8E0742FF2DF5378900F2DD7F /* Lottie */,
-				924762DB2D4B7ACE008FF911 /* Json */,
+				924762DB2D4B7ACE008FF911 /* Workout */,
 				F2E74CE92921F73600BD35F6 /* Assets.xcassets */,
 				F2E74CEB2921F73600BD35F6 /* TodayworkoutDone.entitlements */,
 				F2CB39F4295DE48B00CA80D6 /* ColorAsset.xcassets */,
@@ -376,7 +376,7 @@
 			path = Chart;
 			sourceTree = "<group>";
 		};
-		924762DB2D4B7ACE008FF911 /* Json */ = {
+		924762DB2D4B7ACE008FF911 /* Workout */ = {
 			isa = PBXGroup;
 			children = (
 				926B74A82D4A3AD60006E8CB /* cardio.json */,
@@ -386,7 +386,7 @@
 				926B74AC2D4A3AD60006E8CB /* yoga.json */,
 				F264AC5B29D21F3A0003E70D /* category.json */,
 			);
-			path = Json;
+			path = Workout;
 			sourceTree = "<group>";
 		};
 		F2007DA82A8AA25700833AF0 /* HealthKit */ = {

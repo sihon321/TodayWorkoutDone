@@ -99,7 +99,7 @@ struct WorkoutListReducer {
                 return .send(.filteredWorkouts(workouts))
                 
             case .filteredWorkouts(let workouts):
-                state.filters = Array(Set(workouts.compactMap(\.target))).sorted()
+                state.filters = Set(workouts.flatMap(\.target)).sorted()
                 state.soretedWorkoutSection = IdentifiedArrayOf(
                     uniqueElements: state.filteredGroupedNames(workouts)
                         .enumerated()
@@ -219,7 +219,7 @@ struct WorkoutListView: View {
                                                    action: \.workoutListSubview)) { rowStore in
                             if selectedFilters.isEmpty
                                 || (selectedFilters.isEmpty == false
-                                    && selectedFilters.contains(where: { $0 == rowStore.workout.target })) {
+                                    && selectedFilters.contains(where: { rowStore.workout.target.contains($0) })) {
                                 WorkoutListSubview(store: rowStore)
                                     .padding(.vertical, 3)
                                     .padding(.horizontal, 15)

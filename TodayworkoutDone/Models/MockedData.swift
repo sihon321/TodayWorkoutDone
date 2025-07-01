@@ -20,7 +20,7 @@ extension Workout {
         Workout(
             name: "스쿼트",
             category: WorkoutCategoryState(name: "하체"),
-            target: "대퇴사두근, 햄스트링, 둔근",
+            target: ["대퇴사두근", "햄스트링", "둔근"],
             isSelected: false,
             summary: "대표적인 하체 복합 운동으로, 하체 근육 강화와 코어 안정성 향상에 효과적입니다.",
             instructions: [
@@ -44,7 +44,7 @@ extension Workout {
         Workout(
             name: "스쿼트",
             category: WorkoutCategoryState(name: "하체"),
-            target: "대퇴사두근, 햄스트링, 둔근",
+            target: ["대퇴사두근", "햄스트링", "둔근"],
             isSelected: false,
             summary: "대표적인 하체 복합 운동으로, 하체 근육 강화와 코어 안정성 향상에 효과적입니다.",
             instructions: [
@@ -68,7 +68,7 @@ extension Workout {
         Workout(
             name: "스쿼트",
             category: WorkoutCategoryState(name: "하체"),
-            target: "대퇴사두근, 햄스트링, 둔근",
+            target: ["대퇴사두근", "햄스트링", "둔근"],
             isSelected: false,
             summary: "대표적인 하체 복합 운동으로, 하체 근육 강화와 코어 안정성 향상에 효과적입니다.",
             instructions: [
@@ -92,7 +92,7 @@ extension Workout {
         Workout(
             name: "스트레칭",
             category: WorkoutCategoryState(name: "하체"),
-            target: "대퇴사두근, 햄스트링, 둔근",
+            target: ["대퇴사두근", "햄스트링", "둔근"],
             isSelected: false,
             summary: "대표적인 하체 복합 운동으로, 하체 근육 강화와 코어 안정성 향상에 효과적입니다.",
             instructions: [

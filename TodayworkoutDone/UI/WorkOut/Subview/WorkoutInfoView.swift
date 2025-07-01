@@ -44,7 +44,7 @@ struct WorkoutInfoView: View {
                 Text("운동 방법")
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundStyle(Color.todBlack)
-                Text(workout.instructions.joined(separator: "\n"))
+                Text(workout.instructions.enumerated().map({ return "\($0.offset + 1). \($0.element)"  }).joined(separator: "\n"))
                     .font(.system(size: 15))
                     .padding()
                     .frame(maxWidth: .infinity,
