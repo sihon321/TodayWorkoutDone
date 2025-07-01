@@ -172,7 +172,7 @@ struct MainContentDetailView: View {
             }
         }
         .padding(.horizontal, 15)
-        .background(Color(0xf4f4f4))
+        .background(Color.background)
     }
     
     func listIdentifiers(_ type: MainContentFeature.MainContentType) -> [(HKQuantityTypeIdentifier, HKUnit)] {
@@ -294,12 +294,11 @@ extension MainContentDetailView {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: iconName(id))
-                    .foregroundStyle(.black)
                 Text(headerTitle(id))
                     .font(.system(size: 15,
                                   weight: .semibold,
                                   design: .default))
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color.todBlack)
             }
             .padding(.horizontal, 15)
             HStack {
@@ -312,7 +311,7 @@ extension MainContentDetailView {
                     .font(.system(size: 22,
                                   weight: .bold,
                                   design: .default))
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color.todBlack)
                 Text(unit(id))
                     .font(.system(size: 12,
                                   weight: .semibold,
@@ -327,7 +326,8 @@ extension MainContentDetailView {
         .frame(maxWidth: .infinity,
                minHeight: 80,
                alignment: .leading)
-        .background(.white)
+        .background(Color.contentBackground)
         .cornerRadius(15)
+        .tint(Color.todBlack)
     }
 }
