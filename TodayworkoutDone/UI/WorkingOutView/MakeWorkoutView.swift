@@ -78,7 +78,16 @@ struct MakeWorkoutReducer {
                     } catch {
                         print(error.localizedDescription)
                     }
+                } else {
+                    @Dependency(\.myRoutineData) var myRoutineContext
+                    do {
+                        try myRoutineContext.add(myRoutine.toModel())
+                        try myRoutineContext.save()
+                    } catch {
+                        print(error.localizedDescription)
+                    }
                 }
+                
                 return .send(.dismissMakeWorkout)
                 
             case .didUpdateText(let text):

@@ -107,10 +107,10 @@ struct StopWatchView: View {
                             viewStore.send(.close)
                         }) {
                             Image(systemName: "xmark")
-                                .foregroundStyle(.black)
                         }
                     }
                 }
+                .tint(Color.todBlack)
             }
         }
     }

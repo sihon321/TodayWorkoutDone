@@ -20,6 +20,7 @@ struct MyRoutineReducer {
     enum Action {
         case myRoutineSubview(IdentifiedActionOf<MyRoutineSubviewReducer>)
         case touchedMyRoutine(MyRoutineState)
+        case touchedMakeRoutine
     }
     
     var body: some Reducer<State, Action> {
@@ -28,6 +29,8 @@ struct MyRoutineReducer {
             case .myRoutineSubview:
                 return .none
             case .touchedMyRoutine:
+                return .none
+            case .touchedMakeRoutine:
                 return .none
             }
         }
@@ -48,9 +51,27 @@ struct MyRoutineView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("My Routine")
-                .font(.system(size: 20, weight: .medium))
-                .padding(.leading, 15)
+            HStack {
+                Text("My Routine")
+                    .font(.system(size: 20, weight: .medium))
+                Spacer()
+                Button(action: {
+                    viewStore.send(.touchedMakeRoutine)
+                }) {
+                    HStack {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 15, height: 15)
+                        Text("루틴 추가")
+                            .font(.system(size: 15))
+                    }
+                    .frame(width: 100)
+                    .padding(5)
+                    .background(Color(0x7d7d7d))
+                    .cornerRadius(15)
+                }
+            }
+            .padding(.horizontal, 15)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(
@@ -63,10 +84,16 @@ struct MyRoutineView: View {
                             MyRoutineSubview(store: store)
                         }
                     }
-                    .offset(x: 15)
                 }
+                .offset(x: 15)
                 .padding(.trailing, 25)
             }
         }
     }
+}
+
+#Preview {
+    MyRoutineView(store: Store(initialState: MyRoutineReducer.State(), reducer: {
+        MyRoutineReducer()
+    }))
 }

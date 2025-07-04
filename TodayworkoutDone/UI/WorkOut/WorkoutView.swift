@@ -169,6 +169,8 @@ struct WorkoutReducer {
                 case let .touchedMyRoutine(selectedMyRoutine):
                     state.destination = .alert(.startMyRoutine(selectedMyRoutine))
                     return .none
+                case .touchedMakeRoutine:
+                    return .send(.createMakeWorkoutView(routines: [], isEdit: true))
                 case let .myRoutineSubview(action):
                     switch action {
                     case let .element(_, action):
@@ -260,13 +262,12 @@ struct WorkoutView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    if viewStore.myRoutineReducer.myRoutineSubview.isEmpty == false {
-                        MyRoutineView(
-                            store: store.scope(state: \.myRoutineReducer,
-                                               action: \.myRoutineReducer)
-                        )
-                        .padding(.top, 10)
-                    }
+                    MyRoutineView(
+                        store: store.scope(state: \.myRoutineReducer,
+                                           action: \.myRoutineReducer)
+                    )
+                    .padding(.top, 10)
+                    
                     WorkoutCategoryView(
                         store: store.scope(state: \.workoutCategory,
                                            action: \.workoutCategory)
