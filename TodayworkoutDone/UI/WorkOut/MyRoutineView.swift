@@ -67,9 +67,10 @@ struct MyRoutineView: View {
                     }
                     .frame(width: 100)
                     .padding(5)
-                    .background(Color(0x7d7d7d))
+                    .background(Color.contentBackground)
                     .cornerRadius(15)
                 }
+                .shadow(color: .shadowColor, radius: 0.5, x: 1, y: 1)
             }
             .padding(.horizontal, 15)
             ScrollView(.horizontal, showsIndicators: false) {

@@ -23,6 +23,11 @@
 		8E132D902E0A699600570A51 /* DurationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E132D8F2E0A699200570A51 /* DurationRow.swift */; };
 		8E1495CD2E0390ED008FBB06 /* StopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1495CC2E0390E2008FBB06 /* StopWatchView.swift */; };
 		8E1F53AF2DF69F9C00D04278 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F53AE2DF69F9900D04278 /* SettingView.swift */; };
+		8E2073B62E1B4D0F00FA5D21 /* LoopingVideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2073B52E1B4D0000FA5D21 /* LoopingVideoPlayerView.swift */; };
+		8E2073B82E1B4D2200FA5D21 /* LoopingPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2073B72E1B4D1C00FA5D21 /* LoopingPlayerManager.swift */; };
+		8E2073BA2E1B503000FA5D21 /* bench_press.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8E2073B92E1B503000FA5D21 /* bench_press.mp4 */; };
+		8E2073BC2E1B647E00FA5D21 /* VideoThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2073BB2E1B647700FA5D21 /* VideoThumbnailView.swift */; };
+		8E2073BF2E1B8EAE00FA5D21 /* ThumbnailCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2073BE2E1B8EA500FA5D21 /* ThumbnailCacheManager.swift */; };
 		8E2A89062C96E332009C9032 /* WorkoutRoutineDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A89052C96E332009C9032 /* WorkoutRoutineDatabase.swift */; };
 		8E2A89082C96E78E009C9032 /* CategoryDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A89072C96E78E009C9032 /* CategoryDatabase.swift */; };
 		8E33A8792DB7309800BAE2CF /* EditWorkoutRoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E33A8782DB7308E00BAE2CF /* EditWorkoutRoutineView.swift */; };
@@ -34,6 +39,8 @@
 		8EB5396F2C98138A00F56034 /* WorkoutAPIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB5396E2C98138A00F56034 /* WorkoutAPIRepository.swift */; };
 		8EB539712C98151100F56034 /* CategoryAPIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB539702C98151100F56034 /* CategoryAPIRepository.swift */; };
 		8EB539732C98152E00F56034 /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB539722C98152E00F56034 /* APIHelper.swift */; };
+		8EBC4DFA2E1B9DC10083B8BB /* dead_lift.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8EBC4DF92E1B9DC10083B8BB /* dead_lift.mp4 */; };
+		8EBC4DFC2E1B9DE20083B8BB /* squat.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8EBC4DFB2E1B9DE20083B8BB /* squat.mp4 */; };
 		8EC0B0E329CC4E7600C3278C /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4066AB29B33D71004BB7A2 /* Workout.swift */; };
 		8EC563652A6D206600A8DCD5 /* MockedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC563642A6D206600A8DCD5 /* MockedData.swift */; };
 		8EC772592C959FE100C35CE7 /* WorkoutDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC772582C959FE100C35CE7 /* WorkoutDatabase.swift */; };
@@ -141,6 +148,11 @@
 		8E132D8F2E0A699200570A51 /* DurationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationRow.swift; sourceTree = "<group>"; };
 		8E1495CC2E0390E2008FBB06 /* StopWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchView.swift; sourceTree = "<group>"; };
 		8E1F53AE2DF69F9900D04278 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		8E2073B52E1B4D0000FA5D21 /* LoopingVideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingVideoPlayerView.swift; sourceTree = "<group>"; };
+		8E2073B72E1B4D1C00FA5D21 /* LoopingPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingPlayerManager.swift; sourceTree = "<group>"; };
+		8E2073B92E1B503000FA5D21 /* bench_press.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = bench_press.mp4; sourceTree = "<group>"; };
+		8E2073BB2E1B647700FA5D21 /* VideoThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoThumbnailView.swift; sourceTree = "<group>"; };
+		8E2073BE2E1B8EA500FA5D21 /* ThumbnailCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCacheManager.swift; sourceTree = "<group>"; };
 		8E2A89052C96E332009C9032 /* WorkoutRoutineDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRoutineDatabase.swift; sourceTree = "<group>"; };
 		8E2A89072C96E78E009C9032 /* CategoryDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDatabase.swift; sourceTree = "<group>"; };
 		8E33A8782DB7308E00BAE2CF /* EditWorkoutRoutineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutRoutineView.swift; sourceTree = "<group>"; };
@@ -154,6 +166,8 @@
 		8EB5396E2C98138A00F56034 /* WorkoutAPIRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutAPIRepository.swift; sourceTree = "<group>"; };
 		8EB539702C98151100F56034 /* CategoryAPIRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryAPIRepository.swift; sourceTree = "<group>"; };
 		8EB539722C98152E00F56034 /* APIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
+		8EBC4DF92E1B9DC10083B8BB /* dead_lift.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = dead_lift.mp4; sourceTree = "<group>"; };
+		8EBC4DFB2E1B9DE20083B8BB /* squat.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = squat.mp4; sourceTree = "<group>"; };
 		8EC563642A6D206600A8DCD5 /* MockedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedData.swift; sourceTree = "<group>"; };
 		8EC772582C959FE100C35CE7 /* WorkoutDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDatabase.swift; sourceTree = "<group>"; };
 		8EC7725A2C95A4F600C35CE7 /* MyRoutineDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutineDatabase.swift; sourceTree = "<group>"; };
@@ -290,9 +304,29 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		8E2073AE2E1B403C00FA5D21 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				8EBC4DFB2E1B9DE20083B8BB /* squat.mp4 */,
+				8EBC4DF92E1B9DC10083B8BB /* dead_lift.mp4 */,
+				8E2073B92E1B503000FA5D21 /* bench_press.mp4 */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		8E2073BD2E1B8E9900FA5D21 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				8E2073BE2E1B8EA500FA5D21 /* ThumbnailCacheManager.swift */,
+				8E2073B72E1B4D1C00FA5D21 /* LoopingPlayerManager.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		8E4066A529B33C90004BB7A2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8E2073AE2E1B403C00FA5D21 /* Video */,
 				8E0742FF2DF5378900F2DD7F /* Lottie */,
 				924762DB2D4B7ACE008FF911 /* Workout */,
 				F2E74CE92921F73600BD35F6 /* Assets.xcassets */,
@@ -428,6 +462,7 @@
 		F23F4E972958002B0084392B /* WorkOut */ = {
 			isa = PBXGroup;
 			children = (
+				8E2073BD2E1B8E9900FA5D21 /* Utility */,
 				F23F4E98295814F90084392B /* Subview */,
 				F239B430295761AD00781EF2 /* WorkoutView.swift */,
 				F23F4E9D295826F30084392B /* WorkoutCategoryView.swift */,
@@ -441,6 +476,8 @@
 		F23F4E98295814F90084392B /* Subview */ = {
 			isa = PBXGroup;
 			children = (
+				8E2073BB2E1B647700FA5D21 /* VideoThumbnailView.swift */,
+				8E2073B52E1B4D0000FA5D21 /* LoopingVideoPlayerView.swift */,
 				8EFA58F02DF8047200706B60 /* WorkoutInfoView.swift */,
 				F23F4E99295815140084392B /* MyRoutineSubview.swift */,
 				F23F4E9F2958271B0084392B /* WorkoutCategorySubview.swift */,
@@ -699,10 +736,13 @@
 			files = (
 				8E0743092DF5435900F2DD7F /* dumbel.json in Resources */,
 				F2CB39F5295DE48B00CA80D6 /* ColorAsset.xcassets in Resources */,
+				8E2073BA2E1B503000FA5D21 /* bench_press.mp4 in Resources */,
 				F2E74CEE2921F73600BD35F6 /* Preview Assets.xcassets in Resources */,
 				8E07430F2DF5595500F2DD7F /* archive.json in Resources */,
 				8E0743122DF59D8100F2DD7F /* pro.json in Resources */,
+				8EBC4DFC2E1B9DE20083B8BB /* squat.mp4 in Resources */,
 				8E0743132DF59D8100F2DD7F /* premium.json in Resources */,
+				8EBC4DFA2E1B9DC10083B8BB /* dead_lift.mp4 in Resources */,
 				926B74AD2D4A3AD60006E8CB /* strength.json in Resources */,
 				926B74AE2D4A3AD60006E8CB /* cardio.json in Resources */,
 				926B74AF2D4A3AD60006E8CB /* pilates.json in Resources */,
@@ -745,6 +785,7 @@
 				8E0C8C792DDDBD970051BDB8 /* CountdownTimerView.swift in Sources */,
 				8E0C496B2DC09BC600DDBF6A /* FloatingView.swift in Sources */,
 				F2007DA72A8A8AC300833AF0 /* HealthKitManager.swift in Sources */,
+				8E2073BF2E1B8EAE00FA5D21 /* ThumbnailCacheManager.swift in Sources */,
 				F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */,
 				F276E2952A6C48B50046EBA4 /* ErrorView.swift in Sources */,
 				925C863F2D7180B900B708CB /* StickyHeaderView.swift in Sources */,
@@ -759,6 +800,7 @@
 				F286ACA62AB7250D00D74F75 /* CalendarDetailView.swift in Sources */,
 				F29285332A17CEE000C3A055 /* CustomTabBar.swift in Sources */,
 				F2E221502999555F00B7DCCB /* CheckboxToggleStyle.swift in Sources */,
+				8E2073BC2E1B647E00FA5D21 /* VideoThumbnailView.swift in Sources */,
 				F2335417295B4BF9006E12CB /* WorkingOutView.swift in Sources */,
 				F292A3A72BB3318900B8EDCD /* EquipmentType.swift in Sources */,
 				8EFC66502DD8605C00F32D22 /* AddWorkoutButtonStyle.swift in Sources */,
@@ -769,6 +811,7 @@
 				8EB5396F2C98138A00F56034 /* WorkoutAPIRepository.swift in Sources */,
 				F296FD722AB5EDF000BCF890 /* CalendarViewComponent.swift in Sources */,
 				F2AEA40F2A66E31E0023871D /* Routine.swift in Sources */,
+				8E2073B82E1B4D2200FA5D21 /* LoopingPlayerManager.swift in Sources */,
 				8ED37AF32AC87E0700B4F206 /* MyRoutine.swift in Sources */,
 				F2E74D29292221D500BD35F6 /* Color+SwiftUI.swift in Sources */,
 				8E52F6D32CBD049F00362A40 /* AddWorkoutCategoryView.swift in Sources */,
@@ -790,6 +833,7 @@
 				F23F4E9A295815140084392B /* MyRoutineSubview.swift in Sources */,
 				F2E2214C29994C3B00B7DCCB /* WorkingOutRow.swift in Sources */,
 				8E0743032DF53E5A00F2DD7F /* LottieView.swift in Sources */,
+				8E2073B62E1B4D0F00FA5D21 /* LoopingVideoPlayerView.swift in Sources */,
 				F2102C34292BB06D00417789 /* MainContentStepView.swift in Sources */,
 				F201082A2B6FE03100265F17 /* MainContentEnergyBurn.swift in Sources */,
 				F2E74CE62921F73500BD35F6 /* TodayworkoutDoneApp.swift in Sources */,

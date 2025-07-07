@@ -198,10 +198,11 @@ struct WorkoutListView: View {
         ZStack(alignment: .top) {
             if let index = topHeaderIndex {
                 Text(viewStore.groupedNames[index].key)
-                    .font(.headline)
+                    .font(.system(size: 17))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                    .background(.clear)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 10)
+                    .background(Color.contentBackground)
                     .overlay(Divider(), alignment: .bottom)
                     .zIndex(1) // 항상 앞에 있도록 설정
             }

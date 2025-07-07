@@ -23,7 +23,7 @@
     "recommendedReps": "10~12회 × 3세트",
     "restInterval": "30~60초",
     "equipment": [],
-    "animationName": "벤치_프레스"
+    "animationName": "bench_press"
   },
   {
     "category": {
@@ -231,7 +231,7 @@
     "recommendedReps": "10~12회 × 3세트",
     "restInterval": "30~60초",
     "equipment": [],
-    "animationName": "데드리프트"
+    "animationName": "dead_lift"
   },
   {
     "category": {
@@ -573,7 +573,7 @@
       "덤벨",
       "스미스 머신"
     ],
-    "animationName": "스쿼트"
+    "animationName": "squat"
   },
   {
     "category": {

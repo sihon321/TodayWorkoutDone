@@ -215,6 +215,8 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("설정")
+            .scrollContentBackground(.hidden)
+            .background(Color.background)
         }
         .onAppear {
             viewStore.send(.loadProfile)

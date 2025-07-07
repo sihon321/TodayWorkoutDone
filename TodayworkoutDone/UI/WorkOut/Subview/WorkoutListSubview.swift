@@ -52,12 +52,7 @@ struct WorkoutListSubview: View {
                 viewStore.send(.didTapped)
             }) {
                 HStack {
-                    if let image = UIImage(named: "default") {
-                        Image(uiImage: image)
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .cornerRadius(10)
-                    }
+                    VideoThumbnailView(videoFileName: viewStore.workout.animationName)
                     Text(viewStore.workout.name)
                         .font(.system(size: 15, weight: .light))
                         .foregroundStyle(Color.todBlack)

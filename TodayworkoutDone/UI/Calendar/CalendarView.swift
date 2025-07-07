@@ -173,7 +173,7 @@ struct CalendarView: View {
                 }
             )
             .padding([.leading, .trailing], 15)
-            .background(Color(UIColor.systemGroupedBackground))
+            .background(Color.background)
             .navigationTitle("Calendar")
             .sheet(isPresented: $store.isSheetPresented.sending(\.setSheet)) {
                 if let store = store.scope(state: \.calendarDetail, action: \.calendarDetail) {

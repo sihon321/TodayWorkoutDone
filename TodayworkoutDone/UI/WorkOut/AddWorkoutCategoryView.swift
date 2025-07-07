@@ -82,9 +82,6 @@ struct AddWorkoutCategoryView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
-                    Text("category")
-                        .font(.system(size: 20, weight: .medium))
-                        .padding(.leading, 15)
                     ForEach(
                         store.scope(state: \.workoutList, action: \.workoutList)
                     ) { rowStore in
@@ -109,6 +106,7 @@ struct AddWorkoutCategoryView: View {
                     })
                 }
             }
+            .navigationTitle("Category")
             .ignoresSafeArea(.container, edges: .bottom)
         }
         .onAppear {

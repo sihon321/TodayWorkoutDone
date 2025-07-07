@@ -13,9 +13,11 @@ struct StickyHeaderView: View {
     
     @Binding var topHeaderIndex: Int?
     
+    @State private var prevMinY: CGFloat?
+    
     var body: some View {
         Text(title)
-            .font(.headline)
+            .font(.system(size: 17))
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 10)
             .background(
@@ -29,9 +31,19 @@ struct StickyHeaderView: View {
                 if let firstIndex = values.first, firstIndex.index == 0, firstIndex.minY > 100 {
                     topHeaderIndex = nil
                 }
-                let visibleHeaders = values.filter { $0.minY < 100 && $0.minY >= 0 } // 헤더가 상단에 도달한 경우
+                
+                let visibleHeaders = values.filter { $0.minY < 110 && $0.minY >= 0 } // 헤더가 상단에 도달한 경우
+                
                 if let topHeader = visibleHeaders.first {
-                    topHeaderIndex = topHeader.index
+                    if let prevMinY = prevMinY, prevMinY < topHeader.minY && topHeader.index != 0 {
+                        topHeaderIndex = topHeader.index - 1
+                    } else {
+                        topHeaderIndex = topHeader.index
+                    }
+                }
+                
+                if !visibleHeaders.isEmpty {
+                    prevMinY = visibleHeaders.first?.minY
                 }
             }
         Divider()

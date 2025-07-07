@@ -54,7 +54,8 @@ struct MakeWorkoutReducer {
         Reduce { state, action in
             switch action {
             case .dismissMakeWorkout:
-                return .run { _ in
+                return .run { send in
+                    await send(.dismissKeyboard)
                     await self.dismiss()
                 }
             case .tappedDone(let myRoutine):

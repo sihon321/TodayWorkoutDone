@@ -21,11 +21,9 @@ struct WorkoutInfoView: View {
                         .padding(.top, 12)
                         .foregroundStyle(Color.todBlack)
                     
-                    Image("default")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 226, maxHeight: 226)
-                        .cornerRadius(8)
+                    if let name = workout.animationName {
+                        LoopingVideoPlayerView(videoFileName: name)
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 
@@ -92,6 +90,7 @@ struct WorkoutInfoView: View {
         }
         .padding(15)
         .background(Color.contentBackground)
+        .cornerRadius(15)
         .padding(20)
     }
 }
