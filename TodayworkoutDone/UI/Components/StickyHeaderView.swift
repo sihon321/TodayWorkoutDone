@@ -32,7 +32,7 @@ struct StickyHeaderView: View {
                     topHeaderIndex = nil
                 }
                 
-                let visibleHeaders = values.filter { $0.minY < 110 && $0.minY >= 0 } // 헤더가 상단에 도달한 경우
+                let visibleHeaders = values.filter { $0.minY < 100 && $0.minY >= 0 } // 헤더가 상단에 도달한 경우
                 
                 if let topHeader = visibleHeaders.first {
                     if let prevMinY = prevMinY, prevMinY < topHeader.minY && topHeader.index != 0 {

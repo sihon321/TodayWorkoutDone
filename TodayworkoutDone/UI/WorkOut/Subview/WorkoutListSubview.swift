@@ -7,20 +7,20 @@
 
 import SwiftUI
 import ComposableArchitecture
-import PopupView
 
 @Reducer
 struct WorkoutListSubviewReducer {
     @ObservableState
     struct State: Equatable, Identifiable {
+        @Presents var workoutInfo: WorkoutInfoFeature.State?
         let id: UUID
         var workout: WorkoutState
-        var isPopupShown: Bool = false
     }
     
     enum Action {
         case didTapped
-        case popUpShown(Bool)
+        case tappedInfo
+        case workoutInfo(PresentationAction<WorkoutInfoFeature.Action>)
     }
     
     var body: some Reducer<State, Action> {
@@ -29,10 +29,15 @@ struct WorkoutListSubviewReducer {
             case .didTapped:
                 state.workout.isSelected = !state.workout.isSelected
                 return .none
-            case .popUpShown(let isShown):
-                state.isPopupShown = isShown
+            case .tappedInfo:
+                state.workoutInfo = WorkoutInfoFeature.State(workout: state.workout)
+                return .none
+            case .workoutInfo:
                 return .none
             }
+        }
+        .ifLet(\.$workoutInfo, action: \.workoutInfo) {
+            WorkoutInfoFeature()
         }
     }
 }
@@ -52,7 +57,12 @@ struct WorkoutListSubview: View {
                 viewStore.send(.didTapped)
             }) {
                 HStack {
-                    VideoThumbnailView(videoFileName: viewStore.workout.animationName)
+                    if let image = UIImage(named: "default") {
+                        Image(uiImage: image)
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .cornerRadius(10)
+                    }
                     Text(viewStore.workout.name)
                         .font(.system(size: 15, weight: .light))
                         .foregroundStyle(Color.todBlack)
@@ -62,7 +72,7 @@ struct WorkoutListSubview: View {
                             .foregroundStyle(Color.personal)
                     } else {
                         Button(action: {
-                            viewStore.send(.popUpShown(true))
+                            viewStore.send(.tappedInfo)
                         }) {
                             Image(systemName: "info.circle")
                                 .foregroundStyle(Color.todBlack)
@@ -75,17 +85,11 @@ struct WorkoutListSubview: View {
                maxWidth: .infinity,
                maxHeight: 60,
                alignment: .leading)
-        .popup(isPresented: viewStore.binding(
-            get: \.isPopupShown,
-            send: WorkoutListSubviewReducer.Action.popUpShown
-        )) {
-            WorkoutInfoView(workout: store.workout)
-        } customize: {
-            $0
-            .appearFrom(.centerScale)
-            .closeOnTap(true)
-            .allowTapThroughBG(false)
-            .backgroundColor(.black.opacity(0.4))
+        .fullScreenCover(
+            item:  $store.scope(state: \.workoutInfo,
+                                action: \.workoutInfo)
+        ) { store in
+            WorkoutInfoView(store: store)
         }
     }
 }
