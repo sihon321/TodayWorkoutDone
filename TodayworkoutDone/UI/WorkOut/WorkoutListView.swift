@@ -15,7 +15,7 @@ struct WorkoutListReducer {
     struct State: Equatable, Identifiable {
         let id: UUID
         let isAddWorkoutPresented: Bool
-        let categoryName: String
+        let category: WorkoutCategoryState
         var workouts: [WorkoutState] = []
         var routines: [RoutineState] = []
         var keyword: String = ""
@@ -53,11 +53,11 @@ struct WorkoutListReducer {
         
         init(isAddWorkoutPresented: Bool,
              routines: [RoutineState],
-             categoryName: String) {
+             category: WorkoutCategoryState) {
             self.id = UUID()
             self.isAddWorkoutPresented = isAddWorkoutPresented
             self.routines = routines
-            self.categoryName = categoryName
+            self.category = category
         }
     }
     
@@ -254,10 +254,10 @@ struct WorkoutListView: View {
                 get: { $0.keyword },
                 send: { WorkoutListReducer.Action.search(keyword: $0) }
             ))
-            .navigationTitle(viewStore.categoryName)
+            .navigationTitle(viewStore.category.name)
         }
         .onAppear {
-            store.send(.getWorkouts(viewStore.categoryName))
+            store.send(.getWorkouts(viewStore.category.name))
         }
         .tint(.todBlack)
     }

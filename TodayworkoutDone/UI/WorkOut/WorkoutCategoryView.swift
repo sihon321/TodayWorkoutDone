@@ -63,12 +63,12 @@ struct WorkoutCategoryView: View {
             ForEach(
                 store.scope(state: \.workoutList, action: \.workoutList)
             ) { rowStore in
-                if rowStore.categoryName.hasPrefix(store.keyword) {
+                if rowStore.category.name.hasPrefix(store.keyword) {
                     NavigationLink {
                         WorkoutListView(store: rowStore)
                     } label: {
                         WorkoutCategorySubview(
-                            category: WorkoutCategoryState(name: rowStore.categoryName)
+                            category: rowStore.category
                         )
                     }
                 }

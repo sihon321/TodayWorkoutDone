@@ -1,17 +1,32 @@
 [
     {
-        "name": "strength"
+        "name": "strength",
+        "classification": "weight",
+        "explanation": ""
     },
     {
-        "name": "pilates"
+        "name": "strength",
+        "classification": "machines",
+        "explanation": ""
     },
     {
-        "name": "cardio"
+        "name": "pilates",
+        "classification": "pilates",
+        "explanation": ""
     },
     {
-        "name": "yoga"
+        "name": "cardio",
+        "classification": "cardio",
+        "explanation": ""
     },
     {
-        "name": "stretching"
+        "name": "yoga",
+        "classification": "yoga",
+        "explanation": ""
+    },
+    {
+        "name": "stretching",
+        "classification": "stretching",
+        "explanation": ""
     }
 ]

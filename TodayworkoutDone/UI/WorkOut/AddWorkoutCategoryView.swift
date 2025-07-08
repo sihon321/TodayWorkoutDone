@@ -51,7 +51,7 @@ struct AddWorkoutCategoryReducer {
                     uniqueElements: categories.compactMap {
                         WorkoutListReducer.State(isAddWorkoutPresented: true,
                                                  routines: state.routines,
-                                                 categoryName: $0.name)
+                                                 category: $0)
                     }
                 )
                 return .none
@@ -85,12 +85,12 @@ struct AddWorkoutCategoryView: View {
                     ForEach(
                         store.scope(state: \.workoutList, action: \.workoutList)
                     ) { rowStore in
-                        if rowStore.categoryName.hasPrefix(viewStore.keyword) {
+                        if rowStore.category.name.hasPrefix(viewStore.keyword) {
                             NavigationLink {
                                 WorkoutListView(store: rowStore)
                             } label: {
                                 WorkoutCategorySubview(
-                                    category: WorkoutCategoryState(name: rowStore.categoryName)
+                                    category: rowStore.category
                                 )
                             }
                         }

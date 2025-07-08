@@ -1,152 +1,164 @@
 [
-  {
-    "category": {
-      "name": "cardio"
+    {
+        "category": {
+            "name": "cardio",
+            "classification": "cardio",
+            "explanation": ""
+        },
+        "name": "걷기",
+        "target": ["유산소"],
+        "isSelected": false,
+        "summary": "걷기는 일상에서 쉽게 실천할 수 있는 저강도 유산소 운동으로, 심폐 건강과 전신 순환에 도움을 줍니다.",
+        "instructions": [
+            "자연스럽게 등을 펴고 어깨에 힘을 뺀 채 걷기 시작합니다.",
+            "발뒤꿈치부터 디디고 발끝으로 밀며 앞으로 나아갑니다.",
+            "팔을 자연스럽게 흔들며 규칙적인 호흡을 유지합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "walking"
     },
-    "name": "걷기",
-    "target": ["유산소"],
-    "isSelected": false,
-    "summary": "걷기는 일상에서 쉽게 실천할 수 있는 저강도 유산소 운동으로, 심폐 건강과 전신 순환에 도움을 줍니다.",
-    "instructions": [
-      "자연스럽게 등을 펴고 어깨에 힘을 뺀 채 걷기 시작합니다.",
-      "발뒤꿈치부터 디디고 발끝으로 밀며 앞으로 나아갑니다.",
-      "팔을 자연스럽게 흔들며 규칙적인 호흡을 유지합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "walking"
-  },
-  {
-    "category": {
-      "name": "cardio"
+    {
+        "category": {
+            "name": "cardio",
+            "classification": "cardio",
+            "explanation": ""
+        },
+        "name": "조깅",
+        "target": ["유산소"],
+        "isSelected": false,
+        "summary": "조깅은 심박수를 적절히 높이며 지구력을 향상시키는 유산소 운동입니다.",
+        "instructions": [
+            "무리가 가지 않는 속도로 천천히 달리기 시작합니다.",
+            "팔은 90도 각도로 굽혀 자연스럽게 흔듭니다.",
+            "발은 뒤꿈치-앞꿈치 순으로 디디며 착지 충격을 줄입니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "jogging"
     },
-    "name": "조깅",
-    "target": ["유산소"],
-    "isSelected": false,
-    "summary": "조깅은 심박수를 적절히 높이며 지구력을 향상시키는 유산소 운동입니다.",
-    "instructions": [
-      "무리가 가지 않는 속도로 천천히 달리기 시작합니다.",
-      "팔은 90도 각도로 굽혀 자연스럽게 흔듭니다.",
-      "발은 뒤꿈치-앞꿈치 순으로 디디며 착지 충격을 줄입니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "jogging"
-  },
-  {
-    "category": {
-      "name": "cardio"
+    {
+        "category": {
+            "name": "cardio",
+            "classification": "cardio",
+            "explanation": ""
+        },
+        "name": "러닝",
+        "target": ["유산소"],
+        "isSelected": false,
+        "summary": "러닝은 고강도의 유산소 운동으로 체중 감량과 심폐 지구력 향상에 효과적입니다.",
+        "instructions": [
+            "속도에 맞는 운동화를 착용한 뒤 준비 운동을 합니다.",
+            "상체는 곧게 세우고 리듬감 있게 달립니다.",
+            "무릎을 자연스럽게 들어올리고 발끝으로 차듯이 착지합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "running"
     },
-    "name": "러닝",
-    "target": ["유산소"],
-    "isSelected": false,
-    "summary": "러닝은 고강도의 유산소 운동으로 체중 감량과 심폐 지구력 향상에 효과적입니다.",
-    "instructions": [
-      "속도에 맞는 운동화를 착용한 뒤 준비 운동을 합니다.",
-      "상체는 곧게 세우고 리듬감 있게 달립니다.",
-      "무릎을 자연스럽게 들어올리고 발끝으로 차듯이 착지합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "running"
-  },
-  {
-    "category": {
-      "name": "cardio"
+    {
+        "category": {
+            "name": "cardio",
+            "classification": "cardio",
+            "explanation": ""
+        },
+        "name": "사이클",
+        "target": ["유산소"],
+        "isSelected": false,
+        "summary": "사이클은 관절에 무리가 적으면서도 강도 높은 유산소 효과를 주는 운동입니다.",
+        "instructions": [
+            "안장 높이를 조절해 무릎이 10도 정도 굽힌 상태가 되도록 합니다.",
+            "페달을 일정한 속도로 부드럽게 밟습니다.",
+            "허리를 펴고 시선을 정면으로 유지하며 호흡을 고르게 합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "cycling"
     },
-    "name": "사이클",
-    "target": ["유산소"],
-    "isSelected": false,
-    "summary": "사이클은 관절에 무리가 적으면서도 강도 높은 유산소 효과를 주는 운동입니다.",
-    "instructions": [
-      "안장 높이를 조절해 무릎이 10도 정도 굽힌 상태가 되도록 합니다.",
-      "페달을 일정한 속도로 부드럽게 밟습니다.",
-      "허리를 펴고 시선을 정면으로 유지하며 호흡을 고르게 합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "cycling"
-  },
-  {
-    "category": {
-      "name": "cardio"
+    {
+        "category": {
+            "name": "cardio",
+            "classification": "cardio",
+            "explanation": ""
+        },
+        "name": "수영",
+        "target": ["유산소"],
+        "isSelected": false,
+        "summary": "수영은 전신을 사용하는 유산소 운동으로 심폐지구력, 유연성, 근지구력 향상에 탁월합니다.",
+        "instructions": [
+            "충분한 준비운동 후 물속에서 자유형, 평영 등 자신에게 맞는 스타일로 수영합니다.",
+            "호흡은 일정한 리듬을 유지하며 코와 입을 번갈아 사용합니다.",
+            "어깨와 허리에 무리가 가지 않도록 부드럽게 동작합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "swimming"
     },
-    "name": "수영",
-    "target": ["유산소"],
-    "isSelected": false,
-    "summary": "수영은 전신을 사용하는 유산소 운동으로 심폐지구력, 유연성, 근지구력 향상에 탁월합니다.",
-    "instructions": [
-      "충분한 준비운동 후 물속에서 자유형, 평영 등 자신에게 맞는 스타일로 수영합니다.",
-      "호흡은 일정한 리듬을 유지하며 코와 입을 번갈아 사용합니다.",
-      "어깨와 허리에 무리가 가지 않도록 부드럽게 동작합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "swimming"
-  },
-  {
-    "category": {
-      "name": "cardio"
-    },
-    "name": "로잉",
-    "target": ["유산소"],
-    "isSelected": false,
-    "summary": "로잉은 등, 하체, 팔을 동시에 사용하는 유산소 운동으로 전신 근력과 지구력 향상에 효과적입니다.",
-    "instructions": [
-      "발을 고정하고 핸들을 두 손으로 잡습니다.",
-      "다리를 밀고 몸통을 젖힌 후 팔을 당깁니다.",
-      "반대 순서로 핸들을 천천히 앞으로 내보냅니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "rowing"
-  }
+    {
+        "category": {
+            "name": "cardio",
+            "classification": "cardio",
+            "explanation": ""
+        },
+        "name": "로잉",
+        "target": ["유산소"],
+        "isSelected": false,
+        "summary": "로잉은 등, 하체, 팔을 동시에 사용하는 유산소 운동으로 전신 근력과 지구력 향상에 효과적입니다.",
+        "instructions": [
+            "발을 고정하고 핸들을 두 손으로 잡습니다.",
+            "다리를 밀고 몸통을 젖힌 후 팔을 당깁니다.",
+            "반대 순서로 핸들을 천천히 앞으로 내보냅니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "rowing"
+    }
 ]

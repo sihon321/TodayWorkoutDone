@@ -97,7 +97,7 @@ struct WorkoutReducer {
                     uniqueElements: categories.compactMap {
                         WorkoutListReducer.State(isAddWorkoutPresented: false,
                                                  routines: state.myRoutine.routines,
-                                                 categoryName: $0.name)
+                                                 category: $0)
                     }
                 )
                 return .none

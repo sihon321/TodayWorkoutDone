@@ -1,852 +1,920 @@
 [
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "헌드레드",
+        "target": ["코어", "호흡"],
+        "isSelected": false,
+        "summary": "필라테스의 기본 워밍업 동작으로, 호흡 조절과 코어 근육 활성화를 도와줍니다.",
+        "instructions": [
+            "등을 바닥에 대고 누운 상태에서 다리를 테이블탑 자세로 올립니다.",
+            "팔을 바닥에서 약간 들어올린 후 위아래로 빠르게 움직입니다.",
+            "5회 들이쉬고 5회 내쉬는 호흡을 10세트 반복합니다."
+        ],
+        "cautions": [
+            "허리가 뜨지 않도록 복부에 힘을 주며 동작을 유지합니다.",
+            "목에 무리가 가지 않도록 시선은 배꼽을 향합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.0,
+        "caloriesPer30Min": 90,
+        "recommendedReps": "100회 펌핑 (5-5 호흡 기준)",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "hundred"
     },
-    "name": "헌드레드",
-    "target": ["코어", "호흡"],
-    "isSelected": false,
-    "summary": "필라테스의 기본 워밍업 동작으로, 호흡 조절과 코어 근육 활성화를 도와줍니다.",
-    "instructions": [
-      "등을 바닥에 대고 누운 상태에서 다리를 테이블탑 자세로 올립니다.",
-      "팔을 바닥에서 약간 들어올린 후 위아래로 빠르게 움직입니다.",
-      "5회 들이쉬고 5회 내쉬는 호흡을 10세트 반복합니다."
-    ],
-    "cautions": [
-      "허리가 뜨지 않도록 복부에 힘을 주며 동작을 유지합니다.",
-      "목에 무리가 가지 않도록 시선은 배꼽을 향합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.0,
-    "caloriesPer30Min": 90,
-    "recommendedReps": "100회 펌핑 (5-5 호흡 기준)",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "hundred"
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "롤업",
+        "target": ["코어", "유연성"],
+        "isSelected": false,
+        "summary": "척추를 한 마디씩 말아올리는 동작으로 복근을 강화하고 유연성을 기릅니다.",
+        "instructions": [
+            "바닥에 누운 자세에서 팔을 머리 위로 뻗습니다.",
+            "숨을 내쉬며 팔을 앞으로 가져오고, 척추를 말아올리며 천천히 앉습니다.",
+            "다시 천천히 척추를 말아내리며 시작 자세로 돌아갑니다."
+        ],
+        "cautions": [
+            "반동 없이 복근의 힘만으로 올라옵니다.",
+            "허리를 과도하게 젖히지 않도록 주의합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.8,
+        "caloriesPer30Min": 85,
+        "recommendedReps": "10~12회",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "roll_up"
     },
-    "name": "롤업",
-    "target": ["코어", "유연성"],
-    "isSelected": false,
-    "summary": "척추를 한 마디씩 말아올리는 동작으로 복근을 강화하고 유연성을 기릅니다.",
-    "instructions": [
-      "바닥에 누운 자세에서 팔을 머리 위로 뻗습니다.",
-      "숨을 내쉬며 팔을 앞으로 가져오고, 척추를 말아올리며 천천히 앉습니다.",
-      "다시 천천히 척추를 말아내리며 시작 자세로 돌아갑니다."
-    ],
-    "cautions": [
-      "반동 없이 복근의 힘만으로 올라옵니다.",
-      "허리를 과도하게 젖히지 않도록 주의합니다."
-    ],
-    "difficulty": 2,
-    "mets": 3.8,
-    "caloriesPer30Min": 85,
-    "recommendedReps": "10~12회",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "roll_up"
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "롤오버",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "롤오버",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "싱글 레그 서클",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "싱글 레그 서클",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "공처럼 굴리기",
+        "target": ["척추", "균형"],
+        "isSelected": false,
+        "summary": "척추 유연성과 균형 감각을 향상시키는 동작으로, 중추신경계 자극에 효과적입니다.",
+        "instructions": [
+            "앉은 자세에서 무릎을 가슴 쪽으로 끌어안고 발을 들어 올립니다.",
+            "복부에 힘을 주고 뒤로 구르며 척추를 마사지하듯 굴립니다.",
+            "균형을 유지하며 다시 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "목이나 허리에 통증이 느껴질 경우 동작을 멈춥니다.",
+            "굴러올 때 반동을 최소화하고 복부 힘으로 조절합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.6,
+        "caloriesPer30Min": 85,
+        "recommendedReps": "6~10회",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "rolling_like_a_ball"
     },
-    "name": "공처럼 굴리기",
-    "target": ["척추", "균형"],
-    "isSelected": false,
-    "summary": "척추 유연성과 균형 감각을 향상시키는 동작으로, 중추신경계 자극에 효과적입니다.",
-    "instructions": [
-      "앉은 자세에서 무릎을 가슴 쪽으로 끌어안고 발을 들어 올립니다.",
-      "복부에 힘을 주고 뒤로 구르며 척추를 마사지하듯 굴립니다.",
-      "균형을 유지하며 다시 시작 자세로 돌아옵니다."
-    ],
-    "cautions": [
-      "목이나 허리에 통증이 느껴질 경우 동작을 멈춥니다.",
-      "굴러올 때 반동을 최소화하고 복부 힘으로 조절합니다."
-    ],
-    "difficulty": 2,
-    "mets": 3.6,
-    "caloriesPer30Min": 85,
-    "recommendedReps": "6~10회",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "rolling_like_a_ball"
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "싱글 레그 스트레치",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "싱글 레그 스트레치",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "더블 레그 스트레치",
+        "target": ["복부", "전신"],
+        "isSelected": false,
+        "summary": "복부 코어 근육과 팔다리 협응을 동시에 강화하는 복합 동작입니다.",
+        "instructions": [
+            "누운 상태에서 무릎을 당기고 양손으로 감쌉니다.",
+            "팔과 다리를 동시에 뻗으며 복부 긴장을 유지합니다.",
+            "다시 원위치로 돌아옵니다."
+        ],
+        "cautions": [
+            "허리가 들리지 않도록 복부에 힘을 유지합니다.",
+            "팔과 다리를 너무 빠르게 뻗지 않습니다."
+        ],
+        "difficulty": 3,
+        "mets": 4.0,
+        "caloriesPer30Min": 95,
+        "recommendedReps": "10~12회",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "double_leg_stretch"
     },
-    "name": "더블 레그 스트레치",
-    "target": ["복부", "전신"],
-    "isSelected": false,
-    "summary": "복부 코어 근육과 팔다리 협응을 동시에 강화하는 복합 동작입니다.",
-    "instructions": [
-      "누운 상태에서 무릎을 당기고 양손으로 감쌉니다.",
-      "팔과 다리를 동시에 뻗으며 복부 긴장을 유지합니다.",
-      "다시 원위치로 돌아옵니다."
-    ],
-    "cautions": [
-      "허리가 들리지 않도록 복부에 힘을 유지합니다.",
-      "팔과 다리를 너무 빠르게 뻗지 않습니다."
-    ],
-    "difficulty": 3,
-    "mets": 4.0,
-    "caloriesPer30Min": 95,
-    "recommendedReps": "10~12회",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "double_leg_stretch"
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "척추 스트레치 포워드",
+        "target": ["유연성"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "척추 스트레치 포워드",
-    "target": ["유연성"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "오픈 레그 로커",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "오픈 레그 로커",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "코크스크류",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "코크스크류",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "쏘우",
+        "target": ["유연성"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "쏘우",
-    "target": ["유연성"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "스완",
+        "target": ["등", "유연성"],
+        "isSelected": false,
+        "summary": "척추의 신전 근육을 강화하고, 굽은 등을 펴는 데 도움을 주는 동작입니다.",
+        "instructions": [
+            "엎드린 상태에서 손바닥은 어깨 아래에 둡니다.",
+            "숨을 들이마시며 상체를 들어올려 척추를 신전합니다.",
+            "내쉬며 천천히 내려옵니다."
+        ],
+        "cautions": [
+            "허리에 과도한 부담이 가지 않도록 복부에 힘을 줍니다.",
+            "목을 뒤로 꺾지 않고, 시선은 전방을 유지합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.6,
+        "caloriesPer30Min": 85,
+        "recommendedReps": "10회 × 2세트",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "swan"
     },
-    "name": "스완",
-    "target": ["등", "유연성"],
-    "isSelected": false,
-    "summary": "척추의 신전 근육을 강화하고, 굽은 등을 펴는 데 도움을 주는 동작입니다.",
-    "instructions": [
-      "엎드린 상태에서 손바닥은 어깨 아래에 둡니다.",
-      "숨을 들이마시며 상체를 들어올려 척추를 신전합니다.",
-      "내쉬며 천천히 내려옵니다."
-    ],
-    "cautions": [
-      "허리에 과도한 부담이 가지 않도록 복부에 힘을 줍니다.",
-      "목을 뒤로 꺾지 않고, 시선은 전방을 유지합니다."
-    ],
-    "difficulty": 2,
-    "mets": 3.6,
-    "caloriesPer30Min": 85,
-    "recommendedReps": "10회 × 2세트",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "swan"
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "싱글 레그 킥",
+        "target": ["하체"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "싱글 레그 킥",
-    "target": ["하체"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "더블 레그 킥",
+        "target": ["하체"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "더블 레그 킥",
-    "target": ["하체"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "넥 풀",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "복부 근육을 강화하고 척추 굴곡의 유연성을 높이는 동작입니다.",
+        "instructions": [
+            "양손을 머리 뒤에 두고 누운 자세에서 시작합니다.",
+            "복부 힘으로 척추를 말아올리며 상체를 들어올립니다.",
+            "천천히 말아내리며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "목에 힘을 주지 않고 손으로 머리를 당기지 않도록 주의합니다.",
+            "반동 없이 천천히 수행합니다."
+        ],
+        "difficulty": 3,
+        "mets": 3.8,
+        "caloriesPer30Min": 90,
+        "recommendedReps": "8~10회",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "neck_pull"
     },
-    "name": "넥 풀",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "복부 근육을 강화하고 척추 굴곡의 유연성을 높이는 동작입니다.",
-    "instructions": [
-      "양손을 머리 뒤에 두고 누운 자세에서 시작합니다.",
-      "복부 힘으로 척추를 말아올리며 상체를 들어올립니다.",
-      "천천히 말아내리며 시작 자세로 돌아옵니다."
-    ],
-    "cautions": [
-      "목에 힘을 주지 않고 손으로 머리를 당기지 않도록 주의합니다.",
-      "반동 없이 천천히 수행합니다."
-    ],
-    "difficulty": 3,
-    "mets": 3.8,
-    "caloriesPer30Min": 90,
-    "recommendedReps": "8~10회",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "neck_pull"
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "하이 시저스",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "하이 시저스",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "하이 바이시클",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "하이 바이시클",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "숄더 브리지",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "숄더 브리지",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "스파인 트위스트",
+        "target": ["유연성"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "스파인 트위스트",
-    "target": ["유연성"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "잭나이프",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "잭나이프",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "사이드 킥",
+        "target": ["하체"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "사이드 킥",
-    "target": ["하체"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "티저",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "복부와 균형 감각을 동시에 사용하는 고급 필라테스 동작입니다.",
+        "instructions": [
+            "누운 자세에서 팔과 다리를 동시에 들어올려 V자 형태를 만듭니다.",
+            "복부 힘으로 균형을 유지한 채 자세를 유지합니다.",
+            "천천히 내려오며 시작 자세로 돌아갑니다."
+        ],
+        "cautions": [
+            "요통이 있을 경우 피하는 것이 좋습니다.",
+            "초보자는 무릎을 굽힌 상태로 시작해도 좋습니다."
+        ],
+        "difficulty": 4,
+        "mets": 4.5,
+        "caloriesPer30Min": 110,
+        "recommendedReps": "8~10회 또는 10초 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "teaser"
     },
-    "name": "티저",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "복부와 균형 감각을 동시에 사용하는 고급 필라테스 동작입니다.",
-    "instructions": [
-      "누운 자세에서 팔과 다리를 동시에 들어올려 V자 형태를 만듭니다.",
-      "복부 힘으로 균형을 유지한 채 자세를 유지합니다.",
-      "천천히 내려오며 시작 자세로 돌아갑니다."
-    ],
-    "cautions": [
-      "요통이 있을 경우 피하는 것이 좋습니다.",
-      "초보자는 무릎을 굽힌 상태로 시작해도 좋습니다."
-    ],
-    "difficulty": 4,
-    "mets": 4.5,
-    "caloriesPer30Min": 110,
-    "recommendedReps": "8~10회 또는 10초 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "teaser"
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "힙 트위스트",
+        "target": ["전신"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "힙 트위스트",
-    "target": ["전신"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "스위밍",
+        "target": ["등"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "스위밍",
-    "target": ["등"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "레그 풀 프론트",
+        "target": ["전신"],
+        "isSelected": false,
+        "summary": "플랭크 기반의 동작으로 전신 근력과 코어 안정성을 향상시킵니다.",
+        "instructions": [
+            "플랭크 자세에서 한쪽 다리를 들어올립니다.",
+            "다리를 천천히 내려 다시 시작 자세로 돌아갑니다.",
+            "반대쪽도 반복합니다."
+        ],
+        "cautions": [
+            "골반이 흔들리지 않도록 복부에 힘을 줍니다.",
+            "어깨가 긴장되지 않도록 주의합니다."
+        ],
+        "difficulty": 3,
+        "mets": 4.2,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "양쪽 각각 10회",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "leg_pull_front"
     },
-    "name": "레그 풀 프론트",
-    "target": ["전신"],
-    "isSelected": false,
-    "summary": "플랭크 기반의 동작으로 전신 근력과 코어 안정성을 향상시킵니다.",
-    "instructions": [
-      "플랭크 자세에서 한쪽 다리를 들어올립니다.",
-      "다리를 천천히 내려 다시 시작 자세로 돌아갑니다.",
-      "반대쪽도 반복합니다."
-    ],
-    "cautions": [
-      "골반이 흔들리지 않도록 복부에 힘을 줍니다.",
-      "어깨가 긴장되지 않도록 주의합니다."
-    ],
-    "difficulty": 3,
-    "mets": 4.2,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "양쪽 각각 10회",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "leg_pull_front"
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "레그 풀",
+        "target": ["전신"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "레그 풀",
-    "target": ["전신"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "사이드 킥 니링",
+        "target": ["하체"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "사이드 킥 니링",
-    "target": ["하체"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "사이드 벤드",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "사이드 벤드",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "부메랑",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "부메랑",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "씰",
+        "target": ["유연성"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "씰",
-    "target": ["유연성"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "크랩",
+        "target": ["유연성"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "크랩",
-    "target": ["유연성"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "로킹",
+        "target": ["코어"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "로킹",
-    "target": ["코어"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "컨트롤 밸런스",
+        "target": ["전신"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
     },
-    "name": "컨트롤 밸런스",
-    "target": ["전신"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  },
-  {
-    "category": {
-      "name": "pilates"
-    },
-    "name": "푸시업",
-    "target": ["가슴"],
-    "isSelected": false,
-    "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
-    "instructions": [
-      "편안한 자세에서 시작합니다.",
-      "호흡을 고르게 유지하며 동작을 수행합니다.",
-      "무리하지 않고 본인의 체력에 맞게 반복합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": null
-  }
+    {
+        "category": {
+            "name": "pilates",
+            "classification": "pilates",
+            "explanation": ""
+        },
+        "name": "푸시업",
+        "target": ["가슴"],
+        "isSelected": false,
+        "summary": "신체 기능 향상과 건강 유지를 위한 운동입니다.",
+        "instructions": [
+            "편안한 자세에서 시작합니다.",
+            "호흡을 고르게 유지하며 동작을 수행합니다.",
+            "무리하지 않고 본인의 체력에 맞게 반복합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": null
+    }
 ]

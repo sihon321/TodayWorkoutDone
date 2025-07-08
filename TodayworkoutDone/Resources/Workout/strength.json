@@ -1,786 +1,846 @@
 [
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "벤치 프레스",
+        "target": ["대흉근", "삼두근", "전면 삼각근"],
+        "isSelected": false,
+        "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "벤치 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "bench_press"
     },
-    "name": "벤치 프레스",
-    "target": ["대흉근", "삼두근", "전면 삼각근"],
-    "isSelected": false,
-    "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "벤치 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "bench_press"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "플라이",
+        "target": ["대흉근", "삼두근", "전면 삼각근"],
+        "isSelected": false,
+        "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "플라이 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "플라이",
-    "target": ["대흉근", "삼두근", "전면 삼각근"],
-    "isSelected": false,
-    "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "플라이 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "플라이"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "펙댁 플라이",
+        "target": ["대흉근", "삼두근", "전면 삼각근"],
+        "isSelected": false,
+        "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "펙댁 플라이 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "펙댁 플라이",
-    "target": ["대흉근", "삼두근", "전면 삼각근"],
-    "isSelected": false,
-    "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "펙댁 플라이 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "펙댁_플라이"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "푸쉬업",
+        "target": ["대흉근", "삼두근", "전면 삼각근"],
+        "isSelected": false,
+        "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "푸쉬업 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "푸쉬업",
-    "target": ["대흉근", "삼두근", "전면 삼각근"],
-    "isSelected": false,
-    "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "푸쉬업 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "푸쉬업"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "인클라인 벤치 프레스",
+        "target": ["대흉근", "삼두근", "전면 삼각근"],
+        "isSelected": false,
+        "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "인클라인 벤치 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "인클라인 벤치 프레스",
-    "target": ["대흉근", "삼두근", "전면 삼각근"],
-    "isSelected": false,
-    "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "인클라인 벤치 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "인클라인_벤치_프레스"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "디클라인 벤치 프레스",
+        "target": ["대흉근", "삼두근", "전면 삼각근"],
+        "isSelected": false,
+        "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "디클라인 벤치 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "디클라인 벤치 프레스",
-    "target": ["대흉근", "삼두근", "전면 삼각근"],
-    "isSelected": false,
-    "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "디클라인 벤치 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "디클라인_벤치_프레스"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "체스트 딥",
+        "target": ["대흉근", "삼두근", "전면 삼각근"],
+        "isSelected": false,
+        "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "체스트 딥 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "체스트 딥",
-    "target": ["대흉근", "삼두근", "전면 삼각근"],
-    "isSelected": false,
-    "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "체스트 딥 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "체스트_딥"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "케이블 크로스 오버",
+        "target": ["대흉근", "삼두근", "전면 삼각근"],
+        "isSelected": false,
+        "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "케이블 크로스 오버 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "케이블 크로스 오버",
-    "target": ["대흉근", "삼두근", "전면 삼각근"],
-    "isSelected": false,
-    "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "케이블 크로스 오버 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "케이블_크로스_오버"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "데드리프트",
+        "target": ["대둔근", "햄스트링", "척추기립근"],
+        "isSelected": false,
+        "summary": "대둔근, 햄스트링, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "데드리프트 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "dead_lift"
     },
-    "name": "데드리프트",
-    "target": ["대둔근", "햄스트링", "척추기립근"],
-    "isSelected": false,
-    "summary": "대둔근, 햄스트링, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "데드리프트 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "dead_lift"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "렛풀다운",
+        "target": ["광배근", "승모근", "척추기립근"],
+        "isSelected": false,
+        "summary": "광배근, 승모근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "렛풀다운 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "렛풀다운",
-    "target": ["광배근", "승모근", "척추기립근"],
-    "isSelected": false,
-    "summary": "광배근, 승모근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "렛풀다운 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "렛풀다운"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "벤트오버 로우",
+        "target": ["광배근", "승모근", "척추기립근"],
+        "isSelected": false,
+        "summary": "광배근, 승모근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "벤트오버 로우 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "벤트오버 로우",
-    "target": ["광배근", "승모근", "척추기립근"],
-    "isSelected": false,
-    "summary": "광배근, 승모근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "벤트오버 로우 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "벤트오버_로우"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "시티드 로우",
+        "target": ["광배근", "승모근", "척추기립근"],
+        "isSelected": false,
+        "summary": "광배근, 승모근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "시티드 로우 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "시티드 로우",
-    "target": ["광배근", "승모근", "척추기립근"],
-    "isSelected": false,
-    "summary": "광배근, 승모근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "시티드 로우 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "시티드_로우"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "풀업",
+        "target": ["광배근", "승모근", "척추기립근"],
+        "isSelected": false,
+        "summary": "광배근, 승모근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "풀업 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "풀업",
-    "target": ["광배근", "승모근", "척추기립근"],
-    "isSelected": false,
-    "summary": "광배근, 승모근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "풀업 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "풀업"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "숄더 프레스",
+        "target": ["삼각근 전후면", "승모근"],
+        "isSelected": false,
+        "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "숄더 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "숄더 프레스",
-    "target": ["삼각근 전후면", "승모근"],
-    "isSelected": false,
-    "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "숄더 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "숄더_프레스"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "사이드 레터럴 레이즈",
+        "target": ["삼각근 전후면", "승모근"],
+        "isSelected": false,
+        "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "사이드 레터럴 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "사이드 레터럴 레이즈",
-    "target": ["삼각근 전후면", "승모근"],
-    "isSelected": false,
-    "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "사이드 레터럴 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "사이드_레터럴_레이즈"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "프론트 레이즈",
+        "target": ["삼각근 전후면", "승모근"],
+        "isSelected": false,
+        "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "프론트 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "프론트 레이즈",
-    "target": ["삼각근 전후면", "승모근"],
-    "isSelected": false,
-    "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "프론트 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "프론트_레이즈"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "벤트오버 레터럴 레이즈",
+        "target": ["삼각근 전후면", "승모근"],
+        "isSelected": false,
+        "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "벤트오버 레터럴 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "벤트오버 레터럴 레이즈",
-    "target": ["삼각근 전후면", "승모근"],
-    "isSelected": false,
-    "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "벤트오버 레터럴 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "벤트오버_레터럴_레이즈"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "바벨 컬",
+        "target": ["이두근", "삼두근", "전완근"],
+        "isSelected": false,
+        "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "바벨 컬 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "바벨 컬",
-    "target": ["이두근", "삼두근", "전완근"],
-    "isSelected": false,
-    "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "바벨 컬 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "바벨_컬"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "덤벨 컬",
+        "target": ["이두근", "삼두근", "전완근"],
+        "isSelected": false,
+        "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "덤벨 컬 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "덤벨 컬",
-    "target": ["이두근", "삼두근", "전완근"],
-    "isSelected": false,
-    "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "덤벨 컬 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "덤벨_컬"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "트라이셉스 푸시다운",
+        "target": ["이두근", "삼두근", "전완근"],
+        "isSelected": false,
+        "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "트라이셉스 푸시다운 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "트라이셉스 푸시다운",
-    "target": ["이두근", "삼두근", "전완근"],
-    "isSelected": false,
-    "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "트라이셉스 푸시다운 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "트라이셉스_푸시다운"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "트라이셉스 익스텐션",
+        "target": ["이두근", "삼두근", "전완근"],
+        "isSelected": false,
+        "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "트라이셉스 익스텐션 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "트라이셉스 익스텐션",
-    "target": ["이두근", "삼두근", "전완근"],
-    "isSelected": false,
-    "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "트라이셉스 익스텐션 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "트라이셉스_익스텐션"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "스쿼트",
+        "target": ["대퇴사두근", "대둔근", "햄스트링"],
+        "isSelected": false,
+        "summary": "대퇴사두근, 대둔근, 햄스트링을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "스쿼트 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무릎이 안쪽으로 모이지 않도록 주의",
+            "허리가 굽지 않도록 코어에 힘주기"
+        ],
+        "difficulty": 2,
+        "mets": 5.0,
+        "caloriesPer30Min": 120,
+        "recommendedReps": "12~15회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [
+            "바벨",
+            "덤벨",
+            "스미스 머신"
+        ],
+        "animationName": "squat"
     },
-    "name": "스쿼트",
-    "target": ["대퇴사두근", "대둔근", "햄스트링"],
-    "isSelected": false,
-    "summary": "대퇴사두근, 대둔근, 햄스트링을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "스쿼트 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무릎이 안쪽으로 모이지 않도록 주의",
-      "허리가 굽지 않도록 코어에 힘주기"
-    ],
-    "difficulty": 2,
-    "mets": 5.0,
-    "caloriesPer30Min": 120,
-    "recommendedReps": "12~15회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [
-      "바벨",
-      "덤벨",
-      "스미스 머신"
-    ],
-    "animationName": "squat"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "레그 프레스",
+        "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
+        "isSelected": false,
+        "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "레그 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "레그 프레스",
-    "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
-    "isSelected": false,
-    "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "레그 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "레그_프레스"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "런지",
+        "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
+        "isSelected": false,
+        "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "런지 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "런지",
-    "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
-    "isSelected": false,
-    "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "런지 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "런지"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "레그 익스텐션",
+        "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
+        "isSelected": false,
+        "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "레그 익스텐션 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "레그 익스텐션",
-    "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
-    "isSelected": false,
-    "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "레그 익스텐션 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "레그_익스텐션"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "레그 컬",
+        "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
+        "isSelected": false,
+        "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "레그 컬 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "레그 컬",
-    "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
-    "isSelected": false,
-    "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "레그 컬 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "레그_컬"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "카프 레이즈",
+        "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
+        "isSelected": false,
+        "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "카프 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "카프 레이즈",
-    "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
-    "isSelected": false,
-    "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "카프 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "카프_레이즈"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "크런치",
+        "target": ["복직근", "복사근", "요방형근"],
+        "isSelected": false,
+        "summary": "복직근, 복사근, 요방형근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "크런치 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "크런치",
-    "target": ["복직근", "복사근", "요방형근"],
-    "isSelected": false,
-    "summary": "복직근, 복사근, 요방형근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "크런치 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "크런치"
-  },
-  {
-    "category": {
-      "name": "strength"
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "플랭크",
+        "target": ["복직근", "복사근", "척추기립근"],
+        "isSelected": false,
+        "summary": "복직근, 복사근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "플랭크 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
     },
-    "name": "플랭크",
-    "target": ["복직근", "복사근", "척추기립근"],
-    "isSelected": false,
-    "summary": "복직근, 복사근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "플랭크 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "플랭크"
-  },
-  {
-    "category": {
-      "name": "strength"
-    },
-    "name": "레그 레이즈",
-    "target": ["복직근", "복사근", "요방형근"],
-    "isSelected": false,
-    "summary": "복직근, 복사근, 요방형근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-    "instructions": [
-      "레그 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
-      "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-      "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-      "운동 중 올바른 자세와 정렬을 유지합니다."
-    ],
-    "cautions": [
-      "무리한 중량은 피합니다.",
-      "통증이 발생하면 즉시 중단합니다."
-    ],
-    "difficulty": 2,
-    "mets": 4.5,
-    "caloriesPer30Min": 100,
-    "recommendedReps": "10~12회 × 3세트",
-    "restInterval": "30~60초",
-    "equipment": [],
-    "animationName": "레그_레이즈"
-  }
+    {
+        "category": {
+            "name": "strength",
+            "classification": "weight",
+            "explanation": ""
+        },
+        "name": "레그 레이즈",
+        "target": ["복직근", "복사근", "요방형근"],
+        "isSelected": false,
+        "summary": "복직근, 복사근, 요방형근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "instructions": [
+            "레그 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
+            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
+            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
+            "운동 중 올바른 자세와 정렬을 유지합니다."
+        ],
+        "cautions": [
+            "무리한 중량은 피합니다.",
+            "통증이 발생하면 즉시 중단합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 100,
+        "recommendedReps": "10~12회 × 3세트",
+        "restInterval": "30~60초",
+        "equipment": [],
+        "animationName": "default"
+    }
 ]

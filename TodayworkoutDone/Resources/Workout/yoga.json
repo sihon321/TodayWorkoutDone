@@ -1,210 +1,226 @@
 [
-  {
-    "category": {
-      "name": "yoga"
+    {
+        "category": {
+            "name": "yoga",
+            "classification": "yoga",
+            "explanation": ""
+        },
+        "name": "타다아사나",
+        "target": [
+            "자세 교정",
+            "균형 감각"
+        ],
+        "isSelected": false,
+        "summary": "타다아사나는 '산 자세'로, 전신 정렬을 돕고 척추를 곧게 세우는 기본 요가 자세입니다.",
+        "instructions": [
+            "발을 가지런히 모으고 서서 양팔을 몸 옆에 둡니다.",
+            "무게 중심을 양 발에 고르게 분산합니다.",
+            "등을 곧게 펴고 가슴을 활짝 엽니다.",
+            "깊은 호흡을 유지하며 30초간 자세를 유지합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "tadasana"
     },
-    "name": "타다아사나",
-    "target": [
-        "자세 교정",
-        "균형 감각"
-    ],
-    "isSelected": false,
-    "summary": "타다아사나는 '산 자세'로, 전신 정렬을 돕고 척추를 곧게 세우는 기본 요가 자세입니다.",
-    "instructions": [
-      "발을 가지런히 모으고 서서 양팔을 몸 옆에 둡니다.",
-      "무게 중심을 양 발에 고르게 분산합니다.",
-      "등을 곧게 펴고 가슴을 활짝 엽니다.",
-      "깊은 호흡을 유지하며 30초간 자세를 유지합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "tadasana"
-  },
-  {
-    "category": {
-      "name": "yoga"
+    {
+        "category": {
+            "name": "yoga",
+            "classification": "yoga",
+            "explanation": ""
+        },
+        "name": "전사",
+        "target": [
+            "균형 감각",
+            "하체"
+        ],
+        "isSelected": false,
+        "summary": "전사 자세는 하체의 안정성과 유연성을 동시에 길러주는 대표적인 파워 요가 동작입니다.",
+        "instructions": [
+            "한쪽 다리를 앞으로 크게 내딛고 무릎을 90도로 굽힙니다.",
+            "뒷다리는 곧게 펴고, 양팔을 머리 위로 올립니다.",
+            "척추는 곧게 유지한 채 시선은 앞을 봅니다.",
+            "30초간 유지 후 반대편도 동일하게 수행합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "warrior_pose"
     },
-    "name": "전사",
-    "target": [
-        "균형 감각",
-        "하체"
-    ],
-    "isSelected": false,
-    "summary": "전사 자세는 하체의 안정성과 유연성을 동시에 길러주는 대표적인 파워 요가 동작입니다.",
-    "instructions": [
-      "한쪽 다리를 앞으로 크게 내딛고 무릎을 90도로 굽힙니다.",
-      "뒷다리는 곧게 펴고, 양팔을 머리 위로 올립니다.",
-      "척추는 곧게 유지한 채 시선은 앞을 봅니다.",
-      "30초간 유지 후 반대편도 동일하게 수행합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "warrior_pose"
-  },
-  {
-    "category": {
-      "name": "yoga"
+    {
+        "category": {
+            "name": "yoga",
+            "classification": "yoga",
+            "explanation": ""
+        },
+        "name": "우티타 트리코나사나",
+        "target": ["유연성"],
+        "isSelected": false,
+        "summary": "삼각자세는 몸의 측면을 깊게 늘려주고, 복부와 허리 유연성을 향상시킵니다.",
+        "instructions": [
+            "양발을 넓게 벌리고 오른발을 바깥쪽으로 돌립니다.",
+            "오른손을 바닥 혹은 정강이에 두고, 왼팔은 천장을 향해 뻗습니다.",
+            "시선은 왼손 끝을 바라보며 30초간 유지합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "triangle_pose"
     },
-    "name": "우티타 트리코나사나",
-    "target": ["유연성"],
-    "isSelected": false,
-    "summary": "삼각자세는 몸의 측면을 깊게 늘려주고, 복부와 허리 유연성을 향상시킵니다.",
-    "instructions": [
-      "양발을 넓게 벌리고 오른발을 바깥쪽으로 돌립니다.",
-      "오른손을 바닥 혹은 정강이에 두고, 왼팔은 천장을 향해 뻗습니다.",
-      "시선은 왼손 끝을 바라보며 30초간 유지합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "triangle_pose"
-  },
-  {
-    "category": {
-      "name": "yoga"
+    {
+        "category": {
+            "name": "yoga",
+            "classification": "yoga",
+            "explanation": ""
+        },
+        "name": "받다코나사나",
+        "target": ["유연성"],
+        "isSelected": false,
+        "summary": "받다코나사나는 엉덩이와 허벅지 안쪽을 부드럽게 풀어주는 자세입니다.",
+        "instructions": [
+            "바닥에 앉아 두 발바닥을 마주 붙입니다.",
+            "무릎을 바깥쪽으로 눌러 바닥 쪽으로 내립니다.",
+            "등을 곧게 펴고 30초간 유지합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "bound_angle_pose"
     },
-    "name": "받다코나사나",
-    "target": ["유연성"],
-    "isSelected": false,
-    "summary": "받다코나사나는 엉덩이와 허벅지 안쪽을 부드럽게 풀어주는 자세입니다.",
-    "instructions": [
-      "바닥에 앉아 두 발바닥을 마주 붙입니다.",
-      "무릎을 바깥쪽으로 눌러 바닥 쪽으로 내립니다.",
-      "등을 곧게 펴고 30초간 유지합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "bound_angle_pose"
-  },
-  {
-    "category": {
-      "name": "yoga"
+    {
+        "category": {
+            "name": "yoga",
+            "classification": "yoga",
+            "explanation": ""
+        },
+        "name": "수카아사나",
+        "target": ["명상"],
+        "isSelected": false,
+        "summary": "수카아사나는 명상 및 호흡 훈련에 적합한 편안한 좌식 자세입니다.",
+        "instructions": [
+            "편하게 가부좌로 앉아 척추를 곧게 펴줍니다.",
+            "양손은 무릎 위에 가볍게 올립니다.",
+            "눈을 감고 복식 호흡을 유지합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "easy_pose"
     },
-    "name": "수카아사나",
-    "target": ["명상"],
-    "isSelected": false,
-    "summary": "수카아사나는 명상 및 호흡 훈련에 적합한 편안한 좌식 자세입니다.",
-    "instructions": [
-      "편하게 가부좌로 앉아 척추를 곧게 펴줍니다.",
-      "양손은 무릎 위에 가볍게 올립니다.",
-      "눈을 감고 복식 호흡을 유지합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "easy_pose"
-  },
-  {
-    "category": {
-      "name": "yoga"
+    {
+        "category": {
+            "name": "yoga",
+            "classification": "yoga",
+            "explanation": ""
+        },
+        "name": "사바아사나",
+        "target": ["명상"],
+        "isSelected": false,
+        "summary": "사바아사나는 수련 후 몸과 마음을 진정시키는 가장 중요한 휴식 자세입니다.",
+        "instructions": [
+            "등을 대고 누워 양팔과 다리를 자연스럽게 벌립니다.",
+            "전신의 긴장을 풀고 호흡에 집중합니다.",
+            "5~10분간 정지 유지합니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "corpse_pose"
     },
-    "name": "사바아사나",
-    "target": ["명상"],
-    "isSelected": false,
-    "summary": "사바아사나는 수련 후 몸과 마음을 진정시키는 가장 중요한 휴식 자세입니다.",
-    "instructions": [
-      "등을 대고 누워 양팔과 다리를 자연스럽게 벌립니다.",
-      "전신의 긴장을 풀고 호흡에 집중합니다.",
-      "5~10분간 정지 유지합니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "corpse_pose"
-  },
-  {
-    "category": {
-      "name": "yoga"
+    {
+        "category": {
+            "name": "yoga",
+            "classification": "yoga",
+            "explanation": ""
+        },
+        "name": "브륵샤아사나",
+        "target": ["명상"],
+        "isSelected": false,
+        "summary": "나무 자세는 한쪽 다리로 몸을 지탱하면서 균형과 집중력을 기릅니다.",
+        "instructions": [
+            "한쪽 발을 반대쪽 허벅지 안쪽에 올립니다.",
+            "두 손을 가슴 앞에서 합장하거나 머리 위로 뻗습니다.",
+            "30초간 유지하며 시선을 한 곳에 둡니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "tree_pose"
     },
-    "name": "브륵샤아사나",
-    "target": ["명상"],
-    "isSelected": false,
-    "summary": "나무 자세는 한쪽 다리로 몸을 지탱하면서 균형과 집중력을 기릅니다.",
-    "instructions": [
-      "한쪽 발을 반대쪽 허벅지 안쪽에 올립니다.",
-      "두 손을 가슴 앞에서 합장하거나 머리 위로 뻗습니다.",
-      "30초간 유지하며 시선을 한 곳에 둡니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "tree_pose"
-  },
-  {
-    "category": {
-      "name": "yoga"
-    },
-    "name": "발라아사나",
-    "target": ["상체"],
-    "isSelected": false,
-    "summary": "아기 자세는 스트레칭이나 피로 회복을 위한 대표적인 휴식 자세입니다.",
-    "instructions": [
-      "무릎을 꿇고 엉덩이를 뒤꿈치에 붙입니다.",
-      "상체를 앞으로 숙여 이마를 바닥에 댑니다.",
-      "팔은 앞이나 옆으로 자연스럽게 둡니다."
-    ],
-    "cautions": [
-      "통증이 느껴질 경우 즉시 중단하세요.",
-      "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
-    ],
-    "difficulty": 1,
-    "mets": 3.5,
-    "caloriesPer30Min": 80,
-    "recommendedReps": "15~20회 또는 30초 이상 유지",
-    "restInterval": "30초",
-    "equipment": [],
-    "animationName": "child_pose"
-  }
+    {
+        "category": {
+            "name": "yoga",
+            "classification": "yoga",
+            "explanation": ""
+        },
+        "name": "발라아사나",
+        "target": ["상체"],
+        "isSelected": false,
+        "summary": "아기 자세는 스트레칭이나 피로 회복을 위한 대표적인 휴식 자세입니다.",
+        "instructions": [
+            "무릎을 꿇고 엉덩이를 뒤꿈치에 붙입니다.",
+            "상체를 앞으로 숙여 이마를 바닥에 댑니다.",
+            "팔은 앞이나 옆으로 자연스럽게 둡니다."
+        ],
+        "cautions": [
+            "통증이 느껴질 경우 즉시 중단하세요.",
+            "자세가 흐트러지지 않도록 거울 등을 활용해 확인하세요."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 80,
+        "recommendedReps": "15~20회 또는 30초 이상 유지",
+        "restInterval": "30초",
+        "equipment": [],
+        "animationName": "child_pose"
+    }
 ]
