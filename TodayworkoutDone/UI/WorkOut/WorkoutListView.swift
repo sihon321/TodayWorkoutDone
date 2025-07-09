@@ -22,6 +22,9 @@ struct WorkoutListReducer {
         var filters: [String] = []
         var soretedWorkoutSection: IdentifiedArrayOf<SortedWorkoutSectionReducer.State> = []
         
+        var selectedTrainingType: TrainingType = .weight
+        var trainingTypes: [TrainingType] = TrainingType.allCases
+        
         var groupedNames: [(key: String, value: [WorkoutState])] {
             let groupedDictionary = Dictionary(grouping: workouts,
                                                by: { extractFirstCharacter($0.name) })
@@ -72,6 +75,14 @@ struct WorkoutListReducer {
         case createMakeWorkoutView(routines: [RoutineState], isEdit: Bool)
         
         case sortedWorkoutSection(IdentifiedActionOf<SortedWorkoutSectionReducer>)
+        
+        case typeSelected(TrainingType)
+    }
+    
+    enum TrainingType: String, CaseIterable, Identifiable {
+        case weight, machines
+
+        var id: Self { self }
     }
     
     @Dependency(\.workoutAPI) var workoutRepository
@@ -121,6 +132,10 @@ struct WorkoutListReducer {
                 return .none
             case .sortedWorkoutSection:
                 return .none
+                
+            case .typeSelected(let newType):
+                state.selectedTrainingType = newType
+                return .send(.getWorkouts(newType.rawValue))
             }
         }
         .forEach(\.soretedWorkoutSection, action: \.sortedWorkoutSection) {
@@ -208,13 +223,20 @@ struct WorkoutListView: View {
             }
             ScrollView {
                 VStack(spacing: 0) {
+                    Picker("", selection: $store.selectedTrainingType.sending(\.typeSelected)) {
+                        ForEach(store.trainingTypes, id: \.self) { type in
+                            Text(type.rawValue).tag(type)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
                     HorizontalFilterView(filters: viewStore.filters,
                                          selectedFilters: $selectedFilters)
                     ForEach(store.scope(state: \.soretedWorkoutSection,
                                         action: \.sortedWorkoutSection)) { sectionStore in
-                        StickyHeaderView(index: sectionStore.index,
-                                         title: sectionStore.key,
-                                         topHeaderIndex: $topHeaderIndex)
+                        WorkoutListHeaderView(index: sectionStore.index,
+                                              title: sectionStore.key,
+                                              topHeaderIndex: $topHeaderIndex)
                         .padding(.horizontal, 15)
                         ForEach(sectionStore.scope(state: \.workoutListSubview,
                                                    action: \.workoutListSubview)) { rowStore in
@@ -257,7 +279,7 @@ struct WorkoutListView: View {
             .navigationTitle(viewStore.category.name)
         }
         .onAppear {
-            store.send(.getWorkouts(viewStore.category.name))
+            store.send(.getWorkouts(viewStore.category.classification))
         }
         .tint(.todBlack)
     }

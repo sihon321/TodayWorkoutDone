@@ -52,12 +52,13 @@
 		8EFA58F12DF8047900706B60 /* WorkoutInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA58F02DF8047200706B60 /* WorkoutInfoView.swift */; };
 		8EFBD8C62DDC116100EEDD2C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFBD8C52DDC115B00EEDD2C /* String+Extension.swift */; };
 		8EFC66502DD8605C00F32D22 /* AddWorkoutButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFC664F2DD8604F00F32D22 /* AddWorkoutButtonStyle.swift */; };
+		8EFC6D3D2E1E41C8005AEA8E /* machines.json in Resources */ = {isa = PBXBuildFile; fileRef = 8EFC6D3C2E1E41C8005AEA8E /* machines.json */; };
 		921A4E912D6F514800065C78 /* HorizontalFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A4E902D6F514400065C78 /* HorizontalFilterView.swift */; };
 		923E42CB2D735A37001E28CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923E42CA2D735A34001E28CC /* LoginView.swift */; };
 		9248E2AF2D3800D100D5AF37 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9248E2AE2D3800CF00D5AF37 /* DateManager.swift */; };
 		9255A3692D731EE400399723 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9255A3682D731EE000399723 /* SplashView.swift */; };
-		925C863F2D7180B900B708CB /* StickyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C863E2D7180B300B708CB /* StickyHeaderView.swift */; };
-		926B74AD2D4A3AD60006E8CB /* strength.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AA2D4A3AD60006E8CB /* strength.json */; };
+		925C863F2D7180B900B708CB /* WorkoutListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C863E2D7180B300B708CB /* WorkoutListHeaderView.swift */; };
+		926B74AD2D4A3AD60006E8CB /* weight.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AA2D4A3AD60006E8CB /* weight.json */; };
 		926B74AE2D4A3AD60006E8CB /* cardio.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74A82D4A3AD60006E8CB /* cardio.json */; };
 		926B74AF2D4A3AD60006E8CB /* pilates.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74A92D4A3AD60006E8CB /* pilates.json */; };
 		926B74B02D4A3AD60006E8CB /* stretching.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AB2D4A3AD60006E8CB /* stretching.json */; };
@@ -178,14 +179,15 @@
 		8EFA58F02DF8047200706B60 /* WorkoutInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutInfoView.swift; sourceTree = "<group>"; };
 		8EFBD8C52DDC115B00EEDD2C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8EFC664F2DD8604F00F32D22 /* AddWorkoutButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutButtonStyle.swift; sourceTree = "<group>"; };
+		8EFC6D3C2E1E41C8005AEA8E /* machines.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = machines.json; sourceTree = "<group>"; };
 		921A4E902D6F514400065C78 /* HorizontalFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalFilterView.swift; sourceTree = "<group>"; };
 		923E42CA2D735A34001E28CC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		9248E2AE2D3800CF00D5AF37 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		9255A3682D731EE000399723 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		925C863E2D7180B300B708CB /* StickyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeaderView.swift; sourceTree = "<group>"; };
+		925C863E2D7180B300B708CB /* WorkoutListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListHeaderView.swift; sourceTree = "<group>"; };
 		926B74A82D4A3AD60006E8CB /* cardio.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cardio.json; sourceTree = "<group>"; };
 		926B74A92D4A3AD60006E8CB /* pilates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pilates.json; sourceTree = "<group>"; };
-		926B74AA2D4A3AD60006E8CB /* strength.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = strength.json; sourceTree = "<group>"; };
+		926B74AA2D4A3AD60006E8CB /* weight.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = weight.json; sourceTree = "<group>"; };
 		926B74AB2D4A3AD60006E8CB /* stretching.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = stretching.json; sourceTree = "<group>"; };
 		926B74AC2D4A3AD60006E8CB /* yoga.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = yoga.json; sourceTree = "<group>"; };
 		F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
@@ -415,7 +417,8 @@
 			children = (
 				926B74A82D4A3AD60006E8CB /* cardio.json */,
 				926B74A92D4A3AD60006E8CB /* pilates.json */,
-				926B74AA2D4A3AD60006E8CB /* strength.json */,
+				926B74AA2D4A3AD60006E8CB /* weight.json */,
+				8EFC6D3C2E1E41C8005AEA8E /* machines.json */,
 				926B74AB2D4A3AD60006E8CB /* stretching.json */,
 				926B74AC2D4A3AD60006E8CB /* yoga.json */,
 				F264AC5B29D21F3A0003E70D /* category.json */,
@@ -506,7 +509,7 @@
 				8E0743022DF53E5500F2DD7F /* LottieView.swift */,
 				8EF871C72DCC8FC70009CC1A /* SwipeView.swift */,
 				8E0C496A2DC09BC200DDBF6A /* FloatingView.swift */,
-				925C863E2D7180B300B708CB /* StickyHeaderView.swift */,
+				925C863E2D7180B300B708CB /* WorkoutListHeaderView.swift */,
 				921A4E902D6F514400065C78 /* HorizontalFilterView.swift */,
 				F2CB39F0295DE20400CA80D6 /* SlideOverCardView.swift */,
 				F2CB39F2295DE25900CA80D6 /* DragState.swift */,
@@ -735,6 +738,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E0743092DF5435900F2DD7F /* dumbel.json in Resources */,
+				8EFC6D3D2E1E41C8005AEA8E /* machines.json in Resources */,
 				F2CB39F5295DE48B00CA80D6 /* ColorAsset.xcassets in Resources */,
 				8E2073BA2E1B503000FA5D21 /* bench_press.mp4 in Resources */,
 				F2E74CEE2921F73600BD35F6 /* Preview Assets.xcassets in Resources */,
@@ -743,7 +747,7 @@
 				8EBC4DFC2E1B9DE20083B8BB /* squat.mp4 in Resources */,
 				8E0743132DF59D8100F2DD7F /* premium.json in Resources */,
 				8EBC4DFA2E1B9DC10083B8BB /* dead_lift.mp4 in Resources */,
-				926B74AD2D4A3AD60006E8CB /* strength.json in Resources */,
+				926B74AD2D4A3AD60006E8CB /* weight.json in Resources */,
 				926B74AE2D4A3AD60006E8CB /* cardio.json in Resources */,
 				926B74AF2D4A3AD60006E8CB /* pilates.json in Resources */,
 				926B74B02D4A3AD60006E8CB /* stretching.json in Resources */,
@@ -788,7 +792,7 @@
 				8E2073BF2E1B8EAE00FA5D21 /* ThumbnailCacheManager.swift in Sources */,
 				F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */,
 				F276E2952A6C48B50046EBA4 /* ErrorView.swift in Sources */,
-				925C863F2D7180B900B708CB /* StickyHeaderView.swift in Sources */,
+				925C863F2D7180B900B708CB /* WorkoutListHeaderView.swift in Sources */,
 				F26808A92A9CE0140016E8E9 /* CalendarView.swift in Sources */,
 				F2E2214E29994C7000B7DCCB /* WorkingOutHeader.swift in Sources */,
 				F264949C2A6C11E000B0A31C /* ActivityIndicatorView.swift in Sources */,

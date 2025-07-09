@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StickyHeaderView: View {
+struct WorkoutListHeaderView: View {
     let index: Int
     let title: String
     
@@ -66,7 +66,7 @@ struct StickyHeaderPreferenceKey: PreferenceKey {
 }
 
 #Preview {
-    StickyHeaderView(index: 0,
+    WorkoutListHeaderView(index: 0,
                      title: "Hello",
                      topHeaderIndex: .constant(nil))
 }
