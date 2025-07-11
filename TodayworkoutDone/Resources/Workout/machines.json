@@ -1,622 +1,2696 @@
 [
     {
-        "category": {
-            "name": "strength",
-            "classification": "machines",
-            "explanation": ""
-        },
-        "name": "펙댁 플라이",
-        "target": ["대흉근", "삼두근", "전면 삼각근"],
-        "isSelected": false,
-        "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "name": "Iso-Lateral Horizontal Bench Press",
+        "summary": "가슴 근육의 균형적인 발달을 돕고, 어깨와 삼두근을 강화하는 머신 웨이트 트레이닝 운동입니다. 각 팔을 독립적으로 움직여 좌우 근력 불균형을 개선하는 데 효과적입니다.",
+        "target": [
+            "대흉근", "전면 삼각근", "삼두근"
+        ],
         "instructions": [
-            "펙댁 플라이 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
+            "머신의 등받이에 등을 완전히 기대고, 발은 바닥에 단단히 고정합니다.",
+            "핸들이 가슴 중앙 높이에 오도록 좌석 높이를 조절합니다.",
+            "허리가 과도하게 아치형이 되지 않도록 복부에 힘을 주고, 가슴을 편 상태를 유지합니다.",
+            "양손으로 핸들을 잡고, 숨을 내쉬면서 양팔을 앞으로 밀어줍니다. 이때 팔꿈치를 완전히 펴지 않도록 주의합니다.",
+            "숨을 들이마시면서 천천히 시작 자세로 돌아옵니다. 가슴 근육의 자극을 느끼며 동작을 반복합니다."
         ],
         "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "machines",
-            "explanation": ""
-        },
-        "name": "케이블 크로스 오버",
-        "target": ["대흉근", "삼두근", "전면 삼각근"],
-        "isSelected": false,
-        "summary": "대흉근, 삼두근, 전면 삼각근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "케이블 크로스 오버 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "machines",
-            "explanation": ""
-        },
-        "name": "벤트오버 로우",
-        "target": ["광배근", "승모근", "척추기립근"],
-        "isSelected": false,
-        "summary": "광배근, 승모근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "벤트오버 로우 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "machines",
-            "explanation": ""
-        },
-        "name": "시티드 로우",
-        "target": ["광배근", "승모근", "척추기립근"],
-        "isSelected": false,
-        "summary": "광배근, 승모근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "시티드 로우 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "풀업",
-        "target": ["광배근", "승모근", "척추기립근"],
-        "isSelected": false,
-        "summary": "광배근, 승모근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "풀업 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "숄더 프레스",
-        "target": ["삼각근 전후면", "승모근"],
-        "isSelected": false,
-        "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "숄더 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "사이드 레터럴 레이즈",
-        "target": ["삼각근 전후면", "승모근"],
-        "isSelected": false,
-        "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "사이드 레터럴 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "프론트 레이즈",
-        "target": ["삼각근 전후면", "승모근"],
-        "isSelected": false,
-        "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "프론트 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "벤트오버 레터럴 레이즈",
-        "target": ["삼각근 전후면", "승모근"],
-        "isSelected": false,
-        "summary": "삼각근 전후면, 승모근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "벤트오버 레터럴 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "바벨 컬",
-        "target": ["이두근", "삼두근", "전완근"],
-        "isSelected": false,
-        "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "바벨 컬 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "덤벨 컬",
-        "target": ["이두근", "삼두근", "전완근"],
-        "isSelected": false,
-        "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "덤벨 컬 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "트라이셉스 푸시다운",
-        "target": ["이두근", "삼두근", "전완근"],
-        "isSelected": false,
-        "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "트라이셉스 푸시다운 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "트라이셉스 익스텐션",
-        "target": ["이두근", "삼두근", "전완근"],
-        "isSelected": false,
-        "summary": "이두근, 삼두근, 전완근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "트라이셉스 익스텐션 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "스쿼트",
-        "target": ["대퇴사두근", "대둔근", "햄스트링"],
-        "isSelected": false,
-        "summary": "대퇴사두근, 대둔근, 햄스트링을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "스쿼트 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무릎이 안쪽으로 모이지 않도록 주의",
-            "허리가 굽지 않도록 코어에 힘주기"
+            "운동 전 기구의 좌석 높이와 무게가 자신에게 맞게 조절되었는지 확인합니다.",
+            "너무 무거운 무게로 운동하여 허리가 등받이에서 떨어지지 않도록 주의합니다.",
+            "팔꿈치를 과도하게 펴거나 뒤로 젖히면 부상의 위험이 있으니 주의합니다.",
+            "통증이 느껴지면 즉시 운동을 중단하고 휴식을 취합니다."
         ],
         "difficulty": 2,
         "mets": 5.0,
-        "caloriesPer30Min": 120,
-        "recommendedReps": "12~15회 × 3세트",
-        "restInterval": "30~60초",
+        "caloriesPer30Min": 175,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
         "equipment": [
-            "바벨",
-            "덤벨",
+            "머신"
+        ],
+        "animationName": "iso_lateral_horizontal_bench_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Bench Press",
+        "summary": "대흉근(가슴 근육) 전체를 타겟으로 하는 기본적인 가슴 운동 기구입니다. 안정적인 자세에서 가슴 근육의 힘을 기르는 데 효과적이며, 좌우 팔을 독립적으로 움직여 균형 발달을 돕습니다.",
+        "target": [
+            "대흉근", "전면 삼각근", "삼두근"
+        ],
+        "instructions": [
+            "벤치에 앉아 등과 엉덩이를 패드에 밀착시키고, 발은 바닥에 안정적으로 둡니다.",
+            "그립이 가슴 중앙에 오도록 의자 높이를 조절하고, 핸들을 잡습니다.",
+            "가슴을 펴고 복부에 힘을 준 상태에서 숨을 내쉬며 핸들을 앞으로 밀어줍니다.",
+            "숨을 들이마시며 천천히 가슴 근육의 긴장을 느끼며 원래 위치로 돌아옵니다."
+        ],
+        "cautions": [
+            "어깨가 앞으로 과도하게 나오지 않도록 주의하여 어깨 부상을 예방합니다.",
+            "팔꿈치를 완전히 펴면 관절에 부담을 줄 수 있으므로 약간 구부린 상태를 유지합니다.",
+            "허리가 등받이에서 떨어지지 않도록 복부에 지속적으로 힘을 줍니다."
+        ],
+        "difficulty": 2,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_bench_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Incline Press",
+        "summary": "윗가슴 근육(대흉근 상부)을 집중적으로 발달시키는 운동입니다. 각도를 높여 수행함으로써 쇄골 주변의 볼륨감을 키우는 데 효과적입니다.",
+        "target": [
+            "대흉근 상부", "전면 삼각근", "삼두근"
+        ],
+        "instructions": [
+            "경사진 벤치에 앉아 등과 엉덩이를 완전히 밀착합니다.",
+            "핸들이 쇄골 아래, 즉 윗가슴 라인에 오도록 위치를 잡습니다.",
+            "숨을 내쉬면서 핸들을 대각선 위 방향으로 밀어 올립니다.",
+            "숨을 들이마시면서 윗가슴의 자극을 느끼며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "너무 무거운 중량은 어깨 관절에 큰 부담을 줄 수 있으므로 주의합니다.",
+            "팔꿈치가 핸들보다 너무 뒤로 빠지지 않도록 합니다.",
+            "동작 내내 어깨가 으쓱 올라가지 않도록 견갑을 안정시킨 상태를 유지합니다."
+        ],
+        "difficulty": 3,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_incline_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Super Incline Press",
+        "summary": "일반 인클라인 프레스보다 더 높은 각도에서 수행하여 윗가슴 최상부와 전면 어깨 근육을 강하게 자극하는 운동입니다. 가슴과 어깨의 경계를 명확히 하는 데 도움이 됩니다.",
+        "target": [
+            "대흉근 최상부", "전면 삼각근"
+        ],
+        "instructions": [
+            "매우 가파른 경사의 벤치에 앉아 몸을 안정시킵니다.",
+            "핸들을 잡고 어깨와 윗가슴의 힘으로 수직에 가깝게 밀어 올립니다.",
+            "숨을 내쉬며 끝까지 밀어주고, 정점에서 잠시 멈춰 근육의 수축을 느낍니다.",
+            "숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "어깨 개입이 매우 높으므로, 어깨 통증이 있다면 주의해야 합니다.",
+            "처음에는 가벼운 무게로 시작하여 정확한 자극점을 찾는 것이 중요합니다.",
+            "과도한 중량은 승모근의 개입을 높여 목표 부위의 자극을 분산시킬 수 있습니다."
+        ],
+        "difficulty": 4,
+        "mets": 5.5,
+        "caloriesPer30Min": 193,
+        "recommendedReps": "8~12회 x 3세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_super_incline_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Decline Chest Press",
+        "summary": "아랫가슴 근육(대흉근 하부)을 집중적으로 공략하는 운동입니다. 가슴 아래쪽 라인을 선명하게 만드는 데 효과적입니다.",
+        "target": [
+            "대흉근 하부", "전면 삼각근", "삼두근"
+        ],
+        "instructions": [
+            "아래로 기울어진 벤치에 앉아 몸을 고정시킵니다.",
+            "핸들이 가슴 아래쪽에 위치하도록 조절하고 잡습니다.",
+            "숨을 내쉬면서 핸들을 대각선 아래 방향으로 밀어냅니다.",
+            "숨을 들이마시며 아랫가슴에 긴장감을 유지한 채 천천히 원래 위치로 돌아옵니다."
+        ],
+        "cautions": [
+            "동작 시 엉덩이가 벤치에서 뜨지 않도록 주의합니다.",
+            "팔꿈치를 너무 넓게 벌리면 어깨에 부담이 갈 수 있습니다.",
+            "정확한 자극을 위해 아랫가슴 근육의 움직임에 집중합니다."
+        ],
+        "difficulty": 3,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_decline_chest_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Wide Chest",
+        "summary": "가슴 바깥쪽 근육을 넓게 발달시키는 데 초점을 맞춘 운동입니다. 넓은 가슴 프레임을 만드는 데 효과적입니다.",
+        "target": [
+            "대흉근 바깥쪽", "전면 삼각근"
+        ],
+        "instructions": [
+            "머신에 앉아 등받이에 등을 기대고, 와이드 그립 핸들을 잡습니다.",
+            "가슴을 편 상태에서 숨을 내쉬며 팔꿈치가 원을 그리듯 안으로 모아줍니다.",
+            "가슴 중앙에서 근육의 최대 수축을 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아갑니다.",
+            "동작 내내 가슴 바깥쪽이 늘어나는 느낌에 집중합니다."
+        ],
+        "cautions": [
+            "어깨 관절에 부담이 가지 않도록 팔꿈치를 약간 구부린 상태를 유지합니다.",
+            "너무 넓게 벌리면 어깨 부상의 위험이 있으므로 자신의 유연성에 맞게 조절합니다.",
+            "반동을 이용하지 않고, 통제된 속도로 운동을 수행합니다."
+        ],
+        "difficulty": 3,
+        "mets": 4.5,
+        "caloriesPer30Min": 158,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_wide_chest",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Chest/Back",
+        "summary": "하나의 기구로 가슴과 등 운동을 모두 수행할 수 있는 복합 머신입니다. 양쪽 팔을 독립적으로 사용하여 좌우 근력의 균형적인 발달을 돕고, 상체 전면과 후면 근육을 효과적으로 강화할 수 있습니다.",
+        "target": [
+            "대흉근",
+            "광배근",
+            "능형근",
+            "전면 삼각근",
+            "삼두근"
+        ],
+        "instructions": [
+            "운동 목적에 따라 앉는 방향과 핸들 위치를 조절합니다.",
+            "가슴 운동 (Press): 등받이에 등을 기대고 앉아, 핸들을 앞으로 밀어줍니다. 가슴 근육의 수축에 집중합니다.",
+            "등 운동 (Row): 가슴을 패드에 기대고 앉아, 핸들을 몸 쪽으로 당깁니다. 등 근육(견갑골)을 모아주는 느낌에 집중합니다.",
+            "각 동작은 통제된 속도로 천천히 반복하며, 목표 근육의 자극을 최대한 느낍니다."
+        ],
+        "cautions": [
+            "운동 전 자신의 신체에 맞게 의자 높이와 무게를 조절해야 합니다.",
+            "가슴 운동 시 팔꿈치를 완전히 펴지 않도록 주의하여 관절을 보호합니다.",
+            "등 운동 시 허리가 굽거나 과도한 반동을 사용하지 않도록 복부에 힘을 줍니다.",
+            "통증이 발생하면 즉시 운동을 중단하고 자세를 점검합니다."
+        ],
+        "difficulty": 3,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_chest_back",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Shoulder Press",
+        "summary": "어깨 근육(삼각근), 특히 측면과 전면 삼각근을 발달시키는 대표적인 어깨 운동입니다. 넓고 입체적인 어깨를 만드는 데 필수적입니다.",
+        "target": [
+            "전면 삼각근", "측면 삼각근", "삼두근"
+        ],
+        "instructions": [
+            "벤치에 앉아 허리를 곧게 펴고 등받이에 기댑니다.",
+            "핸들이 귀 높이 정도에 오도록 잡고, 팔꿈치는 90도 정도로 구부립니다.",
+            "숨을 내쉬면서 머리 위로 핸들을 들어 올립니다. 이때 팔꿈치를 완전히 펴지 않습니다.",
+            "숨을 들이마시며 천천히 어깨의 긴장을 느끼면서 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "허리가 과도하게 아치형이 되지 않도록 복부에 힘을 줍니다.",
+            "핸들을 너무 뒤로 내리면 어깨 관절에 부담이 될 수 있습니다.",
+            "어깨를 으쓱하지 않고, 삼각근의 힘으로만 들어 올리는 데 집중합니다."
+        ],
+        "difficulty": 3,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_shoulder_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Row",
+        "summary": "등 중앙부(능형근, 승모근 중부)와 광배근을 효과적으로 단련하는 로우 운동입니다. 등 근육의 두께감을 키우는 데 필수적이며, 좌우 팔을 독립적으로 사용하여 등 근육의 비대칭을 교정하는 데 도움이 됩니다.",
+        "target": [
+            "광배근",
+            "능형근",
+            "승모근 중부",
+            "후면 삼각근",
+            "이두근"
+        ],
+        "instructions": [
+            "머신에 앉아 가슴을 패드에 완전히 밀착시키고, 발을 발판에 안정적으로 고정합니다.",
+            "어깨에 긴장을 풀고 가슴을 편 상태에서 핸들을 잡습니다.",
+            "숨을 내쉬면서 팔꿈치를 뒤로 보낸다는 느낌으로 핸들을 몸 쪽으로 당겨줍니다. 이때 견갑골(날개뼈)을 서로 모아주는 것에 집중합니다.",
+            "등 근육이 최대로 수축된 것을 잠시 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "상체를 앞뒤로 흔드는 반동을 이용하지 않도록 주의합니다.",
+            "운동 중 어깨가 위로 으쓱 올라가지 않도록 항상 어깨를 아래로 내린 상태를 유지합니다.",
+            "팔의 힘이 아닌 등의 힘으로 당기는 느낌을 찾는 것이 중요합니다.",
+            "허리가 굽지 않도록 척추 중립을 유지합니다."
+        ],
+        "difficulty": 3,
+        "mets": 4.8,
+        "caloriesPer30Min": 168,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_row",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral High Row",
+        "summary": "등 상부 근육, 특히 능형근과 승모근 중상부를 타겟으로 하는 로우 운동입니다. 등 근육의 두께와 선명도를 높이는 데 효과적입니다.",
+        "target": [
+            "능형근", "승모근 중부/상부", "후면 삼각근", "광배근 상부"
+        ],
+        "instructions": [
+            "머신에 앉아 가슴을 패드에 밀착시키고, 발은 발판에 안정적으로 고정합니다.",
+            "어깨너비보다 넓게 위쪽 핸들을 잡습니다.",
+            "숨을 내쉬면서 팔꿈치를 뒤로 당겨 견갑골(날개뼈)을 서로 모아줍니다.",
+            "등 근육의 최대 수축을 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "팔의 힘이 아닌 등의 힘으로 당기는 것에 집중합니다.",
+            "어깨가 위로 으쓱 올라가지 않도록 주의합니다.",
+            "상체가 너무 뒤로 눕지 않도록 가슴을 패드에 고정한 상태를 유지합니다."
+        ],
+        "difficulty": 3,
+        "mets": 4.8,
+        "caloriesPer30Min": 168,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_high_row",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Low Row",
+        "summary": "등 중앙부와 광배근 하부를 집중적으로 공략하는 로우 운동입니다. 넓은 등을 만드는 데 효과적이며, 허리를 강화하는 데도 도움이 됩니다.",
+        "target": [
+            "광배근 중하부", "능형근", "승모근 중부"
+        ],
+        "instructions": [
+            "머신에 앉아 가슴을 패드에 단단히 고정하고, 아래쪽 핸들을 잡습니다.",
+            "허리를 곧게 편 상태를 유지하며, 숨을 내쉬면서 핸들을 복부 쪽으로 당깁니다.",
+            "이때 팔꿈치를 옆구리에 스치듯 당겨 등 근육을 최대한 수축시킵니다.",
+            "숨을 들이마시며 등 근육이 스트레칭되는 것을 느끼며 천천히 원래 위치로 돌아갑니다."
+        ],
+        "cautions": [
+            "상체를 과도하게 뒤로 젖히는 반동을 사용하지 않습니다.",
+            "어깨가 앞으로 말리지 않도록 가슴을 편 자세를 유지합니다.",
+            "팔 힘보다는 등의 힘으로 당기는 느낌에 집중해야 합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.8,
+        "caloriesPer30Min": 168,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_low_row",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral D.Y. Row",
+        "summary": "보디빌더 도리안 예이츠 스타일의 로우 운동을 머신으로 구현한 기구입니다. 언더핸드 그립(손바닥이 위를 향하는)을 사용하여 등 중앙부와 하부 광배근을 집중적으로 타겟하며, 등의 두께를 만드는 데 매우 효과적입니다.",
+        "target": [
+            "광배근",
+            "능형근",
+            "승모근 중부",
+            "이두근"
+        ],
+        "instructions": [
+            "머신에 서서 가슴을 패드에 기대고, 무릎은 살짝 구부려 안정적인 자세를 취합니다.",
+            "손바닥이 위를 향하도록 핸들을 잡습니다(언더핸드 그립).",
+            "허리를 곧게 펴고 코어에 힘을 준 상태를 유지합니다.",
+            "숨을 내쉬면서 팔꿈치를 옆구리에 스치듯 몸 뒤쪽으로 당겨줍니다. 이때 핸들은 배꼽 쪽으로 온다고 생각합니다.",
+            "정점에서 등 근육을 강하게 수축시킨 후, 숨을 들이마시며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 내내 허리가 굽혀지지 않도록 척추 중립을 유지하는 것이 매우 중요합니다.",
+            "과도한 반동을 사용하면 허리 부상의 위험이 있으니 통제된 자세로 수행합니다.",
+            "언더핸드 그립은 이두근의 개입이 높으므로, 팔 힘이 아닌 등의 힘으로 당기는 데 집중해야 합니다."
+        ],
+        "difficulty": 4,
+        "mets": 5.5,
+        "caloriesPer30Min": 193,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_dy_row",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Front Lat Pulldown",
+        "summary": "광배근을 주 타겟으로 하여 등 전체의 너비를 넓히는 데 매우 효과적인 운동입니다. '넓은 등'을 만들기 위한 필수 운동 중 하나입니다.",
+        "target": [
+            "광배근", "대원근", "능형근", "이두근"
+        ],
+        "instructions": [
+            "머신에 앉아 무릎을 패드에 단단히 고정시켜 하체를 안정시킵니다.",
+            "어깨너비보다 넓게 바를 잡습니다. (Iso-Lateral 기구의 경우 핸들을 잡습니다)",
+            "허리를 곧게 펴고 가슴을 살짝 위로 연 상태에서, 숨을 내쉬며 바(핸들)를 쇄골 쪽으로 당겨 내립니다.",
+            "팔꿈치가 몸통 뒤로 가도록 당기며 광배근의 수축을 최대로 이끌어냅니다.",
+            "숨을 들이마시며 천천히 광배근의 저항을 느끼며 시작 자세로 돌아갑니다."
+        ],
+        "cautions": [
+            "상체가 너무 뒤로 눕거나, 반동을 이용하지 않도록 주의합니다.",
+            "팔의 힘으로만 당기지 말고, 등 근육을 사용해 당기는 느낌을 찾는 것이 중요합니다.",
+            "바를 너무 아래로(복부 쪽으로) 내리면 어깨 부상의 위험이 있습니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.5,
+        "caloriesPer30Min": 158,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_front_lat_pulldown",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Wide Pulldown",
+        "summary": "등의 너비를 발달시키는 데 매우 효과적인 와이드 그립 풀다운 운동입니다. 양팔을 독립적으로 사용하여 등 근육의 균형적인 발달과 자극을 극대화할 수 있으며, 특히 광배근 상부와 바깥쪽을 타겟합니다.",
+        "target": [
+            "광배근",
+            "대원근",
+            "능형근",
+            "이두근"
+        ],
+        "instructions": [
+            "머신에 앉아 무릎을 패드 아래에 단단히 고정시켜 하체를 안정시킵니다.",
+            "어깨너비보다 넓게 바깥쪽 핸들을 잡습니다(와이드 그립).",
+            "가슴을 위로 열어주고 허리를 편 상태에서, 숨을 내쉬며 팔꿈치가 옆구리 쪽으로 오도록 핸들을 당겨 내립니다.",
+            "정점에서 광배근의 수축을 강하게 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아갑니다."
+        ],
+        "cautions": [
+            "상체를 과도하게 뒤로 젖히거나 반동을 이용하지 않도록 주의합니다.",
+            "핸들을 너무 낮게(배꼽 쪽으로) 당기면 어깨에 부담이 갈 수 있습니다.",
+            "운동 중 어깨가 으쓱 올라가지 않도록 견갑을 안정시킨 상태를 유지하는 것이 중요합니다."
+        ],
+        "difficulty": 3,
+        "mets": 4.5,
+        "caloriesPer30Min": 158,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_wide_pulldown",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Leg Extension",
+        "summary": "허벅지 앞쪽 근육(대퇴사두근)을 고립하여 선명도를 높이는 데 효과적인 운동입니다. 각 다리를 독립적으로 훈련할 수 있어 좌우 근력 불균형을 교정하고, 무릎 주변 근육 강화 및 재활에도 사용됩니다.",
+        "target": [
+            "대퇴사두근"
+        ],
+        "instructions": [
+            "머신에 앉아 등과 엉덩이를 등받이에 완전히 밀착시킵니다.",
+            "무릎의 회전축과 기구의 회전축을 일치시킨 후, 발목을 롤러 패드 아래에 위치시킵니다.",
+            "손잡이를 잡아 상체를 고정하고, 숨을 내쉬면서 한쪽 또는 양쪽 다리를 들어 올려 허벅지 앞쪽 근육을 수축시킵니다.",
+            "정점에서 잠시 멈춘 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "무릎을 완전히 펴서 관절이 잠기지 않도록 주의합니다.",
+            "반동을 이용해 다리를 차지 말고, 대퇴사두근의 힘으로 통제하며 움직입니다.",
+            "무릎에 통증이 있다면 중량을 낮추거나 가동범위를 조절해야 합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_leg_extension",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Iso-Lateral Leg Curl",
+        "summary": "허벅지 뒤쪽 근육(슬굴곡근, 햄스트링)을 집중적으로 강화하는 고립 운동입니다. 각 다리를 독립적으로 사용하여 좌우 근력 차이를 개선하고, 하체 후면의 볼륨과 라인을 만드는 데 효과적입니다.",
+        "target": [
+            "슬굴곡근 (햄스트링)"
+        ],
+        "instructions": [
+            "기구 종류에 따라 앉거나 엎드린 후, 무릎을 기구의 회전축에 맞춥니다.",
+            "롤러 패드를 아킬레스건 바로 위쪽에 위치시키고, 허벅지나 골반을 패드에 고정합니다.",
+            "숨을 내쉬면서 발뒤꿈치가 엉덩이 쪽으로 오도록 다리를 구부려 햄스트링을 강하게 수축합니다.",
+            "정점에서 잠시 멈춘 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아갑니다."
+        ],
+        "cautions": [
+            "운동 중 엉덩이나 허리가 패드에서 뜨지 않도록 주의합니다.",
+            "너무 빠르거나 반동을 이용한 동작은 부상의 위험이 있으니 통제된 속도를 유지합니다.",
+            "자신의 유연성에 맞는 가동범위 내에서 운동하여 무릎이나 허리에 부담이 가지 않도록 합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "iso_lateral_leg_curl",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Vertical Smith Machine",
+        "summary": "바벨이 수직 레일에 고정되어 있어 안정적인 궤적으로 움직이는 운동 기구입니다. 스쿼트, 벤치 프레스, 숄더 프레스 등 다양한 운동을 비교적 안전하게 수행할 수 있으며, 특히 보조자 없이 고중량 훈련을 할 때 유용합니다.",
+        "target": [
+            "전신",
+            "하체",
+            "가슴",
+            "어깨"
+        ],
+        "instructions": [
+            "수행할 운동에 맞게 벤치나 발의 위치를 설정합니다.",
+            "자신에게 맞는 높이에 안전핀을 반드시 설치합니다.",
+            "바를 들어 올려 손목을 돌려 랙에서 분리한 후, 정해진 자세로 운동을 수행합니다.",
+            "운동이 끝나면 손목을 반대로 돌려 바를 랙에 다시 안전하게 고정시킵니다."
+        ],
+        "cautions": [
+            "궤적이 고정되어 있어 관절에 부자연스러운 스트레스를 줄 수 있으니 주의합니다.",
+            "프리웨이트에 비해 안정근의 개입이 적으므로, 프리웨이트 운동과 병행하는 것이 좋습니다.",
+            "운동 전 반드시 안전핀의 높이를 정확하게 설정하여 부상을 예방해야 합니다."
+        ],
+        "difficulty": 3,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "운동 종류에 따라 다름",
+        "restInterval": "운동 종류에 따라 다름",
+        "equipment": [
             "스미스 머신"
         ],
-        "animationName": "squat"
-    },
-    {
+        "animationName": "vertical_smith_machine",
+        "isSelected": false,
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": "machines",
             "explanation": ""
-        },
-        "name": "레그 프레스",
-        "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
-        "isSelected": false,
-        "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        }
+    },
+    {
+        "name": "Plate-Loaded T-Bar Row",
+        "summary": "등 중앙부와 광배근의 두께를 키우는 데 매우 효과적인 대표적인 등 운동입니다. 바벨 로우보다 허리에 가해지는 부담이 적고, 좁은 그립으로 등 안쪽까지 깊은 자극을 줄 수 있습니다.",
+        "target": [
+            "광배근",
+            "능형근",
+            "승모근 중부",
+            "후면 삼각근"
+        ],
         "instructions": [
-            "레그 프레스 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
+            "발판 위에 서서 무릎을 살짝 구부리고, 허리는 곧게 편 상태로 상체를 숙입니다.",
+            "양손으로 핸들을 잡고, 가슴을 편 자세를 유지합니다.",
+            "숨을 내쉬면서 팔꿈치를 뒤로 당기며 핸들을 복부 상단 쪽으로 강하게 끌어당깁니다.",
+            "정점에서 등 근육을 최대한 수축시킨 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
         ],
         "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
+            "운동 내내 허리가 굽지 않도록 척추 중립을 유지하는 것이 매우 중요합니다.",
+            "과도한 중량은 허리 부상 및 자세 불균형의 위험을 높일 수 있습니다.",
+            "상체의 반동을 이용하지 말고, 오직 등의 힘으로만 당기는 데 집중해야 합니다."
+        ],
+        "difficulty": 4,
+        "mets": 6.0,
+        "caloriesPer30Min": 210,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "T-Bar Row 머신"
+        ],
+        "animationName": "t_bar_row",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Pullover",
+        "summary": "가슴과 등(광배근)을 동시에 자극하는 독특한 상체 운동입니다. 흉곽을 확장시키는 효과가 있으며, 가슴과 등의 분리도를 높이고 상체 전반의 볼륨감을 키우는 데 도움이 됩니다.",
+        "target": [
+            "광배근",
+            "대흉근",
+            "전거근",
+            "상완삼두근 장두"
+        ],
+        "instructions": [
+            "머신에 앉아 등과 머리를 패드에 완전히 밀착시킵니다.",
+            "팔꿈치를 패드에 대고 핸들을 잡습니다.",
+            "숨을 내쉬면서 광배근과 가슴의 힘을 이용해 팔꿈치를 아래로 눌러줍니다.",
+            "숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아가, 가슴과 등이 최대로 스트레칭되는 것을 느낍니다."
+        ],
+        "cautions": [
+            "어깨 관절이 유연하지 않은 경우, 통증이 없는 범위까지만 가동범위를 가져가야 합니다.",
+            "과도한 중량은 어깨 부상의 위험을 높일 수 있으므로 통제 가능한 무게로 수행합니다.",
+            "운동 중 허리가 과도하게 아치형이 되지 않도록 복부에 힘을 줍니다."
+        ],
+        "difficulty": 3,
+        "mets": 4.0,
+        "caloriesPer30Min": 140,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "pullover",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Gripper",
+        "summary": "손으로 쥐는 힘, 즉 악력을 집중적으로 강화하기 위해 고안된 운동 기구입니다. 전완근을 발달시키며, 데드리프트나 턱걸이 등 다른 운동의 수행 능력을 향상시키는 데 도움이 됩니다.",
+        "target": [
+            "전완근 (악력)"
+        ],
+        "instructions": [
+            "한 손에 그립퍼를 쥐고, 손가락 전체를 사용해 핸들을 감싸 쥡니다.",
+            "숨을 내쉬면서 손 안의 모든 힘을 이용해 핸들 양쪽이 서로 맞닿을 때까지 강하게 쥡니다.",
+            "최대 수축 지점에서 잠시 멈춘 후, 숨을 들이마시며 천천히 힘을 풀며 시작 자세로 돌아옵니다.",
+            "양손을 번갈아 가며 반복합니다."
+        ],
+        "cautions": [
+            "처음부터 너무 강한 장력의 그립퍼를 사용하면 손목이나 손가락에 부상을 입을 수 있습니다.",
+            "손목에 통증이 느껴지면 즉시 중단합니다.",
+            "과도한 훈련은 건염을 유발할 수 있으니 충분한 휴식을 취하며 운동합니다."
+        ],
+        "difficulty": 2,
+        "mets": 2.5,
+        "caloriesPer30Min": 88,
+        "recommendedReps": "10~15회 또는 실패 지점까지",
+        "restInterval": "30~60초",
+        "equipment": [
+            "핸드 그립퍼"
+        ],
+        "animationName": "gripper",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded 4-Way Neck",
+        "summary": "목의 굽힘(flexion), 폄(extension), 그리고 좌우 측면 굽힘(lateral flexion) 등 네 방향의 움직임을 통해 목 주변 근육 전체를 강화하는 전문적인 기구입니다. 목의 안정성을 높이고 부상을 예방하는 데 도움이 됩니다.",
+        "target": [
+            "목 주변 근육 전체",
+            "흉쇄유돌근",
+            "사각근",
+            "승모근 상부"
+        ],
+        "instructions": [
+            "굴곡(앞): 패드를 이마에 대고, 천천히 고개를 숙여 목 앞쪽 근육을 수축합니다.",
+            "신전(뒤): 패드를 뒤통수에 대고, 천천히 고개를 뒤로 젖혀 목 뒤쪽 근육을 수축합니다.",
+            "측면(좌/우): 패드를 머리 옆에 대고, 천천히 해당 방향으로 고개를 기울여 목 옆쪽 근육을 수축합니다.",
+            "모든 동작은 매우 느리고 통제된 속도로 수행합니다."
+        ],
+        "cautions": [
+            "목은 매우 민감하고 부상 위험이 높은 부위이므로, 반드시 아주 가벼운 무게로 시작해야 합니다.",
+            "절대로 반동을 이용하거나 갑작스럽게 움직이지 않습니다.",
+            "운동 중 어지러움이나 날카로운 통증이 느껴지면 즉시 중단해야 합니다.",
+            "목 디스크나 관련 질환이 있는 경우, 운동 전 반드시 전문가와 상담해야 합니다."
+        ],
+        "difficulty": 4,
+        "mets": 2.5,
+        "caloriesPer30Min": 88,
+        "recommendedReps": "10~15회 x 2-3세트 (가벼운 무게로)",
+        "restInterval": "30~60초",
+        "equipment": [
+            "4-Way Neck 머신"
+        ],
+        "animationName": "4_way_neck",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Linear Hack Squat",
+        "summary": "핵 스쿼트의 한 종류로, 움직임의 궤적이 경사가 아닌 수직(Linear)으로 고정된 머신입니다. 일반 핵 스쿼트보다 대퇴사두근에 더 강한 고립과 자극을 줄 수 있는 것이 특징입니다.",
+        "target": [
+            "대퇴사두근",
+            "둔근",
+            "슬굴곡근"
+        ],
+        "instructions": [
+            "기구의 등받이에 등을, 어깨를 패드에 완전히 밀착시키고 발판 위에 발을 올립니다.",
+            "허리가 뜨지 않도록 복부에 힘을 주고, 안전바를 해제합니다.",
+            "숨을 들이마시며 천천히 수직으로 내려옵니다. 이때 무릎이 발끝보다 과도하게 나가지 않도록 주의합니다.",
+            "숨을 내쉬면서 발뒤꿈치로 발판을 강하게 밀어 올리며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "수직 궤적은 무릎에 부담을 줄 수 있으므로, 통증이 느껴지면 즉시 중단합니다.",
+            "운동 중 엉덩이가 등받이에서 떨어지지 않도록 합니다.",
+            "무릎을 완전히 펴서 관절이 잠기지 않도록 주의합니다."
+        ],
+        "difficulty": 4,
+        "mets": 6.0,
+        "caloriesPer30Min": 210,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "linear_hack_squat",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Hack Squat",
+        "summary": "대퇴사두근을 집중적으로 발달시키는 대표적인 하체 운동입니다. 프리웨이트 스쿼트에 비해 허리 부담이 적고 안정적인 자세로 고중량 훈련이 가능하여, 허벅지 근육의 볼륨을 키우는 데 매우 효과적입니다.",
+        "target": [
+            "대퇴사두근",
+            "둔근",
+            "슬굴곡근"
+        ],
+        "instructions": [
+            "기구에 들어가 어깨를 패드에 고정하고, 등과 엉덩이를 등받이에 완전히 밀착시킵니다.",
+            "발을 어깨너비로 발판에 놓고, 발끝은 약간 바깥쪽을 향하게 합니다.",
+            "안전장치를 풀고, 숨을 들이마시며 무릎이 90도가 될 때까지 경사진 궤적을 따라 천천히 앉습니다.",
+            "숨을 내쉬면서 발판을 강하게 밀어 시작 자세로 돌아옵니다. 이때 무릎을 완전히 펴지 않도록 합니다."
+        ],
+        "cautions": [
+            "엉덩이가 등받이에서 떨어지면 허리에 큰 부담이 가므로 주의합니다.",
+            "무릎이 안쪽으로 모이지 않도록 발과 무릎의 방향을 일정하게 유지합니다.",
+            "너무 깊게 앉으면 무릎과 허리에 부담이 될 수 있으므로 자신의 유연성에 맞게 조절합니다."
+        ],
+        "difficulty": 3,
+        "mets": 6.0,
+        "caloriesPer30Min": 210,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "hack_squat",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Linear Leg Press",
+        "summary": "하체 전체의 근력을 강화하는 대표적인 머신 운동입니다. 'Linear'는 발판이 직선 궤적(수평 또는 45도)으로 움직이는 방식을 의미하며, 척추에 부담을 주지 않고 안정적으로 고중량 하체 훈련을 할 수 있게 해줍니다.",
+        "target": [
+            "대퇴사두근",
+            "둔근",
+            "슬굴곡근"
+        ],
+        "instructions": [
+            "머신에 앉아 등과 엉덩이를 패드에 완전히 밀착시킵니다.",
+            "발판에 발을 어깨너비로 올립니다. 발의 위치에 따라 자극 부위를 조절할 수 있습니다.",
+            "안전바를 풀고, 숨을 들이마시며 무릎이 90도가 될 때까지 천천히 발판을 내립니다.",
+            "숨을 내쉬면서 발뒤꿈치로 민다는 느낌으로 힘껏 밀어 올립니다. 이때 무릎을 완전히 펴지 않습니다."
+        ],
+        "cautions": [
+            "무릎을 완전히 펴면 관절에 큰 부담을 줄 수 있으므로 항상 약간 구부린 상태를 유지합니다.",
+            "동작 중 엉덩이가 패드에서 뜨거나 허리가 말리면 허리 부상을 유발할 수 있으므로 절대적으로 피해야 합니다.",
+            "자신의 가동범위를 초과하여 무리하게 내리지 않도록 합니다."
+        ],
+        "difficulty": 2,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "linear_leg_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Leg Press",
+        "summary": "스쿼트와 유사하게 하체 전반의 근력을 강화하는 대표적인 머신 운동입니다. 특히 대퇴사두근과 둔근 발달에 효과적이며, 허리에 부담이 적어 초보자도 안전하게 수행할 수 있습니다.",
+        "target": [
+            "대퇴사두근", "둔근", "슬굴곡근"
+        ],
+        "instructions": [
+            "머신에 앉아 등과 엉덩이를 패드에 완전히 밀착시킵니다.",
+            "발판에 어깨너비 정도로 발을 올리고, 발의 위치에 따라 자극 부위를 조절할 수 있습니다. (위쪽: 둔근/슬굴곡근, 아래쪽: 대퇴사두근)",
+            "무릎을 편 상태에서 안전바를 풀고, 숨을 들이마시며 무릎이 90도가 될 때까지 천천히 내립니다.",
+            "숨을 내쉬면서 발뒤꿈치로 민다는 느낌으로 힘껏 밀어 올립니다. 이때 무릎을 완전히 펴지 않도록 주의합니다."
+        ],
+        "cautions": [
+            "무릎을 완전히 펴면 관절에 큰 부담을 줄 수 있으므로 항상 약간 구부린 상태를 유지합니다.",
+            "동작 중 엉덩이가 패드에서 뜨지 않도록 주의해야 허리 부상을 예방할 수 있습니다.",
+            "무릎이 안쪽으로 모이지 않도록 발과 무릎의 방향을 일정하게 유지합니다."
+        ],
+        "difficulty": 2,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "leg_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Leg Extension",
+        "summary": "허벅지 앞쪽 근육인 대퇴사두근을 집중적으로 단련하여 선명도를 높이는 데 매우 효과적인 고립 운동입니다. 무릎 주변 근육 강화에도 도움이 됩니다.",
+        "target": [
+            "대퇴사두근"
+        ],
+        "instructions": [
+            "머신에 앉아 엉덩이와 등을 등받이에 깊숙이 밀착시킵니다.",
+            "무릎의 회전축과 기구의 회전축이 일치하도록 위치를 맞추고, 발목을 패드 아래에 고정합니다.",
+            "손잡이를 잡아 상체를 고정한 후, 숨을 내쉬면서 허벅지 앞쪽의 힘으로만 다리를 들어 올립니다.",
+            "정점에서 잠시 멈춰 대퇴사두근의 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "반동을 이용해 다리를 차 올리지 않도록 주의합니다.",
+            "무릎 관절에 통증이 있는 경우, 중량을 낮추거나 운동을 피하는 것이 좋습니다.",
+            "상체가 앞으로 숙여지거나 엉덩이가 뜨지 않도록 손잡이를 잡아 단단히 고정합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "leg_extension",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Seated Leg Curl",
+        "summary": "허벅지 뒤쪽 근육인 슬굴곡근(햄스트링)을 집중적으로 강화하는 고립 운동입니다. 하체 후면의 볼륨과 라인을 다듬는 데 효과적입니다.",
+        "target": [
+            "슬굴곡근(햄스트링)"
+        ],
+        "instructions": [
+            "머신에 앉아 등받이에 등을 기대고, 위쪽 패드로 허벅지를 단단히 고정합니다.",
+            "다리 뒤쪽 패드에 아킬레스건 바로 윗부분이 오도록 위치를 조절합니다.",
+            "숨을 내쉬면서 발뒤꿈치가 엉덩이 쪽으로 오도록 다리를 구부립니다.",
+            "슬굴곡근의 최대 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "상체가 앞으로 숙여지거나 엉덩이가 뜨지 않도록 주의합니다.",
+            "너무 빠른 속도로 운동하면 관절에 무리가 갈 수 있으니 통제된 속도를 유지합니다.",
+            "허리 통증이 있는 경우, 허리에 과도한 부담이 가지 않도록 중량을 조절합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "seated_leg_curl",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Seated Calf Raise",
+        "summary": "종아리 근육 중 특히 가자미근을 집중적으로 단련하는 운동입니다. 서서 하는 카프레이즈와 함께 병행하면 균형 잡힌 종아리 근육을 만들 수 있습니다.",
+        "target": [
+            "가자미근",
+            "비복근"
+        ],
+        "instructions": [
+            "머신에 앉아 무릎을 패드 아래에 고정합니다. 발 앞꿈치를 발판에 올리고 뒤꿈치는 아래로 내려 종아리가 스트레칭되게 합니다.",
+            "숨을 내쉬면서 발뒤꿈치를 최대한 높이 들어 올려 종아리 근육을 수축시킵니다.",
+            "정점에서 잠시 멈춘 후, 숨을 들이마시며 천천히 시작 자세보다 더 깊게 내려가 근육을 이완시킵니다."
+        ],
+        "cautions": [
+            "무릎에 과도한 압력이 가해지지 않도록 주의합니다.",
+            "반동을 사용하지 않고, 통제된 속도로 근육의 수축과 이완에 집중합니다.",
+            "최대 이완 지점에서 스트레칭을 충분히 느껴 가동 범위를 확보하는 것이 중요합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3,
+        "caloriesPer30Min": 105,
+        "recommendedReps": "15~20회 x 3~4세트",
+        "restInterval": "45~60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "seated_calf_raise",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Seated Dip",
+        "summary": "상완삼두근과 가슴 하부 근육을 강화하는 머신 운동입니다. 의자에 앉아 안정적인 자세로 수행하므로, 평행봉 딥스에 비해 어깨 관절의 부담이 적어 초보자나 여성도 안전하게 삼두근을 단련할 수 있습니다.",
+        "target": [
+            "상완삼두근",
+            "대흉근 하부",
+            "전면 삼각근"
+        ],
+        "instructions": [
+            "머신에 앉아 허리를 등받이에 곧게 폅니다.",
+            "양손으로 핸들을 잡고, 팔꿈치를 90도 정도로 구부려 시작 자세를 취합니다.",
+            "숨을 내쉬면서 팔꿈치가 완전히 펴지기 직전까지 핸들을 아래로 강하게 누릅니다.",
+            "정점에서 삼두근의 수축을 잠시 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 어깨가 위로 으쓱 올라가지 않도록 항상 어깨를 아래로 내린 상태를 유지합니다.",
+            "팔꿈치를 완전히 펴서 관절이 잠기지 않도록 주의하여 관절을 보호합니다.",
+            "상체가 앞으로 과도하게 숙여지지 않도록 복부에 힘을 주고 바른 자세를 유지합니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.0,
+        "caloriesPer30Min": 140,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "seated_dip",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Seated/Standing Shrug",
+        "summary": "목과 어깨 사이의 근육인 상부 승모근을 집중적으로 발달시키는 고립 운동입니다. 머신을 사용하면 안정적인 자세로 목표 부위에 집중할 수 있으며, 덤벨이나 바벨로도 수행 가능합니다.",
+        "target": [
+            "상부 승모근",
+            "중부 승모근"
+        ],
+        "instructions": [
+            "기구에 서거나 앉아 어깨를 패드 밑에 위치시키거나, 양손으로 핸들을 잡습니다.",
+            "팔은 자연스럽게 편 상태를 유지하고, 다른 부위의 개입을 최소화합니다.",
+            "숨을 내쉬면서 어깨를 귀에 붙인다는 느낌으로 최대한 높이 으쓱합니다.",
+            "최대 수축 지점에서 잠시 멈춘 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "어깨를 앞이나 뒤로 돌리는 동작은 어깨 관절에 부담을 줄 수 있으므로, 수직으로만 움직여야 합니다.",
+            "과도한 중량은 목에 불필요한 긴장을 유발할 수 있습니다.",
+            "승모근의 힘만으로 움직이는 데 집중하고, 팔이나 다리의 반동을 이용하지 않습니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "45~60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "shrug",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate Loaded Lateral Raise",
+        "summary": "어깨 측면 근육인 측면 삼각근을 고립하여 발달시키는 운동입니다. 어깨를 넓혀 상체의 역삼각형 프레임을 만드는 데 매우 효과적이며, 머신을 사용하면 안정적인 궤적으로 자극에 더 집중할 수 있습니다.",
+        "target": [
+            "측면 삼각근",
+            "전면 삼각근",
+            "극상근"
+        ],
+        "instructions": [
+            "머신에 앉아 허리를 곧게 펴고, 팔을 패드에 밀착시킵니다.",
+            "손잡이를 가볍게 잡고, 팔꿈치로 패드를 들어 올린다는 느낌으로 시작합니다.",
+            "숨을 내쉬면서 팔이 지면과 수평이 될 때까지 옆으로 들어 올립니다.",
+            "정점에서 측면 어깨의 자극을 잠시 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "어깨보다 높이 들어 올리면 승모근의 개입이 커지고 어깨에 부담을 줄 수 있습니다.",
+            "몸을 흔들거나 반동을 이용하지 말고, 오직 어깨 근육의 힘으로만 들어 올려야 합니다.",
+            "과도한 중량은 어깨 관절 부상의 위험을 높이므로, 통제 가능한 무게로 수행합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "45~60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "lateral_raise",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Plate-Loaded Abdominal Oblique Crunch",
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        },
+        "target": [
+            "복사근",
+            "복직근"
+        ],
+        "isSelected": false,
+        "summary": "원판(Plate)으로 무게를 조절하는 머신을 이용해 복부, 특히 옆구리 근육인 복사근을 강화하는 운동입니다. 몸통을 비트는 동작을 통해 코어의 회전력을 안정적으로 발달시키는 데 효과적입니다.",
+        "instructions": [
+            "기구에 앉아 다리를 패드에 단단히 고정하고, 원하는 무게의 원판을 끼웁니다.",
+            "상체를 패드에 밀착시키고 핸들을 잡습니다.",
+            "숨을 내쉬면서 옆구리의 힘을 이용해 상체를 한쪽으로 천천히 비틉니다.",
+            "최대 수축 지점에서 잠시 멈춘 후, 숨을 들이마시며 저항을 느끼며 시작 자세로 돌아옵니다.",
+            "한쪽 방향을 모두 마친 후, 반대쪽을 수행합니다."
+        ],
+        "cautions": [
+            "허리 부상을 방지하기 위해 빠르거나 반동을 주는 동작은 절대적으로 피해야 합니다.",
+            "처음에는 원판 없이 시작하여 정확한 자세와 자극점을 찾는 데 집중합니다.",
+            "과도한 가동범위로 허리를 비틀면 부상의 위험이 있으니 주의합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.0,
+        "caloriesPer30Min": 105,
+        "recommendedReps": "15~20회 (방향별) x 3세트",
+        "restInterval": "45~60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "plate_loaded_abdominal_oblique_crunch"
+    },
+    {
+        "name": "Plate-Loaded Belt Squat",
+        "summary": "허리에 벨트를 착용하여 중량을 직접 연결하는 방식으로, 척추에 압박을 주지 않고 하체를 집중적으로 단련할 수 있는 스쿼트 변형 운동입니다. 허리 부상이 있거나 부담을 최소화하고 싶은 사람에게 매우 효과적입니다.",
+        "target": [
+            "대퇴사두근",
+            "둔근",
+            "내전근"
+        ],
+        "instructions": [
+            "벨트를 허리에 착용하고 기구의 중량 케이블을 연결합니다.",
+            "발판 위에 서서 안정적인 자세를 잡습니다.",
+            "상체를 곧게 편 상태를 유지하며, 숨을 들이마시며 천천히 스쿼트 자세로 앉습니다.",
+            "숨을 내쉬면서 둔근과 허벅지의 힘으로 강하게 일어나 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "상체가 앞으로 과도하게 쏠리지 않도록 주의합니다.",
+            "무릎이 안쪽으로 모이지 않도록 발끝 방향과 일치시킵니다.",
+            "자신의 가동범위에 맞춰 안전하게 운동합니다."
+        ],
+        "difficulty": 3,
+        "mets": 5.5,
+        "caloriesPer30Min": 193,
+        "recommendedReps": "8~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "belt_squat",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Ground Base Jammer",
+        "summary": "하체에서부터 시작되는 힘을 상체로 전달하는 전신 협응성, 파워 증진 운동입니다. 미식축구 선수가 상대를 밀어내는 동작과 유사하며, 운동선수들의 폭발적인 힘을 기르는 데 매우 효과적입니다.",
+        "target": [
+            "전신 근육",
+            "둔근, 대퇴사두근 (하체 파워)",
+            "코어 (힘의 전달)",
+            "삼각근, 대흉근, 삼두근 (상체 파워)"
+        ],
+        "instructions": [
+            "기구의 양 핸들 사이에 서서 발을 어깨너비로 벌리고 운동선수와 같은 준비 자세를 취합니다.",
+            "양손으로 어깨 높이의 핸들을 잡습니다.",
+            "숨을 들이마시며 무릎을 살짝 구부려 스쿼트 자세로 힘을 모읍니다.",
+            "숨을 내쉬면서 발바닥으로 땅을 강하게 밀어내며, 하체와 엉덩이의 힘을 이용해 폭발적으로 일어섭니다.",
+            "동시에 팔을 앞으로 쭉 뻗어 핸들을 강하게 밀어줍니다."
+        ],
+        "cautions": [
+            "단순한 팔 운동이 아닌, 하체에서 시작된 힘을 온몸으로 전달하는 느낌에 집중해야 합니다.",
+            "운동 내내 허리가 굽지 않도록 코어를 단단히 잠그고 척추 중립을 유지합니다.",
+            "처음에는 가벼운 무게로 시작하여 정확한 협응 동작을 익히는 것이 중요합니다.",
+            "동작은 폭발적이지만, 무게를 통제하며 부상을 방지해야 합니다."
+        ],
+        "difficulty": 4,
+        "mets": 7.0,
+        "caloriesPer30Min": 257,
+        "recommendedReps": "6~10회 x 3~4세트",
+        "restInterval": "90~120초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "ground_base_jammer",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Ground Base Multi-Squat",
+        "summary": "프리웨이트 스쿼트의 움직임을 모방하여 실제적인 근력과 파워를 기를 수 있도록 설계된 하체 운동 기구입니다. 지면에 발을 딛고 수행하여 운동 능력을 향상시키는 데 효과적이며, 핵스쿼트나 스미스머신보다 자유로운 움직임이 가능합니다.",
+        "target": [
+            "대퇴사두근",
+            "둔근",
+            "슬굴곡근",
+            "내전근"
+        ],
+        "instructions": [
+            "기구의 발판 위에 서서 어깨를 패드 아래에 편안하게 위치시킵니다.",
+            "발은 어깨너비 또는 편안한 너비로 벌리고, 안정성을 위해 핸들을 잡습니다.",
+            "허리를 곧게 펴고 가슴을 연 상태를 유지하며, 숨을 들이마시면서 의자에 앉듯이 천천히 내려갑니다.",
+            "허벅지가 지면과 평행이 될 때까지 내려간 후, 숨을 내쉬면서 발바닥 전체로 땅을 밀어내듯 강하게 일어섭니다."
+        ],
+        "cautions": [
+            "운동 중 허리가 굽거나 엉덩이가 말리지 않도록 척추 중립을 유지하는 것이 매우 중요합니다.",
+            "무릎이 발끝 방향과 일치하도록 하고, 안쪽으로 모이지 않도록 주의합니다.",
+            "내려가는 동작을 통제하지 않고 갑자기 주저앉으면 무릎 부상의 위험이 있습니다.",
+            "무릎을 완전히 펴서 관절이 잠기지 않도록 합니다."
+        ],
+        "difficulty": 3,
+        "mets": 6.5,
+        "caloriesPer30Min": 239,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "90~120초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "ground_base_multi_squat",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Ground Base Squat/High Pull",
+        "summary": "스쿼트로 하체의 힘을 기르고, 그 힘을 이용해 폭발적으로 당기는 하이풀 동작을 결합한 전신 운동입니다. 하체, 코어, 등, 어깨 근육을 모두 사용하여 운동선수와 같은 협응성과 순발력을 기르는 데 매우 효과적입니다.",
+        "target": [
+            "전신 근육",
+            "둔근, 대퇴사두근",
+            "승모근, 삼각근",
+            "척추기립근, 코어"
+        ],
+        "instructions": [
+            "기구의 발판 위에 서서 스쿼트 자세로 앉아 낮은 위치의 핸들을 잡습니다.",
+            "허리를 곧게 펴고, 가슴을 열어 바른 자세를 유지합니다.",
+            "숨을 내쉬면서 폭발적으로 스쿼트 자세에서 일어납니다.",
+            "하체에서 올라오는 힘을 그대로 이어받아, 팔꿈치를 위로 당겨 올리며 핸들을 턱 가까이까지 끌어올립니다.",
+            "저항을 느끼며 천천히 시작 자세인 스쿼트 자세로 돌아가 동작을 반복합니다."
+        ],
+        "cautions": [
+            "스쿼트와 하이풀, 두 가지 동작의 연계성이 중요하므로 처음에는 가벼운 무게로 정확한 자세를 익혀야 합니다.",
+            "운동 내내 허리가 굽어지지 않도록 코어에 지속적으로 힘을 줍니다.",
+            "팔의 힘으로만 당기는 것이 아니라, 하체에서 시작된 힘을 상체로 전달하는 느낌에 집중해야 합니다.",
+            "동작이 크고 폭발적이므로, 관절에 무리가 가지 않도록 통제된 움직임이 필수적입니다."
+        ],
+        "difficulty": 5,
+        "mets": 8.0,
+        "caloriesPer30Min": 294,
+        "recommendedReps": "5~8회 x 3~4세트",
+        "restInterval": "90~120초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "ground_base_squat_high_pull",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Ground Base Combo Incline",
+        "summary": "하체의 미는 힘(스쿼트)과 상체의 미는 힘(인클라인 프레스)을 결합한 전신 복합 운동입니다. 지면에서부터 시작되는 파워를 경사 방향으로 폭발시키는 훈련으로, 전신의 협응력과 근력을 동시에 발달시키는 데 매우 효과적입니다.",
+        "target": [
+            "전신 근육",
+            "둔근, 대퇴사두근",
+            "대흉근 상부, 전면 삼각근",
+            "코어"
+        ],
+        "instructions": [
+            "기구의 발판 위에 서서 운동 준비 자세를 취하고, 인클라인 궤적의 핸들을 잡습니다.",
+            "숨을 들이마시며 스쿼트 자세로 앉아 하체에 힘을 모읍니다.",
+            "숨을 내쉬면서 폭발적으로 일어남과 동시에, 그 힘을 이용해 핸들을 대각선 위 방향으로 강하게 밀어줍니다.",
+            "팔을 완전히 편 후, 저항을 느끼며 천천히 시작 자세(스쿼트)로 돌아와 동작을 반복합니다."
+        ],
+        "cautions": [
+            "하체와 상체 동작이 부드럽게 연결되도록, 처음에는 가벼운 무게로 정확한 리듬과 자세를 익혀야 합니다.",
+            "운동 중 허리가 굽거나 아치형이 되지 않도록 코어에 지속적인 긴장을 유지합니다.",
+            "단순한 팔 운동이 아니라, 지면을 박차는 힘이 상체까지 전달되는 느낌에 집중해야 합니다.",
+            "폭발적인 움직임 속에서도 무게를 완전히 통제하여 부상을 방지해야 합니다."
+        ],
+        "difficulty": 4,
+        "mets": 7.5,
+        "caloriesPer30Min": 276,
+        "recommendedReps": "6~10회 x 3~4세트",
+        "restInterval": "90~120초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "ground_base_combo_incline",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Ground Base Combo Decline",
+        "summary": "하체의 미는 힘(스쿼트)과 상체의 아래 방향으로 미는 힘(디클라인 프레스)을 결합한 전신 복합 운동입니다. 지면에서부터 시작된 파워를 아래 방향으로 폭발시키는 독특한 훈련으로, 전신 협응력과 함께 특히 가슴 하부 근육을 강화하는 데 효과적입니다.",
+        "target": [
+            "전신 근육",
+            "둔근, 대퇴사두근",
+            "대흉근 하부, 삼두근",
+            "코어"
+        ],
+        "instructions": [
+            "기구의 발판 위에 서서 운동 준비 자세를 취하고, 디클라인 궤적의 핸들을 잡습니다.",
+            "숨을 들이마시며 스쿼트 자세로 앉아 하체에 힘을 모읍니다.",
+            "숨을 내쉬면서 폭발적으로 일어남과 동시에, 그 힘을 이용해 핸들을 대각선 아래 방향으로 강하게 밀어줍니다.",
+            "팔을 완전히 편 후, 저항을 느끼며 천천히 시작 자세(스쿼트)로 돌아와 동작을 반복합니다."
+        ],
+        "cautions": [
+            "하체와 상체 동작이 부드럽게 연결되도록, 처음에는 가벼운 무게로 정확한 리듬과 자세를 익혀야 합니다.",
+            "운동 중 허리가 굽거나 아치형이 되지 않도록 코어에 지속적인 긴장을 유지합니다.",
+            "디클라인 각도의 프레스는 어깨 관절에 부담을 줄 수 있으니, 통제된 움직임으로 수행해야 합니다.",
+            "폭발적인 움직임 속에서도 무게를 완전히 통제하여 부상을 방지해야 합니다."
+        ],
+        "difficulty": 4,
+        "mets": 7.5,
+        "caloriesPer30Min": 276,
+        "recommendedReps": "6~10회 x 3~4세트",
+        "restInterval": "90~120초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "ground_base_combo_decline",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Ground Base Combo Twist",
+        "summary": "하체(스쿼트)의 힘을 코어의 회전력으로 전환하여 상체로 폭발시키는 전신 복합 운동입니다. 복싱, 골프, 야구 등 회전력이 중요한 스포츠의 실제 움직임과 유사하며, 전신의 협응성과 파워를 기르는 데 매우 효과적입니다.",
+        "target": [
+            "전신 근육",
+            "둔근, 대퇴사두근",
+            "복사근, 코어",
+            "대흉근, 삼각근"
+        ],
+        "instructions": [
+            "기구 옆에 서서 운동 준비 자세를 취하고, 양손으로 핸들 하나를 가슴 높이에서 잡습니다.",
+            "숨을 들이마시며 스쿼트 자세로 앉아 하체와 코어에 힘을 모읍니다.",
+            "숨을 내쉬면서 폭발적으로 일어나며, 축이 되는 발을 중심으로 몸을 회전시킵니다.",
+            "하체에서 시작된 회전력을 그대로 이어받아, 핸들을 몸 바깥쪽으로 강하게 밀어줍니다.",
+            "저항을 느끼며 천천히 시작 자세로 돌아옵니다. 한쪽 방향을 모두 마친 후 반대쪽을 수행합니다."
+        ],
+        "cautions": [
+            "하체, 코어, 상체의 움직임이 부드럽게 연결되는 것이 매우 중요하므로, 가벼운 무게로 정확한 자세를 먼저 익혀야 합니다.",
+            "회전 시 발이 땅에 고정되어 있으면 무릎에 큰 부담을 줄 수 있으므로, 반드시 뒷발을 함께 돌려주며(피벗) 회전해야 합니다.",
+            "허리 부상을 방지하기 위해 운동 내내 코어를 단단하게 유지해야 합니다.",
+            "단순히 팔로만 미는 것이 아니라, 온몸을 사용해 회전하며 밀어내는 느낌에 집중해야 합니다."
+        ],
+        "difficulty": 5,
+        "mets": 8.0,
+        "caloriesPer30Min": 294,
+        "recommendedReps": "5~8회 (방향별) x 3세트",
+        "restInterval": "90~120초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "ground_base_combo_twist",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Ground Base Twist Left",
+        "summary": "하체의 힘을 코어의 회전력을 통해 왼쪽으로 밀어내는 전신 파워 운동입니다. 신체의 회전력을 한 방향으로 집중적으로 훈련하여, 특정 방향의 파워와 안정성을 기르는 데 효과적입니다.",
+        "target": [
+            "전신 근육",
+            "둔근, 대퇴사두근",
+            "복사근, 코어",
+            "대흉근, 삼각근"
+        ],
+        "instructions": [
+            "기구의 오른쪽에 서서, 양손으로 핸들 하나를 가슴 높이에서 잡습니다.",
+            "숨을 들이마시며 스쿼트 자세로 앉아 힘을 모읍니다.",
+            "숨을 내쉬면서 폭발적으로 일어나며, 오른쪽 발을 축으로 몸을 왼쪽으로 회전시킵니다.",
+            "하체에서 시작된 회전력을 그대로 이어받아, 핸들을 몸의 왼쪽 바깥 방향으로 강하게 밀어줍니다.",
+            "저항을 느끼며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "오른쪽 발이 땅에 고정되어 있으면 무릎에 큰 부담을 줄 수 있으므로, 반드시 함께 돌려주며(피벗) 회전해야 합니다.",
+            "허리 부상을 방지하기 위해 운동 내내 코어를 단단하게 유지해야 합니다.",
+            "단순히 팔로만 미는 것이 아니라, 온몸을 사용해 회전하며 밀어내는 느낌에 집중해야 합니다.",
+            "처음에는 가벼운 무게로 정확한 자세를 익히는 것이 중요합니다."
+        ],
+        "difficulty": 5,
+        "mets": 8.0,
+        "caloriesPer30Min": 294,
+        "recommendedReps": "5~8회 x 3세트",
+        "restInterval": "90~120초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "ground_base_twist_left",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Ground Base Glute Drive",
+        "summary": "서 있는 자세에서 엉덩이를 강력하게 수축시켜 둔근을 집중적으로 단련하는 운동입니다. 바닥에 누워서 하는 힙 쓰러스트와 유사한 효과를 주며, 척추에 부담을 주지 않고 안정적으로 엉덩이 근육의 힘과 크기를 키울 수 있습니다.",
+        "target": [
+            "대둔근",
+            "슬굴곡근",
+            "척추기립근 (안정화)"
+        ],
+        "instructions": [
+            "기구의 발판 위에 서서 등을 등받이에 기대고, 골반 앞쪽에 패드를 위치시킵니다.",
+            "안정성을 위해 핸들을 잡고, 무릎을 살짝 구부려 준비 자세를 취합니다.",
+            "숨을 내쉬면서 엉덩이 근육에 강하게 힘을 주어 골반을 앞으로 폭발적으로 밀어냅니다.",
+            "엉덩이가 완전히 펴지고 최대 수축이 느껴지는 지점에서 잠시 멈춥니다.",
+            "숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "허리를 꺾어서 미는 것이 아니라, 엉덩이 관절을 접었다 펴는 느낌에 집중해야 합니다.",
+            "운동 중 허리가 과도하게 아치형이 되지 않도록 복부에 힘을 주어 코어를 안정시킵니다.",
+            "패드가 골반에 정확히 위치했는지 확인하여 통증이나 불편함을 방지합니다.",
+            "단순히 앞뒤로 움직이는 것이 아니라, 엉덩이 근육의 강한 수축을 만드는 것이 중요합니다."
+        ],
+        "difficulty": 3,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "ground_base_glute_drive",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Ground Base Squat Lunge",
+        "summary": "스쿼트와 런지 두 가지 핵심 하체 운동을 하나의 기구에서 수행할 수 있도록 설계된 기능성 운동 기구입니다. 특히 런지 동작을 통해 한쪽 다리의 근력과 균형감각을 집중적으로 발달시키고, 좌우 비대칭을 교정하는 데 매우 효과적입니다.",
+        "target": [
+            "대퇴사두근",
+            "둔근",
+            "슬굴곡근",
+            "코어 (균형 유지)"
+        ],
+        "instructions": [
+            "기구의 발판 위에 서서 어깨를 패드 아래에 위치시킵니다.",
+            "한쪽 발을 앞으로 크게 내딛어 런지 자세를 취합니다. 앞 무릎과 뒷 무릎이 약 90도가 되도록 합니다.",
+            "허리를 곧게 펴고, 코어에 힘을 주어 중심을 잡습니다.",
+            "숨을 내쉬면서 앞발의 뒤꿈치로 땅을 강하게 밀어내며 시작 자세로 돌아옵니다.",
+            "한쪽 다리의 반복 횟수를 모두 마친 후, 반대쪽 다리를 수행합니다."
+        ],
+        "cautions": [
+            "앞쪽 무릎이 발끝을 너무 많이 넘어가면 무릎 관절에 부담이 갈 수 있습니다.",
+            "몸이 좌우로 흔들리지 않도록 코어에 지속적으로 힘을 주어 균형을 유지해야 합니다.",
+            "상체가 앞으로 과도하게 숙여지지 않도록 주의합니다.",
+            "처음에는 가벼운 무게로 시작하여 안정적인 자세를 찾는 것이 중요합니다."
+        ],
+        "difficulty": 4,
+        "mets": 6.0,
+        "caloriesPer30Min": 210,
+        "recommendedReps": "8~12회 (다리별) x 3세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "ground_base_squat_lunge",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS Iso-Lateral Chest Press",
+        "summary": "각 팔의 무게를 개별적으로 설정할 수 있는 고급 체스트 프레스 머신입니다. 독립적인 움직임(Iso-Lateral)과 수렴하는(Converging) 궤적을 통해 가슴 근육의 자연스러운 움직임을 구현하며, 좌우 균형 발달과 근육의 최대 수축을 유도하는 데 매우 효과적입니다.",
+        "target": [
+            "대흉근",
+            "전면 삼각근",
+            "상완삼두근"
+        ],
+        "instructions": [
+            "의자 높이를 조절하여 핸들이 가슴 중앙에 오도록 맞춥니다.",
+            "양쪽 무게 스택에서 핀을 이용해 각각 원하는 무게를 설정합니다.",
+            "등을 등받이에 완전히 밀착시키고, 양손으로 핸들을 잡습니다.",
+            "숨을 내쉬면서 가슴 근육의 힘으로 핸들을 앞으로 밀어줍니다. 이때 팔꿈치를 완전히 펴지 않습니다.",
+            "정점에서 가슴 근육의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "좌우 근력 차이를 인지하고, 필요한 경우 무게를 다르게 설정하여 불균형을 교정할 수 있습니다.",
+            "운동 중 허리가 등받이에서 과도하게 뜨지 않도록 복부에 힘을 줍니다.",
+            "어깨가 앞으로 나오거나 위로 으쓱 올라가지 않도록 주의하여 어깨 부상을 예방합니다."
+        ],
+        "difficulty": 2,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_iso_lateral_chest_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS Iso-Lateral Incline Press",
+        "summary": "윗가슴 근육(대흉근 상부)을 타겟으로 하는 고급 인클라인 프레스 머신입니다. 각 팔의 무게를 개별적으로 설정할 수 있고(MTS), 독립적인 움직임(Iso-Lateral)과 수렴하는 궤적을 통해 윗가슴의 균형적인 발달과 최대 수축을 효과적으로 이끌어냅니다.",
+        "target": [
+            "대흉근 상부",
+            "전면 삼각근",
+            "상완삼두근"
+        ],
+        "instructions": [
+            "의자 높이를 조절하여 핸들이 쇄골 아래, 즉 윗가슴 라인에 오도록 맞춥니다.",
+            "양쪽 무게 스택에서 핀을 이용해 각각 원하는 무게를 설정합니다.",
+            "등을 등받이에 완전히 밀착시키고, 양손으로 핸들을 잡습니다.",
+            "숨을 내쉬면서 윗가슴 근육의 힘으로 핸들을 대각선 위 방향으로 밀어줍니다.",
+            "정점에서 윗가슴의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "인클라인 각도는 어깨 관절에 부담을 줄 수 있으므로, 과도한 무게 설정은 피해야 합니다.",
+            "운동 중 허리가 등받이에서 과도하게 뜨지 않도록 복부에 힘을 줍니다.",
+            "팔꿈치를 완전히 펴서 관절이 잠기지 않도록 주의합니다.",
+            "좌우 근력 차이를 인지하고, 필요한 경우 무게를 다르게 설정하여 불균형을 교정할 수 있습니다."
+        ],
+        "difficulty": 3,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_iso_lateral_incline_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS Iso-Lateral Decline Press",
+        "summary": "아랫가슴 근육(대흉근 하부)을 타겟으로 하는 고급 디클라인 프레스 머신입니다. 각 팔의 무게를 개별적으로 설정할 수 있고(MTS), 독립적인 움직임(Iso-Lateral)과 수렴하는 궤적을 통해 아랫가슴의 균형적인 발달과 선명도를 높이는 데 매우 효과적입니다.",
+        "target": [
+            "대흉근 하부",
+            "상완삼두근",
+            "전면 삼각근"
+        ],
+        "instructions": [
+            "의자 높이를 조절하여 핸들이 가슴 하단 라인에 오도록 맞춥니다.",
+            "양쪽 무게 스택에서 핀을 이용해 각각 원하는 무게를 설정합니다.",
+            "등을 등받이에 완전히 밀착시키고, 양손으로 핸들을 잡습니다.",
+            "숨을 내쉬면서 아랫가슴 근육의 힘으로 핸들을 대각선 아래 방향으로 밀어줍니다.",
+            "정점에서 아랫가슴의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 어깨가 앞으로 말리거나 위로 으쓱 올라가지 않도록 주의합니다.",
+            "허리가 등받이에서 과도하게 뜨지 않도록 복부에 힘을 줍니다.",
+            "팔꿈치를 완전히 펴서 관절이 잠기지 않도록 주의합니다.",
+            "좌우 근력 차이를 인지하고, 필요한 경우 무게를 다르게 설정하여 불균형을 교정할 수 있습니다."
+        ],
+        "difficulty": 3,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_iso_lateral_decline_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS Iso-Lateral Shoulder Press",
+        "summary": "어깨 근육(삼각근)의 크기와 힘을 기르는 고급 숄더 프레스 머신입니다. 각 팔의 무게를 개별적으로 설정할 수 있고(MTS), 독립적인 움직임(Iso-Lateral)이 가능하여 어깨 근육의 좌우 균형을 맞추고 입체적인 모양을 만드는 데 매우 효과적입니다.",
+        "target": [
+            "전면 삼각근",
+            "측면 삼각근",
+            "상완삼두근"
+        ],
+        "instructions": [
+            "의자 높이를 조절하여 핸들이 어깨 높이에 오도록 맞춥니다.",
+            "양쪽 무게 스택에서 핀을 이용해 각각 원하는 무게를 설정합니다.",
+            "등과 허리를 등받이에 완전히 밀착시키고, 양손으로 핸들을 잡습니다.",
+            "숨을 내쉬면서 어깨 근육의 힘으로 핸들을 머리 위로 밀어 올립니다. 이때 팔꿈치를 완전히 펴지 않습니다.",
+            "정점에서 어깨 근육의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 허리가 등받이에서 과도하게 뜨지 않도록 복부에 힘을 줍니다.",
+            "어깨가 위로 으쓱 올라가지 않도록 주의하고, 승모근의 개입을 최소화합니다.",
+            "팔꿈치를 완전히 펴서 관절이 잠기지 않도록 주의합니다.",
+            "좌우 근력 차이를 인지하고, 필요한 경우 무게를 다르게 설정하여 불균형을 교정할 수 있습니다."
+        ],
+        "difficulty": 2,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_iso_lateral_shoulder_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS Iso-Lateral High Row",
+        "summary": "등 상부 근육, 특히 능형근과 승모근 중상부를 타겟으로 하는 고급 로우 머신입니다. 각 팔의 무게를 개별적으로 설정할 수 있고(MTS), 독립적인 움직임(Iso-Lateral)이 가능하여 등 상부의 균형적인 발달과 근육의 세밀함을 높이는 데 매우 효과적입니다.",
+        "target": [
+            "능형근",
+            "승모근 중부/상부",
+            "후면 삼각근",
+            "광배근 상부"
+        ],
+        "instructions": [
+            "의자 높이를 조절하여 핸들이 어깨와 비슷한 높이에 오도록 맞춥니다.",
+            "양쪽 무게 스택에서 핀을 이용해 각각 원하는 무게를 설정합니다.",
+            "가슴을 패드에 완전히 밀착시키고, 양손으로 핸들을 잡습니다.",
+            "숨을 내쉬면서 팔꿈치를 뒤로 당겨 견갑골(날개뼈)을 강하게 모아줍니다.",
+            "정점에서 등 상부 근육의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 몸을 앞뒤로 흔드는 반동을 이용하지 않도록 주의합니다.",
+            "어깨가 위로 으쓱 올라가지 않도록 항상 어깨를 아래로 내린 상태를 유지합니다.",
+            "팔의 힘이 아닌 등의 힘으로 당기는 느낌을 찾는 것이 중요합니다.",
+            "좌우 근력 차이를 인지하고, 필요한 경우 무게를 다르게 설정하여 불균형을 교정할 수 있습니다."
+        ],
+        "difficulty": 3,
+        "mets": 4.8,
+        "caloriesPer30Min": 168,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_iso_lateral_high_row",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS Iso-Lateral Row",
+        "summary": "등 중앙부와 광배근의 두께를 만드는 데 효과적인 고급 로우 머신입니다. 각 팔의 무게를 개별적으로 설정할 수 있고(MTS), 독립적인 움직임(Iso-Lateral)이 가능하여 등 근육의 좌우 균형을 맞추고 깊은 자극을 주는 데 매우 효과적입니다.",
+        "target": [
+            "광배근",
+            "능형근",
+            "승모근 중부",
+            "후면 삼각근"
+        ],
+        "instructions": [
+            "의자 높이를 조절하여 핸들이 복부 중앙 높이에 오도록 맞춥니다.",
+            "양쪽 무게 스택에서 핀을 이용해 각각 원하는 무게를 설정합니다.",
+            "가슴을 패드에 완전히 밀착시키고, 양손으로 핸들을 잡습니다.",
+            "숨을 내쉬면서 팔꿈치를 뒤로 보내 견갑골(날개뼈)을 모아준다는 느낌으로 핸들을 당깁니다.",
+            "정점에서 등 중앙부의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 몸을 앞뒤로 흔드는 반동을 이용하지 않도록 주의합니다.",
+            "어깨가 위로 으쓱 올라가지 않도록 항상 어깨를 아래로 내린 상태를 유지합니다.",
+            "팔의 힘이 아닌 등의 힘으로 당기는 느낌을 찾는 것이 중요합니다.",
+            "좌우 근력 차이를 인지하고, 필요한 경우 무게를 다르게 설정하여 불균형을 교정할 수 있습니다."
+        ],
+        "difficulty": 2,
+        "mets": 4.8,
+        "caloriesPer30Min": 168,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_iso_lateral_row",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS Iso-Lateral Front Pulldown",
+        "summary": "등의 너비를 발달시키는 데 매우 효과적인 고급 프론트 풀다운 머신입니다. 각 팔의 무게를 개별적으로 설정할 수 있고(MTS), 독립적인 움직임(Iso-Lateral)을 통해 좌우 광배근의 균형적인 발달을 촉진하고 V-테이퍼 형태의 등을 만드는 데 효과적입니다.",
+        "target": [
+            "광배근",
+            "대원근",
+            "능형근",
+            "이두근"
+        ],
+        "instructions": [
+            "무릎 패드를 조절하여 앉았을 때 하체가 단단히 고정되도록 합니다.",
+            "양쪽 무게 스택에서 핀을 이용해 각각 원하는 무게를 설정합니다.",
+            "자리에 앉아 양손으로 오버헤드 핸들을 잡습니다.",
+            "가슴을 위로 열어주고, 숨을 내쉬면서 팔꿈치를 아래로 당겨 핸들을 가슴 위쪽으로 끌어내립니다.",
+            "정점에서 등 근육의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아갑니다."
+        ],
+        "cautions": [
+            "운동 중 상체를 과도하게 뒤로 젖히거나 반동을 이용하지 않도록 주의합니다.",
+            "팔의 힘으로만 당기는 것이 아니라, 등 근육을 이용해 당기는 느낌을 찾는 것이 중요합니다.",
+            "어깨가 위로 으쓱 올라가지 않도록 견갑을 안정시킨 상태를 유지합니다.",
+            "좌우 근력 차이를 인지하고, 필요한 경우 무게를 다르게 설정하여 불균형을 교정할 수 있습니다."
         ],
         "difficulty": 2,
         "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
+        "caloriesPer30Min": 158,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_iso_lateral_front_pulldown",
+        "isSelected": false,
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": "machines",
             "explanation": ""
-        },
-        "name": "런지",
-        "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
-        "isSelected": false,
-        "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        }
+    },
+    {
+        "name": "MTS Iso-Lateral Biceps Curl",
+        "summary": "상완이두근(알통)을 고립하여 발달시키는 고급 바이셉스 컬 머신입니다. 각 팔의 무게를 개별적으로 설정할 수 있고(MTS), 독립적인 움직임(Iso-Lateral)이 가능하여 좌우 이두근의 균형적인 발달과 집중적인 자극을 주는 데 매우 효과적입니다.",
+        "target": [
+            "상완이두근",
+            "상완근",
+            "상완요골근"
+        ],
         "instructions": [
-            "런지 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
+            "의자 높이를 조절하여 겨드랑이가 팔걸이 패드 상단에 오도록 맞춥니다.",
+            "양쪽 무게 스택에서 핀을 이용해 각각 원하는 무게를 설정합니다.",
+            "팔꿈치부터 겨드랑이까지의 팔 윗부분 전체를 패드에 완전히 밀착시킵니다.",
+            "숨을 내쉬면서 손잡이를 어깨 방향으로 들어 올려 이두근을 강하게 수축합니다.",
+            "정점에서 잠시 멈춘 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
         ],
         "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
+            "운동 중 팔꿈치가 패드에서 떨어지지 않도록 완전히 고정해야 합니다.",
+            "어깨가 앞으로 말리거나, 어깨를 들어 올리는 등 다른 부위의 개입을 최소화합니다.",
+            "손목이 꺾이지 않도록 주의하고, 손목과 팔꿈치가 일직선을 유지하도록 합니다.",
+            "좌우 근력 차이를 인지하고, 필요한 경우 무게를 다르게 설정하여 불균형을 교정할 수 있습니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.0,
+        "caloriesPer30Min": 105,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_iso_lateral_biceps_curl",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS Iso-Lateral Triceps Extension",
+        "summary": "팔 뒤쪽 근육인 상완삼두근을 고립하여 발달시키는 고급 트라이셉스 익스텐션 머신입니다. 각 팔의 무게를 개별적으로 설정할 수 있고(MTS), 독립적인 움직임(Iso-Lateral)이 가능하여 좌우 삼두근의 균형적인 발달과 집중적인 자극을 주는 데 매우 효과적입니다.",
+        "target": [
+            "상완삼두근"
+        ],
+        "instructions": [
+            "의자에 앉아 등과 허리를 등받이에 완전히 밀착시킵니다.",
+            "양쪽 무게 스택에서 핀을 이용해 각각 원하는 무게를 설정합니다.",
+            "양손으로 핸들을 잡고, 팔꿈치를 옆구리나 패드에 고정합니다.",
+            "숨을 내쉬면서 팔꿈치를 펴서 핸들을 아래로 누르거나 앞으로 밀어 삼두근을 강하게 수축합니다.",
+            "정점에서 잠시 멈춘 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 팔꿈치의 위치가 흔들리지 않도록 완전히 고정해야 합니다.",
+            "어깨를 사용하여 누르지 말고, 오직 삼두근의 힘으로만 동작을 수행하는 데 집중합니다.",
+            "손목이 꺾이지 않도록 주의하고, 손목과 팔꿈치가 일직선을 유지하도록 합니다.",
+            "좌우 근력 차이를 인지하고, 필요한 경우 무게를 다르게 설정하여 불균형을 교정할 수 있습니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.0,
+        "caloriesPer30Min": 105,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_iso_lateral_triceps_extension",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS Abdominal Crunch",
+        "summary": "복직근(식스팩)을 효과적으로 고립하고 강화하기 위해 설계된 고급 복부 운동 머신입니다. 정해진 궤적을 따라 안정적으로 운동할 수 있어, 목이나 허리에 불필요한 부담 없이 복부 근육에만 집중할 수 있는 장점이 있습니다.",
+        "target": [
+            "복직근",
+            "복사근"
+        ],
+        "instructions": [
+            "기구에 앉아 자신에게 맞는 무게를 핀으로 설정합니다.",
+            "발을 발판에 고정하고, 어깨를 패드 아래에 위치시키거나 핸들을 잡습니다.",
+            "숨을 내쉬면서 복부의 힘만으로 상체를 아래로 말아준다는 느낌으로 수축합니다.",
+            "복부 근육이 최대로 수축되는 지점에서 잠시 멈춥니다.",
+            "숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "팔이나 어깨의 힘으로 당기지 말고, 오직 복부의 힘을 이용하는 데 집중해야 합니다.",
+            "과도한 중량은 허리에 부담을 줄 수 있으므로, 통제 가능한 무게로 수행합니다.",
+            "빠르게 반동을 이용하기보다, 느리고 통제된 속도로 복부의 자극을 느끼는 것이 중요합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.0,
+        "caloriesPer30Min": 105,
+        "recommendedReps": "15~20회 x 3~4세트",
+        "restInterval": "45~60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_abdominal_crunch",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS Iso-Lateral Leg Extension",
+        "summary": "허벅지 앞쪽 근육(대퇴사두근)을 고립하여 선명도를 높이는 고급 레그 익스텐션 머신입니다. 각 다리의 무게를 개별적으로 설정할 수 있고(MTS), 독립적인 움직임(Iso-Lateral)이 가능하여 좌우 다리의 근력 불균형을 교정하고 재활 목적으로도 매우 효과적입니다.",
+        "target": [
+            "대퇴사두근"
+        ],
+        "instructions": [
+            "등받이를 조절하여 앉았을 때 무릎의 회전축이 기구의 회전축과 일직선이 되도록 맞춥니다.",
+            "양쪽 무게 스택에서 핀을 이용해 각각 원하는 무게를 설정합니다.",
+            "발목을 롤러 패드 아래에 위치시키고, 손잡이를 잡아 상체를 단단히 고정합니다.",
+            "숨을 내쉬면서 대퇴사두근의 힘으로 다리를 들어 올려 무릎을 폅니다.",
+            "정점에서 허벅지 근육의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "무릎 관절 보호를 위해, 기구의 회전축과 자신의 무릎 위치를 정확히 맞추는 것이 매우 중요합니다.",
+            "반동을 이용해 다리를 차지 말고, 통제된 속도로 근육의 자극에 집중합니다.",
+            "무릎을 완전히 펴서 관절이 잠기지 않도록 주의합니다.",
+            "좌우 근력 차이를 인지하고, 필요한 경우 무게를 다르게 설정하여 불균형을 교정할 수 있습니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_iso_lateral_leg_extension",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS Kneeling Leg Curl",
+        "summary": "한쪽 무릎을 꿇은 자세에서 다리를 하나씩 훈련하여 허벅지 뒤쪽 근육(슬굴곡근)을 고립시키는 고급 레그 컬 머신입니다. 서거나 누워서 하는 방식보다 허리의 개입을 최소화하고 엉덩이 근육의 스트레칭을 유도하여, 햄스트링에 더 깊고 강한 자극을 줄 수 있습니다.",
+        "target": [
+            "슬굴곡근 (햄스트링)",
+            "비복근"
+        ],
+        "instructions": [
+            "한쪽 무릎을 지지 패드에, 반대쪽 발은 바닥에 둡니다. 상체는 가슴 패드에 밀착시킵니다.",
+            "운동할 다리의 발목을 롤러 패드에 걸고, 양쪽 무게 스택에서 각각 원하는 무게를 설정합니다.",
+            "숨을 내쉬면서 햄스트링의 힘만으로 발뒤꿈치가 엉덩이 방향으로 오도록 다리를 위로 접어 올립니다.",
+            "정점에서 햄스트링의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다.",
+            "한쪽 다리를 마친 후, 반대쪽 다리를 수행합니다."
+        ],
+        "cautions": [
+            "운동 중 골반이 들리거나 허리가 과도하게 꺾이지 않도록 코어에 힘을 주고 자세를 유지해야 합니다.",
+            "반동을 이용하지 말고, 통제된 속도로 햄스트링 근육의 자극에 집중합니다.",
+            "좌우 근력 차이를 인지하고, 필요한 경우 무게를 다르게 설정하여 불균형을 교정할 수 있습니다."
+        ],
+        "difficulty": 3,
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "10~15회 (다리별) x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_kneeling_leg_curl",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "MTS V-Squat",
+        "summary": "독특한 V자형 궤적을 따라 움직여, 스쿼트 시 허리에 가해지는 부담을 최소화하고 하체 근육에 자극을 집중시키는 고급 스쿼트 머신입니다. 자연스러운 아치형 움직임으로 무릎 관절의 스트레스를 줄이면서 깊은 스쿼트가 가능하여, 대퇴사두근과 둔근을 효과적으로 강화할 수 있습니다.",
+        "target": [
+            "대퇴사두근",
+            "둔근",
+            "슬굴곡근"
+        ],
+        "instructions": [
+            "기구의 발판 위에 서서 어깨를 패드 아래에 단단히 고정시킵니다.",
+            "발을 어깨너비 또는 편안한 너비로 벌리고, 핸들을 잡아 안전장치를 해제합니다.",
+            "허리를 곧게 펴고 가슴을 연 상태를 유지하며, 기구의 V자 궤적을 따라 천천히 앉습니다.",
+            "허벅지가 발판과 평행이 될 때까지 충분히 내려간 후, 발바닥 전체로 발판을 밀어내며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 허리가 굽거나 등받이에서 떨어지지 않도록 주의합니다.",
+            "무릎이 안쪽으로 모이지 않도록 발끝과 같은 방향을 유지해야 합니다.",
+            "무릎을 완전히 펴서 관절이 잠기지 않도록 하여 관절을 보호합니다.",
+            "기구의 움직임이 익숙해질 때까지는 가벼운 무게로 정확한 자세를 연습하는 것이 중요합니다."
+        ],
+        "difficulty": 3,
+        "mets": 6.0,
+        "caloriesPer30Min": 210,
+        "recommendedReps": "8~12회 x 3~4세트",
+        "restInterval": "90~120초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "mts_v_squat",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Chest Press",
+        "summary": "핀 로드 머신을 사용하여 가슴 근육을 단련하는 기본적인 운동입니다. 안정적인 궤적으로 움직여 초보자도 쉽게 가슴 근육에 자극을 줄 수 있습니다.",
+        "target": [
+            "대흉근",
+            "전면 삼각근",
+            "삼두근"
+        ],
+        "instructions": [
+            "머신에 앉아 등받이에 등을 기대고, 핸들이 가슴 중앙에 오도록 의자 높이를 조절합니다.",
+            "핀으로 원하는 무게를 설정합니다.",
+            "숨을 내쉬면서 핸들을 앞으로 밀어줍니다.",
+            "숨을 들이마시면서 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "어깨가 으쓱 올라가지 않도록 주의합니다.",
+            "팔꿈치를 완전히 펴지 않아 관절을 보호합니다.",
+            "허리가 뜨지 않도록 복부에 힘을 줍니다."
+        ],
+        "difficulty": 1,
+        "mets": 4.5,
+        "caloriesPer30Min": 158,
+        "recommendedReps": "10~15회 x 3세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_chest_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Shoulder Press",
+        "summary": "핀으로 무게를 조절하는 표준적인 숄더 프레스 머신입니다. 정해진 궤적을 따라 안정적으로 움직여, 초보자도 쉽게 어깨 근육을 자극하고 안전하게 근력을 기를 수 있습니다.",
+        "target": [
+            "전면 삼각근",
+            "측면 삼각근",
+            "상완삼두근"
+        ],
+        "instructions": [
+            "의자 높이를 조절하여 핸들이 어깨와 비슷한 높이에 오도록 맞춥니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정합니다.",
+            "등과 허리를 등받이에 완전히 밀착시키고, 양손으로 핸들을 잡습니다.",
+            "숨을 내쉬면서 어깨 근육의 힘으로 핸들을 머리 위로 밀어 올립니다.",
+            "정점에서 잠시 멈춘 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 허리가 등받이에서 과도하게 뜨지 않도록 복부에 힘을 줍니다.",
+            "어깨가 위로 으쓱 올라가지 않도록 주의하고, 승모근의 개입을 최소화합니다.",
+            "팔꿈치를 완전히 펴서 관절이 잠기지 않도록 주의합니다."
+        ],
+        "difficulty": 1,
+        "mets": 4.5,
+        "caloriesPer30Min": 158,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_shoulder_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Lat Pulldown",
+        "summary": "핀으로 무게를 조절하는 표준적인 랫풀다운 머신입니다. 등 근육, 특히 광배근을 발달시켜 등의 너비를 넓히는 데 가장 기본이 되는 운동 중 하나이며, 안정적인 궤적으로 초보자도 쉽게 등 근육에 자극을 줄 수 있습니다.",
+        "target": [
+            "광배근",
+            "이두근",
+            "능형근",
+            "대원근"
+        ],
+        "instructions": [
+            "무릎 패드를 조절하여 앉았을 때 하체가 기구에 단단히 고정되도록 합니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정합니다.",
+            "어깨너비보다 넓게 바(Bar)를 잡고 자리에 앉습니다.",
+            "가슴을 위로 열어주고, 숨을 내쉬면서 팔꿈치를 아래로 당겨 바를 가슴 위쪽으로 끌어내립니다.",
+            "정점에서 등 근육의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아갑니다."
+        ],
+        "cautions": [
+            "운동 중 상체를 과도하게 뒤로 젖히거나 반동을 이용하지 않도록 주의합니다.",
+            "팔의 힘으로만 당기는 것이 아니라, 등 근육을 이용해 당기는 느낌을 찾는 것이 중요합니다.",
+            "어깨가 위로 으쓱 올라가지 않도록 견갑을 안정시킨 상태를 유지합니다.",
+            "바를 목 뒤로 넘기는 비하인드 넥 프레스 동작은 어깨 부상의 위험이 높으므로 피하는 것이 좋습니다."
+        ],
+        "difficulty": 1,
+        "mets": 4.5,
+        "caloriesPer30Min": 158,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_lat_pulldown",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Fixed Pulldown",
+        "summary": "고정된 핸들이 호(arc)를 그리며 움직이는 궤적을 가진 풀다운 머신입니다. 케이블 랫풀다운보다 안정적이며, 등 근육에 다른 각도의 자극을 줄 수 있습니다. 특히 광배근을 집중적으로 발달시켜 등의 너비를 키우는 데 효과적입니다.",
+        "target": [
+            "광배근",
+            "능형근",
+            "대원근",
+            "이두근"
+        ],
+        "instructions": [
+            "의자와 무릎 패드를 조절하여 하체가 단단히 고정되도록 합니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정합니다.",
+            "자리에 앉아 양손으로 핸들을 잡습니다. 보통 오버핸드, 뉴트럴 그립이 모두 가능합니다.",
+            "가슴을 펴고, 숨을 내쉬면서 기구의 궤적을 따라 핸들을 아래로 당겨줍니다.",
+            "정점에서 등 근육의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아갑니다."
+        ],
+        "cautions": [
+            "운동 중 어깨가 으쓱 올라가지 않도록 견갑을 안정시킨 상태를 유지합니다.",
+            "상체를 과도하게 뒤로 젖히는 반동을 이용하지 않도록 주의합니다.",
+            "팔의 힘이 아닌 등의 힘으로 당기는 느낌을 찾는 것이 중요합니다."
         ],
         "difficulty": 2,
         "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
-    },
-    {
+        "caloriesPer30Min": 158,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_fixed_pulldown",
+        "isSelected": false,
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": "machines",
             "explanation": ""
-        },
-        "name": "레그 익스텐션",
-        "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
-        "isSelected": false,
-        "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
-        "instructions": [
-            "레그 익스텐션 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
-        ],
-        "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
-        ],
-        "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
+        }
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "레그 컬",
-        "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
-        "isSelected": false,
-        "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "name": "Select Seated Row",
+        "summary": "핀 로드 방식의 시티드 로우 머신으로 등 근육을 강화하는 운동입니다. 안정적인 자세에서 등 근육의 두께와 너비를 발달시키는 데 효과적입니다.",
+        "target": [
+            "광배근",
+            "능형근",
+            "승모근"
+        ],
         "instructions": [
-            "레그 컬 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
+            "머신에 앉아 가슴을 패드에 밀착시키고 발을 발판에 둡니다.",
+            "핀으로 무게를 설정하고 핸들을 잡습니다.",
+            "숨을 내쉬며 팔꿈치를 뒤로 당겨 등 근육을 강하게 수축합니다.",
+            "숨을 들이마시며 천천히 등 근육의 이완을 느끼며 시작 자세로 돌아옵니다."
         ],
         "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
+            "반동을 사용하지 말고, 등의 힘으로 당기는 데 집중합니다.",
+            "어깨가 앞으로 말리거나 위로 올라가지 않도록 주의합니다.",
+            "상체를 곧게 편 자세를 유지합니다."
         ],
-        "difficulty": 2,
+        "difficulty": 1,
         "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
+        "caloriesPer30Min": 158,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_seated_row",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "카프 레이즈",
-        "target": ["대퇴사두근", "햄스트링", "대둔근", "종아리"],
-        "isSelected": false,
-        "summary": "대퇴사두근, 햄스트링, 대둔근, 종아리을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "name": "Select Pectoral Fly",
+        "summary": "가슴 근육, 특히 가슴 안쪽을 집중적으로 고립하여 발달시키는 머신 운동입니다. 안정적인 자세에서 가슴 근육의 최대 수축을 유도하여, 가슴 근육의 분리도와 선명도를 높이는 데 매우 효과적입니다.",
+        "target": [
+            "대흉근 (특히 안쪽)",
+            "전면 삼각근"
+        ],
         "instructions": [
-            "카프 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
+            "의자 높이를 조절하여 핸들이 가슴 중앙 높이에 오도록 맞춥니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정합니다.",
+            "등과 엉덩이를 패드에 완전히 밀착시키고, 팔꿈치를 살짝 구부린 상태로 핸들을 잡습니다.",
+            "숨을 내쉬면서, 가슴을 모아준다는 느낌으로 핸들을 가슴 앞으로 부드럽게 가져옵니다.",
+            "정점에서 가슴 안쪽 근육의 강한 수축(짜릿한 느낌)을 잠시 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아갑니다."
         ],
         "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
+            "팔꿈치를 완전히 펴면 관절에 부담이 갈 수 있으니, 운동 내내 약간 구부린 상태를 유지합니다.",
+            "어깨 관절 보호를 위해, 팔을 너무 과도하게 뒤로 젖히지 않도록 주의합니다.",
+            "반동을 이용하지 않고, 통제된 속도로 가슴 근육의 자극에 집중하는 것이 중요합니다.",
+            "운동 중 어깨가 앞으로 말리거나 위로 으쓱 올라가지 않도록 합니다."
         ],
         "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_pectoral_fly",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "크런치",
-        "target": ["복직근", "복사근", "요방형근"],
-        "isSelected": false,
-        "summary": "복직근, 복사근, 요방형근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "name": "Select Pectoral Fly/Rear Deltoid",
+        "summary": "하나의 기구로 가슴 안쪽 근육(펙토럴 플라이)과 등 후면 어깨 근육(리어 델토이드)을 모두 단련할 수 있는 다기능 머신입니다.",
+        "target": [
+            "대흉근 내측 (플라이)",
+            "후면 삼각근 (리어 델토이드)",
+            "능형근",
+            "승모근"
+        ],
         "instructions": [
-            "크런치 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
+            "플라이: 앞으로 앉아 팔꿈치를 패드에 대고 숨을 내쉬며 가슴 앞으로 모아줍니다.",
+            "리어 델토이드: 뒤로 돌아앉아 가슴을 패드에 대고, 숨을 내쉬며 핸들을 잡고 팔을 바깥쪽으로 벌려줍니다.",
+            "각 동작 시 목표 근육의 수축에 집중하며 천천히 수행합니다."
         ],
         "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
+            "어깨 관절에 부담이 가지 않도록 팔꿈치를 살짝 구부린 상태를 유지합니다.",
+            "반동을 사용하지 않고 통제된 속도로 운동합니다.",
+            "자신에게 맞는 가동범위 내에서 운동하여 부상을 예방합니다."
         ],
         "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_pectoral_fly_rear_deltoid",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "플랭크",
-        "target": ["복직근", "복사근", "척추기립근"],
-        "isSelected": false,
-        "summary": "복직근, 복사근, 척추기립근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "name": "Select Lateral Raise",
+        "summary": "어깨 측면 근육인 측면 삼각근을 고립하여 발달시키는 표준적인 머신 운동입니다. 안정적인 궤적을 따라 움직여 초보자도 쉽게 자극을 찾을 수 있으며, 어깨를 넓혀 상체의 프레임을 만드는 데 매우 효과적입니다.",
+        "target": [
+            "측면 삼각근",
+            "전면 삼각근",
+            "극상근"
+        ],
         "instructions": [
-            "플랭크 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
+            "의자 높이를 조절하여 앉았을 때 어깨가 기구의 회전축과 비슷한 높이에 오도록 맞춥니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정합니다.",
+            "등을 등받이에 기대고, 팔을 패드에 밀착시킨 후 핸들을 가볍게 잡습니다.",
+            "숨을 내쉬면서 팔꿈치로 패드를 들어 올린다는 느낌으로, 팔이 지면과 수평이 될 때까지 옆으로 들어 올립니다.",
+            "정점에서 측면 어깨의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
         ],
         "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
+            "팔이 어깨 높이 이상으로 올라가면 승모근의 개입이 커지므로 주의합니다.",
+            "몸을 흔들거나 반동을 이용하지 말고, 오직 어깨 근육의 힘으로만 들어 올려야 합니다.",
+            "운동 중 어깨가 위로 으쓱 올라가지 않도록 합니다.",
+            "과도한 중량은 어깨 관절 부상의 위험을 높이므로, 통제 가능한 무게로 수행합니다."
         ],
         "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "45~60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_lateral_raise",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": "weight",
-            "explanation": ""
-        },
-        "name": "레그 레이즈",
-        "target": ["복직근", "복사근", "요방형근"],
-        "isSelected": false,
-        "summary": "복직근, 복사근, 요방형근을 강화하고 기능적 움직임을 향상시키는 웨이트 트레이닝 운동입니다.",
+        "name": "Select Biceps Curl",
+        "summary": "핀으로 무게를 조절하는 표준적인 바이셉스 컬 머신입니다. 팔 윗부분을 패드에 고정하여 반동을 억제하고, 안정적인 자세에서 상완이두근(알통)을 효과적으로 고립시켜 발달시키는 데 매우 유용합니다. 초보자도 쉽게 정확한 자세로 운동할 수 있습니다.",
+        "target": [
+            "상완이두근",
+            "상완근",
+            "상완요골근"
+        ],
         "instructions": [
-            "레그 레이즈 전 준비운동으로 관절을 충분히 풀어줍니다.",
-            "정해진 자세를 취하고 복부에 힘을 준 상태에서 시작합니다.",
-            "호흡을 유지하며 부드럽고 안정된 동작으로 반복합니다.",
-            "운동 중 올바른 자세와 정렬을 유지합니다."
+            "의자 높이를 조절하여 겨드랑이가 팔걸이 패드 상단에 오도록 맞춥니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정합니다.",
+            "팔꿈치부터 겨드랑이까지의 팔 윗부분 전체를 패드에 완전히 밀착시킵니다.",
+            "숨을 내쉬면서 손잡이를 어깨 방향으로 들어 올려 이두근을 강하게 수축합니다.",
+            "정점에서 잠시 멈춘 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
         ],
         "cautions": [
-            "무리한 중량은 피합니다.",
-            "통증이 발생하면 즉시 중단합니다."
+            "운동 중 팔꿈치가 패드에서 떨어지지 않도록 완전히 고정해야 합니다.",
+            "어깨를 사용하여 들어 올리지 말고, 오직 이두근의 힘으로만 동작을 수행해야 합니다.",
+            "손목이 과도하게 꺾이지 않도록 주의합니다.",
+            "너무 무거운 무게는 어깨와 팔꿈치 관절에 부담을 줄 수 있습니다."
+        ],
+        "difficulty": 1,
+        "mets": 3.0,
+        "caloriesPer30Min": 105,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_biceps_curl",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Triceps Extension",
+        "summary": "핀으로 무게를 조절하는 표준적인 트라이셉스 익스텐션 머신입니다. 팔 윗부분을 고정한 상태에서 안정적으로 운동할 수 있어, 반동을 억제하고 팔 뒤쪽 근육인 상완삼두근을 효과적으로 고립시켜 발달시키는 데 매우 유용합니다.",
+        "target": [
+            "상완삼두근"
+        ],
+        "instructions": [
+            "의자에 앉아 등과 허리를 등받이에 완전히 밀착시킵니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정합니다.",
+            "양손으로 핸들을 잡고, 팔꿈치를 옆구리나 패드에 고정합니다.",
+            "숨을 내쉬면서 팔꿈치를 펴서 핸들을 아래로 누르거나 앞으로 밀어 삼두근을 강하게 수축합니다.",
+            "정점에서 잠시 멈춘 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 팔꿈치의 위치가 흔들리지 않도록 완전히 고정해야 합니다.",
+            "어깨를 사용하여 누르지 말고, 오직 삼두근의 힘으로만 동작을 수행하는 데 집중합니다.",
+            "손목이 과도하게 꺾이지 않도록 주의합니다.",
+            "너무 무거운 무게는 어깨와 팔꿈치 관절에 부담을 줄 수 있습니다."
+        ],
+        "difficulty": 1,
+        "mets": 3.0,
+        "caloriesPer30Min": 105,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_triceps_extension",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Leg Press",
+        "summary": "핀으로 무게를 조절하는 표준적인 레그 프레스 머신입니다. 앉아서 안정적인 자세로 하체 전체 근육을 훈련할 수 있으며, 척추에 부담이 적어 스쿼트가 어려운 초보자도 안전하게 하체 근력을 강화할 수 있습니다.",
+        "target": [
+            "대퇴사두근",
+            "둔근",
+            "슬굴곡근"
+        ],
+        "instructions": [
+            "의자를 조절하여 앉았을 때 무릎이 약 90도로 구부려지도록 맞춥니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정합니다.",
+            "등과 엉덩이를 패드에 완전히 밀착시키고, 발을 발판에 어깨너비로 올립니다.",
+            "숨을 내쉬면서 발바닥 전체로 발판을 밀어 다리를 폅니다.",
+            "정점에서 무릎을 완전히 펴지 않도록 주의하며, 숨을 들이마시면서 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 엉덩이가 의자에서 뜨거나 허리가 말리면, 허리 디스크 등 심각한 부상을 유발할 수 있으므로 절대적으로 피해야 합니다.",
+            "무릎을 완전히 펴서 관절이 잠기지 않도록 하여 관절을 보호합니다.",
+            "발의 위치에 따라 자극 부위가 달라지므로, 목적에 맞게 발 위치를 조절할 수 있습니다. (위쪽: 둔근/햄스트링, 아래쪽: 대퇴사두근)"
+        ],
+        "difficulty": 1,
+        "mets": 5.0,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "10~15회 x 3~4세트",
+        "restInterval": "60~90초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_leg_press",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Leg Extension",
+        "summary": "핀으로 무게를 조절하는 표준적인 레그 익스텐션 머신입니다. 허벅지 앞쪽 근육인 대퇴사두근을 직접적으로 고립하여, 근육의 선명도와 데피니션을 높이는 데 매우 효과적입니다. 초보자도 쉽게 따라 할 수 있는 대표적인 하체 단일 관절 운동입니다.",
+        "target": [
+            "대퇴사두근"
+        ],
+        "instructions": [
+            "등받이를 조절하여 앉았을 때 무릎의 회전축이 기구의 회전축과 일직선이 되도록 맞춥니다.",
+            "발목 패드가 발목 바로 윗부분에 오도록 길이를 조절합니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정하고, 손잡이를 잡아 상체를 고정합니다.",
+            "숨을 내쉬면서 대퇴사두근의 힘으로 다리를 들어 올려 무릎을 폅니다.",
+            "정점에서 허벅지 근육의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "무릎 관절 보호를 위해, 기구의 회전축과 자신의 무릎 위치를 정확히 맞추는 것이 매우 중요합니다.",
+            "반동을 이용해 다리를 차지 말고, 통제된 속도로 근육의 자극에 집중합니다.",
+            "무릎을 완전히 펴서 관절이 잠기지 않도록 주의합니다.",
+            "무릎 부상이 있거나 통증이 있는 경우, 운동을 피하거나 전문가와 상담 후 매우 가벼운 무게로 진행해야 합니다."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_leg_extension",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Leg Curl",
+        "summary": "핀으로 무게를 조절하는 표준적인 레그 컬 머신입니다. 주로 엎드려서 수행하며, 허벅지 뒤쪽 근육인 슬굴곡근(햄스트링)을 직접적으로 고립하여 강화하는 데 매우 효과적인 운동입니다.",
+        "target": [
+            "슬굴곡근 (햄스트링)",
+            "비복근 (종아리)"
+        ],
+        "instructions": [
+            "기구에 엎드렸을 때 무릎이 기구의 회전축과 일직선이 되도록 위치를 조절합니다.",
+            "발목 패드가 아킬레스건 바로 윗부분에 오도록 길이를 조절합니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정하고, 기구 앞쪽의 손잡이를 잡아 상체를 고정합니다.",
+            "숨을 내쉬면서 햄스트링의 힘으로 다리를 들어 올려 발뒤꿈치가 엉덩이 방향으로 오도록 합니다.",
+            "정점에서 햄스트링의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 골반이나 허벅지가 패드에서 떨어지면 허리에 부담이 갈 수 있으니 주의합니다.",
+            "반동을 이용하지 않고, 통제된 속도로 햄스트링 근육의 자극에 집중합니다.",
+            "과도한 무게는 햄스트링 부상의 위험을 높일 수 있습니다.",
+            "기구가 몸에 맞게 제대로 조절되었는지 확인 후 운동을 시작합니다."
         ],
         "difficulty": 2,
-        "mets": 4.5,
-        "caloriesPer30Min": 100,
-        "recommendedReps": "10~12회 × 3세트",
-        "restInterval": "30~60초",
-        "equipment": [],
-        "animationName": "default"
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_leg_curl",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Seated Leg Curl",
+        "summary": "핀으로 무게를 조절하는 표준적인 시티드 레그 컬 머신입니다. 앉은 자세에서 안정적으로 허벅지 뒤쪽 근육인 슬굴곡근(햄스트링)을 고립하여 강화할 수 있으며, 엎드려서 하는 라잉 레그 컬보다 허리에 부담이 적은 장점이 있습니다.",
+        "target": [
+            "슬굴곡근 (햄스트링)",
+            "비복근 (종아리)"
+        ],
+        "instructions": [
+            "등받이를 조절하여 앉았을 때 무릎의 회전축이 기구의 회전축과 일직선이 되도록 맞춥니다.",
+            "허벅지 패드를 내려 다리를 단단히 고정하고, 발목 패드는 아킬레스건 바로 윗부분에 위치시킵니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정하고, 손잡이를 잡아 상체를 고정합니다.",
+            "숨을 내쉬면서 햄스트링의 힘으로 다리를 아래로 누르며 무릎을 구부립니다.",
+            "정점에서 햄스트링의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "운동 중 엉덩이가 의자에서 뜨지 않도록 허벅지 패드로 단단히 고정해야 합니다.",
+            "무릎 관절 보호를 위해, 기구의 회전축과 자신의 무릎 위치를 정확히 맞추는 것이 매우 중요합니다.",
+            "반동을 이용하지 않고, 통제된 속도로 햄스트링 근육의 자극에 집중합니다.",
+            "과도한 무게는 무릎과 허리에 부담을 줄 수 있습니다."
+        ],
+        "difficulty": 1,
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_seated_leg_curl",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Hip Abduction",
+        "summary": "허벅지 바깥쪽과 엉덩이 측면 근육(중둔근)을 강화하는 운동입니다. 골반을 안정시키고 힙 라인을 다듬는 데 효과적입니다.",
+        "target": [
+            "중둔근",
+            "소둔근"
+        ],
+        "instructions": [
+            "머신에 앉아 등받이에 등을 기대고, 다리 바깥쪽을 패드에 밀착시킵니다.",
+            "핀으로 무게를 설정합니다.",
+            "숨을 내쉬면서 엉덩이 옆쪽의 힘을 이용해 다리를 바깥으로 벌려줍니다.",
+            "정점에서 잠시 멈춰 수축을 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "반동을 이용하지 않고 엉덩이 근육의 힘에 집중합니다.",
+            "상체가 앞으로 숙여지지 않도록 주의합니다.",
+            "너무 무거운 무게는 고관절에 부담을 줄 수 있습니다."
+        ],
+        "difficulty": 2,
+        "mets": 3,
+        "caloriesPer30Min": 105,
+        "recommendedReps": "15~20회 x 3~4세트",
+        "restInterval": "45~60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_hip_abduction",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Hip Adduction",
+        "summary": "허벅지 안쪽 근육(내전근)을 집중적으로 단련하는 운동입니다. 다리 라인을 다듬고 코어 안정성을 높이는 데 도움이 됩니다.",
+        "target": [
+            "내전근"
+        ],
+        "instructions": [
+            "머신에 앉아 등받이에 등을 기대고, 다리 안쪽을 패드에 밀착시킵니다.",
+            "핀으로 무게를 설정합니다.",
+            "숨을 내쉬면서 허벅지 안쪽의 힘을 이용해 다리를 안으로 모아줍니다.",
+            "정점에서 잠시 멈춰 수축을 느낀 후, 숨을 들이마시며 천천히 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "골반이 뜨거나 상체가 흔들리지 않도록 주의합니다.",
+            "자신의 유연성에 맞는 가동범위 내에서 운동합니다.",
+            "통제된 속도로 운동하여 근육의 자극에 집중합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3,
+        "caloriesPer30Min": 105,
+        "recommendedReps": "15~20회 x 3~4세트",
+        "restInterval": "45~60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_hip_adduction",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Hip and Glute",
+        "summary": "핀으로 무게를 조절하는 표준적인 힙 & 글루트 머신입니다. 주로 서서 한 발씩 뒤로 차는 동작(킥백)을 통해 엉덩이 근육인 대둔근을 직접적으로 고립하여 강화합니다. 엉덩이의 볼륨감과 모양을 다듬는 데 매우 효과적인 운동입니다.",
+        "target": [
+            "대둔근",
+            "슬굴곡근 (햄스트링)"
+        ],
+        "instructions": [
+            "기구의 높낮이를 조절하고, 무게 스택에서 핀을 이용해 원하는 무게를 설정합니다.",
+            "상체를 패드에 기대어 고정하고, 한쪽 발을 뒤쪽의 롤러 패드에 위치시킵니다.",
+            "손잡이를 잡아 몸의 중심을 잡습니다.",
+            "숨을 내쉬면서 엉덩이 근육의 힘으로 발을 뒤로 힘껏 밀어냅니다(차 올립니다).",
+            "정점에서 엉덩이의 강한 수축을 느낀 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다. 한쪽 다리를 마친 후 반대쪽을 수행합니다."
+        ],
+        "cautions": [
+            "허리를 꺾어서 다리를 들어 올리면 허리 부상의 위험이 있으므로, 코어에 힘을 주고 엉덩이의 힘에만 집중해야 합니다.",
+            "반동을 이용하지 않고, 통제된 속도로 동작을 수행하여 정확한 자극을 찾는 것이 중요합니다.",
+            "상체가 과도하게 세워지거나 움직이지 않도록 패드에 단단히 고정합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.5,
+        "caloriesPer30Min": 123,
+        "recommendedReps": "12~15회 (다리별) x 3~4세트",
+        "restInterval": "60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_hip_and_glute",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Standing Calf",
+        "summary": "핀으로 무게를 조절하는 표준적인 스탠딩 카프 레이즈 머신입니다. 서서 안정적인 자세로 종아리 근육, 특히 비복근을 집중적으로 강화하여 종아리의 크기와 힘을 기르는 데 매우 효과적입니다.",
+        "target": [
+            "비복근",
+            "가자미근"
+        ],
+        "instructions": [
+            "어깨 패드의 높이를 조절하여 패드가 어깨 위에 편안하게 얹히도록 합니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정합니다.",
+            "발판 위에 발의 앞부분만 걸치고, 발뒤꿈치는 아래로 충분히 내려 종아리 근육을 스트레칭합니다.",
+            "숨을 내쉬면서 발뒤꿈치를 최대한 높이 들어 올려 종아리 근육을 강하게 수축합니다.",
+            "정점에서 잠시 멈춘 후, 숨을 들이마시며 천천히 저항을 느끼며 시작 자세로 돌아옵니다."
+        ],
+        "cautions": [
+            "무릎을 구부려 반동을 이용하지 말고, 오직 종아리 근육의 힘으로만 동작을 수행해야 합니다.",
+            "최대 이완과 최대 수축, 즉 전체 가동범위를 활용하여 운동 효과를 극대화하는 것이 중요합니다.",
+            "빠르게 튕기듯이 운동하지 말고, 통제된 속도를 유지합니다.",
+            "운동 전후로 종아리 스트레칭을 충분히 하여 부상을 예방합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.0,
+        "caloriesPer30Min": 105,
+        "recommendedReps": "15~20회 x 3~4세트",
+        "restInterval": "45~60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_standing_calf",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Select Horizontal Calf",
+        "summary": "주로 레그 프레스 머신을 이용하여 수평 방향으로 종아리를 단련하는 운동입니다. 무릎을 편 상태로 수행하여 종아리 근육, 특히 비복근을 집중적으로 강화하는 데 효과적입니다.",
+        "target": [
+            "비복근",
+            "가자미근"
+        ],
+        "instructions": [
+            "레그 프레스 머신에 앉아 등과 엉덩이를 패드에 완전히 밀착시킵니다.",
+            "발의 앞부분을 발판 하단에 대고, 발뒤꿈치는 발판 밖으로 나오게 합니다.",
+            "무게 스택에서 핀을 이용해 원하는 무게를 설정하고, 무릎을 편 상태를 유지합니다.",
+            "숨을 들이마시며 발목을 몸 쪽으로 당겨 종아리를 최대한 스트레칭합니다.",
+            "숨을 내쉬면서 발목을 펴서 발판을 밀어내며 종아리 근육을 강하게 수축합니다."
+        ],
+        "cautions": [
+            "무릎을 완전히 펴서 관절이 잠기지 않도록 약간 구부린 상태를 유지하는 것이 안전합니다.",
+            "최대 이완과 최대 수축, 즉 전체 가동범위를 활용하여 운동 효과를 극대화하는 것이 중요합니다.",
+            "빠르게 튕기듯이 운동하지 말고, 통제된 속도를 유지합니다.",
+            "발이 발판에서 미끄러지지 않도록 주의합니다."
+        ],
+        "difficulty": 2,
+        "mets": 3.0,
+        "caloriesPer30Min": 105,
+        "recommendedReps": "15~20회 x 3~4세트",
+        "restInterval": "45~60초",
+        "equipment": [
+            "머신"
+        ],
+        "animationName": "select_horizontal_calf",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "machines",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Olympic Barbells & Plates",
+        "summary": "올림픽 바벨과 원판은 근력 운동의 가장 기본적인 도구입니다. 스쿼트, 데드리프트, 벤치프레스 등 다양한 복합 관절 운동을 통해 전신의 근력과 근육량을 효과적으로 증가시킬 수 있습니다.",
+        "target": [
+            "전신 근육 (운동 종류에 따라 다름)"
+        ],
+        "instructions": [
+            "운동 목적에 맞는 바벨과 원판을 선택합니다.",
+            "정확한 자세와 기술을 숙지하는 것이 매우 중요합니다.",
+            "코어에 힘을 주고, 통제된 속도로 운동을 수행합니다.",
+            "초보자는 반드시 전문가의 지도를 받아 안전하게 운동을 시작해야 합니다."
+        ],
+        "cautions": [
+            "자신의 수준을 넘어서는 과도한 중량은 심각한 부상을 초래할 수 있습니다.",
+            "부정확한 자세는 부상의 가장 큰 원인이므로 항상 자세에 신경 씁니다.",
+            "운동 전 충분한 웜업과 스트레칭을 실시합니다."
+        ],
+        "difficulty": 5,
+        "mets": 6,
+        "caloriesPer30Min": 210,
+        "recommendedReps": "운동 종류에 따라 다름",
+        "restInterval": "운동 강도에 따라 다름",
+        "equipment": [
+            "바벨",
+            "원판"
+        ],
+        "animationName": "olympic_barbells_and_plates",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "free-weights",
+            "explanation": ""
+        }
+    },
+    {
+        "name": "Dumbbells & Fixed Barbells",
+        "summary": "덤벨과 고정 바벨은 다양한 근력 운동에 사용되는 필수적인 프리웨이트 도구입니다. 머신 운동에 비해 더 많은 협응력과 균형감각을 요구하며, 가동범위가 자유로워 특정 근육을 고립시키거나 다양한 각도로 자극하는 데 유리합니다.",
+        "target": [
+            "전신 근육 (운동 종류에 따라 다름)"
+        ],
+        "instructions": [
+            "목표하는 운동과 근력 수준에 맞는 무게의 덤벨 또는 바벨을 선택합니다.",
+            "각 운동의 정확한 자세를 숙지하고 수행합니다.",
+            "좌우 균형을 맞추며 통제된 움직임으로 운동합니다."
+        ],
+        "cautions": [
+            "처음에는 가벼운 무게로 시작하여 정확한 자세를 익히는 데 집중합니다.",
+            "운동 중 균형을 잃지 않도록 주의하고, 필요시 보조를 받습니다.",
+            "무리한 중량은 관절에 부담을 줄 수 있습니다."
+        ],
+        "difficulty": 4,
+        "mets": 5,
+        "caloriesPer30Min": 175,
+        "recommendedReps": "운동 종류에 따라 다름",
+        "restInterval": "운동 강도에 따라 다름",
+        "equipment": [
+            "덤벨",
+            "고정 바벨"
+        ],
+        "animationName": "dumbbells_and_fixed_barbells",
+        "isSelected": false,
+        "category": {
+            "name": "strength",
+            "classification": "free-weights",
+            "explanation": ""
+        }
     }
 ]

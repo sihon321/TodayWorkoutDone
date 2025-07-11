@@ -223,13 +223,15 @@ struct WorkoutListView: View {
             }
             ScrollView {
                 VStack(spacing: 0) {
-                    Picker("", selection: $store.selectedTrainingType.sending(\.typeSelected)) {
-                        ForEach(store.trainingTypes, id: \.self) { type in
-                            Text(type.rawValue).tag(type)
+                    if store.category.categoryType == .strength {
+                        Picker("", selection: $store.selectedTrainingType.sending(\.typeSelected)) {
+                            ForEach(store.trainingTypes, id: \.self) { type in
+                                Text(type.rawValue).tag(type)
+                            }
                         }
+                        .pickerStyle(.segmented)
+                        .padding()
                     }
-                    .pickerStyle(.segmented)
-                    .padding()
                     HorizontalFilterView(filters: viewStore.filters,
                                          selectedFilters: $selectedFilters)
                     ForEach(store.scope(state: \.soretedWorkoutSection,
@@ -279,7 +281,11 @@ struct WorkoutListView: View {
             .navigationTitle(viewStore.category.name)
         }
         .onAppear {
-            store.send(.getWorkouts(viewStore.category.classification))
+            if store.category.categoryType == .strength {
+                store.send(.typeSelected(.weight))
+            } else {
+                store.send(.getWorkouts(viewStore.category.classification))
+            }
         }
         .tint(.todBlack)
     }
