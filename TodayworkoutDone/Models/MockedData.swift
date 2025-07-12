@@ -126,7 +126,7 @@ extension Routine {
                 WorkoutSet(prevWeight: 40, weight: 50, prevReps: 12, reps: 12),
                 WorkoutSet(prevWeight: 50, weight: 60, prevReps: 12, reps: 10),
                 WorkoutSet(prevWeight: 60, weight: 80, prevReps: 10, reps: 5)
-            ],
+            ], equipmentType: .bar,
             averageEndDate: 43
         )
     }

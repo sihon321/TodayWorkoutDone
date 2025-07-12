@@ -73,21 +73,35 @@ struct MyRoutineView: View {
                 .shadow(color: .shadowColor, radius: 0.5, x: 1, y: 1)
             }
             .padding(.horizontal, 15)
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(
-                        store.scope(state: \.myRoutineSubview,
-                                    action: \.myRoutineSubview)
-                    ) { store in
-                        Button(action: {
-                            viewStore.send(.touchedMyRoutine(store.myRoutine))
-                        }) {
-                            MyRoutineSubview(store: store)
+            if viewStore.myRoutineSubview.isEmpty {
+                VStack {
+                    Text("루틴 추가를 누르거나 운동을 선택해 루틴을 만드세요.")
+                        .font(.system(size: 15))
+                        .foregroundColor(Color.todBlack)
+                }
+                .frame(maxWidth: .infinity,
+                       minHeight: 120,
+                       alignment: .center)
+                .background(Color.contentBackground)
+                .cornerRadius(15)
+                .padding(.horizontal, 15)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(
+                            store.scope(state: \.myRoutineSubview,
+                                        action: \.myRoutineSubview)
+                        ) { store in
+                            Button(action: {
+                                viewStore.send(.touchedMyRoutine(store.myRoutine))
+                            }) {
+                                MyRoutineSubview(store: store)
+                            }
                         }
                     }
+                    .offset(x: 15)
+                    .padding(.trailing, 25)
                 }
-                .offset(x: 15)
-                .padding(.trailing, 25)
             }
         }
     }

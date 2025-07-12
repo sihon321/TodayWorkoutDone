@@ -42,14 +42,14 @@ struct RoutineState: RoutineData, Codable, Equatable, Identifiable {
     
     init(workout: WorkoutState,
          sets: [WorkoutSetState] = [WorkoutSetState(order: 1)],
-         equipmentType: EquipmentType = .barbel,
+         equipmentType: EquipmentType?,
          averageEndDate: Double? = nil,
          calories: Double = 0.0,
          restTime: Int = 0,
          endDate: Date? = nil) {
         self.workout = workout
         self.sets = sets
-        self.equipmentType = equipmentType
+        self.equipmentType = equipmentType ?? .bar
         self.avgSetDuration = averageEndDate
         self.calories = calories
         self.restTime = restTime
@@ -143,7 +143,7 @@ class Routine: RoutineData, Equatable {
     init(index: Int,
          workout: WorkoutType,
          sets: [WorkoutSetType] = [],
-         equipmentType: EquipmentType = .barbel,
+         equipmentType: EquipmentType,
          averageEndDate: Double? = nil,
          calories: Double = 0.0,
          restTime: Int = 0,

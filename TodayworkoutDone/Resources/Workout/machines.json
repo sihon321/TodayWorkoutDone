@@ -24,7 +24,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_horizontal_bench_press",
         "isSelected": false,
@@ -57,7 +57,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_bench_press",
         "isSelected": false,
@@ -90,7 +90,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_incline_press",
         "isSelected": false,
@@ -123,7 +123,7 @@
         "recommendedReps": "8~12회 x 3세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_super_incline_press",
         "isSelected": false,
@@ -156,7 +156,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_decline_chest_press",
         "isSelected": false,
@@ -189,7 +189,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_wide_chest",
         "isSelected": false,
@@ -227,7 +227,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_chest_back",
         "isSelected": false,
@@ -260,7 +260,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_shoulder_press",
         "isSelected": false,
@@ -298,7 +298,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_row",
         "isSelected": false,
@@ -331,7 +331,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_high_row",
         "isSelected": false,
@@ -364,7 +364,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_low_row",
         "isSelected": false,
@@ -401,7 +401,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_dy_row",
         "isSelected": false,
@@ -435,7 +435,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_front_lat_pulldown",
         "isSelected": false,
@@ -471,7 +471,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_wide_pulldown",
         "isSelected": false,
@@ -504,7 +504,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_leg_extension",
         "isSelected": false,
@@ -537,7 +537,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "iso_lateral_leg_curl",
         "isSelected": false,
@@ -573,7 +573,7 @@
         "recommendedReps": "운동 종류에 따라 다름",
         "restInterval": "운동 종류에 따라 다름",
         "equipment": [
-            "스미스 머신"
+            "machine"
         ],
         "animationName": "vertical_smith_machine",
         "isSelected": false,
@@ -609,7 +609,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "T-Bar Row 머신"
+            "machine"
         ],
         "animationName": "t_bar_row",
         "isSelected": false,
@@ -645,7 +645,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "pullover",
         "isSelected": false,
@@ -678,7 +678,7 @@
         "recommendedReps": "10~15회 또는 실패 지점까지",
         "restInterval": "30~60초",
         "equipment": [
-            "핸드 그립퍼"
+            "machine"
         ],
         "animationName": "gripper",
         "isSelected": false,
@@ -715,7 +715,7 @@
         "recommendedReps": "10~15회 x 2-3세트 (가벼운 무게로)",
         "restInterval": "30~60초",
         "equipment": [
-            "4-Way Neck 머신"
+            "machine"
         ],
         "animationName": "4_way_neck",
         "isSelected": false,
@@ -750,7 +750,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "linear_hack_squat",
         "isSelected": false,
@@ -785,7 +785,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "hack_squat",
         "isSelected": false,
@@ -820,7 +820,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "linear_leg_press",
         "isSelected": false,
@@ -853,7 +853,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "leg_press",
         "isSelected": false,
@@ -886,7 +886,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "leg_extension",
         "isSelected": false,
@@ -919,7 +919,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "seated_leg_curl",
         "isSelected": false,
@@ -952,7 +952,7 @@
         "recommendedReps": "15~20회 x 3~4세트",
         "restInterval": "45~60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "seated_calf_raise",
         "isSelected": false,
@@ -987,7 +987,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "seated_dip",
         "isSelected": false,
@@ -1021,7 +1021,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "45~60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "shrug",
         "isSelected": false,
@@ -1056,7 +1056,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "45~60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "lateral_raise",
         "isSelected": false,
@@ -1097,7 +1097,7 @@
         "recommendedReps": "15~20회 (방향별) x 3세트",
         "restInterval": "45~60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "plate_loaded_abdominal_oblique_crunch"
     },
@@ -1126,7 +1126,7 @@
         "recommendedReps": "8~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "belt_squat",
         "isSelected": false,
@@ -1164,7 +1164,7 @@
         "recommendedReps": "6~10회 x 3~4세트",
         "restInterval": "90~120초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "ground_base_jammer",
         "isSelected": false,
@@ -1201,7 +1201,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "90~120초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "ground_base_multi_squat",
         "isSelected": false,
@@ -1239,7 +1239,7 @@
         "recommendedReps": "5~8회 x 3~4세트",
         "restInterval": "90~120초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "ground_base_squat_high_pull",
         "isSelected": false,
@@ -1276,7 +1276,7 @@
         "recommendedReps": "6~10회 x 3~4세트",
         "restInterval": "90~120초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "ground_base_combo_incline",
         "isSelected": false,
@@ -1313,7 +1313,7 @@
         "recommendedReps": "6~10회 x 3~4세트",
         "restInterval": "90~120초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "ground_base_combo_decline",
         "isSelected": false,
@@ -1351,7 +1351,7 @@
         "recommendedReps": "5~8회 (방향별) x 3세트",
         "restInterval": "90~120초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "ground_base_combo_twist",
         "isSelected": false,
@@ -1389,7 +1389,7 @@
         "recommendedReps": "5~8회 x 3세트",
         "restInterval": "90~120초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "ground_base_twist_left",
         "isSelected": false,
@@ -1426,7 +1426,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "ground_base_glute_drive",
         "isSelected": false,
@@ -1464,7 +1464,7 @@
         "recommendedReps": "8~12회 (다리별) x 3세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "ground_base_squat_lunge",
         "isSelected": false,
@@ -1500,7 +1500,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_iso_lateral_chest_press",
         "isSelected": false,
@@ -1537,7 +1537,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_iso_lateral_incline_press",
         "isSelected": false,
@@ -1574,7 +1574,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_iso_lateral_decline_press",
         "isSelected": false,
@@ -1611,7 +1611,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_iso_lateral_shoulder_press",
         "isSelected": false,
@@ -1649,7 +1649,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_iso_lateral_high_row",
         "isSelected": false,
@@ -1687,7 +1687,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_iso_lateral_row",
         "isSelected": false,
@@ -1725,7 +1725,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_iso_lateral_front_pulldown",
         "isSelected": false,
@@ -1762,7 +1762,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_iso_lateral_biceps_curl",
         "isSelected": false,
@@ -1797,7 +1797,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_iso_lateral_triceps_extension",
         "isSelected": false,
@@ -1832,7 +1832,7 @@
         "recommendedReps": "15~20회 x 3~4세트",
         "restInterval": "45~60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_abdominal_crunch",
         "isSelected": false,
@@ -1867,7 +1867,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_iso_lateral_leg_extension",
         "isSelected": false,
@@ -1902,7 +1902,7 @@
         "recommendedReps": "10~15회 (다리별) x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_kneeling_leg_curl",
         "isSelected": false,
@@ -1938,7 +1938,7 @@
         "recommendedReps": "8~12회 x 3~4세트",
         "restInterval": "90~120초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "mts_v_squat",
         "isSelected": false,
@@ -1973,7 +1973,7 @@
         "recommendedReps": "10~15회 x 3세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_chest_press",
         "isSelected": false,
@@ -2009,7 +2009,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_shoulder_press",
         "isSelected": false,
@@ -2047,7 +2047,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_lat_pulldown",
         "isSelected": false,
@@ -2084,7 +2084,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_fixed_pulldown",
         "isSelected": false,
@@ -2119,7 +2119,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_seated_row",
         "isSelected": false,
@@ -2155,7 +2155,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_pectoral_fly",
         "isSelected": false,
@@ -2190,7 +2190,7 @@
         "recommendedReps": "12~15회 x 3세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_pectoral_fly_rear_deltoid",
         "isSelected": false,
@@ -2227,7 +2227,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "45~60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_lateral_raise",
         "isSelected": false,
@@ -2264,7 +2264,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_biceps_curl",
         "isSelected": false,
@@ -2299,7 +2299,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_triceps_extension",
         "isSelected": false,
@@ -2335,7 +2335,7 @@
         "recommendedReps": "10~15회 x 3~4세트",
         "restInterval": "60~90초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_leg_press",
         "isSelected": false,
@@ -2370,7 +2370,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_leg_extension",
         "isSelected": false,
@@ -2406,7 +2406,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_leg_curl",
         "isSelected": false,
@@ -2442,7 +2442,7 @@
         "recommendedReps": "12~15회 x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_seated_leg_curl",
         "isSelected": false,
@@ -2476,7 +2476,7 @@
         "recommendedReps": "15~20회 x 3~4세트",
         "restInterval": "45~60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_hip_abduction",
         "isSelected": false,
@@ -2509,7 +2509,7 @@
         "recommendedReps": "15~20회 x 3~4세트",
         "restInterval": "45~60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_hip_adduction",
         "isSelected": false,
@@ -2544,7 +2544,7 @@
         "recommendedReps": "12~15회 (다리별) x 3~4세트",
         "restInterval": "60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_hip_and_glute",
         "isSelected": false,
@@ -2580,7 +2580,7 @@
         "recommendedReps": "15~20회 x 3~4세트",
         "restInterval": "45~60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_standing_calf",
         "isSelected": false,
@@ -2616,80 +2616,13 @@
         "recommendedReps": "15~20회 x 3~4세트",
         "restInterval": "45~60초",
         "equipment": [
-            "머신"
+            "machine"
         ],
         "animationName": "select_horizontal_calf",
         "isSelected": false,
         "category": {
             "name": "strength",
             "classification": "machines",
-            "explanation": ""
-        }
-    },
-    {
-        "name": "Olympic Barbells & Plates",
-        "summary": "올림픽 바벨과 원판은 근력 운동의 가장 기본적인 도구입니다. 스쿼트, 데드리프트, 벤치프레스 등 다양한 복합 관절 운동을 통해 전신의 근력과 근육량을 효과적으로 증가시킬 수 있습니다.",
-        "target": [
-            "전신 근육 (운동 종류에 따라 다름)"
-        ],
-        "instructions": [
-            "운동 목적에 맞는 바벨과 원판을 선택합니다.",
-            "정확한 자세와 기술을 숙지하는 것이 매우 중요합니다.",
-            "코어에 힘을 주고, 통제된 속도로 운동을 수행합니다.",
-            "초보자는 반드시 전문가의 지도를 받아 안전하게 운동을 시작해야 합니다."
-        ],
-        "cautions": [
-            "자신의 수준을 넘어서는 과도한 중량은 심각한 부상을 초래할 수 있습니다.",
-            "부정확한 자세는 부상의 가장 큰 원인이므로 항상 자세에 신경 씁니다.",
-            "운동 전 충분한 웜업과 스트레칭을 실시합니다."
-        ],
-        "difficulty": 5,
-        "mets": 6,
-        "caloriesPer30Min": 210,
-        "recommendedReps": "운동 종류에 따라 다름",
-        "restInterval": "운동 강도에 따라 다름",
-        "equipment": [
-            "바벨",
-            "원판"
-        ],
-        "animationName": "olympic_barbells_and_plates",
-        "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": "free-weights",
-            "explanation": ""
-        }
-    },
-    {
-        "name": "Dumbbells & Fixed Barbells",
-        "summary": "덤벨과 고정 바벨은 다양한 근력 운동에 사용되는 필수적인 프리웨이트 도구입니다. 머신 운동에 비해 더 많은 협응력과 균형감각을 요구하며, 가동범위가 자유로워 특정 근육을 고립시키거나 다양한 각도로 자극하는 데 유리합니다.",
-        "target": [
-            "전신 근육 (운동 종류에 따라 다름)"
-        ],
-        "instructions": [
-            "목표하는 운동과 근력 수준에 맞는 무게의 덤벨 또는 바벨을 선택합니다.",
-            "각 운동의 정확한 자세를 숙지하고 수행합니다.",
-            "좌우 균형을 맞추며 통제된 움직임으로 운동합니다."
-        ],
-        "cautions": [
-            "처음에는 가벼운 무게로 시작하여 정확한 자세를 익히는 데 집중합니다.",
-            "운동 중 균형을 잃지 않도록 주의하고, 필요시 보조를 받습니다.",
-            "무리한 중량은 관절에 부담을 줄 수 있습니다."
-        ],
-        "difficulty": 4,
-        "mets": 5,
-        "caloriesPer30Min": 175,
-        "recommendedReps": "운동 종류에 따라 다름",
-        "restInterval": "운동 강도에 따라 다름",
-        "equipment": [
-            "덤벨",
-            "고정 바벨"
-        ],
-        "animationName": "dumbbells_and_fixed_barbells",
-        "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": "free-weights",
             "explanation": ""
         }
     }

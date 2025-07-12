@@ -221,9 +221,11 @@ struct WorkoutReducer {
                                     .workout
 
                                 if workout.isSelected {
-                                    state.myRoutine.routines.append(RoutineState(workout: workout))
-                                    for index in 0..<state.workoutCategory.workoutList.count {
-                                        state.workoutCategory.workoutList[index].routines.append(RoutineState(workout: workout))
+                                    if let equipment = workout.equipment.first {
+                                        state.myRoutine.routines.append(RoutineState(workout: workout, equipmentType: EquipmentType(rawValue: equipment)))
+                                        for index in 0..<state.workoutCategory.workoutList.count {
+                                            state.workoutCategory.workoutList[index].routines.append(RoutineState(workout: workout, equipmentType: EquipmentType(rawValue: equipment)))
+                                        }
                                     }
                                 } else {
                                     state.myRoutine.routines.removeAll { $0.workout.name == workout.name }
