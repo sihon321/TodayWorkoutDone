@@ -14,6 +14,7 @@ struct WorkingOutHeaderReducer {
     struct State: Equatable {
         var routine: RoutineState
         var editMode: EditMode
+        @Shared(.appStorage("weightUnit")) var weightUnit: SettingsReducer.WeightUnit = .meter
         
         init(routine: RoutineState, editMode: EditMode) {
             self.routine = routine
@@ -123,7 +124,7 @@ struct WorkingOutHeader: View {
                 .font(.system(size: 17, weight: .medium))
                 .frame(minWidth: viewStore.editMode == .inactive ? 85 : 110)
                 
-            Text("kg")
+            Text(viewStore.weightUnit.unit)
                 .font(.system(size: 17, weight: .medium))
                 .frame(minWidth: viewStore.editMode == .inactive ? 85 : 100)
                 

@@ -2,7 +2,7 @@
   {
     "category": {
         "name": "stretching",
-        "classification": "stretching",
+        "classification": ["stretching"],
         "explanation": ""
     },
     "name": "전신 스트레칭",

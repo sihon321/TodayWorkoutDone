@@ -2,7 +2,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "헌드레드",
@@ -29,7 +29,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "롤업",
@@ -56,7 +56,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "롤오버",
@@ -83,7 +83,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "싱글 레그 서클",
@@ -110,7 +110,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "공처럼 굴리기",
@@ -137,7 +137,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "싱글 레그 스트레치",
@@ -164,7 +164,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "더블 레그 스트레치",
@@ -191,7 +191,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "척추 스트레치 포워드",
@@ -218,7 +218,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "오픈 레그 로커",
@@ -245,7 +245,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "코크스크류",
@@ -272,7 +272,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "쏘우",
@@ -299,7 +299,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "스완",
@@ -326,7 +326,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "싱글 레그 킥",
@@ -353,7 +353,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "더블 레그 킥",
@@ -380,7 +380,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "넥 풀",
@@ -407,7 +407,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "하이 시저스",
@@ -434,7 +434,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "하이 바이시클",
@@ -461,7 +461,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "숄더 브리지",
@@ -488,7 +488,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "스파인 트위스트",
@@ -515,7 +515,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "잭나이프",
@@ -542,7 +542,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "사이드 킥",
@@ -569,7 +569,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "티저",
@@ -596,7 +596,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "힙 트위스트",
@@ -623,7 +623,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "스위밍",
@@ -650,7 +650,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "레그 풀 프론트",
@@ -677,7 +677,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "레그 풀",
@@ -704,7 +704,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "사이드 킥 니링",
@@ -731,7 +731,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "사이드 벤드",
@@ -758,7 +758,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "부메랑",
@@ -785,7 +785,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "씰",
@@ -812,7 +812,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "크랩",
@@ -839,7 +839,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "로킹",
@@ -866,7 +866,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "컨트롤 밸런스",
@@ -893,7 +893,7 @@
     {
         "category": {
             "name": "pilates",
-            "classification": "pilates",
+            "classification": ["pilates"],
             "explanation": ""
         },
         "name": "푸시업",

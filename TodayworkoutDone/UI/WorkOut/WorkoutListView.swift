@@ -283,8 +283,8 @@ struct WorkoutListView: View {
         .onAppear {
             if store.category.categoryType == .strength {
                 store.send(.typeSelected(.weight))
-            } else {
-                store.send(.getWorkouts(viewStore.category.classification))
+            } else if let classification = viewStore.category.classification.first {
+                store.send(.getWorkouts(classification))
             }
         }
         .tint(.todBlack)

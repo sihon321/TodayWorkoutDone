@@ -1,27 +1,27 @@
 [
     {
         "name": "strength",
-        "classification": "weight",
-        "explanation": ""
+        "classification": ["weight", "machines"],
+        "explanation": "근육의 힘과 크기를 키우는 운동입니다. 기구나 체중을 이용해 신체를 단련하고 기초대사량을 높입니다."
     },
     {
         "name": "pilates",
-        "classification": "pilates",
-        "explanation": ""
+        "classification": ["pilates"],
+        "explanation": "코어 강화와 자세 교정에 집중하는 운동입니다. 호흡과 함께 신체 균형을 잡고 속근육을 단련시켜 아름다운 몸의 선을 만듭니다."
     },
     {
         "name": "cardio",
-        "classification": "cardio",
-        "explanation": ""
+        "classification": ["cardio"],
+        "explanation": "심장과 폐의 건강을 위한 운동입니다. 심박수를 높여 체지방을 태우고 심폐 지구력을 향상시킵니다."
     },
     {
         "name": "yoga",
-        "classification": "yoga",
-        "explanation": ""
+        "classification": ["yoga"],
+        "explanation": "몸과 마음의 조화를 추구하는 심신 수련입니다. 다양한 자세와 호흡, 명상을 통해 유연성과 균형 감각을 기릅니다."
     },
     {
         "name": "stretching",
-        "classification": "stretching",
-        "explanation": ""
+        "classification": ["stretching"],
+        "explanation": "근육의 긴장을 풀고 유연성을 높이는 운동입니다. 운동 전후 부상 예방과 피로 회복에 효과적입니다."
     }
 ]

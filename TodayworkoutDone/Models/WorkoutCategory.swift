@@ -11,7 +11,7 @@ import HealthKit
 
 protocol WorkoutCategoryData {
     var name: String { get set }
-    var classification: String { get }
+    var classification: [String] { get }
     var explanation: String { get }
 }
 
@@ -41,7 +41,7 @@ struct WorkoutCategoryState: WorkoutCategoryData, Equatable, Codable {
     }
 
     var name: String
-    var classification: String
+    var classification: [String]
     var explanation: String
     
     var categoryType: WorkoutCategoryType {
@@ -53,7 +53,7 @@ struct WorkoutCategoryState: WorkoutCategoryData, Equatable, Codable {
     }
     
     init(name: String,
-         classification: String,
+         classification: [String],
          explanation: String) {
         self.name = name
         self.classification = classification
@@ -63,7 +63,7 @@ struct WorkoutCategoryState: WorkoutCategoryData, Equatable, Codable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
-        classification = try container.decode(String.self, forKey: .classification)
+        classification = try container.decode([String].self, forKey: .classification)
         explanation = try container.decode(String.self, forKey: .explanation)
     }
     
@@ -94,10 +94,12 @@ extension WorkoutCategoryState {
 @Model
 class WorkoutCategory: WorkoutCategoryData, Equatable {
     var name: String
-    var classification: String
+    var classification: [String]
     var explanation: String
 
-    init(name: String, classification: String, explanation: String) {
+    init(name: String,
+         classification: [String],
+         explanation: String) {
         self.name = name
         self.classification = classification
         self.explanation = explanation

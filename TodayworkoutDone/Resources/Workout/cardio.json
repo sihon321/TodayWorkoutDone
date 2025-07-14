@@ -2,7 +2,7 @@
     {
         "category": {
             "name": "cardio",
-            "classification": "cardio",
+            "classification": ["cardio"],
             "explanation": ""
         },
         "name": "걷기",
@@ -29,7 +29,7 @@
     {
         "category": {
             "name": "cardio",
-            "classification": "cardio",
+            "classification": ["cardio"],
             "explanation": ""
         },
         "name": "조깅",
@@ -56,7 +56,7 @@
     {
         "category": {
             "name": "cardio",
-            "classification": "cardio",
+            "classification": ["cardio"],
             "explanation": ""
         },
         "name": "러닝",
@@ -83,7 +83,7 @@
     {
         "category": {
             "name": "cardio",
-            "classification": "cardio",
+            "classification": ["cardio"],
             "explanation": ""
         },
         "name": "사이클",
@@ -110,7 +110,7 @@
     {
         "category": {
             "name": "cardio",
-            "classification": "cardio",
+            "classification": ["cardio"],
             "explanation": ""
         },
         "name": "수영",
@@ -137,7 +137,7 @@
     {
         "category": {
             "name": "cardio",
-            "classification": "cardio",
+            "classification": ["cardio"],
             "explanation": ""
         },
         "name": "로잉",

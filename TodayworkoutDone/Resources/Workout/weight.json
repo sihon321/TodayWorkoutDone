@@ -2,7 +2,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "체스트 프레스",
@@ -38,7 +38,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "플라이",
@@ -72,7 +72,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "푸쉬업",
@@ -106,7 +106,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "인클라인 벤치 프레스",
@@ -140,7 +140,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "디클라인 벤치 프레스",
@@ -174,7 +174,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "체스트 딥",
@@ -209,7 +209,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "케이블 크로스 오버",
@@ -242,7 +242,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "데드리프트",
@@ -280,7 +280,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "렛풀다운",
@@ -315,7 +315,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "벤트오버 로우",
@@ -351,7 +351,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "시티드 로우",
@@ -387,7 +387,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "풀업",
@@ -422,7 +422,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "숄더 프레스",
@@ -457,7 +457,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "사이드 레터럴 레이즈",
@@ -490,7 +490,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "프론트 레이즈",
@@ -524,7 +524,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "벤트오버 레터럴 레이즈",
@@ -559,7 +559,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "바벨 컬",
@@ -592,7 +592,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "덤벨 컬",
@@ -624,7 +624,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "트라이셉스 푸시다운",
@@ -656,7 +656,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "트라이셉스 익스텐션",
@@ -689,7 +689,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "스쿼트",
@@ -725,7 +725,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "레그 프레스",
@@ -758,7 +758,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "런지",
@@ -794,7 +794,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "레그 익스텐션",
@@ -826,7 +826,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "레그 컬",
@@ -858,7 +858,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "카프 레이즈",
@@ -892,7 +892,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "크런치",
@@ -924,7 +924,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "플랭크",
@@ -956,7 +956,7 @@
     {
         "category": {
             "name": "strength",
-            "classification": "weight",
+            "classification": ["weight"],
             "explanation": ""
         },
         "name": "레그 레이즈",

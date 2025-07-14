@@ -2,7 +2,7 @@
     {
         "category": {
             "name": "yoga",
-            "classification": "yoga",
+            "classification": ["yoga"],
             "explanation": ""
         },
         "name": "타다아사나",
@@ -33,7 +33,7 @@
     {
         "category": {
             "name": "yoga",
-            "classification": "yoga",
+            "classification": ["yoga"],
             "explanation": ""
         },
         "name": "전사",
@@ -64,7 +64,7 @@
     {
         "category": {
             "name": "yoga",
-            "classification": "yoga",
+            "classification": ["yoga"],
             "explanation": ""
         },
         "name": "우티타 트리코나사나",
@@ -91,7 +91,7 @@
     {
         "category": {
             "name": "yoga",
-            "classification": "yoga",
+            "classification": ["yoga"],
             "explanation": ""
         },
         "name": "받다코나사나",
@@ -118,7 +118,7 @@
     {
         "category": {
             "name": "yoga",
-            "classification": "yoga",
+            "classification": ["yoga"],
             "explanation": ""
         },
         "name": "수카아사나",
@@ -145,7 +145,7 @@
     {
         "category": {
             "name": "yoga",
-            "classification": "yoga",
+            "classification": ["yoga"],
             "explanation": ""
         },
         "name": "사바아사나",
@@ -172,7 +172,7 @@
     {
         "category": {
             "name": "yoga",
-            "classification": "yoga",
+            "classification": ["yoga"],
             "explanation": ""
         },
         "name": "브륵샤아사나",
@@ -199,7 +199,7 @@
     {
         "category": {
             "name": "yoga",
-            "classification": "yoga",
+            "classification": ["yoga"],
             "explanation": ""
         },
         "name": "발라아사나",
