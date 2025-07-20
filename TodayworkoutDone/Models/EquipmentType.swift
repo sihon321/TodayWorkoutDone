@@ -12,6 +12,8 @@ enum EquipmentType: String, Codable {
     case machine, barbell, dumbbell, cable, bar, body
     case mat, reformer, cadillac, chair, barrel, springboard
     
+    case none
+    
     var kor: String {
         switch self {
         case .machine: "머신"
@@ -27,6 +29,8 @@ enum EquipmentType: String, Codable {
         case .chair: "체어"
         case .barrel: "바렐"
         case .springboard: "스프링보드"
+            
+        case .none: ""
         }
     }
     

@@ -137,11 +137,16 @@ struct MakeWorkoutReducer {
                                 .workoutListSubview[rowIndex]
                                 .workout
                             if workout.isSelected {
-                                if let equipment = workout.equipment.first {
-                                    state.myRoutine.routines.append(RoutineState(workout: workout, equipmentType: EquipmentType(rawValue: equipment)))
-                                    for index in 0..<addWorkoutCategory.workoutList.count {
-                                        state.addWorkoutCategory?.workoutList[index].routines.append(RoutineState(workout: workout, equipmentType: EquipmentType(rawValue: equipment)))
-                                    }
+                                let equipmentType = EquipmentType(rawValue: workout.equipment.first ?? "") ?? .none
+                                state.myRoutine.routines.append(
+                                    RoutineState(workout: workout,
+                                                 equipmentType: equipmentType)
+                                )
+                                for index in 0..<addWorkoutCategory.workoutList.count {
+                                    state.addWorkoutCategory?.workoutList[index].routines.append(
+                                        RoutineState(workout: workout,
+                                                     equipmentType: equipmentType)
+                                    )
                                 }
                             } else {
                                 state.myRoutine.routines.removeAll { $0.workout.name == workout.name }

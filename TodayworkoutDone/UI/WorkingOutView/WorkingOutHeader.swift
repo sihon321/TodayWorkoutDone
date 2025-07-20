@@ -57,25 +57,26 @@ struct WorkingOutHeader: View {
                 Text(viewStore.routine.workout.name)
                     .font(.system(size: 20, weight: .semibold))
                 
-                Button(action: {}) {
-                    Menu {
-                        let types = viewStore.routine.workout.equipment.compactMap { EquipmentType(rawValue: $0) }
-                        
-                        ForEach(types, id: \.self) { type in
-                            Button(action: {
-                                viewStore.send(.tappedWorkoutsType(type: type))
-                            }) {
-                                Label(type.rawValue, systemImage: "pencil")
+                let types = viewStore.routine.workout.equipment.compactMap { EquipmentType(rawValue: $0) }
+                if types.isEmpty == false && types.contains(.none) == false {
+                    Button(action: {}) {
+                        Menu {
+                            ForEach(types, id: \.self) { type in
+                                Button(action: {
+                                    viewStore.send(.tappedWorkoutsType(type: type))
+                                }) {
+                                    Label(type.rawValue, systemImage: "pencil")
+                                }
                             }
+                        } label: {
+                            Text(viewStore.routine.equipmentType.kor)
+                                .padding([.leading, .trailing], 5)
+                                .padding([.top, .bottom], 3)
+                                .font(.system(size: 11))
+                                .foregroundStyle(.white)
+                                .background(Color.personal.opacity(0.6))
+                                .cornerRadius(3.0)
                         }
-                    } label: {
-                        Text(viewStore.routine.equipmentType.kor)
-                            .padding([.leading, .trailing], 5)
-                            .padding([.top, .bottom], 3)
-                            .font(.system(size: 11))
-                            .foregroundStyle(.white)
-                            .background(Color.personal.opacity(0.6))
-                            .cornerRadius(3.0)
                     }
                 }
                 Spacer()
