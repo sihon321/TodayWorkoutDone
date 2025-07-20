@@ -204,10 +204,10 @@ struct WorkingOutReducer {
                     }
                     return .none
                     
-                case let .typeRep(lab):
+                case let .typeRep(rep):
                     if let sectionIndex = state.workingOutSection.index(id: sectionId),
                        let rowIndex = state.workingOutSection[sectionIndex].workingOutRow.index(id: rowId),
-                       let labValue = Int(lab) {
+                       let labValue = Int(rep) {
                         state.myRoutine?.routines[sectionIndex].sets[rowIndex].reps = labValue
                     }
                     return .none

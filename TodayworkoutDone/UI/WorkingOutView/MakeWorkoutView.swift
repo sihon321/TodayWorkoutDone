@@ -19,6 +19,10 @@ struct MakeWorkoutReducer {
         var isEdit: Bool = false
         var isFocused: Bool = false
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State>
+        var filteredReps: [Int] = []
+        var filteredWeight: [Int] = []
+        var filteredRestTimes: [Int] = []
+        var filteredDurations: [Int] = []
         
         init(myRoutine: MyRoutineState,
              isEdit: Bool) {
@@ -215,17 +219,38 @@ struct MakeWorkoutReducer {
                             switch action {
                             case .toggleCheck:
                                 return .none
-                            case let .typeRep(lab):
-                            if let sectionIndex = state.workingOutSection
+                            case let .typeRep(rep):
+                                if let sectionIndex = state.workingOutSection
                                     .index(id: sectionId),
                                    let rowIndex = state.workingOutSection[sectionIndex]
                                     .workingOutRow
                                     .index(id: rowId),
-                                   let labValue = Int(lab) {
+                                   let repValue = Int(rep) {
                                     state.myRoutine
                                         .routines[sectionIndex]
                                         .sets[rowIndex]
-                                        .reps = labValue
+                                        .reps = repValue
+                                    
+                                    if rep.count == 1 {
+                                        state.filteredReps = state.myRoutine
+                                            .routines[sectionIndex]
+                                            .sets
+                                            .enumerated()
+                                            .filter { $0.element.reps == 0 }
+                                            .map { $0.offset }
+                                    }
+                                    let endIndex = state.workingOutSection[sectionIndex].workingOutRow.count
+                                    for index in rowIndex..<endIndex {
+                                        if state.filteredReps.contains(index) {
+                                            state.myRoutine
+                                                .routines[sectionIndex]
+                                                .sets[index]
+                                                .reps = repValue
+                                            state.workingOutSection[sectionIndex]
+                                                .workingOutRow[index]
+                                                .repText = String(repValue)
+                                        }
+                                    }
                                 }
                                 return .none
                             case let .typeWeight(weight):
@@ -239,6 +264,27 @@ struct MakeWorkoutReducer {
                                         .routines[sectionIndex]
                                         .sets[rowIndex]
                                         .weight = weightValue
+                                    
+                                    if weight.count == 1 {
+                                        state.filteredWeight = state.myRoutine
+                                            .routines[sectionIndex]
+                                            .sets
+                                            .enumerated()
+                                            .filter { $0.element.weight == 0.0 }
+                                            .map { $0.offset }
+                                    }
+                                    let endIndex = state.workingOutSection[sectionIndex].workingOutRow.count
+                                    for index in rowIndex..<endIndex {
+                                        if state.filteredWeight.contains(index) {
+                                            state.myRoutine
+                                                .routines[sectionIndex]
+                                                .sets[index]
+                                                .weight = weightValue
+                                            state.workingOutSection[sectionIndex]
+                                                .workingOutRow[index]
+                                                .weightText = String(weightValue)
+                                        }
+                                    }
                                 }
                                 return .none
                             case .typeRestTime(let restTime):
@@ -250,6 +296,27 @@ struct MakeWorkoutReducer {
                                         .routines[sectionIndex]
                                         .sets[rowIndex]
                                         .restTime = restTime.timeStringToSeconds()
+                                    
+                                    if restTime.count == 1 {
+                                        state.filteredRestTimes = state.myRoutine
+                                            .routines[sectionIndex]
+                                            .sets
+                                            .enumerated()
+                                            .filter { $0.element.restTime == 0 }
+                                            .map { $0.offset }
+                                    }
+                                    let endIndex = state.workingOutSection[sectionIndex].workingOutRow.count
+                                    for index in rowIndex..<endIndex {
+                                        if state.filteredRestTimes.contains(index) {
+                                            state.myRoutine
+                                                .routines[sectionIndex]
+                                                .sets[index]
+                                                .restTime = restTime.timeStringToSeconds()
+                                            state.workingOutSection[sectionIndex]
+                                                .workingOutRow[index]
+                                                .restTimeText = restTime.formattedTime()
+                                        }
+                                    }
                                 }
                                 return .none
                             case .typeDuration(let duration):
@@ -261,9 +328,36 @@ struct MakeWorkoutReducer {
                                         .routines[sectionIndex]
                                         .sets[rowIndex]
                                         .duration = duration.timeStringToSeconds()
+                                    
+                                    if duration.count == 1 {
+                                        state.filteredDurations = state.myRoutine
+                                            .routines[sectionIndex]
+                                            .sets
+                                            .enumerated()
+                                            .filter { $0.element.duration == 0 }
+                                            .map { $0.offset }
+                                    }
+                                    let endIndex = state.workingOutSection[sectionIndex].workingOutRow.count
+                                    for index in rowIndex..<endIndex {
+                                        if state.filteredDurations.contains(index) {
+                                            state.myRoutine
+                                                .routines[sectionIndex]
+                                                .sets[index]
+                                                .duration = duration.timeStringToSeconds()
+                                            state.workingOutSection[sectionIndex]
+                                                .workingOutRow[index]
+                                                .durationText = duration.formattedTime()
+                                        }
+                                    }
                                 }
                                 return .none
-                            case .setFocus, .dismissKeyboard, .timerView, .presentStopWatch:
+                            case .setFocus:
+                                state.filteredReps.removeAll()
+                                state.filteredWeight.removeAll()
+                                state.filteredRestTimes.removeAll()
+                                state.filteredDurations.removeAll()
+                                return .none
+                            case .dismissKeyboard, .timerView, .presentStopWatch:
                                 return .none
                             case .stopwatch:
                                 return .none
