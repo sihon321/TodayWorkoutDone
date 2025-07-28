@@ -17,7 +17,11 @@ struct CountdownTimerReducer {
         var isRunning: Bool = false
         
         init(totalTime: Int) {
-            self.totalTime = totalTime
+            if totalTime == 0 {
+                self.totalTime = 100
+            } else {
+                self.totalTime = totalTime
+            }
             self.timeRemaining = totalTime
         }
     }

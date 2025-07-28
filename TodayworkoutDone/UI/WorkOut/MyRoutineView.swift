@@ -62,22 +62,23 @@ struct MyRoutineView: View {
                         Image(systemName: "plus")
                             .resizable()
                             .frame(width: 15, height: 15)
+                            .foregroundStyle(.white)
                         Text("루틴 추가")
                             .font(.system(size: 15))
+                            .foregroundStyle(.white)
                     }
                     .frame(width: 100)
                     .padding(5)
-                    .background(Color.contentBackground)
+                    .background(Color.personal)
                     .cornerRadius(15)
                 }
-                .shadow(color: .shadowColor, radius: 0.5, x: 1, y: 1)
             }
             .padding(.horizontal, 15)
             if viewStore.myRoutineSubview.isEmpty {
                 VStack {
                     Text("루틴 추가를 누르거나 운동을 선택해 루틴을 만드세요.")
                         .font(.system(size: 15))
-                        .foregroundColor(Color.todBlack)
+                        .foregroundColor(Color.gray88)
                 }
                 .frame(maxWidth: .infinity,
                        minHeight: 120,

@@ -1,10 +1,6 @@
 [
     {
-        "category": {
-            "name": "cardio",
-            "classification": ["cardio"],
-            "explanation": ""
-        },
+        "categoryName": "cardio",
         "name": "걷기",
         "target": ["유산소"],
         "isSelected": false,
@@ -27,11 +23,7 @@
         "animationName": "walking"
     },
     {
-        "category": {
-            "name": "cardio",
-            "classification": ["cardio"],
-            "explanation": ""
-        },
+        "categoryName": "cardio",
         "name": "조깅",
         "target": ["유산소"],
         "isSelected": false,
@@ -54,11 +46,7 @@
         "animationName": "jogging"
     },
     {
-        "category": {
-            "name": "cardio",
-            "classification": ["cardio"],
-            "explanation": ""
-        },
+        "categoryName": "cardio",
         "name": "러닝",
         "target": ["유산소"],
         "isSelected": false,
@@ -81,11 +69,7 @@
         "animationName": "running"
     },
     {
-        "category": {
-            "name": "cardio",
-            "classification": ["cardio"],
-            "explanation": ""
-        },
+        "categoryName": "cardio",
         "name": "사이클",
         "target": ["유산소"],
         "isSelected": false,
@@ -108,11 +92,7 @@
         "animationName": "cycling"
     },
     {
-        "category": {
-            "name": "cardio",
-            "classification": ["cardio"],
-            "explanation": ""
-        },
+        "categoryName": "cardio",
         "name": "수영",
         "target": ["유산소"],
         "isSelected": false,
@@ -135,11 +115,7 @@
         "animationName": "swimming"
     },
     {
-        "category": {
-            "name": "cardio",
-            "classification": ["cardio"],
-            "explanation": ""
-        },
+        "categoryName": "cardio",
         "name": "로잉",
         "target": ["유산소"],
         "isSelected": false,

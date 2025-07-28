@@ -1,10 +1,6 @@
 [
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "체스트 프레스",
         "target": [
             "대흉근 (전체)",
@@ -36,11 +32,7 @@
         "animationName": "bench_press"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "플라이",
         "target": [
             "대흉근 (특히 안쪽)",
@@ -70,11 +62,7 @@
         "animationName": "fly"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "푸쉬업",
         "target": [
             "대흉근",
@@ -104,11 +92,7 @@
         "animationName": "push_up"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "인클라인 벤치 프레스",
         "target": [
             "대흉근 상부",
@@ -138,11 +122,7 @@
         "animationName": "incline_bench_press"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "디클라인 벤치 프레스",
         "target": [
             "대흉근 하부",
@@ -172,11 +152,7 @@
         "animationName": "decline_bench_press"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "체스트 딥",
         "target": [
             "대흉근 하부",
@@ -207,11 +183,7 @@
         "animationName": "chest_dip"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "케이블 크로스 오버",
         "target": [
             "대흉근 (특히 안쪽과 하부)",
@@ -240,11 +212,7 @@
         "animationName": "cable_cross_over"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "데드리프트",
         "target": [
             "척추기립근",
@@ -278,11 +246,7 @@
         "animationName": "deadlift"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "렛풀다운",
         "target": [
             "광배근",
@@ -313,11 +277,7 @@
         "animationName": "lat_pulldown"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "벤트오버 로우",
         "target": [
             "광배근",
@@ -349,11 +309,7 @@
         "animationName": "bent_over_row"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "시티드 로우",
         "target": [
             "광배근",
@@ -385,11 +341,7 @@
         "animationName": "seated_row"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "풀업",
         "target": [
             "광배근",
@@ -420,11 +372,7 @@
         "animationName": "pull_up"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "숄더 프레스",
         "target": [
             "전면 삼각근",
@@ -455,11 +403,7 @@
         "animationName": "shoulder_press"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "사이드 레터럴 레이즈",
         "target": [
             "측면 삼각근",
@@ -488,11 +432,7 @@
         "animationName": "side_lateral_raise"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "프론트 레이즈",
         "target": [
             "전면 삼각근",
@@ -522,11 +462,7 @@
         "animationName": "front_raise"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "벤트오버 레터럴 레이즈",
         "target": [
             "후면 삼각근",
@@ -557,11 +493,7 @@
         "animationName": "bent_over_lateral_raise"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "바벨 컬",
         "target": [
             "상완이두근",
@@ -590,11 +522,7 @@
         "animationName": "barbell_curl"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "덤벨 컬",
         "target": [
             "상완이두근",
@@ -622,11 +550,7 @@
         "animationName": "dumbbell_curl"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "트라이셉스 푸시다운",
         "target": [
             "상완삼두근"
@@ -654,11 +578,7 @@
         "animationName": "triceps_pushdown"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "트라이셉스 익스텐션",
         "target": [
             "상완삼두근"
@@ -687,11 +607,7 @@
         "animationName": "triceps_extension"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "스쿼트",
         "target": [
             "대퇴사두근",
@@ -723,11 +639,7 @@
         "animationName": "squat"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "레그 프레스",
         "target": [
             "대퇴사두근",
@@ -756,11 +668,7 @@
         "animationName": "leg_press"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "런지",
         "target": [
             "대퇴사두근",
@@ -792,11 +700,7 @@
         "animationName": "lunge"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "레그 익스텐션",
         "target": [
             "대퇴사두근"
@@ -824,11 +728,7 @@
         "animationName": "leg_extension"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "레그 컬",
         "target": [
             "슬굴곡근 (햄스트링)"
@@ -856,11 +756,7 @@
         "animationName": "leg_curl"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "카프 레이즈",
         "target": [
             "비복근",
@@ -890,11 +786,7 @@
         "animationName": "calf_raise"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "크런치",
         "target": [
             "복직근 (특히 상부)"
@@ -922,11 +814,7 @@
         "animationName": "crunch"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "플랭크",
         "target": [
             "코어 전체 (복횡근, 복직근, 척추기립근)",
@@ -954,11 +842,7 @@
         "animationName": "plank"
     },
     {
-        "category": {
-            "name": "strength",
-            "classification": ["weight"],
-            "explanation": ""
-        },
+        "categoryName": "strength",
         "name": "레그 레이즈",
         "target": [
             "복직근 (특히 하부)",

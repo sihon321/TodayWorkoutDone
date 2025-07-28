@@ -15,6 +15,7 @@ struct WorkingOutSectionReducer {
         let id: UUID
         var editMode: EditMode
         var routine: RoutineState
+        var categoryType: WorkoutCategoryState.WorkoutCategoryType
         var workingOutRow: IdentifiedArrayOf<WorkingOutRowReducer.State>
         var workingOutHeader: WorkingOutHeaderReducer.State
         
@@ -22,10 +23,12 @@ struct WorkingOutSectionReducer {
             self.id = routine.id
             self.routine = routine
             self.editMode = editMode
+            let type = WorkoutCategoryState.WorkoutCategoryType(rawValue: routine.workout.categoryName) ?? .strength
+            self.categoryType = type
             self.workingOutRow = IdentifiedArrayOf(
                 uniqueElements: routine.sets.enumerated().map {
                     WorkingOutRowReducer.State(
-                        category: routine.workout.category,
+                        categoryType: type,
                         workoutSet: $0.element,
                         editMode: editMode
                     )
@@ -105,7 +108,7 @@ struct WorkingOutSection: View {
                                                 action: \.workingOutHeader),
                              equipmentType: .init(wrappedValue: store.routine.equipmentType))
             ForEach(store.scope(state: \.workingOutRow, action: \.workingOutRow)) { rowStore in
-                if viewStore.editMode == .active && viewStore.routine.workout.category.categoryType != .stretching {
+                if viewStore.editMode == .active && viewStore.categoryType != .stretching {
                     SwipeView(content: {
                         WorkingOutRow(store: rowStore)
                     }, onDelete: {
@@ -118,7 +121,7 @@ struct WorkingOutSection: View {
                     WorkingOutRow(store: rowStore)
                 }
             }
-            if viewStore.editMode == .active && viewStore.routine.workout.category.categoryType != .stretching {
+            if viewStore.editMode == .active && viewStore.categoryType != .stretching {
                 Button(action: {
                     viewStore.send(.tappedAddFooter)
                 }) {

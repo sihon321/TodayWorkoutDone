@@ -173,12 +173,13 @@ struct WorkingOutReducer {
                     let index = state.workingOutSection[sectionIndex]
                         .workingOutRow.count
                     let workoutSet = WorkoutSetState(order: index + 1)
-                    let category = state.workingOutSection[sectionIndex].routine.workout.category
+                    let categoryName = state.workingOutSection[sectionIndex].routine.workout.categoryName
+                    let categoryType = WorkoutCategoryState.WorkoutCategoryType(rawValue: categoryName) ?? .strength
                     state.workingOutSection[sectionIndex]
                         .workingOutRow
                         .append(
                             WorkingOutRowReducer.State(
-                                category: category,
+                                categoryType: categoryType,
                                 workoutSet: workoutSet,
                                 editMode: .active
                             )

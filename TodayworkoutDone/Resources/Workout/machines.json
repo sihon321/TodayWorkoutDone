@@ -28,11 +28,7 @@
         ],
         "animationName": "iso_lateral_horizontal_bench_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Bench Press",
@@ -61,11 +57,7 @@
         ],
         "animationName": "iso_lateral_bench_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Incline Press",
@@ -94,11 +86,7 @@
         ],
         "animationName": "iso_lateral_incline_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Super Incline Press",
@@ -127,11 +115,7 @@
         ],
         "animationName": "iso_lateral_super_incline_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Decline Chest Press",
@@ -160,11 +144,7 @@
         ],
         "animationName": "iso_lateral_decline_chest_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Wide Chest",
@@ -193,11 +173,7 @@
         ],
         "animationName": "iso_lateral_wide_chest",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Chest/Back",
@@ -231,11 +207,7 @@
         ],
         "animationName": "iso_lateral_chest_back",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Shoulder Press",
@@ -264,11 +236,7 @@
         ],
         "animationName": "iso_lateral_shoulder_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Row",
@@ -302,11 +270,7 @@
         ],
         "animationName": "iso_lateral_row",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral High Row",
@@ -335,11 +299,7 @@
         ],
         "animationName": "iso_lateral_high_row",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Low Row",
@@ -368,11 +328,7 @@
         ],
         "animationName": "iso_lateral_low_row",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral D.Y. Row",
@@ -405,11 +361,7 @@
         ],
         "animationName": "iso_lateral_dy_row",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Front Lat Pulldown",
@@ -439,11 +391,7 @@
         ],
         "animationName": "iso_lateral_front_lat_pulldown",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Wide Pulldown",
@@ -475,11 +423,7 @@
         ],
         "animationName": "iso_lateral_wide_pulldown",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Leg Extension",
@@ -508,11 +452,7 @@
         ],
         "animationName": "iso_lateral_leg_extension",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Iso-Lateral Leg Curl",
@@ -541,11 +481,7 @@
         ],
         "animationName": "iso_lateral_leg_curl",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Vertical Smith Machine",
@@ -577,11 +513,7 @@
         ],
         "animationName": "vertical_smith_machine",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded T-Bar Row",
@@ -613,11 +545,7 @@
         ],
         "animationName": "t_bar_row",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Pullover",
@@ -649,11 +577,7 @@
         ],
         "animationName": "pullover",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Gripper",
@@ -682,11 +606,7 @@
         ],
         "animationName": "gripper",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded 4-Way Neck",
@@ -719,11 +639,7 @@
         ],
         "animationName": "4_way_neck",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Linear Hack Squat",
@@ -754,11 +670,7 @@
         ],
         "animationName": "linear_hack_squat",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Hack Squat",
@@ -789,11 +701,7 @@
         ],
         "animationName": "hack_squat",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Linear Leg Press",
@@ -824,11 +732,7 @@
         ],
         "animationName": "linear_leg_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Leg Press",
@@ -857,11 +761,7 @@
         ],
         "animationName": "leg_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Leg Extension",
@@ -890,11 +790,7 @@
         ],
         "animationName": "leg_extension",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Seated Leg Curl",
@@ -923,11 +819,7 @@
         ],
         "animationName": "seated_leg_curl",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Seated Calf Raise",
@@ -956,11 +848,7 @@
         ],
         "animationName": "seated_calf_raise",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Seated Dip",
@@ -991,11 +879,7 @@
         ],
         "animationName": "seated_dip",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Seated/Standing Shrug",
@@ -1025,11 +909,7 @@
         ],
         "animationName": "shrug",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate Loaded Lateral Raise",
@@ -1060,19 +940,11 @@
         ],
         "animationName": "lateral_raise",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Plate-Loaded Abdominal Oblique Crunch",
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        },
+        "categoryName": "strength",,
         "target": [
             "복사근",
             "복직근"
@@ -1130,11 +1002,7 @@
         ],
         "animationName": "belt_squat",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Ground Base Jammer",
@@ -1168,11 +1036,7 @@
         ],
         "animationName": "ground_base_jammer",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Ground Base Multi-Squat",
@@ -1205,11 +1069,7 @@
         ],
         "animationName": "ground_base_multi_squat",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Ground Base Squat/High Pull",
@@ -1243,11 +1103,7 @@
         ],
         "animationName": "ground_base_squat_high_pull",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Ground Base Combo Incline",
@@ -1280,11 +1136,7 @@
         ],
         "animationName": "ground_base_combo_incline",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Ground Base Combo Decline",
@@ -1317,11 +1169,7 @@
         ],
         "animationName": "ground_base_combo_decline",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Ground Base Combo Twist",
@@ -1355,11 +1203,7 @@
         ],
         "animationName": "ground_base_combo_twist",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Ground Base Twist Left",
@@ -1393,11 +1237,7 @@
         ],
         "animationName": "ground_base_twist_left",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Ground Base Glute Drive",
@@ -1430,11 +1270,7 @@
         ],
         "animationName": "ground_base_glute_drive",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Ground Base Squat Lunge",
@@ -1468,11 +1304,7 @@
         ],
         "animationName": "ground_base_squat_lunge",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Iso-Lateral Chest Press",
@@ -1504,11 +1336,7 @@
         ],
         "animationName": "mts_iso_lateral_chest_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Iso-Lateral Incline Press",
@@ -1541,11 +1369,7 @@
         ],
         "animationName": "mts_iso_lateral_incline_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Iso-Lateral Decline Press",
@@ -1578,11 +1402,7 @@
         ],
         "animationName": "mts_iso_lateral_decline_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Iso-Lateral Shoulder Press",
@@ -1615,11 +1435,7 @@
         ],
         "animationName": "mts_iso_lateral_shoulder_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Iso-Lateral High Row",
@@ -1653,11 +1469,7 @@
         ],
         "animationName": "mts_iso_lateral_high_row",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Iso-Lateral Row",
@@ -1691,11 +1503,7 @@
         ],
         "animationName": "mts_iso_lateral_row",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Iso-Lateral Front Pulldown",
@@ -1729,11 +1537,7 @@
         ],
         "animationName": "mts_iso_lateral_front_pulldown",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Iso-Lateral Biceps Curl",
@@ -1766,11 +1570,7 @@
         ],
         "animationName": "mts_iso_lateral_biceps_curl",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Iso-Lateral Triceps Extension",
@@ -1801,11 +1601,7 @@
         ],
         "animationName": "mts_iso_lateral_triceps_extension",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Abdominal Crunch",
@@ -1836,11 +1632,7 @@
         ],
         "animationName": "mts_abdominal_crunch",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Iso-Lateral Leg Extension",
@@ -1871,11 +1663,7 @@
         ],
         "animationName": "mts_iso_lateral_leg_extension",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS Kneeling Leg Curl",
@@ -1906,11 +1694,7 @@
         ],
         "animationName": "mts_kneeling_leg_curl",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "MTS V-Squat",
@@ -1942,11 +1726,7 @@
         ],
         "animationName": "mts_v_squat",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Chest Press",
@@ -1977,11 +1757,7 @@
         ],
         "animationName": "select_chest_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Shoulder Press",
@@ -2013,11 +1789,7 @@
         ],
         "animationName": "select_shoulder_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Lat Pulldown",
@@ -2051,11 +1823,7 @@
         ],
         "animationName": "select_lat_pulldown",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Fixed Pulldown",
@@ -2088,11 +1856,7 @@
         ],
         "animationName": "select_fixed_pulldown",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Seated Row",
@@ -2123,11 +1887,7 @@
         ],
         "animationName": "select_seated_row",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Pectoral Fly",
@@ -2159,11 +1919,7 @@
         ],
         "animationName": "select_pectoral_fly",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Pectoral Fly/Rear Deltoid",
@@ -2194,11 +1950,7 @@
         ],
         "animationName": "select_pectoral_fly_rear_deltoid",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Lateral Raise",
@@ -2231,11 +1983,7 @@
         ],
         "animationName": "select_lateral_raise",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Biceps Curl",
@@ -2268,11 +2016,7 @@
         ],
         "animationName": "select_biceps_curl",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Triceps Extension",
@@ -2303,11 +2047,7 @@
         ],
         "animationName": "select_triceps_extension",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Leg Press",
@@ -2339,11 +2079,7 @@
         ],
         "animationName": "select_leg_press",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Leg Extension",
@@ -2374,11 +2110,7 @@
         ],
         "animationName": "select_leg_extension",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Leg Curl",
@@ -2410,11 +2142,7 @@
         ],
         "animationName": "select_leg_curl",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Seated Leg Curl",
@@ -2446,11 +2174,7 @@
         ],
         "animationName": "select_seated_leg_curl",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Hip Abduction",
@@ -2480,11 +2204,7 @@
         ],
         "animationName": "select_hip_abduction",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Hip Adduction",
@@ -2513,11 +2233,7 @@
         ],
         "animationName": "select_hip_adduction",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Hip and Glute",
@@ -2548,11 +2264,7 @@
         ],
         "animationName": "select_hip_and_glute",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Standing Calf",
@@ -2584,11 +2296,7 @@
         ],
         "animationName": "select_standing_calf",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     },
     {
         "name": "Select Horizontal Calf",
@@ -2620,10 +2328,6 @@
         ],
         "animationName": "select_horizontal_calf",
         "isSelected": false,
-        "category": {
-            "name": "strength",
-            "classification": ["machines"],
-            "explanation": ""
-        }
+        "categoryName": "strength",
     }
 ]

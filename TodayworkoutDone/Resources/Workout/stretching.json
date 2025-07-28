@@ -1,10 +1,6 @@
 [
   {
-    "category": {
-        "name": "stretching",
-        "classification": ["stretching"],
-        "explanation": ""
-    },
+    "categoryName": "stretching",
     "name": "전신 스트레칭",
     "target": ["유연성"],
     "isSelected": false,

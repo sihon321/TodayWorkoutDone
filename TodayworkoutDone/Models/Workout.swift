@@ -12,7 +12,7 @@ protocol WorkoutData {
     associatedtype WorkoutCategoryType
     
     var name: String { get set }
-    var category: WorkoutCategoryType { get set }
+    var categoryName: String { get set }
     var target: [String] { get set }
     var isSelected: Bool { get set }
     var summary: String { get set }                    // 운동 설명
@@ -32,7 +32,7 @@ struct WorkoutState: WorkoutData, Codable, Equatable {
     
     var id: UUID = UUID()
     var name: String
-    var category: WorkoutCategoryType
+    var categoryName: String
     var target: [String]
     var isSelected: Bool
     var summary: String
@@ -47,7 +47,7 @@ struct WorkoutState: WorkoutData, Codable, Equatable {
     var animationName: String?
     
     enum CodingKeys: String, CodingKey {
-        case name, category, target, isSelected, summary, instructions, cautions
+        case name, categoryName, target, isSelected, summary, instructions, cautions
         case difficulty, mets, caloriesPer30Min, recommendedReps, restInterval
         case equipment, animationName
     }
@@ -56,7 +56,7 @@ struct WorkoutState: WorkoutData, Codable, Equatable {
 extension WorkoutState {
     init(model: Workout) {
         self.name = model.name
-        self.category = model.category
+        self.categoryName = model.categoryName
         self.target = model.target
         self.isSelected = model.isSelected
         self.summary = model.summary
@@ -89,7 +89,7 @@ class Workout: WorkoutData, Equatable {
     typealias WorkoutCategoryType = WorkoutCategoryState
     
     var name: String
-    var category: WorkoutCategoryType
+    var categoryName: String
     var target: [String]
     var isSelected: Bool
     var summary: String
@@ -104,7 +104,7 @@ class Workout: WorkoutData, Equatable {
     var animationName: String?
 
     init(name: String,
-         category: WorkoutCategoryType,
+         categoryName: String,
          target: [String],
          isSelected: Bool,
          summary: String,
@@ -118,7 +118,7 @@ class Workout: WorkoutData, Equatable {
          equipment: [String],
          animationName: String?) {
         self.name = name
-        self.category = category
+        self.categoryName = categoryName
         self.target = target
         self.isSelected = isSelected
         self.summary = summary
@@ -137,7 +137,7 @@ class Workout: WorkoutData, Equatable {
 extension Workout {
     func update(from state: WorkoutState) {
         name = state.name
-        category = state.category
+        categoryName = state.categoryName
         target = state.target
         isSelected = state.isSelected
     }
@@ -145,7 +145,7 @@ extension Workout {
     static func create(from state: WorkoutState) -> Workout {
         Workout(
             name: state.name,
-            category: state.category,
+            categoryName: state.categoryName,
             target: state.target,
             isSelected: state.isSelected,
             summary: state.summary,

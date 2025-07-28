@@ -99,13 +99,15 @@ struct WorkingOutHeader: View {
                     .tint(Color.todBlack)
             }
             
-            switch viewStore.routine.workout.category.categoryType {
+            switch WorkoutCategoryState.WorkoutCategoryType(rawValue: viewStore.routine.workout.categoryName) {
             case .strength:
                 strengthHeader()
             case .cardio, .pilates, .yoga:
                 durationHeader()
             case .stretching:
                 stretchingHeader()
+            case .none:
+                EmptyView()
             }
         }
         .frame(maxWidth: .infinity)

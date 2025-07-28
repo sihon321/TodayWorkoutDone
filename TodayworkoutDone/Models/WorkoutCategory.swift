@@ -12,7 +12,8 @@ import HealthKit
 protocol WorkoutCategoryData {
     var name: String { get set }
     var classification: [String] { get }
-    var explanation: String { get }
+    var explanation: String? { get }
+    var count: Int? { get }
 }
 
 struct WorkoutCategoryState: WorkoutCategoryData, Equatable, Codable {
@@ -42,29 +43,33 @@ struct WorkoutCategoryState: WorkoutCategoryData, Equatable, Codable {
 
     var name: String
     var classification: [String]
-    var explanation: String
+    var explanation: String?
+    var count: Int?
     
     var categoryType: WorkoutCategoryType {
         return WorkoutCategoryType(rawValue: name.lowercased()) ?? .strength
     }
     
     enum CodingKeys: String, CodingKey {
-        case name, classification, explanation
+        case name, classification, explanation, count
     }
     
     init(name: String,
          classification: [String],
-         explanation: String) {
+         explanation: String?,
+         count: Int?) {
         self.name = name
         self.classification = classification
         self.explanation = explanation
+        self.count = count
     }
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
         classification = try container.decode([String].self, forKey: .classification)
-        explanation = try container.decode(String.self, forKey: .explanation)
+        explanation = try container.decodeIfPresent(String.self, forKey: .explanation)
+        count =  try container.decodeIfPresent(Int.self, forKey: .count)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -72,6 +77,7 @@ struct WorkoutCategoryState: WorkoutCategoryData, Equatable, Codable {
         try container.encode(name, forKey: .name)
         try container.encode(classification, forKey: .classification)
         try container.encode(explanation, forKey: .explanation)
+        try container.encode(count, forKey: .count)
     }
 }
 
@@ -80,13 +86,15 @@ extension WorkoutCategoryState {
         self.name = model.name
         self.classification = model.classification
         self.explanation = model.explanation
+        self.count = model.count
     }
     
     func toModel() -> WorkoutCategory {
         return WorkoutCategory(
             name: name,
             classification: classification,
-            explanation: explanation
+            explanation: explanation,
+            count: count
         )
     }
 }
@@ -95,14 +103,17 @@ extension WorkoutCategoryState {
 class WorkoutCategory: WorkoutCategoryData, Equatable {
     var name: String
     var classification: [String]
-    var explanation: String
+    var explanation: String?
+    var count: Int?
 
     init(name: String,
          classification: [String],
-         explanation: String) {
+         explanation: String?,
+         count: Int?) {
         self.name = name
         self.classification = classification
         self.explanation = explanation
+        self.count = count
     }
 }
 
@@ -111,5 +122,6 @@ extension WorkoutCategory {
         name = state.name
         classification = state.classification
         explanation = state.explanation
+        count = state.count
     }
 }

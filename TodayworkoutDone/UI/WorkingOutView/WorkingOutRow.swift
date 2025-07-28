@@ -13,7 +13,7 @@ struct WorkingOutRowReducer {
     @ObservableState
     struct State: Equatable, Identifiable {
         let id: UUID
-        var category: WorkoutCategoryState
+        var categoryType: WorkoutCategoryState.WorkoutCategoryType
         var workoutSet: WorkoutSetState
         var isChecked: Bool
         var editMode: EditMode
@@ -34,10 +34,10 @@ struct WorkingOutRowReducer {
         var timerView: CountdownTimerReducer.State
         @Presents var stopwatch: StopWatchFeature.State?
         
-        init(category: WorkoutCategoryState,
+        init(categoryType: WorkoutCategoryState.WorkoutCategoryType,
              workoutSet: WorkoutSetState,
              editMode: EditMode = .inactive) {
-            self.category = category
+            self.categoryType = categoryType
             self.id = workoutSet.id
             self.editMode = editMode
             self.workoutSet = workoutSet
@@ -161,7 +161,7 @@ struct WorkingOutRow: View {
     
     var body: some View {
         HStack {
-            switch viewStore.category.categoryType {
+            switch viewStore.categoryType {
             case .strength:
                 orderView()
                 prevAndTimerView()
@@ -323,7 +323,7 @@ struct WorkingOutRow: View {
             .frame(maxWidth: .infinity)
             .focused($focusedField, equals: .durationText)
         } else {
-            Text(String(viewStore.workoutSet.duration))
+            Text(String(viewStore.workoutSet.duration.formattedTime()))
                 .font(.system(size: 17))
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 3)

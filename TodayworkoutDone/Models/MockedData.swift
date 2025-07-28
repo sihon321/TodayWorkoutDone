@@ -9,9 +9,9 @@ import Foundation
 
 extension WorkoutCategory {
     static let mockedData: [WorkoutCategory] = [
-        WorkoutCategory(name: "헬스", classification: [""], explanation: ""),
-        WorkoutCategory(name: "요가", classification: [""], explanation: ""),
-        WorkoutCategory(name: "필라테스", classification: [""], explanation: "")
+        WorkoutCategory(name: "헬스", classification: [""], explanation: "", count: 0),
+        WorkoutCategory(name: "요가", classification: [""], explanation: "", count: 0),
+        WorkoutCategory(name: "필라테스", classification: [""], explanation: "", count: 0)
     ]
 }
 
@@ -19,7 +19,7 @@ extension Workout {
     static let mockedData: [Workout] = [
         Workout(
             name: "스쿼트",
-            category: WorkoutCategoryState(name: "하체", classification: [""], explanation: ""),
+            categoryName: "strength",
             target: ["대퇴사두근", "햄스트링", "둔근"],
             isSelected: false,
             summary: "대표적인 하체 복합 운동으로, 하체 근육 강화와 코어 안정성 향상에 효과적입니다.",
@@ -43,7 +43,7 @@ extension Workout {
         ),
         Workout(
             name: "스쿼트",
-            category: WorkoutCategoryState(name: "하체", classification: [""], explanation: ""),
+            categoryName: "strength",
             target: ["대퇴사두근", "햄스트링", "둔근"],
             isSelected: false,
             summary: "대표적인 하체 복합 운동으로, 하체 근육 강화와 코어 안정성 향상에 효과적입니다.",
@@ -67,7 +67,7 @@ extension Workout {
         ),
         Workout(
             name: "스쿼트",
-            category: WorkoutCategoryState(name: "하체", classification: [""], explanation: ""),
+            categoryName: "strength",
             target: ["대퇴사두근", "햄스트링", "둔근"],
             isSelected: false,
             summary: "대표적인 하체 복합 운동으로, 하체 근육 강화와 코어 안정성 향상에 효과적입니다.",
@@ -91,7 +91,7 @@ extension Workout {
         ),
         Workout(
             name: "스트레칭",
-            category: WorkoutCategoryState(name: "하체", classification: [""], explanation: ""),
+            categoryName: "strength",
             target: ["대퇴사두근", "햄스트링", "둔근"],
             isSelected: false,
             summary: "대표적인 하체 복합 운동으로, 하체 근육 강화와 코어 안정성 향상에 효과적입니다.",

@@ -59,7 +59,7 @@ struct WorkoutReducer {
     
     @Dependency(\.myRoutineData) var myRoutineContext
     @Dependency(\.categoryAPI) var categoryRepository
-    @Dependency(\.workoutAPI) var workoutRepository
+    
     @Dependency(\.dismiss) var dismiss
     
     var body: some Reducer<State, Action> {

@@ -1,10 +1,6 @@
 [
     {
-        "category": {
-            "name": "yoga",
-            "classification": ["yoga"],
-            "explanation": ""
-        },
+        "categoryName": "yoga",
         "name": "타다아사나",
         "target": [
             "자세 교정",
