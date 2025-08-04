@@ -40,6 +40,7 @@ struct WorkoutCategorySubview: View {
                         .foregroundStyle(Color.todBlack)
                 }
             }
+            .padding(.leading, 5)
         }
         .frame(minWidth: 0,
                maxWidth: .infinity,
