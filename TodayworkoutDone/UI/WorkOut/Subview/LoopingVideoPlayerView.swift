@@ -13,11 +13,14 @@ struct LoopingVideoPlayerView: View {
     @StateObject private var playerManager: LoopingPlayerManager
     
     // 뷰를 초기화할 때 재생할 비디오 파일 이름을 받습니다.
-    init(videoFileName: String = "sampleVideo", fileExtension: String = "mp4") {
-        _playerManager = StateObject(wrappedValue: LoopingPlayerManager(
+    init?(videoFileName: String = "sampleVideo", fileExtension: String = "mp4") {
+        guard let manager = LoopingPlayerManager(
             videoFileName: videoFileName,
             fileExtension: fileExtension
-        ))
+        ) else {
+            return nil
+        }
+        _playerManager = StateObject(wrappedValue: manager)
     }
 
     var body: some View {

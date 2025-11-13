@@ -266,12 +266,13 @@ struct CalendarDetailSubView: View {
                     }
                 }
                 if let maxSets = routine.sets.sorted(by: { $0.weight > $1.weight }).first {
-                    VStack {
-                        Text("추청 1RM")
+                    HStack {
+                        Text("추정 1RM")
                             .foregroundStyle(Color.todBlack)
                         Text("\(String(format: "%.2f kg", maxSets.weight * (1 + 0.0333 * Double(maxSets.reps))))")
                             .foregroundStyle(Color.todBlack)
                     }
+                    .padding(.top, 5)
                 }
             }
         }

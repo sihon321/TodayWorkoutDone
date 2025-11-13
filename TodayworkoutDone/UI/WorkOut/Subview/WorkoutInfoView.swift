@@ -52,8 +52,9 @@ struct WorkoutInfoView: View {
                             .padding(.top, 12)
                             .foregroundStyle(Color.todBlack)
                         
-                        if let name = viewStore.workout.animationName {
-                            LoopingVideoPlayerView(videoFileName: name)
+                        if let name = viewStore.workout.animationName,
+                           let view = LoopingVideoPlayerView(videoFileName: name) {
+                            view
                         }
                     }
                     .frame(maxWidth: .infinity)

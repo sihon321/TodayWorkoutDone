@@ -12,18 +12,11 @@ struct WorkoutCategorySubview: View {
     
     var body: some View {
         HStack(alignment: .top) {
-            Image(category.name)
-                .resizable()
-                .frame(maxWidth: 100)
-                .cornerRadius(10)
-                .padding(.leading, 15)
-                .padding([.top, .bottom], 10)
             VStack(alignment: .leading) {
                 Text(category.name)
                     .font(.system(size: 18,
                                   weight: .bold,
                                   design: .default))
-                    .padding(.top, 15)
                     .foregroundStyle(Color.todBlack)
                 if let count = category.count {
                     Text("\(count) workouts")
@@ -46,6 +39,8 @@ struct WorkoutCategorySubview: View {
                maxWidth: .infinity,
                maxHeight: 120,
                alignment: .leading)
+        .padding(.leading, 15)
+        .padding([.top, .bottom], 10)
         .background(Color.contentBackground)
         .cornerRadius(15)
     }

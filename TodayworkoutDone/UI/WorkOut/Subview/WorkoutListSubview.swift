@@ -57,12 +57,12 @@ struct WorkoutListSubview: View {
                 viewStore.send(.didTapped)
             }) {
                 HStack {
-                    if let image = UIImage(named: "default") {
-                        Image(uiImage: image)
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .cornerRadius(10)
-                    }
+//                    if let image = UIImage(named: "default") {
+//                        Image(uiImage: image)
+//                            .resizable()
+//                            .frame(width: 50, height: 50)
+//                            .cornerRadius(10)
+//                    }
                     Text(viewStore.workout.name)
                         .font(.system(size: 15, weight: .light))
                         .foregroundStyle(Color.todBlack)
@@ -85,6 +85,9 @@ struct WorkoutListSubview: View {
                maxWidth: .infinity,
                maxHeight: 60,
                alignment: .leading)
+        .padding()
+        .background(Color.contentBackground)
+        .cornerRadius(10)
         .fullScreenCover(
             item:  $store.scope(state: \.workoutInfo,
                                 action: \.workoutInfo)

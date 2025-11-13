@@ -286,10 +286,10 @@ struct WorkoutView: View {
             .navigationBarTitle("workout", displayMode: .inline)
             .workoutViewToolbar(store: store, viewStore: viewStore)
         }
-        .searchable(text: viewStore.binding(
-            get: { $0.keyword },
-            send: { WorkoutReducer.Action.search(keyword: $0) }
-        ))
+//        .searchable(text: viewStore.binding(
+//            get: { $0.keyword },
+//            send: { WorkoutReducer.Action.search(keyword: $0) }
+//        ))
         .fullScreenCover(
             item: $store.scope(state: \.destination?.makeWorkoutView,
                                action: \.destination.makeWorkoutView)
