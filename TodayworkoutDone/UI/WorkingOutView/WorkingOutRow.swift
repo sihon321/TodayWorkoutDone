@@ -133,7 +133,7 @@ struct WorkingOutRowReducer {
             case .presentStopWatch:
                 state.stopwatch = StopWatchFeature.State()
                 return .none
-            case .stopwatch(.presented(.close)):
+            case .stopwatch(.presented(.complete)):
                 if let stopwatch = state.stopwatch {
                     state.workoutSet.duration = Int(stopwatch.elapsedTime)
                 }
