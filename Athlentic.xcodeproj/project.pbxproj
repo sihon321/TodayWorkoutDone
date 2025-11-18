@@ -101,13 +101,13 @@
 		F2E2214C29994C3B00B7DCCB /* WorkingOutRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E2214B29994C3B00B7DCCB /* WorkingOutRow.swift */; };
 		F2E2214E29994C7000B7DCCB /* WorkingOutHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E2214D29994C7000B7DCCB /* WorkingOutHeader.swift */; };
 		F2E221502999555F00B7DCCB /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E2214F2999555F00B7DCCB /* CheckboxToggleStyle.swift */; };
-		F2E74CE62921F73500BD35F6 /* TodayworkoutDoneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74CE52921F73500BD35F6 /* TodayworkoutDoneApp.swift */; };
+		F2E74CE62921F73500BD35F6 /* AthlenticApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74CE52921F73500BD35F6 /* AthlenticApp.swift */; };
 		F2E74CE82921F73500BD35F6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74CE72921F73500BD35F6 /* ContentView.swift */; };
 		F2E74CEA2921F73600BD35F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2E74CE92921F73600BD35F6 /* Assets.xcassets */; };
 		F2E74CEE2921F73600BD35F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2E74CED2921F73600BD35F6 /* Preview Assets.xcassets */; };
-		F2E74CF82921F73600BD35F6 /* TodayworkoutDoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74CF72921F73600BD35F6 /* TodayworkoutDoneTests.swift */; };
-		F2E74D022921F73600BD35F6 /* TodayworkoutDoneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D012921F73600BD35F6 /* TodayworkoutDoneUITests.swift */; };
-		F2E74D042921F73600BD35F6 /* TodayworkoutDoneUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D032921F73600BD35F6 /* TodayworkoutDoneUITestsLaunchTests.swift */; };
+		F2E74CF82921F73600BD35F6 /* AthlenticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74CF72921F73600BD35F6 /* AthlenticTests.swift */; };
+		F2E74D022921F73600BD35F6 /* AthlenticUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D012921F73600BD35F6 /* AthlenticUITests.swift */; };
+		F2E74D042921F73600BD35F6 /* AthlenticUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D032921F73600BD35F6 /* AthlenticUITestsLaunchTests.swift */; };
 		F2E74D242922219000BD35F6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D1F2922219000BD35F6 /* MainView.swift */; };
 		F2E74D252922219000BD35F6 /* WeeklyChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D202922219000BD35F6 /* WeeklyChartView.swift */; };
 		F2E74D262922219000BD35F6 /* MainContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E74D212922219000BD35F6 /* MainContentView.swift */; };
@@ -224,17 +224,17 @@
 		F2E2214B29994C3B00B7DCCB /* WorkingOutRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingOutRow.swift; sourceTree = "<group>"; };
 		F2E2214D29994C7000B7DCCB /* WorkingOutHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingOutHeader.swift; sourceTree = "<group>"; };
 		F2E2214F2999555F00B7DCCB /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
-		F2E74CE22921F73500BD35F6 /* TodayworkoutDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodayworkoutDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2E74CE52921F73500BD35F6 /* TodayworkoutDoneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayworkoutDoneApp.swift; sourceTree = "<group>"; };
+		F2E74CE22921F73500BD35F6 /* Athlentic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Athlentic.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2E74CE52921F73500BD35F6 /* AthlenticApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthlenticApp.swift; sourceTree = "<group>"; };
 		F2E74CE72921F73500BD35F6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F2E74CE92921F73600BD35F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F2E74CEB2921F73600BD35F6 /* TodayworkoutDone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayworkoutDone.entitlements; sourceTree = "<group>"; };
+		F2E74CEB2921F73600BD35F6 /* Athlentic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Athlentic.entitlements; sourceTree = "<group>"; };
 		F2E74CED2921F73600BD35F6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F2E74CF32921F73600BD35F6 /* TodayworkoutDoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodayworkoutDoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2E74CF72921F73600BD35F6 /* TodayworkoutDoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayworkoutDoneTests.swift; sourceTree = "<group>"; };
-		F2E74CFD2921F73600BD35F6 /* TodayworkoutDoneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodayworkoutDoneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2E74D012921F73600BD35F6 /* TodayworkoutDoneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayworkoutDoneUITests.swift; sourceTree = "<group>"; };
-		F2E74D032921F73600BD35F6 /* TodayworkoutDoneUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayworkoutDoneUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F2E74CF32921F73600BD35F6 /* AthlenticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AthlenticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2E74CF72921F73600BD35F6 /* AthlenticTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthlenticTests.swift; sourceTree = "<group>"; };
+		F2E74CFD2921F73600BD35F6 /* AthlenticUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AthlenticUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2E74D012921F73600BD35F6 /* AthlenticUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthlenticUITests.swift; sourceTree = "<group>"; };
+		F2E74D032921F73600BD35F6 /* AthlenticUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthlenticUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F2E74D1F2922219000BD35F6 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F2E74D202922219000BD35F6 /* WeeklyChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeeklyChartView.swift; sourceTree = "<group>"; };
 		F2E74D212922219000BD35F6 /* MainContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentView.swift; sourceTree = "<group>"; };
@@ -323,7 +323,7 @@
 				8E0742FF2DF5378900F2DD7F /* Lottie */,
 				924762DB2D4B7ACE008FF911 /* Workout */,
 				F2E74CE92921F73600BD35F6 /* Assets.xcassets */,
-				F2E74CEB2921F73600BD35F6 /* TodayworkoutDone.entitlements */,
+				F2E74CEB2921F73600BD35F6 /* Athlentic.entitlements */,
 				F2CB39F4295DE48B00CA80D6 /* ColorAsset.xcassets */,
 			);
 			path = Resources;
@@ -531,9 +531,9 @@
 		F2E74CD92921F73500BD35F6 = {
 			isa = PBXGroup;
 			children = (
-				F2E74CE42921F73500BD35F6 /* TodayworkoutDone */,
-				F2E74CF62921F73600BD35F6 /* TodayworkoutDoneTests */,
-				F2E74D002921F73600BD35F6 /* TodayworkoutDoneUITests */,
+				F2E74CE42921F73500BD35F6 /* Athlentic */,
+				F2E74CF62921F73600BD35F6 /* AthlenticTests */,
+				F2E74D002921F73600BD35F6 /* AthlenticUITests */,
 				F2E74CE32921F73500BD35F6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -541,17 +541,17 @@
 		F2E74CE32921F73500BD35F6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F2E74CE22921F73500BD35F6 /* TodayworkoutDone.app */,
-				F2E74CF32921F73600BD35F6 /* TodayworkoutDoneTests.xctest */,
-				F2E74CFD2921F73600BD35F6 /* TodayworkoutDoneUITests.xctest */,
+				F2E74CE22921F73500BD35F6 /* Athlentic.app */,
+				F2E74CF32921F73600BD35F6 /* AthlenticTests.xctest */,
+				F2E74CFD2921F73600BD35F6 /* AthlenticUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F2E74CE42921F73500BD35F6 /* TodayworkoutDone */ = {
+		F2E74CE42921F73500BD35F6 /* Athlentic */ = {
 			isa = PBXGroup;
 			children = (
-				F2E74CE52921F73500BD35F6 /* TodayworkoutDoneApp.swift */,
+				F2E74CE52921F73500BD35F6 /* AthlenticApp.swift */,
 				F2007DA82A8AA25700833AF0 /* HealthKit */,
 				8EB5396D2C98136900F56034 /* API */,
 				F222FFEA2A645B5F002FCCDA /* Persistence */,
@@ -562,7 +562,7 @@
 				8E4066A529B33C90004BB7A2 /* Resources */,
 				F2E74CEC2921F73600BD35F6 /* Preview Content */,
 			);
-			path = TodayworkoutDone;
+			path = Athlentic;
 			sourceTree = "<group>";
 		};
 		F2E74CEC2921F73600BD35F6 /* Preview Content */ = {
@@ -573,21 +573,21 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		F2E74CF62921F73600BD35F6 /* TodayworkoutDoneTests */ = {
+		F2E74CF62921F73600BD35F6 /* AthlenticTests */ = {
 			isa = PBXGroup;
 			children = (
-				F2E74CF72921F73600BD35F6 /* TodayworkoutDoneTests.swift */,
+				F2E74CF72921F73600BD35F6 /* AthlenticTests.swift */,
 			);
-			path = TodayworkoutDoneTests;
+			path = AthlenticTests;
 			sourceTree = "<group>";
 		};
-		F2E74D002921F73600BD35F6 /* TodayworkoutDoneUITests */ = {
+		F2E74D002921F73600BD35F6 /* AthlenticUITests */ = {
 			isa = PBXGroup;
 			children = (
-				F2E74D012921F73600BD35F6 /* TodayworkoutDoneUITests.swift */,
-				F2E74D032921F73600BD35F6 /* TodayworkoutDoneUITestsLaunchTests.swift */,
+				F2E74D012921F73600BD35F6 /* AthlenticUITests.swift */,
+				F2E74D032921F73600BD35F6 /* AthlenticUITestsLaunchTests.swift */,
 			);
-			path = TodayworkoutDoneUITests;
+			path = AthlenticUITests;
 			sourceTree = "<group>";
 		};
 		F2E74D1C2922217500BD35F6 /* Main */ = {
@@ -617,9 +617,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F2E74CE12921F73500BD35F6 /* TodayworkoutDone */ = {
+		F2E74CE12921F73500BD35F6 /* Athlentic */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F2E74D072921F73600BD35F6 /* Build configuration list for PBXNativeTarget "TodayworkoutDone" */;
+			buildConfigurationList = F2E74D072921F73600BD35F6 /* Build configuration list for PBXNativeTarget "Athlentic" */;
 			buildPhases = (
 				F2E74CDE2921F73500BD35F6 /* Sources */,
 				F2E74CDF2921F73500BD35F6 /* Frameworks */,
@@ -629,19 +629,19 @@
 			);
 			dependencies = (
 			);
-			name = TodayworkoutDone;
+			name = Athlentic;
 			packageProductDependencies = (
 				F29B883F2CCAB1C500BBE377 /* ComposableArchitecture */,
 				8E0742F82DF532DB00F2DD7F /* PopupView */,
 				8E0742FB2DF5334E00F2DD7F /* Lottie */,
 			);
 			productName = TodayworkoutDone;
-			productReference = F2E74CE22921F73500BD35F6 /* TodayworkoutDone.app */;
+			productReference = F2E74CE22921F73500BD35F6 /* Athlentic.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F2E74CF22921F73600BD35F6 /* TodayworkoutDoneTests */ = {
+		F2E74CF22921F73600BD35F6 /* AthlenticTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F2E74D0A2921F73600BD35F6 /* Build configuration list for PBXNativeTarget "TodayworkoutDoneTests" */;
+			buildConfigurationList = F2E74D0A2921F73600BD35F6 /* Build configuration list for PBXNativeTarget "AthlenticTests" */;
 			buildPhases = (
 				F2E74CEF2921F73600BD35F6 /* Sources */,
 				F2E74CF02921F73600BD35F6 /* Frameworks */,
@@ -652,14 +652,14 @@
 			dependencies = (
 				F2E74CF52921F73600BD35F6 /* PBXTargetDependency */,
 			);
-			name = TodayworkoutDoneTests;
+			name = AthlenticTests;
 			productName = TodayworkoutDoneTests;
-			productReference = F2E74CF32921F73600BD35F6 /* TodayworkoutDoneTests.xctest */;
+			productReference = F2E74CF32921F73600BD35F6 /* AthlenticTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		F2E74CFC2921F73600BD35F6 /* TodayworkoutDoneUITests */ = {
+		F2E74CFC2921F73600BD35F6 /* AthlenticUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F2E74D0D2921F73600BD35F6 /* Build configuration list for PBXNativeTarget "TodayworkoutDoneUITests" */;
+			buildConfigurationList = F2E74D0D2921F73600BD35F6 /* Build configuration list for PBXNativeTarget "AthlenticUITests" */;
 			buildPhases = (
 				F2E74CF92921F73600BD35F6 /* Sources */,
 				F2E74CFA2921F73600BD35F6 /* Frameworks */,
@@ -670,9 +670,9 @@
 			dependencies = (
 				F2E74CFF2921F73600BD35F6 /* PBXTargetDependency */,
 			);
-			name = TodayworkoutDoneUITests;
+			name = AthlenticUITests;
 			productName = TodayworkoutDoneUITests;
-			productReference = F2E74CFD2921F73600BD35F6 /* TodayworkoutDoneUITests.xctest */;
+			productReference = F2E74CFD2921F73600BD35F6 /* AthlenticUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -698,7 +698,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F2E74CDD2921F73500BD35F6 /* Build configuration list for PBXProject "TodayworkoutDone" */;
+			buildConfigurationList = F2E74CDD2921F73500BD35F6 /* Build configuration list for PBXProject "Athlentic" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -716,9 +716,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F2E74CE12921F73500BD35F6 /* TodayworkoutDone */,
-				F2E74CF22921F73600BD35F6 /* TodayworkoutDoneTests */,
-				F2E74CFC2921F73600BD35F6 /* TodayworkoutDoneUITests */,
+				F2E74CE12921F73500BD35F6 /* Athlentic */,
+				F2E74CF22921F73600BD35F6 /* AthlenticTests */,
+				F2E74CFC2921F73600BD35F6 /* AthlenticUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -828,7 +828,7 @@
 				8E2073B62E1B4D0F00FA5D21 /* LoopingVideoPlayerView.swift in Sources */,
 				F2102C34292BB06D00417789 /* MainContentStepView.swift in Sources */,
 				F201082A2B6FE03100265F17 /* MainContentEnergyBurn.swift in Sources */,
-				F2E74CE62921F73500BD35F6 /* TodayworkoutDoneApp.swift in Sources */,
+				F2E74CE62921F73500BD35F6 /* AthlenticApp.swift in Sources */,
 				8EB539732C98152E00F56034 /* APIHelper.swift in Sources */,
 				F2E2214A29994BB500B7DCCB /* WorkingOutSection.swift in Sources */,
 				F2E74D262922219000BD35F6 /* MainContentView.swift in Sources */,
@@ -858,7 +858,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2E74CF82921F73600BD35F6 /* TodayworkoutDoneTests.swift in Sources */,
+				F2E74CF82921F73600BD35F6 /* AthlenticTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -866,8 +866,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2E74D042921F73600BD35F6 /* TodayworkoutDoneUITestsLaunchTests.swift in Sources */,
-				F2E74D022921F73600BD35F6 /* TodayworkoutDoneUITests.swift in Sources */,
+				F2E74D042921F73600BD35F6 /* AthlenticUITestsLaunchTests.swift in Sources */,
+				F2E74D022921F73600BD35F6 /* AthlenticUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -876,12 +876,12 @@
 /* Begin PBXTargetDependency section */
 		F2E74CF52921F73600BD35F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F2E74CE12921F73500BD35F6 /* TodayworkoutDone */;
+			target = F2E74CE12921F73500BD35F6 /* Athlentic */;
 			targetProxy = F2E74CF42921F73600BD35F6 /* PBXContainerItemProxy */;
 		};
 		F2E74CFF2921F73600BD35F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F2E74CE12921F73500BD35F6 /* TodayworkoutDone */;
+			target = F2E74CE12921F73500BD35F6 /* Athlentic */;
 			targetProxy = F2E74CFE2921F73600BD35F6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1003,13 +1003,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = TodayworkoutDone/Resources/TodayworkoutDone.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = Athlentic/Resources/Athlentic.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development: Sihoon Oh (JP73LTUK7A)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"TodayworkoutDone/Preview Content\"";
-				DEVELOPMENT_TEAM = 3YQP9392XF;
+				DEVELOPMENT_ASSET_PATHS = "\"Athlentic/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = APH9NS5VWL;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1030,10 +1031,13 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ocean.TodayworkoutDone;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ceanlab.athlentic.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Athlentic Development";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1045,13 +1049,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = TodayworkoutDone/Resources/TodayworkoutDone.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = Athlentic/Resources/Athlentic.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development: Sihoon Oh (JP73LTUK7A)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"TodayworkoutDone/Preview Content\"";
-				DEVELOPMENT_TEAM = 3YQP9392XF;
+				DEVELOPMENT_ASSET_PATHS = "\"Athlentic/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1072,10 +1076,12 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ocean.TodayworkoutDone;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ceanlab.athlentic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1095,14 +1101,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ocean.TodayworkoutDoneTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ceanlab.athlentic.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TodayworkoutDone.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TodayworkoutDone";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Athlentic.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Athlentic";
 			};
 			name = Debug;
 		};
@@ -1119,14 +1125,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ocean.TodayworkoutDoneTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ceanlab.athlentic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TodayworkoutDone.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TodayworkoutDone";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Athlentic.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Athlentic";
 			};
 			name = Release;
 		};
@@ -1179,7 +1185,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F2E74CDD2921F73500BD35F6 /* Build configuration list for PBXProject "TodayworkoutDone" */ = {
+		F2E74CDD2921F73500BD35F6 /* Build configuration list for PBXProject "Athlentic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F2E74D052921F73600BD35F6 /* Debug */,
@@ -1188,7 +1194,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F2E74D072921F73600BD35F6 /* Build configuration list for PBXNativeTarget "TodayworkoutDone" */ = {
+		F2E74D072921F73600BD35F6 /* Build configuration list for PBXNativeTarget "Athlentic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F2E74D082921F73600BD35F6 /* Debug */,
@@ -1197,7 +1203,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F2E74D0A2921F73600BD35F6 /* Build configuration list for PBXNativeTarget "TodayworkoutDoneTests" */ = {
+		F2E74D0A2921F73600BD35F6 /* Build configuration list for PBXNativeTarget "AthlenticTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F2E74D0B2921F73600BD35F6 /* Debug */,
@@ -1206,7 +1212,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F2E74D0D2921F73600BD35F6 /* Build configuration list for PBXNativeTarget "TodayworkoutDoneUITests" */ = {
+		F2E74D0D2921F73600BD35F6 /* Build configuration list for PBXNativeTarget "AthlenticUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F2E74D0E2921F73600BD35F6 /* Debug */,

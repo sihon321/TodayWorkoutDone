@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 @main
-struct TodayworkoutDoneApp: App {
+struct AthlenticApp: App {
     var body: some Scene {
         WindowGroup {
             RootView(store: Store(initialState: RootFeature.State()) {
