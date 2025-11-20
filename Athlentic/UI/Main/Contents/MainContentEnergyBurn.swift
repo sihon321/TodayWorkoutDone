@@ -49,16 +49,14 @@ struct EnergyBurnFeature {
 
 struct MainContentEnergyBurn: View {
     @Bindable var store: StoreOf<EnergyBurnFeature>
-    @ObservedObject var viewStore: ViewStoreOf<EnergyBurnFeature>
     
     init(store: StoreOf<EnergyBurnFeature>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
         HStack {
-            Text("\(viewStore.energyBurned)")
+            Text("\(store.energyBurned)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))

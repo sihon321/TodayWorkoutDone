@@ -11,7 +11,8 @@ import ComposableArchitecture
 @Reducer
 struct MainSubContentFeature {
     @ObservableState
-    struct State: Equatable {
+    struct State: Equatable, Identifiable {
+        let id: UUID = UUID()
         var type: MainContentFeature.MainContentType
         var iconName: String {
             switch type {
@@ -28,18 +29,31 @@ struct MainSubContentFeature {
             case .energyBurn: return "활동"
             }
         }
+        var step = StepFeature.State()
+        var workout = ExerciseTimeFeature.State()
+        var energy = EnergyBurnFeature.State()
     }
     
     enum Action {
-
+        case step(StepFeature.Action)
+        case workout(ExerciseTimeFeature.Action)
+        case energy(EnergyBurnFeature.Action)
     }
     
     
     var body: some Reducer<State, Action> {
+        Scope(state: \.step, action: \.step) {
+            StepFeature()
+        }
+        Scope(state: \.workout, action: \.workout) {
+            ExerciseTimeFeature()
+        }
+        Scope(state: \.energy, action: \.energy) {
+            EnergyBurnFeature()
+        }
+        
         Reduce { state, action in
-            switch action {
-
-            }
+            return .none
         }
     }
 }
@@ -71,27 +85,21 @@ struct MainContentSubView: View {
                 switch viewStore.type {
                 case .stepCount:
                     MainContentStepView(
-                        store: Store(initialState: StepFeature.State()) {
-                            StepFeature()
-                        }
+                        store: store.scope(state: \.step, action: \.step)
                     )
                 case .workoutTime:
                     MainContentWorkoutView(
-                        store: Store(initialState: ExerciseTimeFeature.State()) {
-                            ExerciseTimeFeature()
-                        }
+                        store: store.scope(state: \.workout, action: \.workout)
                     )
                 case .energyBurn:
                     MainContentEnergyBurn(
-                        store: Store(initialState: EnergyBurnFeature.State()) {
-                            EnergyBurnFeature()
-                        }
+                        store: store.scope(state: \.energy, action: \.energy)
                     )
                 }
             }
             .padding(.leading, 15)
             .padding([.top, .bottom], 5)
-        } 
+        }
         .frame(minWidth: 0,
                maxWidth: .infinity,
                minHeight: 80,

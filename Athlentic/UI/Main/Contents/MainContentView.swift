@@ -20,8 +20,9 @@ struct MainContentFeature {
     
     @ObservableState
     struct State: Equatable {
-        var dataList: [MainContentType] = []
+        var subContentList: IdentifiedArrayOf<MainSubContentFeature.State> = []
         var weeklyChart = WeeklyChart.State()
+        var path = StackState<Path.State>()
     }
     
     enum Action {
@@ -29,6 +30,26 @@ struct MainContentFeature {
         case reloadData
         
         case weeklyChart(WeeklyChart.Action)
+        case subContentList(IdentifiedActionOf<MainSubContentFeature>)
+        case path(StackAction<Path.State, Path.Action>)
+    }
+    
+    @Reducer
+    struct Path {
+        @ObservableState
+        enum State: Equatable {
+            case detail(MainContentDetailViewReducer.State)
+        }
+        
+        enum Action {
+            case detail(MainContentDetailViewReducer.Action)
+        }
+        
+        var body: some Reducer<State, Action> {
+            Scope(state: \.detail, action: \.detail) {
+                MainContentDetailViewReducer()
+            }
+        }
     }
     
     @Dependency(\.healthKitManager) private var healthKitManager
@@ -56,11 +77,25 @@ struct MainContentFeature {
                     }
                 }
             case .reloadData:
-                state.dataList = [.stepCount, .workoutTime, .energyBurn]
+                state.subContentList = [
+                    MainSubContentFeature.State(type: .stepCount),
+                    MainSubContentFeature.State(type: .workoutTime),
+                    MainSubContentFeature.State(type: .energyBurn)
+                ]
                 return .send(.weeklyChart(.fetchDailyActiveEnergyBurnes))
             case .weeklyChart:
                 return .none
+            case .subContentList:
+                return .none
+            case .path:
+                return .none
             }
+        }
+        .forEach(\.subContentList, action: \.subContentList) {
+            MainSubContentFeature()
+        }
+        .forEach(\.path, action: \.path) {
+            Path()
         }
     }
 }
@@ -70,37 +105,44 @@ struct MainContentView: View {
     @ObservedObject var viewStore: ViewStoreOf<MainContentFeature>
     private let gridLayout = Array(repeating: GridItem(.flexible()),
                                    count: 2)
-
+    
     init(store: StoreOf<MainContentFeature>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
-        VStack {
-            WeeklyChartView(
-                store: store.scope(state: \.weeklyChart, action: \.weeklyChart)
-            )
-            Spacer(minLength: 15)
-            LazyVGrid(columns: gridLayout, spacing: 10) {
-                ForEach(viewStore.dataList) { data in
-                    NavigationLink {
-                        MainContentDetailView(store: Store(
-                            initialState: MainContentDetailViewReducer.State(contentType: data)
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+            VStack {
+                WeeklyChartView(
+                    store: store.scope(state: \.weeklyChart, action: \.weeklyChart)
+                )
+                Spacer(minLength: 15)
+                LazyVGrid(columns: gridLayout, spacing: 10) {
+                    ForEach(store.scope(state: \.subContentList, action: \.subContentList)) { childStore in
+                        NavigationLink(
+                            state: MainContentFeature.Path.State.detail(
+                                MainContentDetailViewReducer.State(
+                                    contentType: childStore.state.type
+                                )
+                            )
                         ) {
-                            MainContentDetailViewReducer()
-                        })
-                    } label: {
-                        MainContentSubView(store: Store(initialState: MainSubContentFeature.State(type: data)) {
-                            MainSubContentFeature()
-                        })
+                            MainContentSubView(store: childStore)
+                        }
                     }
                 }
+                .padding([.leading, .trailing], 15)
+                .onAppear {
+                    viewStore.send(.requstAuthrization)
+                }
             }
-            .onAppear {
-                viewStore.send(.requstAuthrization)
+        } destination: { store in
+            switch store.state {
+            case .detail:
+                if let store = store.scope(state: \.detail, action: \.detail) {
+                    MainContentDetailView(store: store)
+                }
             }
         }
-        .padding([.leading, .trailing], 15)
     }
 }

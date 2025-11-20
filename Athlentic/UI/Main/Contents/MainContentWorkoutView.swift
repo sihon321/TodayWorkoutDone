@@ -49,16 +49,14 @@ struct ExerciseTimeFeature {
 
 struct MainContentWorkoutView: View {
     @Bindable var store: StoreOf<ExerciseTimeFeature>
-    @ObservedObject var viewStore: ViewStoreOf<ExerciseTimeFeature>
     
     init(store: StoreOf<ExerciseTimeFeature>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
 
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("\(viewStore.exerciseTime / 60)")
+            Text("\(store.exerciseTime / 60)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
@@ -69,7 +67,7 @@ struct MainContentWorkoutView: View {
                               design: .default))
                 .foregroundStyle(Color(0x7d7d7d))
                 .padding(.leading, -5)
-            Text("\(viewStore.exerciseTime % 60)")
+            Text("\(store.exerciseTime % 60)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))

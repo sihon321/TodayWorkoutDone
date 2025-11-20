@@ -49,16 +49,14 @@ struct StepFeature {
 
 struct MainContentStepView: View {
     @Bindable var store: StoreOf<StepFeature>
-    @ObservedObject var viewStore: ViewStoreOf<StepFeature>
     
     init(store: StoreOf<StepFeature>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("\(viewStore.stepCount)")
+            Text("\(store.stepCount)")
                 .font(.system(size: 22,
                               weight: .bold,
                               design: .default))
