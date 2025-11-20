@@ -325,12 +325,20 @@ struct WorkingOutView: View {
                 .font(.system(size: 17))
                 .frame(width: 60, height: 20)
                 Spacer()
-                Text(viewStore.state.myRoutine?.secondsElapsed.secondToHMS ?? "")
-                    .font(.system(size: 17))
-                    .monospacedDigit()
+                WithViewStore(self.store, observe: { $0.myRoutine?.secondsElapsed.secondToHMS }) { viewStore in
+                    Text(viewStore.state ?? "")
+                        .font(.system(size: 17))
+                        .monospacedDigit()
+                        .frame(maxHeight: .infinity)
+                        .transaction { transaction in
+                            transaction.animation = nil
+                        }
+                        .id("Timer")
+                }
                 Spacer()
                 toggleButton()
             }
+            .geometryGroup()
             .frame(height: 70)
             .padding(.horizontal, 15)
             
