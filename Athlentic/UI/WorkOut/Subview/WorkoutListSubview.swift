@@ -75,7 +75,7 @@ struct WorkoutListSubview: View {
                             viewStore.send(.tappedInfo)
                         }) {
                             Image(systemName: "info.circle")
-                                .foregroundStyle(Color.gray88)
+                                .foregroundStyle(Color.grayC3)
                         }
                     }
                 }

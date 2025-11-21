@@ -131,11 +131,11 @@ struct MainContentView: View {
                         }
                     }
                 }
-                .padding([.leading, .trailing], 15)
                 .onAppear {
                     viewStore.send(.requstAuthrization)
                 }
             }
+            .padding([.leading, .trailing], 15)
         } destination: { store in
             switch store.state {
             case .detail:

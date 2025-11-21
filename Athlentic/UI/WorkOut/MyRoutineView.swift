@@ -78,7 +78,7 @@ struct MyRoutineView: View {
                 VStack {
                     Text("루틴 추가를 누르거나 운동을 선택해 루틴을 만드세요.")
                         .font(.system(size: 15))
-                        .foregroundColor(Color.gray88)
+                        .foregroundColor(Color.grayC3)
                 }
                 .frame(maxWidth: .infinity,
                        minHeight: 120,

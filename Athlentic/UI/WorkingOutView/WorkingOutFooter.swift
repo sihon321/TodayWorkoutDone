@@ -18,7 +18,7 @@ struct WorkingOutFooter: View {
         }
         .frame(height: 30)
         .frame(maxWidth: .infinity)
-        .background(Color.gray88)
+        .background(Color.grayC3)
         .cornerRadius(10)
         .padding(.vertical, 5)
     }

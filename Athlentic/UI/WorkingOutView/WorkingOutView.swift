@@ -394,7 +394,7 @@ struct WorkingOutView: View {
         ZStack {
             Capsule()
                 .frame(width: 60, height: 30)
-                .foregroundStyle(Color(!viewStore.isEdit ? .personal : .gray88))
+                .foregroundStyle(Color(!viewStore.isEdit ? .personal : .grayC3))
             ZStack{
                 Circle()
                     .frame(width: 35, height: 25)
