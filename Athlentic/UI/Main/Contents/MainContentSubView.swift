@@ -60,19 +60,17 @@ struct MainSubContentFeature {
 
 struct MainContentSubView: View {
     @Bindable var store: StoreOf<MainSubContentFeature>
-    @ObservedObject var viewStore: ViewStoreOf<MainSubContentFeature>
     
     init(store: StoreOf<MainSubContentFeature>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .firstTextBaseline) {
-                Image(systemName: viewStore.iconName)
+                Image(systemName: store.iconName)
                     .foregroundStyle(Color.todBlack)
-                Text(viewStore.headerTitle)
+                Text(store.headerTitle)
                     .font(.system(size: 15,
                                   weight: .semibold,
                                   design: .default))
@@ -82,7 +80,7 @@ struct MainContentSubView: View {
             .padding([.leading], 15)
             
             HStack(alignment: .firstTextBaseline) {
-                switch viewStore.type {
+                switch store.type {
                 case .stepCount:
                     MainContentStepView(
                         store: store.scope(state: \.step, action: \.step)

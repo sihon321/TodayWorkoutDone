@@ -282,12 +282,10 @@ struct EditWorkoutRoutineReducer {
 
 struct EditWorkoutRoutineView: View {
     @Bindable var store: StoreOf<EditWorkoutRoutineReducer>
-    @ObservedObject var viewStore: ViewStoreOf<EditWorkoutRoutineReducer>
     @FocusState private var isTextFieldFocused: Bool
     
     init(store: StoreOf<EditWorkoutRoutineReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
@@ -295,10 +293,7 @@ struct EditWorkoutRoutineView: View {
             ScrollView {
                 VStack {
                     TextField("타이틀을 입력하세요",
-                              text: viewStore.binding(
-                                get: \.workoutRoutine.name,
-                                send: EditWorkoutRoutineReducer.Action.didUpdateText
-                              ))
+                              text: $store.workoutRoutine.name.sending(\.didUpdateText))
                     .multilineTextAlignment(.leading)
                     .font(.title)
                     .accessibilityAddTraits(.isHeader)
@@ -306,13 +301,11 @@ struct EditWorkoutRoutineView: View {
                     
                     Spacer()
                     DatePicker("시작시간",
-                               selection: viewStore.binding(get: \.workoutRoutine.startDate,
-                                                            send: EditWorkoutRoutineReducer.Action.editStartDate),
+                               selection: $store.workoutRoutine.startDate.sending(\.editStartDate),
                                displayedComponents: [.date, .hourAndMinute])
                     .padding(.horizontal, 15)
                     DatePicker("종료시간",
-                               selection: viewStore.binding(get: \.workoutRoutine.endDate,
-                                                            send: EditWorkoutRoutineReducer.Action.editEndDate),
+                               selection: $store.workoutRoutine.endDate.sending(\.editEndDate),
                                displayedComponents: [.date, .hourAndMinute])
                     .padding(.horizontal, 15)
                     Spacer()
@@ -324,17 +317,17 @@ struct EditWorkoutRoutineView: View {
                     .padding([.bottom], 30)
                     
                     Button("워크아웃 추가") {
-                        viewStore.send(.tappedAdd)
+                        store.send(.tappedAdd)
                     }
                     .buttonStyle(AddWorkoutButtonStyle())
                     Spacer().frame(height: 100)
                 }
                 .background(Color.background)
                 .onTapGesture {
-                    viewStore.send(.dismissKeyboard)
-                    viewStore.workingOutSection.elements.forEach { section in
+                    store.send(.dismissKeyboard)
+                    store.workingOutSection.elements.forEach { section in
                         section.workingOutRow.elements.forEach { row in
-                            viewStore.send(
+                            store.send(
                                 .workingOutSection(
                                     .element(id: section.id,
                                              action: .workingOutRow(
@@ -351,14 +344,14 @@ struct EditWorkoutRoutineView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        viewStore.send(.dismiss)
+                        store.send(.dismiss)
                     }, label: {
                         Image(systemName: "xmark")
                     })
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        viewStore.send(.save(viewStore.workoutRoutine))
+                        store.send(.save(store.workoutRoutine))
                     }
                 }
             }

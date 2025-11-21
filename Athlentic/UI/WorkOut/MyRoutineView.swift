@@ -42,11 +42,9 @@ struct MyRoutineReducer {
 
 struct MyRoutineView: View {
     @Bindable var store: StoreOf<MyRoutineReducer>
-    @ObservedObject var viewStore: ViewStoreOf<MyRoutineReducer>
     
     init(store: StoreOf<MyRoutineReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
@@ -56,7 +54,7 @@ struct MyRoutineView: View {
                     .font(.system(size: 20, weight: .medium))
                 Spacer()
                 Button(action: {
-                    viewStore.send(.touchedMakeRoutine)
+                    store.send(.touchedMakeRoutine)
                 }) {
                     HStack {
                         Image(systemName: "plus")
@@ -74,7 +72,7 @@ struct MyRoutineView: View {
                 }
             }
             .padding(.horizontal, 15)
-            if viewStore.myRoutineSubview.isEmpty {
+            if store.myRoutineSubview.isEmpty {
                 VStack {
                     Text("루틴 추가를 누르거나 운동을 선택해 루틴을 만드세요.")
                         .font(.system(size: 15))
@@ -94,7 +92,7 @@ struct MyRoutineView: View {
                                         action: \.myRoutineSubview)
                         ) { store in
                             Button(action: {
-                                viewStore.send(.touchedMyRoutine(store.myRoutine))
+                                store.send(.touchedMyRoutine(store.myRoutine))
                             }) {
                                 MyRoutineSubview(store: store)
                             }

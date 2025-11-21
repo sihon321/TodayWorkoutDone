@@ -49,11 +49,9 @@ struct WorkoutCategoryReducer {
 
 struct WorkoutCategoryView: View {
     @Bindable var store: StoreOf<WorkoutCategoryReducer>
-    @ObservedObject var viewStore: ViewStoreOf<WorkoutCategoryReducer>
     
     init(store: StoreOf<WorkoutCategoryReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {

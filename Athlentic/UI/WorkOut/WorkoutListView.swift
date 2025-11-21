@@ -200,27 +200,16 @@ struct SortedWorkoutSectionReducer {
 
 struct WorkoutListView: View {
     @Bindable var store: StoreOf<WorkoutListReducer>
-    @ObservedObject var viewStore: ViewStoreOf<WorkoutListReducer>
     @State private var topHeaderIndex: Int? = nil
     @State private var selectedFilters: Set<String> = []
     
+    
     init(store: StoreOf<WorkoutListReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
         ZStack(alignment: .top) {
-//            if let index = topHeaderIndex {
-//                Text(viewStore.groupedNames[index].key)
-//                    .font(.system(size: 17))
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//                    .padding(.horizontal, 15)
-//                    .padding(.vertical, 10)
-//                    .background(Color.contentBackground)
-//                    .overlay(Divider(), alignment: .bottom)
-//                    .zIndex(1) // 항상 앞에 있도록 설정
-//            }
             ScrollView {
                 VStack(spacing: 0) {
                     if store.category.categoryType == .strength {
@@ -232,7 +221,7 @@ struct WorkoutListView: View {
                         .pickerStyle(.segmented)
                         .padding()
                     }
-                    HorizontalFilterView(filters: viewStore.filters,
+                    HorizontalFilterView(filters: store.filters,
                                          selectedFilters: $selectedFilters)
                     ForEach(store.scope(state: \.soretedWorkoutSection,
                                         action: \.sortedWorkoutSection)) { sectionStore in
@@ -256,34 +245,34 @@ struct WorkoutListView: View {
             .background(Color.background)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    if !viewStore.routines.isEmpty {
+                    if !store.routines.isEmpty {
                         Button(action: {
-                            if viewStore.isAddWorkoutPresented {
-                                viewStore.send(.dismiss(viewStore.routines))
+                            if store.isAddWorkoutPresented {
+                                store.send(.dismiss(store.routines))
                             } else {
-                                viewStore.send(.createMakeWorkoutView(
-                                    routines: viewStore.routines,
+                                store.send(.createMakeWorkoutView(
+                                    routines: store.routines,
                                     isEdit: false)
                                 )
                             }
                         }) {
-                            let selectedWorkoutCount = viewStore.routines.count
+                            let selectedWorkoutCount = store.routines.count
                             Text("Done(\(selectedWorkoutCount))")
                                 .foregroundStyle(Color.todBlack)
                         }
                     }
                 }
             }
-            .searchable(text: viewStore.binding(
-                get: { $0.keyword },
-                send: { WorkoutListReducer.Action.search(keyword: $0) }
+            .searchable(text: Binding(
+                get: { store.keyword },
+                set: { store.send(.search(keyword: $0)) }
             ))
-            .navigationTitle(viewStore.category.name)
+            .navigationTitle(store.category.name)
         }
         .onAppear {
             if store.category.categoryType == .strength {
                 store.send(.typeSelected(.weight))
-            } else if let classification = viewStore.category.classification.first {
+            } else if let classification = store.category.classification.first {
                 store.send(.getWorkouts(classification))
             }
         }

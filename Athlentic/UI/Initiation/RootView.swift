@@ -57,18 +57,16 @@ struct RootFeature {
 
 struct RootView: View {
     @Bindable var store: StoreOf<RootFeature>
-    @ObservedObject var viewStore: ViewStoreOf<RootFeature>
     
     init(store: StoreOf<RootFeature>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
         VStack {
-            if viewStore.isActive {
-                if viewStore.isOnBoarding {
-                    if viewStore.isLogin {
+            if store.isActive {
+                if store.isOnBoarding {
+                    if store.isLogin {
                         ContentView(store: store.scope(state: \.content, action: \.content))
                     } else {
                         LoginView(store: store.scope(state: \.login,
@@ -79,13 +77,10 @@ struct RootView: View {
                                                       action: \.onBoarding))
                 }
             } else {
-                SplashView(isActive: viewStore.binding(
-                    get: \.isActive,
-                    send: { RootFeature.Action.toggleActive($0) })
-                )
+                SplashView(isActive: $store.isActive.sending(\.toggleActive))
             }
         }
         .modelContainer(SwiftDataConfigurationProvider.shared.container)
-        .preferredColorScheme(viewStore.theme == .dark ? .dark : viewStore.theme == .light ? .light : nil)
+        .preferredColorScheme(store.theme == .dark ? .dark : store.theme == .light ? .light : nil)
     }
 }

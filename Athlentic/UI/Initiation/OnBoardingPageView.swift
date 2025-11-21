@@ -140,16 +140,14 @@ struct OnBoardingFeature {
 
 struct OnBoardingView: View {
     @Bindable var store: StoreOf<OnBoardingFeature>
-    @ObservedObject var viewStore: ViewStoreOf<OnBoardingFeature>
     
     init(store: StoreOf<OnBoardingFeature>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
 
     var body: some View {
         VStack {
-            switch viewStore.currentStep {
+            switch store.currentStep {
             case .intro:
                 VStack(spacing: 20) {
                     Text("당신의 운동 여정, 이제 시작입니다!")
@@ -182,7 +180,7 @@ struct OnBoardingView: View {
                     }
                     .frame(width: 200, height: 300)
                     
-                    if viewStore.isHealthKitAuthorized {
+                    if store.isHealthKitAuthorized {
                         Text("✅ 권한이 허용되었습니다.")
                             .foregroundStyle(.green)
                     }
@@ -190,7 +188,7 @@ struct OnBoardingView: View {
                 .padding(.top, 100)
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        viewStore.send(.requestHealthKit)
+                        store.send(.requestHealthKit)
                     }
                 }
             
@@ -239,19 +237,18 @@ struct OnBoardingView: View {
                     
                     VStack {
                         DatePicker("생년월일",
-                                   selection: viewStore.binding(get: \.birthDay,
-                                                                send: OnBoardingFeature.Action.editBirth),
+                                   selection: $store.birthDay.sending(\.editBirth),
                                    displayedComponents: .date
                         )
                         HStack {
                             Text("키")
-                            TextField("(\(viewStore.distanceUnit.unit))", text: $store.manualHeight)
+                            TextField("(\(store.distanceUnit.unit))", text: $store.manualHeight)
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
                         }
                         HStack {
                             Text("몸무게")
-                            TextField("(\(viewStore.weightUnit.unit))", text: $store.manualWeight)
+                            TextField("(\(store.weightUnit.unit))", text: $store.manualWeight)
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
                         }
@@ -297,25 +294,25 @@ struct OnBoardingView: View {
             Spacer()
 
             Button(action: {
-                if viewStore.currentStep == .profile,
-                   let height = Double(viewStore.manualHeight),
-                   let weight = Double(viewStore.manualWeight) {
-                    viewStore.send(.saveProfile(height: height, weight: weight))
-                    viewStore.send(.nextTapped)
-                } else if viewStore.currentStep == .premium {
-                    viewStore.send(.doneTapped)
+                if store.currentStep == .profile,
+                   let height = Double(store.manualHeight),
+                   let weight = Double(store.manualWeight) {
+                    store.send(.saveProfile(height: height, weight: weight))
+                    store.send(.nextTapped)
+                } else if store.currentStep == .premium {
+                    store.send(.doneTapped)
                 } else {
-                    viewStore.send(.nextTapped)
+                    store.send(.nextTapped)
                 }
             }) {
-                Text(viewStore.currentStep == .premium ? "시작하기" : "다음")
+                Text(store.currentStep == .premium ? "시작하기" : "다음")
                     .frame(maxWidth: .infinity, minHeight: 45)
                     .background(Color.personal)
                     .foregroundStyle(.white)
                     .cornerRadius(20)
                     .padding(.horizontal, 15)
             }
-            .disabled(viewStore.currentStep == .healthKit ? !viewStore.isHealthKitAuthorized : false)
+            .disabled(store.currentStep == .healthKit ? !store.isHealthKitAuthorized : false)
             .padding(.bottom, 30)
         }
         .padding(.horizontal, 15)

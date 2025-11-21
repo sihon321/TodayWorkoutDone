@@ -44,17 +44,15 @@ struct WorkoutListSubviewReducer {
 
 struct WorkoutListSubview: View {
     @Bindable var store: StoreOf<WorkoutListSubviewReducer>
-    @ObservedObject var viewStore: ViewStoreOf<WorkoutListSubviewReducer>
     
     init(store: StoreOf<WorkoutListSubviewReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
 
     var body: some View {
         VStack {
             Button(action: {
-                viewStore.send(.didTapped)
+                store.send(.didTapped)
             }) {
                 HStack {
 //                    if let image = UIImage(named: "default") {
@@ -63,16 +61,16 @@ struct WorkoutListSubview: View {
 //                            .frame(width: 50, height: 50)
 //                            .cornerRadius(10)
 //                    }
-                    Text(viewStore.workout.name)
+                    Text(store.workout.name)
                         .font(.system(size: 15, weight: .light))
                         .foregroundStyle(Color.todBlack)
                     Spacer()
-                    if viewStore.workout.isSelected {
+                    if store.workout.isSelected {
                         Image(systemName: "checkmark")
                             .foregroundStyle(Color.personal)
                     } else {
                         Button(action: {
-                            viewStore.send(.tappedInfo)
+                            store.send(.tappedInfo)
                         }) {
                             Image(systemName: "info.circle")
                                 .foregroundStyle(Color.grayC3)

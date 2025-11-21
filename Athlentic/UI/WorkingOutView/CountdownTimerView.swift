@@ -71,11 +71,9 @@ struct CountdownTimerReducer {
 
 struct CountdownTimerView: View {
     @Bindable var store: StoreOf<CountdownTimerReducer>
-    @ObservedObject var viewStore: ViewStoreOf<CountdownTimerReducer>
     
     init(store: StoreOf<CountdownTimerReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
 
     var body: some View {
@@ -91,12 +89,12 @@ struct CountdownTimerView: View {
                 Rectangle()
                     .fill(Color.personal)
                     .frame(
-                        width: CGFloat(viewStore.timeRemaining) / CGFloat(viewStore.totalTime) * 100,
+                        width: CGFloat(store.timeRemaining) / CGFloat(store.totalTime) * 100,
                         height: 25
                     )
                     .cornerRadius(6.5)
-                    .animation(.linear(duration: 1.0), value: viewStore.timeRemaining)
-                Text("\(viewStore.timeRemaining.secondToHMS)")
+                    .animation(.linear(duration: 1.0), value: store.timeRemaining)
+                Text("\(store.timeRemaining.secondToHMS)")
                     .font(.system(size: 13))
                     .foregroundStyle(.white)
                     .monospacedDigit()
@@ -104,7 +102,7 @@ struct CountdownTimerView: View {
             }
         }
         .onAppear {
-            viewStore.send(.onAppear)
+            store.send(.onAppear)
         }
     }
 }

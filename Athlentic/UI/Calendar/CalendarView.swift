@@ -129,17 +129,15 @@ struct CalendarReducer {
 
 struct CalendarView: View {
     @Bindable var store: StoreOf<CalendarReducer>
-    @ObservedObject var viewStore: ViewStoreOf<CalendarReducer>
 
     init(store: StoreOf<CalendarReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
 
     var body: some View {
         NavigationStack {
             CalendarViewComponent(
-                workoutRoutines: viewStore.workoutRoutines,
+                workoutRoutines: store.workoutRoutines,
                 content: { date in
                     Button(action: {
                         store.send(.tappedDate(date))
@@ -147,10 +145,10 @@ struct CalendarView: View {
                         CalendarViewCell(
                             store: Store(
                                 initialState: CalendarCellReducer.State(
-                                    dayFormatter: viewStore.dayFormatter,
-                                    selectedDate: viewStore.todayDate,
+                                    dayFormatter: store.dayFormatter,
+                                    selectedDate: store.todayDate,
                                     date: date,
-                                    workoutRoutines: viewStore.state.filterWorkout(date: date)
+                                    workoutRoutines: store.state.filterWorkout(date: date)
                                 )
                             ) {
                                 CalendarCellReducer()
@@ -163,11 +161,11 @@ struct CalendarView: View {
                         .foregroundStyle(.clear)
                 },
                 header: { date in
-                    Text(viewStore.weekDayFormatter.string(from: date))
+                    Text(store.weekDayFormatter.string(from: date))
                         .fontWeight(.bold)
                 },
                 title: { date in
-                    Text(viewStore.monthFormatter.string(from: date))
+                    Text(store.monthFormatter.string(from: date))
                         .font(.system(size: 24, weight: .bold, design: .default))
                         .padding(.vertical, 8)
                 }

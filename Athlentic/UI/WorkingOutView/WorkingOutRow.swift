@@ -150,18 +150,16 @@ struct WorkingOutRowReducer {
 
 struct WorkingOutRow: View {
     @Bindable var store: StoreOf<WorkingOutRowReducer>
-    @ObservedObject var viewStore: ViewStoreOf<WorkingOutRowReducer>
     @FocusState private var focusedField: WorkingOutRowReducer.Field?
     @State private var progressOffset: CGFloat = 100
     
     init(store: StoreOf<WorkingOutRowReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
         HStack {
-            switch viewStore.categoryType {
+            switch store.categoryType {
             case .strength:
                 orderView()
                 prevAndTimerView()
@@ -180,22 +178,22 @@ struct WorkingOutRow: View {
         .padding(.vertical, 5)
         .onChange(of: focusedField) { oldValue, newValue in
             if oldValue == .restTimeText,
-                viewStore.restTimeText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                viewStore.send(.typeRestTime(restTime: store.originalRestTimeText))
+               store.restTimeText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                store.send(.typeRestTime(restTime: store.originalRestTimeText))
             }
             if oldValue == .weightText,
-                viewStore.weightText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                viewStore.send(.typeWeight(weight: store.originalWeightText))
+               store.weightText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                store.send(.typeWeight(weight: store.originalWeightText))
             }
             if oldValue == .repText,
-                viewStore.repText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                viewStore.send(.typeRep(rep: store.originalRepText))
+               store.repText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                store.send(.typeRep(rep: store.originalRepText))
             }
             if newValue != nil {
-                viewStore.send(.setFocus(newValue))
+                store.send(.setFocus(newValue))
             }
         }
-        .onChange(of: viewStore.focusedField) { _, newValue in
+        .onChange(of: store.focusedField) { _, newValue in
             focusedField = newValue
         }
         .fullScreenCover(
@@ -208,7 +206,7 @@ struct WorkingOutRow: View {
     
     @ViewBuilder
     private func orderView() -> some View {
-        if viewStore.editMode == .active {
+        if store.editMode == .active {
             Menu {
                 Button(action: {
 
@@ -226,7 +224,7 @@ struct WorkingOutRow: View {
                     Label("실패", systemImage: "pencil")
                 }
             } label: {
-                Text("\(viewStore.workoutSet.order)")
+                Text("\(store.workoutSet.order)")
                     .padding([.leading, .trailing], 5)
                     .padding([.top, .bottom], 3)
                     .font(.system(size: 17))
@@ -238,9 +236,9 @@ struct WorkingOutRow: View {
         } else {
             Toggle(
                 "",
-                isOn: viewStore.binding(
-                    get: { $0.isChecked },
-                    send: { WorkingOutRowReducer.Action.toggleCheck(isChecked: $0) }
+                isOn: Binding(
+                    get: { store.isChecked },
+                    set: { store.send(.toggleCheck(isChecked: $0)) }
                 )
             )
             .toggleStyle(CheckboxToggleStyle(style: .square))
@@ -251,29 +249,29 @@ struct WorkingOutRow: View {
     
     @ViewBuilder
     private func prevAndTimerView() -> some View {
-        if viewStore.editMode == .inactive {
-            if viewStore.isChecked {
+        if store.editMode == .inactive {
+            if store.isChecked {
                 CountdownTimerView(store: store.scope(state: \.timerView,
                                                       action: \.timerView))
                 .frame(maxWidth: .infinity, minHeight: 25)
                 .background(.clear)
                 .transition(.opacity.animation(.easeIn))
             } else {
-                Text("\(viewStore.workoutSet.prevReps) x \(String(format: "%.1f", viewStore.workoutSet.prevWeight))")
+                Text("\(store.workoutSet.prevReps) x \(String(format: "%.1f", store.workoutSet.prevWeight))")
                     .font(.system(size: 17))
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(.secondary)
             }
         }
     }
-    
+
     @ViewBuilder
     private func repsAndWeightView() -> some View {
-        if viewStore.editMode == .active {
-            TextField("count", text: viewStore.binding(
-                get: { $0.repText },
-                send: { WorkingOutRowReducer.Action.typeRep(rep: $0) })
-            )
+        if store.editMode == .active {
+            TextField("count", text: Binding(
+                get: { store.repText },
+                set: { store.send(.typeRep(rep: $0)) }
+            ))
             .font(.system(size: 17))
             .frame(minWidth: 100)
             .keyboardType(.numberPad)
@@ -281,19 +279,19 @@ struct WorkingOutRow: View {
             .multilineTextAlignment(.center)
             .focused($focusedField, equals: .repText)
         } else {
-            Text(String(viewStore.workoutSet.reps))
+            Text(String(store.workoutSet.reps))
                 .font(.system(size: 17))
                 .frame(minWidth: 85)
                 .padding(.vertical, 3)
                 .background(Color(uiColor: .secondarySystemFill))
                 .cornerRadius(5)
         }
-        
-        if viewStore.editMode == .active {
-            TextField("weight", text: viewStore.binding(
-                get: { $0.weightText },
-                send: { WorkingOutRowReducer.Action.typeWeight(weight: $0) })
-            )
+
+        if store.editMode == .active {
+            TextField("weight", text: Binding(
+                get: { store.weightText },
+                set: { store.send(.typeWeight(weight: $0) ) }
+            )       )
             .font(.system(size: 17))
             .frame(minWidth: 100)
             .keyboardType(.decimalPad)
@@ -301,7 +299,7 @@ struct WorkingOutRow: View {
             .multilineTextAlignment(.center)
             .focused($focusedField, equals: .weightText)
         } else {
-            Text(String(viewStore.workoutSet.weight))
+            Text(String(store.workoutSet.weight))
                 .font(.system(size: 17))
                 .frame(minWidth: 85)
                 .padding(.vertical, 3)
@@ -312,10 +310,12 @@ struct WorkingOutRow: View {
     
     @ViewBuilder
     private func durationView() -> some View {
-        if viewStore.editMode == .active {
+        if store.editMode == .active {
             TextField("진행 시간",
-                      text: viewStore.binding(get: \.durationText,
-                                              send: { .typeDuration(duration: $0) }))
+                      text: Binding(
+                        get: { store.durationText },
+                        set: { store.send(.typeDuration(duration: $0)) }
+                    ))
             .font(.system(size: 17))
             .keyboardType(.decimalPad)
             .textFieldStyle(.roundedBorder)
@@ -323,7 +323,7 @@ struct WorkingOutRow: View {
             .frame(maxWidth: .infinity)
             .focused($focusedField, equals: .durationText)
         } else {
-            Text(String(viewStore.workoutSet.duration.formattedTime()))
+            Text(String(store.workoutSet.duration.formattedTime()))
                 .font(.system(size: 17))
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 3)
@@ -331,13 +331,15 @@ struct WorkingOutRow: View {
                 .cornerRadius(5)
         }
     }
-    
+
     @ViewBuilder
     private func restTimeView() -> some View {
-        if viewStore.editMode == .active {
+        if store.editMode == .active {
             TextField("시간 입력",
-                      text: viewStore.binding(get: \.restTimeText,
-                                              send: { .typeRestTime(restTime: $0) }))
+                      text: Binding(
+                        get: { store.restTimeText },
+                        set: { store.send(.typeRestTime(restTime: $0)) }
+                    ))
             .font(.system(size: 17))
             .keyboardType(.decimalPad)
             .textFieldStyle(.roundedBorder)
@@ -348,20 +350,20 @@ struct WorkingOutRow: View {
     
     @ViewBuilder
     private func stopWatchView() -> some View {
-        if viewStore.editMode == .inactive {
-            Text("\(viewStore.workoutSet.prevDuration)")
+        if store.editMode == .inactive {
+            Text("\(store.workoutSet.prevDuration)")
                 .font(.system(size: 17))
                 .frame(maxWidth: .infinity)
                 .foregroundStyle(.secondary)
         }
-        Text(String(viewStore.workoutSet.duration.formattedTime()))
+        Text(String(store.workoutSet.duration.formattedTime()))
             .font(.system(size: 17))
             .frame(maxWidth: .infinity)
             .padding(.vertical, 3)
             .background(Color(uiColor: .secondarySystemFill))
             .cornerRadius(5)
         Button(action: {
-            viewStore.send(.presentStopWatch)
+            store.send(.presentStopWatch)
         }) {
             Text("스탑와치 시작")
                 .frame(minHeight: 30)
@@ -371,6 +373,6 @@ struct WorkingOutRow: View {
                 .cornerRadius(10)
                 .padding(.vertical, 5)
         }
-        .disabled(viewStore.editMode == .active)
+        .disabled(store.editMode == .active)
     }
 }

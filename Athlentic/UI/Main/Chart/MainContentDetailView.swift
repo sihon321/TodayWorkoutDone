@@ -146,11 +146,9 @@ struct MainContentDetailViewReducer {
 
 struct MainContentDetailView: View {
     @Bindable var store: StoreOf<MainContentDetailViewReducer>
-    @ObservedObject var viewStore: ViewStoreOf<MainContentDetailViewReducer>
     
     init(store: StoreOf<MainContentDetailViewReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
@@ -158,15 +156,15 @@ struct MainContentDetailView: View {
             VStack {
                 chartView()
                     .onAppear {
-                        viewStore.send(.fetchChartRecords)
+                        store.send(.fetchChartRecords)
                     }
                 Spacer(minLength: 30)
-                let listData = listIdentifiers(viewStore.contentType)
+                let listData = listIdentifiers(store.contentType)
                 ForEach(listData, id: \.0) { (id, unit) in
                     listView(id)
                 }
                 .onAppear {
-                    viewStore.send(.requestAuthorization(listData))
+                    store.send(.requestAuthorization(listData))
                 }
                 Spacer()
             }
@@ -249,7 +247,7 @@ struct MainContentDetailView: View {
 
 extension MainContentDetailView {
     func chartView() -> some View {
-        Chart(viewStore.chartRecords) {
+        Chart(store.chartRecords) {
             BarMark(
                 x: .value("시간", $0.time),
                 y: .value("값", $0.value)
@@ -307,7 +305,7 @@ extension MainContentDetailView {
                                   weight: .bold,
                                   design: .default))
                     .foregroundStyle(Color(0x7d7d7d))
-                Text(String(format: "%.2f", viewStore.listRecords[id] ?? 0.0))
+                Text(String(format: "%.2f", store.listRecords[id] ?? 0.0))
                     .font(.system(size: 22,
                                   weight: .bold,
                                   design: .default))

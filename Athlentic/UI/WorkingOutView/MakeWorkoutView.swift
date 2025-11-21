@@ -404,12 +404,10 @@ struct MakeWorkoutReducer {
 
 struct MakeWorkoutView: View {
     @Bindable var store: StoreOf<MakeWorkoutReducer>
-    @ObservedObject var viewStore: ViewStoreOf<MakeWorkoutReducer>
     @FocusState private var isTextFieldFocused: Bool
 
     init(store: StoreOf<MakeWorkoutReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
@@ -417,9 +415,9 @@ struct MakeWorkoutView: View {
             ScrollView {
                 VStack {
                     TextField("타이틀을 입력하세요",
-                              text: viewStore.binding(
-                                get: \.myRoutine.name,
-                                send: MakeWorkoutReducer.Action.didUpdateText
+                              text: Binding(
+                                get: { store.myRoutine.name },
+                                set: { store.send(MakeWorkoutReducer.Action.didUpdateText($0)) }
                               ))
                     .multilineTextAlignment(.leading)
                     .font(.system(size: 25, weight: .bold))
@@ -436,7 +434,7 @@ struct MakeWorkoutView: View {
                     .padding(.bottom, 30)
                     
                     Button("워크아웃 추가") {
-                        viewStore.send(.tappedAdd)
+                        store.send(.tappedAdd)
                     }
                     .buttonStyle(AddWorkoutButtonStyle())
                     .fullScreenCover(
@@ -448,10 +446,10 @@ struct MakeWorkoutView: View {
                 }
                 .background(Color.background)
                 .onTapGesture {
-                    viewStore.send(.dismissKeyboard)
-                    viewStore.workingOutSection.elements.forEach { section in
+                    store.send(.dismissKeyboard)
+                    store.workingOutSection.elements.forEach { section in
                         section.workingOutRow.elements.forEach { row in
-                            viewStore.send(
+                            store.send(
                                 .workingOutSection(
                                     .element(id: section.id,
                                              action: .workingOutRow(
@@ -467,10 +465,10 @@ struct MakeWorkoutView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        viewStore.send(.dismissKeyboard)
-                        viewStore.workingOutSection.elements.forEach { section in
+                        store.send(.dismissKeyboard)
+                        store.workingOutSection.elements.forEach { section in
                             section.workingOutRow.elements.forEach { row in
-                                viewStore.send(
+                                store.send(
                                     .workingOutSection(
                                         .element(id: section.id,
                                                  action: .workingOutRow(
@@ -481,7 +479,7 @@ struct MakeWorkoutView: View {
                                 )
                             }
                         }
-                        viewStore.send(.dismissMakeWorkout)
+                        store.send(.dismissMakeWorkout)
                     }) {
                         Image(systemName: "xmark")
                     }
@@ -489,11 +487,11 @@ struct MakeWorkoutView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if store.isEdit {
                         Button("Save") {
-                            viewStore.send(.save(viewStore.myRoutine))
+                            store.send(.save(store.myRoutine))
                         }
                     } else {
                         Button("Done") {
-                            viewStore.send(.tappedDone(viewStore.myRoutine))
+                            store.send(.tappedDone(store.myRoutine))
                         }
                     }
                 }
@@ -501,9 +499,9 @@ struct MakeWorkoutView: View {
             .background(Color.background)
         }
         .onChange(of: isTextFieldFocused) { _, newValue in
-            viewStore.send(.setFocus(newValue))
+            store.send(.setFocus(newValue))
         }
-        .onChange(of: viewStore.isFocused) { _, newValue in
+        .onChange(of: store.isFocused) { _, newValue in
             isTextFieldFocused = newValue
         }
     }

@@ -258,11 +258,9 @@ struct WorkoutReducer {
 
 struct WorkoutView: View {
     @Bindable var store: StoreOf<WorkoutReducer>
-    @ObservedObject var viewStore: ViewStoreOf<WorkoutReducer>
     
     init(store: StoreOf<WorkoutReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
@@ -284,12 +282,9 @@ struct WorkoutView: View {
             }
             .background(Color.background)
             .navigationBarTitle("workout", displayMode: .inline)
-            .workoutViewToolbar(store: store, viewStore: viewStore)
+            .workoutViewToolbar(store: store)
         }
-//        .searchable(text: viewStore.binding(
-//            get: { $0.keyword },
-//            send: { WorkoutReducer.Action.search(keyword: $0) }
-//        ))
+//        .searchable(text: $store.keyword.sending(.search(keyword: $0)))
         .fullScreenCover(
             item: $store.scope(state: \.destination?.makeWorkoutView,
                                action: \.destination.makeWorkoutView)
@@ -299,8 +294,8 @@ struct WorkoutView: View {
         .alert($store.scope(state: \.destination?.alert,
                             action: \.destination.alert))
         .onAppear {
-            viewStore.send(.getMyRoutines)
-            viewStore.send(.getCategories)
+            store.send(.getMyRoutines)
+            store.send(.getCategories)
         }
         .tint(.todBlack)
     }
@@ -328,29 +323,26 @@ extension AlertState where Action == WorkoutReducer.Destination.Alert {
 
 private extension View {
     func workoutViewToolbar(
-        store: StoreOf<WorkoutReducer>,
-        viewStore: ViewStoreOf<WorkoutReducer>
+        store: StoreOf<WorkoutReducer>
     ) -> some View {
-        return self.modifier(WorkoutViewToolbar(store: store,
-                                                viewStore: viewStore))
+        return self.modifier(WorkoutViewToolbar(store: store))
     }
 }
 
 private struct WorkoutViewToolbar: ViewModifier {
     
     @Bindable var store: StoreOf<WorkoutReducer>
-    @ObservedObject var viewStore: ViewStoreOf<WorkoutReducer>
     
     func body(content: Content) -> some View {
         return content
             .toolbar(content: {
-                if !viewStore.myRoutine.routines.isEmpty {
+                if !store.myRoutine.routines.isEmpty {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
-                            viewStore.send(.createMakeWorkoutView(routines: store.myRoutine.routines,
+                            store.send(.createMakeWorkoutView(routines: store.myRoutine.routines,
                                                                   isEdit: false))
                         }) {
-                            let selectedWorkoutCount = viewStore.myRoutine.routines.count
+                            let selectedWorkoutCount = store.myRoutine.routines.count
                             Text("Done(\(selectedWorkoutCount))")
                                 .foregroundStyle(Color.todBlack)
                         }
@@ -358,7 +350,7 @@ private struct WorkoutViewToolbar: ViewModifier {
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        viewStore.send(.dismiss)
+                        store.send(.dismiss)
                     }, label: {
                         Image(systemName: "xmark")
                             .foregroundStyle(Color.todBlack)

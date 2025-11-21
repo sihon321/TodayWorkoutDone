@@ -82,11 +82,9 @@ struct CalendarDetailReducer {
 
 struct CalendarDetailView: View {
     @Bindable var store: StoreOf<CalendarDetailReducer>
-    @ObservedObject var viewStore: ViewStoreOf<CalendarDetailReducer>
     
     init(store: StoreOf<CalendarDetailReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {

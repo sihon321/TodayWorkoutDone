@@ -39,17 +39,15 @@ struct MyRoutineSubviewReducer {
 
 struct MyRoutineSubview: View {
     @Bindable var store: StoreOf<MyRoutineSubviewReducer>
-    @ObservedObject var viewStore: ViewStoreOf<MyRoutineSubviewReducer>
     
     init(store: StoreOf<MyRoutineSubviewReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
 
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(viewStore.myRoutine.name)
+                Text(store.myRoutine.name)
                     .font(.system(size: 18,
                                   weight: .semibold,
                                   design: .default))
@@ -59,13 +57,13 @@ struct MyRoutineSubview: View {
                 Button(action: {}) {
                     Menu {
                         Button(action: {
-                            viewStore.send(.touchedEditMode(store.myRoutine))
+                            store.send(.touchedEditMode(store.myRoutine))
                         }) {
                             Label("편집", systemImage: "pencil")
                                 .foregroundStyle(Color.todBlack)
                         }
                         Button(action: {
-                            viewStore.send(.touchedDelete(store.myRoutine))
+                            store.send(.touchedDelete(store.myRoutine))
                         }) {
                             Label("삭제", systemImage: "trash")
                                 .foregroundStyle(Color.todBlack)
@@ -82,7 +80,7 @@ struct MyRoutineSubview: View {
             .padding(.top, 20)
             .padding(.bottom, 5)
             
-            ForEach(viewStore.myRoutine.routines) { routine in
+            ForEach(store.myRoutine.routines) { routine in
                 Text(routine.workout.name)
                     .font(.system(size: 12,
                                   weight: .light,

@@ -280,7 +280,7 @@ class LiveHealthKitManager: HealthKitManager {
         let heightType = HKQuantityType.quantityType(forIdentifier: .height)!
         let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass)!
 
-        let heightQuantity = HKQuantity(unit: .meter(), doubleValue: height)
+        let heightQuantity = HKQuantity(unit: .meterUnit(with: .centi), doubleValue: height)
         let weightQuantity = HKQuantity(unit: .gramUnit(with: .kilo), doubleValue: weight)
 
         let heightSample = HKQuantitySample(type: heightType, quantity: heightQuantity, start: now, end: now, metadata: [

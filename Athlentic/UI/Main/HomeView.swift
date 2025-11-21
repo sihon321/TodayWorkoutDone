@@ -230,25 +230,24 @@ struct HomeReducer {
 struct HomeView: View {
     @Environment(\.scenePhase) private var scenePhase // scenePhase 환경값 주입
     @Bindable var store: StoreOf<HomeReducer>
-    @ObservedObject var viewStore: ViewStoreOf<HomeReducer>
     
     init(store: StoreOf<HomeReducer>) {
         UITabBar.appearance().isHidden = true
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
+
     
     var body: some View {
         ZStack {
             TabView(
-                selection: viewStore.binding(
-                    get: { $0.tabBar.tabButton.info },
-                    send: { HomeReducer.Action.tabBar(.tabButton(.setTab(info: $0))) }
+                selection: Binding(
+                    get: { store.tabBar.tabButton.info },
+                    set: { store.send(.tabBar(.tabButton(.setTab(info: $0)))) }
                 ).index
             ) {
                 ZStack {
                     MainView(bottomEdge: store.bottomEdge)
-                    if viewStore.workingOut.myRoutine == nil {
+                    if store.workingOut.myRoutine == nil {
                         startButton()
                     }
                 }
@@ -260,11 +259,12 @@ struct HomeView: View {
                 SettingsView(store: store.scope(state: \.setting, action: \.setting))
                     .tag(2)
             }
-            if viewStore.workingOut.myRoutine != nil {
+
+            if store.workingOut.myRoutine != nil {
                 SlideOverCardView(
-                    hideTabValue: viewStore.binding(
-                        get: { $0.tabBarOffset },
-                        send: { HomeReducer.Action.setTabBarOffset(offset: $0) }
+                    hideTabValue: Binding(
+                        get: { store.tabBarOffset },
+                        set: { store.send(.setTabBarOffset(offset: $0)) }
                     ),
                     content: {
                         WorkingOutView(store: store.scope(state: \.workingOut,
@@ -291,8 +291,8 @@ struct HomeView: View {
         .tint(.todBlack)
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                if viewStore.workingOut.myRoutine == nil {
-                    viewStore.send(.loadMyRoutine)
+                if store.workingOut.myRoutine == nil {
+                    store.send(.loadMyRoutine)
                 }
             }
         }
@@ -300,20 +300,20 @@ struct HomeView: View {
             switch newPhase {
             case .active:
                 print("App is active (foreground and interactive)")
-                if let enterTime = viewStore.lastBackgroundEnterTime {
+                if let enterTime = store.lastBackgroundEnterTime {
                     let timeInBackground = Date().timeIntervalSince(enterTime)
                     print("백그라운드 경과 시간: \(timeInBackground) 초")
-                    viewStore.send(.workingOut(.addTimer(Int(timeInBackground))))
+                    store.send(.workingOut(.addTimer(Int(timeInBackground))))
                 }
-                viewStore.send(.setBackground(date: nil))
+                store.send(.setBackground(date: nil))
             case .inactive:
                 print("App is inactive (foreground but not interactive, e.g., during app switcher transition or call)")
-                if viewStore.workingOut.myRoutine != nil {
-                    viewStore.send(.saveMyRoutine)
+                if store.workingOut.myRoutine != nil {
+                    store.send(.saveMyRoutine)
                 }
             case .background:
                 print("App is in background (not visible, may be terminated soon)")
-                viewStore.send(.setBackground(date: Date()))
+                store.send(.setBackground(date: Date()))
             @unknown default:
                 print("Unknown scene phase")
             }
@@ -326,7 +326,7 @@ extension HomeView {
         VStack {
             Spacer()
             Button(action: {
-                viewStore.send(.startButtonTapped)
+                store.send(.startButtonTapped)
             }) {
                 Text("워크아웃 시작")
                     .frame(minWidth: 0, maxWidth: .infinity - 30)

@@ -35,11 +35,9 @@ struct WorkoutInfoFeature {
 
 struct WorkoutInfoView: View {
     @Bindable var store: StoreOf<WorkoutInfoFeature>
-    @ObservedObject var viewStore: ViewStoreOf<WorkoutInfoFeature>
 
     init(store: StoreOf<WorkoutInfoFeature>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
@@ -47,12 +45,12 @@ struct WorkoutInfoView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
                     VStack(alignment: .center) {
-                        Text(viewStore.workout.name)
+                        Text(store.workout.name)
                             .font(.system(size: 20, weight: .bold))
                             .padding(.top, 12)
                             .foregroundStyle(Color.todBlack)
                         
-                        if let name = viewStore.workout.animationName,
+                        if let name = store.workout.animationName,
                            let view = LoopingVideoPlayerView(videoFileName: name) {
                             view
                         }
@@ -62,7 +60,7 @@ struct WorkoutInfoView: View {
                     Text("설명")
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(Color.todBlack)
-                    Text(viewStore.workout.summary)
+                    Text(store.workout.summary)
                         .font(.system(size: 15))
                         .padding()
                         .frame(maxWidth: .infinity,
@@ -74,7 +72,7 @@ struct WorkoutInfoView: View {
                     Text("운동 방법")
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(Color.todBlack)
-                    Text(viewStore.workout.instructions.enumerated().map({ return "\($0.offset + 1). \($0.element)"  }).joined(separator: "\n"))
+                    Text(store.workout.instructions.enumerated().map({ return "\($0.offset + 1). \($0.element)"  }).joined(separator: "\n"))
                         .font(.system(size: 15))
                         .padding()
                         .frame(maxWidth: .infinity,
@@ -86,7 +84,7 @@ struct WorkoutInfoView: View {
                     Text("주의사항")
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(Color.todBlack)
-                    Text(viewStore.workout.cautions.joined(separator: "\n"))
+                    Text(store.workout.cautions.joined(separator: "\n"))
                         .font(.system(size: 15))
                         .padding()
                         .frame(maxWidth: .infinity,
@@ -99,17 +97,17 @@ struct WorkoutInfoView: View {
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(Color.todBlack)
                     VStack(alignment: .leading) {
-                        let stars = (0..<viewStore.workout.difficulty).map { _ in "⭐️" }.joined()
+                        let stars = (0..<store.workout.difficulty).map { _ in "⭐️" }.joined()
                         Text("난이도: \(stars)")
                             .font(.system(size: 15))
                             .foregroundStyle(Color.todBlack)
-                        Text("METs: \(String(format: "%.1f", viewStore.workout.mets))")
+                        Text("METs: \(String(format: "%.1f", store.workout.mets))")
                             .font(.system(size: 15))
                             .foregroundStyle(Color.todBlack)
-                        Text("예상 칼로리 소모: 약 \(viewStore.workout.caloriesPer30Min)kcal/30분")
+                        Text("예상 칼로리 소모: 약 \(store.workout.caloriesPer30Min)kcal/30분")
                             .font(.system(size: 15))
                             .foregroundStyle(Color.todBlack)
-                        Text("적절한 반복/세트 수: \(viewStore.workout.recommendedReps)")
+                        Text("적절한 반복/세트 수: \(store.workout.recommendedReps)")
                             .font(.system(size: 15))
                             .foregroundStyle(Color.todBlack)
                     }
@@ -125,7 +123,7 @@ struct WorkoutInfoView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        viewStore.send(.dismiss)
+                        store.send(.dismiss)
                     }, label: {
                         Image(systemName: "xmark")
                     })

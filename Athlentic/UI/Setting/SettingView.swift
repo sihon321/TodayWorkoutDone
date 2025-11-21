@@ -23,7 +23,7 @@ struct SettingsReducer {
             }
         }
     }
-
+    
     enum WeightUnit: String, CaseIterable, Equatable {
         case meter = "미터법(kg)"
         case yardpound = "파운드(lb)"
@@ -37,7 +37,7 @@ struct SettingsReducer {
             }
         }
     }
-
+    
     enum AppTheme: String, CaseIterable, Equatable {
         case light, dark, system
     }
@@ -58,7 +58,7 @@ struct SettingsReducer {
         @Shared(.appStorage("isHealthKitSyncEnabled")) var isHealthKitSyncEnabled: Bool = true
         @Shared(.appStorage("isNotificationEnabled")) var isNotificationEnabled: Bool = true
     }
-
+    
     enum Action: BindableAction {
         case profileChanged
         case loadProfile
@@ -70,7 +70,7 @@ struct SettingsReducer {
         case notificationToggled(Bool)
         case binding(BindingAction<State>)
     }
-
+    
     var body: some ReducerOf<Self> {
         BindingReducer()
         
@@ -106,7 +106,7 @@ struct SettingsReducer {
                 }
                 state.distanceUnit = unit
                 return .none
-
+                
             case let .weightUnitChanged(unit):
                 if state.weightUnit != unit, let weight = Double(state.manualWeight) {
                     if unit == .meter {
@@ -117,11 +117,11 @@ struct SettingsReducer {
                 }
                 state.weightUnit = unit
                 return .none
-
+                
             case let .themeChanged(theme):
                 state.theme = theme
                 return .none
-
+                
             case let .healthKitSyncToggled(enabled):
                 state.isHealthKitSyncEnabled = enabled
                 return .none
@@ -139,78 +139,60 @@ struct SettingsReducer {
 
 struct SettingsView: View {
     @Bindable var store: StoreOf<SettingsReducer>
-    @ObservedObject var viewStore: ViewStoreOf<SettingsReducer>
     
     init(store: StoreOf<SettingsReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
-
+    
     var body: some View {
         NavigationStack {
             Form {
                 Section(header: Text("프로필 설정")) {
                     DatePicker("생년월일",
-                               selection: viewStore.binding(get: \.birthDay,
-                                                            send: SettingsReducer.Action.editBirth),
+                               selection: $store.birthDay.sending(\.editBirth),
                                displayedComponents: .date
                     )
                     HStack {
                         Text("키")
-                        TextField("(\(viewStore.distanceUnit.unit))", text: $store.manualHeight)
+                        TextField("(\(store.distanceUnit.unit))", text: $store.manualHeight)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                     }
                     HStack {
                         Text("몸무게")
-                        TextField("(\(viewStore.weightUnit.unit))", text: $store.manualWeight)
+                        TextField("(\(store.weightUnit.unit))", text: $store.manualWeight)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                     }
                 }
                 
                 Section(header: Text("단위 설정")) {
-                    Picker("길이", selection: viewStore.binding(
-                        get: \.distanceUnit,
-                        send: SettingsReducer.Action.distanceUnitChanged
-                    )) {
+                    Picker("길이", selection: $store.distanceUnit.sending(\.distanceUnitChanged)) {
                         ForEach(SettingsReducer.DistanceUnit.allCases, id: \.self) {
                             Text($0.rawValue.capitalized)
                         }
                     }
-
-                    Picker("중량", selection: viewStore.binding(
-                        get: \.weightUnit,
-                        send: SettingsReducer.Action.weightUnitChanged
-                    )) {
+                    
+                    Picker("중량", selection: $store.weightUnit.sending(\.weightUnitChanged)) {
                         ForEach(SettingsReducer.WeightUnit.allCases, id: \.self) {
                             Text($0.rawValue.capitalized)
                         }
                     }
                 }
-
+                
                 Section(header: Text("테마")) {
-                    Picker("앱 테마", selection: viewStore.binding(
-                        get: \.theme,
-                        send: SettingsReducer.Action.themeChanged
-                    )) {
+                    Picker("앱 테마", selection: $store.theme.sending(\.themeChanged)) {
                         ForEach(SettingsReducer.AppTheme.allCases, id: \.self) {
                             Text($0.rawValue.capitalized)
                         }
                     }
                 }
-
+                
                 Section(header: Text("기타")) {
-                    Toggle("HealthKit 동기화", isOn: viewStore.binding(
-                        get: \.isHealthKitSyncEnabled,
-                        send: SettingsReducer.Action.healthKitSyncToggled
-                    ))
+                    Toggle("HealthKit 동기화", isOn: $store.isHealthKitSyncEnabled.sending(\.healthKitSyncToggled))
                     .tint(Color.personal)
-
-                    Toggle("알림 설정", isOn: viewStore.binding(
-                        get: \.isNotificationEnabled,
-                        send: SettingsReducer.Action.notificationToggled
-                    ))
+                    
+                    Toggle("알림 설정", isOn: $store.isNotificationEnabled.sending(\.notificationToggled))
                     .tint(Color.personal)
                 }
             }
@@ -219,10 +201,10 @@ struct SettingsView: View {
             .background(Color.background)
         }
         .onAppear {
-            viewStore.send(.loadProfile)
+            store.send(.loadProfile)
         }
         .onDisappear {
-            viewStore.send(.profileChanged)
+            store.send(.profileChanged)
         }
     }
 }

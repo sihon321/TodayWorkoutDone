@@ -42,34 +42,32 @@ struct WorkingOutHeaderReducer {
 
 struct WorkingOutHeader: View {
     @Bindable var store: StoreOf<WorkingOutHeaderReducer>
-    @ObservedObject var viewStore: ViewStoreOf<WorkingOutHeaderReducer>
     @State private var showingOptions = false
     
     init(store: StoreOf<WorkingOutHeaderReducer>,
          equipmentType: State<EquipmentType>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(viewStore.routine.workout.name)
+                Text(store.routine.workout.name)
                     .font(.system(size: 20, weight: .semibold))
                 
-                let types = viewStore.routine.workout.equipment.compactMap { EquipmentType(rawValue: $0) }
+                let types = store.routine.workout.equipment.compactMap { EquipmentType(rawValue: $0) }
                 if types.isEmpty == false && types.contains(.none) == false {
                     Button(action: {}) {
                         Menu {
                             ForEach(types, id: \.self) { type in
                                 Button(action: {
-                                    viewStore.send(.tappedWorkoutsType(type: type))
+                                    store.send(.tappedWorkoutsType(type: type))
                                 }) {
                                     Label(type.rawValue, systemImage: "pencil")
                                 }
                             }
                         } label: {
-                            Text(viewStore.routine.equipmentType.kor)
+                            Text(store.routine.equipmentType.kor)
                                 .padding([.leading, .trailing], 5)
                                 .padding([.top, .bottom], 3)
                                 .font(.system(size: 11))
@@ -99,7 +97,7 @@ struct WorkingOutHeader: View {
                     .tint(Color.todBlack)
             }
             
-            switch WorkoutCategoryState.WorkoutCategoryType(rawValue: viewStore.routine.workout.categoryName) {
+            switch WorkoutCategoryState.WorkoutCategoryType(rawValue: store.routine.workout.categoryName) {
             case .strength:
                 strengthHeader()
             case .cardio, .pilates, .yoga:
@@ -118,20 +116,20 @@ struct WorkingOutHeader: View {
         HStack {
             Text("세트")
                 .font(.system(size: 17, weight: .medium))
-            if viewStore.editMode == .inactive {
+            if store.editMode == .inactive {
                 Text("이전")
                     .font(.system(size: 17, weight: .medium))
                     .frame(minWidth: 140)
             }
             Text("랩")
                 .font(.system(size: 17, weight: .medium))
-                .frame(minWidth: viewStore.editMode == .inactive ? 85 : 110)
+                .frame(minWidth: store.editMode == .inactive ? 85 : 110)
                 
-            Text(viewStore.weightUnit.unit)
+            Text(store.weightUnit.unit)
                 .font(.system(size: 17, weight: .medium))
-                .frame(minWidth: viewStore.editMode == .inactive ? 85 : 100)
+                .frame(minWidth: store.editMode == .inactive ? 85 : 100)
                 
-            if viewStore.editMode == .active {
+            if store.editMode == .active {
                 Text("휴식시간")
                     .font(.system(size: 17, weight: .medium))
                     .frame(minWidth: 100)
@@ -144,7 +142,7 @@ struct WorkingOutHeader: View {
         HStack {
             Text("세트")
                 .font(.system(size: 17, weight: .medium))
-            if viewStore.editMode == .inactive {
+            if store.editMode == .inactive {
                 Text("이전")
                     .font(.system(size: 17, weight: .medium))
                     .frame(minWidth: 190)
@@ -153,7 +151,7 @@ struct WorkingOutHeader: View {
                 .font(.system(size: 17, weight: .medium))
                 .frame(maxWidth: .infinity)
                 
-            if viewStore.editMode == .active {
+            if store.editMode == .active {
                 Text("휴식시간")
                     .font(.system(size: 17, weight: .medium))
                     .frame(maxWidth: .infinity)
@@ -164,7 +162,7 @@ struct WorkingOutHeader: View {
     @ViewBuilder
     private func stretchingHeader() -> some View {
         HStack {
-            if viewStore.editMode == .inactive {
+            if store.editMode == .inactive {
                 Text("이전")
                     .font(.system(size: 17, weight: .medium))
                     .frame(maxWidth: .infinity)

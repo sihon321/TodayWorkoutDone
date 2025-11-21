@@ -94,17 +94,15 @@ struct WeeklyChartView: View {
     }
     
     @Bindable var store: StoreOf<WeeklyChart>
-    @ObservedObject var viewStore: ViewStoreOf<WeeklyChart>
     
     init(store: StoreOf<WeeklyChart>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             Text("주당 소모 칼로리")
-            Chart(viewStore.dailyActiveEnergyBurnes) {
+            Chart(store.dailyActiveEnergyBurnes) {
                 BarMark(
                     x: .value("Weekly", $0.day),
                     y: .value("Profit", $0.profit)

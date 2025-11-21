@@ -95,11 +95,9 @@ struct CalendarDetailSubViewReducer {
 
 struct CalendarDetailSubView: View {
     @Bindable var store: StoreOf<CalendarDetailSubViewReducer>
-    @ObservedObject var viewStore: ViewStoreOf<CalendarDetailSubViewReducer>
     
     init(store: StoreOf<CalendarDetailSubViewReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
@@ -109,7 +107,7 @@ struct CalendarDetailSubView: View {
             
             healthSummaryView()
             
-            ForEach(viewStore.workoutRoutine.routines, id: \.id) { routine in
+            ForEach(store.workoutRoutine.routines, id: \.id) { routine in
                 exerciseSummaryView(routine)
                 Divider()
                 setDetailTableView(routine)
@@ -135,19 +133,19 @@ struct CalendarDetailSubView: View {
     func headerSectionView() -> some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text("\(viewStore.workoutRoutine.name)")
+                Text("\(store.workoutRoutine.name)")
                     .font(.title)
                 Spacer()
                 Button(action: {}) {
                     Menu {
                         Button(action: {
-                            viewStore.send(.edit)
+                            store.send(.edit)
                         }) {
                             Label("편집", systemImage: "pencil")
                                 .foregroundStyle(Color.todBlack)
                         }
                         Button(action: {
-                            viewStore.send(.delete)
+                            store.send(.delete)
                         }) {
                             Label("삭제", systemImage: "trash")
                                 .foregroundStyle(Color.todBlack)
@@ -161,15 +159,15 @@ struct CalendarDetailSubView: View {
                     }
                 }
             }
-            Text("\(viewStore.workoutRoutine.startDate.formatToKoreanStyle())")
+            Text("\(store.workoutRoutine.startDate.formatToKoreanStyle())")
             
             HStack {
                 Image(systemName: "timer")
-                Text(viewStore.workoutRoutine.routineTime.convertSecondsToHMS())
+                Text(store.workoutRoutine.routineTime.convertSecondsToHMS())
                     .padding(.trailing, 10)
                     .foregroundStyle(Color.todBlack)
                 Image(systemName: "flame")
-                Text("\(Int(viewStore.workoutRoutine.calories)) kcal")
+                Text("\(Int(store.workoutRoutine.calories)) kcal")
                     .foregroundStyle(Color.todBlack)
             }
             .padding(.bottom, 5)
@@ -191,39 +189,39 @@ struct CalendarDetailSubView: View {
                     Image(systemName: "shoeprints.fill")
                         .resizable()
                         .frame(width: 15, height: 18)
-                    Text("\(viewStore.step.stepCount) 걸음")
+                    Text("\(store.step.stepCount) 걸음")
                         .foregroundStyle(Color.todBlack)
                 }
                 .onAppear {
                     store.send(.step(.fetchStep(
-                        from: viewStore.workoutRoutine.startDate,
-                        to: viewStore.workoutRoutine.endDate))
+                        from: store.workoutRoutine.startDate,
+                        to: store.workoutRoutine.endDate))
                     )
                 }
                 HStack {
                     Image(systemName: "figure.strengthtraining.traditional")
                         .resizable()
                         .frame(width: 15, height: 18)
-                    Text("\(viewStore.exerciseTime.exerciseTime / 60) 시간 \(viewStore.exerciseTime.exerciseTime % 60) 분")
+                    Text("\(store.exerciseTime.exerciseTime / 60) 시간 \(store.exerciseTime.exerciseTime % 60) 분")
                         .foregroundStyle(Color.todBlack)
                 }
                 .onAppear {
                     store.send(.exerciseTime(.fetchExerciseTime(
-                        from: viewStore.workoutRoutine.startDate,
-                        to: viewStore.workoutRoutine.endDate))
+                        from: store.workoutRoutine.startDate,
+                        to: store.workoutRoutine.endDate))
                     )
                 }
                 HStack {
                     Image(systemName: "flame.fill")
                         .resizable()
                         .frame(width: 15, height: 18)
-                    Text("\(viewStore.energyBurn.energyBurned) kcal")
+                    Text("\(store.energyBurn.energyBurned) kcal")
                         .foregroundStyle(Color.todBlack)
                 }
                 .onAppear {
                     store.send(.energyBurn(.fetchEnergyBurned(
-                        from: viewStore.workoutRoutine.startDate,
-                        to: viewStore.workoutRoutine.endDate))
+                        from: store.workoutRoutine.startDate,
+                        to: store.workoutRoutine.endDate))
                     )
                 }
             }

@@ -71,11 +71,9 @@ struct AddWorkoutCategoryReducer {
 
 struct AddWorkoutCategoryView: View {
     @Bindable var store: StoreOf<AddWorkoutCategoryReducer>
-    @ObservedObject var viewStore: ViewStoreOf<AddWorkoutCategoryReducer>
     
     init(store: StoreOf<AddWorkoutCategoryReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
@@ -85,7 +83,7 @@ struct AddWorkoutCategoryView: View {
                     ForEach(
                         store.scope(state: \.workoutList, action: \.workoutList)
                     ) { rowStore in
-                        if rowStore.category.name.hasPrefix(viewStore.keyword) {
+                        if rowStore.category.name.hasPrefix(store.keyword) {
                             NavigationLink {
                                 WorkoutListView(store: rowStore)
                             } label: {
@@ -100,7 +98,7 @@ struct AddWorkoutCategoryView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        viewStore.send(.dismissWorkoutCategory)
+                        store.send(.dismissWorkoutCategory)
                     }, label: {
                         Image(systemName: "xmark")
                     })
@@ -110,7 +108,7 @@ struct AddWorkoutCategoryView: View {
             .ignoresSafeArea(.container, edges: .bottom)
         }
         .onAppear {
-            viewStore.send(.getCategories)
+            store.send(.getCategories)
         }
         .tint(.todBlack)
     }

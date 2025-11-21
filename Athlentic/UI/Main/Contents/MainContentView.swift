@@ -102,13 +102,11 @@ struct MainContentFeature {
 
 struct MainContentView: View {
     @Bindable var store: StoreOf<MainContentFeature>
-    @ObservedObject var viewStore: ViewStoreOf<MainContentFeature>
     private let gridLayout = Array(repeating: GridItem(.flexible()),
                                    count: 2)
     
     init(store: StoreOf<MainContentFeature>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
@@ -132,7 +130,7 @@ struct MainContentView: View {
                     }
                 }
                 .onAppear {
-                    viewStore.send(.requstAuthrization)
+                    store.send(.requstAuthrization)
                 }
             }
             .padding([.leading, .trailing], 15)

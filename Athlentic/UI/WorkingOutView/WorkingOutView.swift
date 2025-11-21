@@ -305,28 +305,26 @@ struct WorkingOutReducer {
 
 struct WorkingOutView: View {
     @Bindable var store: StoreOf<WorkingOutReducer>
-    @ObservedObject var viewStore: ViewStoreOf<WorkingOutReducer>
     @State private var offsetY: CGFloat = .zero
     
     private let gridLayout: [GridItem] = [GridItem(.flexible())]
     
     init(store: StoreOf<WorkingOutReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
         VStack {
             HStack(alignment: .center) {
                 Button("Close") {
-                    viewStore.send(.tappedToolbarCloseButton(secondsElapsed: store.state.myRoutine?.secondsElapsed ?? 0))
-                    viewStore.send(.toggleTimer)
+                    store.send(.tappedToolbarCloseButton(secondsElapsed: store.state.myRoutine?.secondsElapsed ?? 0))
+                    store.send(.toggleTimer)
                 }
                 .font(.system(size: 17))
                 .frame(width: 60, height: 20)
                 Spacer()
-                WithViewStore(self.store, observe: { $0.myRoutine?.secondsElapsed.secondToHMS }) { viewStore in
-                    Text(viewStore.state ?? "")
+                WithViewStore(self.store, observe: { $0.myRoutine?.secondsElapsed.secondToHMS }) { store in
+                    Text(store.state ?? "")
                         .font(.system(size: 17))
                         .monospacedDigit()
                         .frame(maxHeight: .infinity)
@@ -344,7 +342,7 @@ struct WorkingOutView: View {
             
             ScrollView {
                 VStack(alignment: .leading) {
-                    Text(viewStore.myRoutine?.name ?? "")
+                    Text(store.myRoutine?.name ?? "")
                         .font(.system(size: 25, weight: .bold))
                         .multilineTextAlignment(.center)
                         .padding(.leading, 15)
@@ -357,9 +355,9 @@ struct WorkingOutView: View {
                     }
                     .padding(.bottom, 30)
                     
-                    if viewStore.isEdit {
+                    if store.isEdit {
                         Button("워크아웃 추가") {
-                            viewStore.send(.tappedAdd)
+                            store.send(.tappedAdd)
                         }
                         .buttonStyle(AddWorkoutButtonStyle())
                         .fullScreenCover(
@@ -374,13 +372,13 @@ struct WorkingOutView: View {
             }
         }
         .onAppear {
-            viewStore.send(.toggleTimer)
+            store.send(.toggleTimer)
         }
         .onDisappear {
-            viewStore.send(.cancelTimer)
+            store.send(.cancelTimer)
             for sectionStore in store.workingOutSection {
                 for row in sectionStore.workingOutRow {
-                    viewStore.send(.workingOutSection(.element(id: sectionStore.id, action: .workingOutRow(.element(id: row.id, action: .timerView(.stop))))))
+                    store.send(.workingOutSection(.element(id: sectionStore.id, action: .workingOutRow(.element(id: row.id, action: .timerView(.stop))))))
                 }
             }
         }
@@ -394,12 +392,12 @@ struct WorkingOutView: View {
         ZStack {
             Capsule()
                 .frame(width: 60, height: 30)
-                .foregroundStyle(Color(!viewStore.isEdit ? .personal : .grayC3))
+                .foregroundStyle(Color(!store.isEdit ? .personal : .grayC3))
             ZStack{
                 Circle()
                     .frame(width: 35, height: 25)
                     .foregroundStyle(.white)
-                if viewStore.isEdit {
+                if store.isEdit {
                     Image(systemName: "lock.open.fill")
                         .resizable()
                         .frame(width: 15, height: 15)
@@ -411,12 +409,12 @@ struct WorkingOutView: View {
 
             }
             .shadow(color: .personal.opacity(0.14), radius: 4, x: 0, y: 2)
-            .offset(x: !viewStore.isEdit ? 15 : -15)
+            .offset(x: !store.isEdit ? 15 : -15)
             .padding(15)
-            .animation(.spring(), value: !viewStore.isEdit)
+            .animation(.spring(), value: !store.isEdit)
         }
         .onTapGesture {
-            viewStore.send(.tappedEdit)
+            store.send(.tappedEdit)
         }
     }
     

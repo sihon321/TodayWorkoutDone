@@ -95,11 +95,9 @@ struct WorkingOutSectionReducer {
 struct WorkingOutSection: View {
     @Environment(\.defaultMinListRowHeight) var minRowHeight
     @Bindable var store: StoreOf<WorkingOutSectionReducer>
-    @ObservedObject var viewStore: ViewStoreOf<WorkingOutSectionReducer>
     
     init(store: StoreOf<WorkingOutSectionReducer>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     var body: some View {
@@ -108,22 +106,22 @@ struct WorkingOutSection: View {
                                                 action: \.workingOutHeader),
                              equipmentType: .init(wrappedValue: store.routine.equipmentType))
             ForEach(store.scope(state: \.workingOutRow, action: \.workingOutRow)) { rowStore in
-                if viewStore.editMode == .active && viewStore.categoryType != .stretching {
+                if store.editMode == .active && store.categoryType != .stretching {
                     SwipeView(content: {
                         WorkingOutRow(store: rowStore)
                     }, onDelete: {
-                        if let index = viewStore.workingOutRow
+                        if let index = store.workingOutRow
                             .firstIndex(where: { $0.id == rowStore.id }) {
-                            viewStore.send(.deleteWorkoutSet(IndexSet(integer: index)))
+                            store.send(.deleteWorkoutSet(IndexSet(integer: index)))
                         }
                     })
                 } else {
                     WorkingOutRow(store: rowStore)
                 }
             }
-            if viewStore.editMode == .active && viewStore.categoryType != .stretching {
+            if store.editMode == .active && store.categoryType != .stretching {
                 Button(action: {
-                    viewStore.send(.tappedAddFooter)
+                    store.send(.tappedAddFooter)
                 }) {
                     WorkingOutFooter()
                 }
@@ -132,8 +130,10 @@ struct WorkingOutSection: View {
             }
         }
         .padding(.horizontal, 15)
-        .environment(\.editMode, viewStore.binding(get: \.editMode,
-                                                   send: WorkingOutSectionReducer.Action.setEditMode))
+        .environment(\.editMode, Binding(
+            get: { store.editMode },
+            set: { store.send(.setEditMode($0)) }
+        ))
     }
 }
 
