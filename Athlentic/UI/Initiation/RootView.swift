@@ -40,7 +40,7 @@ struct RootFeature {
                 state.isActive = isActive
                 return .none
             case .onBoarding(.doneTapped):
-                state.isOnBoarding = true
+                state.$isOnBoarding.withLock { $0 = true }
                 return .none
             case .onBoarding:
                 return .none
@@ -84,3 +84,4 @@ struct RootView: View {
         .preferredColorScheme(store.theme == .dark ? .dark : store.theme == .light ? .light : nil)
     }
 }
+

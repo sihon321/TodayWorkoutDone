@@ -77,8 +77,8 @@ struct SettingsReducer {
         Reduce { state, action in
             switch action {
             case .profileChanged:
-                state.height = Double(state.manualHeight)
-                state.weight = Double(state.manualWeight)
+                state.$height.withLock { $0 = Double(state.manualHeight) }
+                state.$weight.withLock { $0 = Double(state.manualWeight) }
                 return .none
             case .loadProfile:
                 if let height = state.height {
@@ -93,7 +93,7 @@ struct SettingsReducer {
                 return .none
             case let .editBirth(date):
                 state.birthDay = date
-                state.birthDayTimeStamp = date.timeIntervalSince1970
+                state.$birthDayTimeStamp.withLock { $0 = date.timeIntervalSince1970 }
                 return .none
                 
             case let .distanceUnitChanged(unit):
@@ -104,7 +104,7 @@ struct SettingsReducer {
                         state.manualHeight = String(format: "%.2f", height * 0.3937)
                     }
                 }
-                state.distanceUnit = unit
+                state.$distanceUnit.withLock { $0 = unit }
                 return .none
                 
             case let .weightUnitChanged(unit):
@@ -115,19 +115,19 @@ struct SettingsReducer {
                         state.manualWeight = String(format: "%.2f", weight * 2.2046)
                     }
                 }
-                state.weightUnit = unit
+                state.$weightUnit.withLock { $0 = unit }
                 return .none
                 
             case let .themeChanged(theme):
-                state.theme = theme
+                state.$theme.withLock { $0 = theme }
                 return .none
                 
             case let .healthKitSyncToggled(enabled):
-                state.isHealthKitSyncEnabled = enabled
+                state.$isHealthKitSyncEnabled.withLock { $0 = enabled }
                 return .none
                 
             case let .notificationToggled(enabled):
-                state.isNotificationEnabled = enabled
+                state.$isNotificationEnabled.withLock { $0 = enabled }
                 return .none
                 
             case .binding:
@@ -208,3 +208,4 @@ struct SettingsView: View {
         }
     }
 }
+

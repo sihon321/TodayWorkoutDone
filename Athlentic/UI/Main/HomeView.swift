@@ -102,7 +102,7 @@ struct HomeReducer {
             case .saveMyRoutine:
                 do {
                     if let myRoutine = try state.workingOut.myRoutine?.encodeToData() {
-                        state.runningMyRoutine = myRoutine
+                        state.$runningMyRoutine.withLock { $0 = myRoutine }
                     }
                 } catch {
                     print(error.localizedDescription)
@@ -210,7 +210,7 @@ struct HomeReducer {
             case .workingOut(.destination(.presented(.alert(.tappedWorkoutAlertClose)))),
                     .workingOut(.destination(.presented(.alert(.tappedWorkoutAlertOk)))):
                 state.isHideTabBar = true
-                state.runningMyRoutine = nil
+                state.$runningMyRoutine.withLock { $0 = nil }
                 return .run { send in
                     await send(.setTabBarOffset(offset: 0.0))
                 }

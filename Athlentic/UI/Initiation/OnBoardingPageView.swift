@@ -104,23 +104,19 @@ struct OnBoardingFeature {
                 }
 
             case let .didLoadProfile(height, weight):
-                state.height = height
-                state.weight = weight
-
-                if height == nil || weight == nil {
-                    state.currentStep = .profile
+                return .run { [height, weight, heightShared = state.$height, weightShared = state.$weight] _ in
+                    heightShared.withLock { $0 = height }
+                    weightShared.withLock { $0 = weight }
                 }
-                
-                return .none
                 
             case let .editBirth(date):
                 state.birthDay = date
-                state.birthDayTimeStamp = date.timeIntervalSince1970
+                state.$birthDayTimeStamp.withLock { $0 = date.timeIntervalSince1970 }
                 return .none
                 
             case let .saveProfile(height, weight):
-                state.height = height
-                state.weight = weight
+                state.$height.withLock { $0 = height }
+                state.$weight.withLock { $0 = weight }
                 
                 return .run { send in
                     do {
