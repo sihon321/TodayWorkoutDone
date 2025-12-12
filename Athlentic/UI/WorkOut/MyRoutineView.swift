@@ -19,7 +19,6 @@ struct MyRoutineReducer {
     
     enum Action {
         case myRoutineSubview(IdentifiedActionOf<MyRoutineSubviewReducer>)
-        case touchedMyRoutine(MyRoutineState)
         case touchedMakeRoutine
     }
     
@@ -27,8 +26,6 @@ struct MyRoutineReducer {
         Reduce { state, action in
             switch action {
             case .myRoutineSubview:
-                return .none
-            case .touchedMyRoutine:
                 return .none
             case .touchedMakeRoutine:
                 return .none

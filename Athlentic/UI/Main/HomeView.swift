@@ -329,7 +329,7 @@ extension HomeView {
                 store.send(.startButtonTapped)
             }) {
                 Text("워크아웃 시작")
-                    .frame(minWidth: 0, maxWidth: .infinity - 30)
+                    .frame(minWidth: 0, maxWidth: .infinity - 30, minHeight: 30)
                     .padding([.top, .bottom], 5)
                     .background(Color.personal)
                     .foregroundStyle(.white)
@@ -339,7 +339,6 @@ extension HomeView {
             .padding(.horizontal, 30)
             .offset(y: -50)
         }
-
     }
 }
 

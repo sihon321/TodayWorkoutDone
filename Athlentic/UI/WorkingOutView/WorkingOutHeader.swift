@@ -116,23 +116,22 @@ struct WorkingOutHeader: View {
         HStack {
             Text("세트")
                 .font(.system(size: 17, weight: .medium))
+                .frame(minWidth: 30)
             if store.editMode == .inactive {
                 Text("이전")
                     .font(.system(size: 17, weight: .medium))
-                    .frame(minWidth: 140)
+                    .frame(minWidth: 140, maxWidth: .infinity)
             }
             Text("랩")
                 .font(.system(size: 17, weight: .medium))
-                .frame(minWidth: store.editMode == .inactive ? 85 : 110)
-                
+                .frame(minWidth: store.editMode == .inactive ? 85 : 110, maxWidth: .infinity)
             Text(store.weightUnit.unit)
                 .font(.system(size: 17, weight: .medium))
-                .frame(minWidth: store.editMode == .inactive ? 85 : 100)
-                
+                .frame(minWidth: store.editMode == .inactive ? 85 : 100, maxWidth: .infinity)
             if store.editMode == .active {
                 Text("휴식시간")
                     .font(.system(size: 17, weight: .medium))
-                    .frame(minWidth: 100)
+                    .frame(minWidth: 110, maxWidth: .infinity)
             }
         }
     }

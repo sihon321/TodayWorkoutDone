@@ -14,6 +14,7 @@ struct CalendarDetailSubViewReducer {
     @ObservableState
     struct State: Equatable, Identifiable {
         @Presents var destination: Destination.State?
+        @Shared(.appStorage("weightUnit")) var weightUnit: SettingsReducer.WeightUnit = .meter
         
         let id = UUID()
         var workoutRoutine: WorkoutRoutineState
@@ -245,9 +246,15 @@ struct CalendarDetailSubView: View {
                         Image(systemName: "dumbbell")
                         let totalWeight = routine.sets.reduce(0) { $0 + $1.weight }
                         let totalRepCount = routine.sets.reduce(0) { $0 + $1.reps }
-                        Text("\(String(format: "%.2f", totalWeight * Double(totalRepCount))) kg")
-                            .padding(.trailing, 10)
-                            .foregroundStyle(Color.todBlack)
+                        if store.weightUnit == .meter {
+                            Text("\(String(format: "%.2f", totalWeight * Double(totalRepCount))) kg")
+                                .padding(.trailing, 10)
+                                .foregroundStyle(Color.todBlack)
+                        } else {
+                            Text("\(String(format: "%.2f", (totalWeight * 2.2046) * Double(totalRepCount))) lb")
+                                .padding(.trailing, 10)
+                                .foregroundStyle(Color.todBlack)
+                        }
                         Image(systemName: "flame")
                         Text("\(Int(routine.calories)) kcal")
                             .foregroundStyle(Color.todBlack)
@@ -267,8 +274,13 @@ struct CalendarDetailSubView: View {
                     HStack {
                         Text("추정 1RM")
                             .foregroundStyle(Color.todBlack)
-                        Text("\(String(format: "%.2f kg", maxSets.weight * (1 + 0.0333 * Double(maxSets.reps))))")
-                            .foregroundStyle(Color.todBlack)
+                        if store.weightUnit == .meter {
+                            Text("\(String(format: "%.2f kg", maxSets.weight * (1 + 0.0333 * Double(maxSets.reps))))")
+                                .foregroundStyle(Color.todBlack)
+                        } else {
+                            Text("\(String(format: "%.2f lb", (maxSets.weight * 2.2046) * (1 + 0.0333 * Double(maxSets.reps))))")
+                                .foregroundStyle(Color.todBlack)
+                        }
                     }
                     .padding(.top, 5)
                 }
@@ -296,8 +308,13 @@ struct CalendarDetailSubView: View {
                         .frame(width: 20, height: 20)
                         .foregroundStyle(Color.todBlack)
                     Spacer()
-                    Text("\(String(format: "%.2f", routine.sets[index].weight)) kg")
-                        .foregroundStyle(Color.todBlack)
+                    if store.weightUnit == .meter {
+                        Text("\(String(format: "%.2f", routine.sets[index].weight)) kg")
+                            .foregroundStyle(Color.todBlack)
+                    } else {
+                        Text("\(String(format: "%.2f", routine.sets[index].weight * 2.2046)) kg")
+                            .foregroundStyle(Color.todBlack)
+                    }
                     Spacer()
                     Text("\(routine.sets[index].reps) reps")
                         .foregroundStyle(Color.todBlack)

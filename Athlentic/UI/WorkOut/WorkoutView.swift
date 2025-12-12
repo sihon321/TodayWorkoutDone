@@ -166,9 +166,6 @@ struct WorkoutReducer {
             // MARK: - myRoutine
             case let .myRoutineReducer(action):
                 switch action {
-                case let .touchedMyRoutine(selectedMyRoutine):
-                    state.destination = .alert(.startMyRoutine(selectedMyRoutine))
-                    return .none
                 case .touchedMakeRoutine:
                     return .send(.createMakeWorkoutView(routines: [], isEdit: true))
                 case let .myRoutineSubview(action):
@@ -193,7 +190,8 @@ struct WorkoutReducer {
                             } else {
                                 return .none
                             }
-                        case .touchedMyRoutine(_):
+                        case let .touchedMyRoutine(selectedMyRoutine):
+                            state.destination = .alert(.startMyRoutine(selectedMyRoutine))
                             return .none
                         }
                     }
