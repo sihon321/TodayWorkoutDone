@@ -32,6 +32,7 @@ struct CountdownTimerReducer {
         case tick
         case onAppear
         case terminate
+        case calculateTimeRemaining(Int)
     }
     
     private enum CancelID { case restTimer }
@@ -68,6 +69,12 @@ struct CountdownTimerReducer {
                 
             case .terminate:
                 state.timeRemaining = 0
+                return .none
+            case let .calculateTimeRemaining(seconds):
+                state.timeRemaining -= seconds
+                if state.timeRemaining < 0 {
+                    state.timeRemaining = 0
+                }
                 return .none
             }
         }

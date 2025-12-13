@@ -304,7 +304,11 @@ struct HomeView: View {
                 if let enterTime = store.lastBackgroundEnterTime {
                     let timeInBackground = Date().timeIntervalSince(enterTime)
                     print("백그라운드 경과 시간: \(timeInBackground) 초")
-                    store.send(.workingOut(.addTimer(Int(timeInBackground))))
+                    let seconds = Int(timeInBackground)
+                    // 전체 루틴 타이머에 경과 시간 추가
+                    store.send(.workingOut(.addTimer(seconds)))
+                    // 현재 동작 중인 타이머(섹션/로우)에 남은 시간 차감 반영
+                    store.send(.workingOut(.applyBackgroundTimeToRunningTimer(seconds)))
                 }
                 store.send(.setBackground(date: nil))
             case .inactive:

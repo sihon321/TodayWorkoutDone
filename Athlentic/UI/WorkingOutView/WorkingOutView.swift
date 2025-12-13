@@ -19,6 +19,9 @@ struct WorkingOutReducer {
         
         var isTimerActive = false
         var isEdit = false
+        
+        var runningTimerSectionId: UUID?
+        var runningTimerRowId: UUID?
     }
     
     enum Action {
@@ -33,6 +36,7 @@ struct WorkingOutReducer {
         case timerTicked
         case toggleTimer
         case addTimer(Int)
+        case applyBackgroundTimeToRunningTimer(Int)
         
         case presentedSaveRoutineAlert(MyRoutineState?)
         
@@ -83,6 +87,30 @@ struct WorkingOutReducer {
             case .addTimer(let seconds):
                 state.myRoutine?.secondsElapsed += seconds
                 return .none
+                
+            case .applyBackgroundTimeToRunningTimer(let seconds):
+                // Use the stored running timer identifiers to forward time deduction to the timerView
+                guard
+                    let sectionId = state.runningTimerSectionId,
+                    let rowId = state.runningTimerRowId,
+                    let _ = state.workingOutSection.index(id: sectionId),
+                    let _ = state.workingOutSection[id: sectionId]?.workingOutRow.index(id: rowId)
+                else {
+                    return .none
+                }
+                return .send(
+                    .workingOutSection(
+                        .element(
+                            id: sectionId,
+                            action: .workingOutRow(
+                                .element(
+                                    id: rowId,
+                                    action: .timerView(.calculateTimeRemaining(seconds))
+                                )
+                            )
+                        )
+                    )
+                )
                 
             case .presentedSaveRoutineAlert:
                 state.myRoutine = nil
@@ -194,7 +222,8 @@ struct WorkingOutReducer {
                     if let sectionIndex = state.workingOutSection.index(id: sectionId),
                        let rowIndex = state.workingOutSection[sectionIndex]
                         .workingOutRow.index(id: rowId) {
-                        
+                        state.runningTimerSectionId = sectionId
+                        state.runningTimerRowId = rowId
                         state.myRoutine?.routines[sectionIndex]
                             .sets[rowIndex].isChecked = isChecked
                         state.myRoutine?.routines[sectionIndex]
