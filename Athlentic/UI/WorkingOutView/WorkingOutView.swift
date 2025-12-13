@@ -392,11 +392,11 @@ struct WorkingOutView: View {
         ZStack {
             Capsule()
                 .frame(width: 60, height: 30)
-                .foregroundStyle(Color(!store.isEdit ? .personal : .grayC3))
+                .foregroundStyle(Color(!store.isEdit ? .personal : .gray88))
             ZStack{
                 Circle()
                     .frame(width: 35, height: 25)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.slideCardBackground)
                 if store.isEdit {
                     Image(systemName: "lock.open.fill")
                         .resizable()

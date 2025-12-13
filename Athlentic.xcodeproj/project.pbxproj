@@ -300,13 +300,6 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
-		8E2073AE2E1B403C00FA5D21 /* Video */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Video;
-			sourceTree = "<group>";
-		};
 		8E2073BD2E1B8E9900FA5D21 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,7 +312,6 @@
 		8E4066A529B33C90004BB7A2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8E2073AE2E1B403C00FA5D21 /* Video */,
 				8E0742FF2DF5378900F2DD7F /* Lottie */,
 				924762DB2D4B7ACE008FF911 /* Workout */,
 				F2E74CE92921F73600BD35F6 /* Assets.xcassets */,

@@ -106,6 +106,8 @@ struct AddWorkoutCategoryView: View {
             }
             .navigationTitle("Category")
             .ignoresSafeArea(.container, edges: .bottom)
+            .padding(.horizontal, 15)
+            .background(Color.background)
         }
         .onAppear {
             store.send(.getCategories)

@@ -56,8 +56,7 @@ struct HomeReducer {
         }
     }
 
-    
-    @Reducer(state: .equatable)
+    @Reducer
     enum Destination {
         case workoutView(WorkoutReducer)
         
@@ -227,6 +226,8 @@ struct HomeReducer {
     }
 }
 
+extension HomeReducer.Destination.State: Equatable {}
+
 struct HomeView: View {
     @Environment(\.scenePhase) private var scenePhase // scenePhase 환경값 주입
     @Bindable var store: StoreOf<HomeReducer>
@@ -358,3 +359,4 @@ extension AlertState where Action == HomeReducer.Destination.Alert {
         }
     }
 }
+
