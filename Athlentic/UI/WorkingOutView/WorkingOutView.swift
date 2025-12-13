@@ -203,7 +203,33 @@ struct WorkingOutReducer {
                             .workingOutRow[rowIndex].isChecked = isChecked
                         state.myRoutine?.routines[sectionIndex].endDate = Date()
                     }
-                    return .none
+                    
+                    var effects: [Effect<WorkingOutReducer.Action>] = []
+                    if isChecked {
+                        for otherSection in state.workingOutSection {
+                            for otherRow in otherSection.workingOutRow {
+                                if otherRow.id != rowId && otherRow.isChecked {
+                                    effects.append(
+                                        .send(
+                                            .workingOutSection(
+                                                .element(
+                                                    id: otherSection.id,
+                                                    action: .workingOutRow(
+                                                        .element(
+                                                            id: otherRow.id,
+                                                            action: .timerView(.terminate)
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                }
+                            }
+                        }
+
+                    }
+                    return .merge(effects)
                     
                 case let .typeRep(rep):
                     if let sectionIndex = state.workingOutSection.index(id: sectionId),
@@ -455,3 +481,4 @@ struct ScrollOffsetPreferenceKey: PreferenceKey {
         value = nextValue()
     }
 }
+

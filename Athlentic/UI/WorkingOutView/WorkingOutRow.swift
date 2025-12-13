@@ -250,7 +250,7 @@ struct WorkingOutRow: View {
     @ViewBuilder
     private func prevAndTimerView() -> some View {
         if store.editMode == .inactive {
-            if store.isChecked {
+            if store.isChecked && store.timerView.timeRemaining != 0 {
                 CountdownTimerView(store: store.scope(state: \.timerView,
                                                       action: \.timerView))
                 .frame(maxWidth: .infinity, minHeight: 25)

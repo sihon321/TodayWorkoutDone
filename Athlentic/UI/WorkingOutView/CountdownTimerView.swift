@@ -31,6 +31,7 @@ struct CountdownTimerReducer {
         case stop
         case tick
         case onAppear
+        case terminate
     }
     
     private enum CancelID { case restTimer }
@@ -63,6 +64,10 @@ struct CountdownTimerReducer {
                     state.isRunning = false
                     return .cancel(id: CancelID.restTimer)
                 }
+                return .none
+                
+            case .terminate:
+                state.timeRemaining = 0
                 return .none
             }
         }
