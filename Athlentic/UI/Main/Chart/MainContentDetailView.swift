@@ -61,25 +61,12 @@ struct MainContentDetailViewReducer {
                 
             case .fetchChartRecords:
                 return .run { [contentType = state.contentType] send in
-                    var type: HKQuantityTypeIdentifier = .stepCount
-                    var unit: HKUnit = .count()
-                    switch contentType {
-                    case .stepCount:
-                        type = .stepCount
-                        unit = .count()
-                    case .energyBurn:
-                        type = .activeEnergyBurned
-                        unit = .kilocalorie()
-                    case .workoutTime:
-                        type = .appleExerciseTime
-                        unit = .minute()
-                    }
                     do {
                         let hourlyRecords = try await healthKitManager.getHealthQuantityTimeSeries(
-                            type: type,
+                            type: contentType.hkType,
                             from: .midnight,
                             to: .currentDateForDeviceRegion,
-                            unit: unit,
+                            unit: contentType.hkUnit,
                             interval: DateComponents(hour: 1)
                         )
                         
@@ -153,7 +140,10 @@ struct MainContentDetailView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(alignment: .leading) {
+                Text(store.contentType.title)
+                    .padding(.bottom, 5)
+                    .font(.system(size: 20, weight: .bold))
                 chartView()
                     .onAppear {
                         store.send(.fetchChartRecords)

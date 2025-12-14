@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import HealthKit
 
 @Reducer
 struct MainContentFeature {
@@ -16,6 +17,38 @@ struct MainContentFeature {
         case energyBurn
         
         var id: String { self.rawValue }
+        
+        var hkType: HKQuantityTypeIdentifier {
+            switch self {
+            case .stepCount:
+                return .stepCount
+            case .workoutTime:
+                return .appleExerciseTime
+            case .energyBurn:
+                return .activeEnergyBurned            }
+        }
+        
+        var hkUnit: HKUnit {
+            switch self {
+            case .stepCount:
+                return .count()
+            case .energyBurn:
+                return .kilocalorie()
+            case .workoutTime:
+                return .minute()
+            }
+        }
+        
+        var title: String {
+            switch self {
+            case .stepCount:
+                return "걸음수"
+            case .workoutTime:
+                return "운동 시간"
+            case .energyBurn:
+                return "칼로리 소모량"
+            }
+        }
     }
     
     @ObservableState
