@@ -25,7 +25,8 @@ struct MainContentFeature {
             case .workoutTime:
                 return .appleExerciseTime
             case .energyBurn:
-                return .activeEnergyBurned            }
+                return .activeEnergyBurned
+            }
         }
         
         var hkUnit: HKUnit {

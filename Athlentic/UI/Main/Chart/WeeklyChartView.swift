@@ -94,6 +94,7 @@ struct WeeklyChartView: View {
     }
     
     @Bindable var store: StoreOf<WeeklyChart>
+    @State private var selectedDay: String?
     
     init(store: StoreOf<WeeklyChart>) {
         self.store = store
@@ -102,13 +103,30 @@ struct WeeklyChartView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("주당 소모 칼로리")
-            Chart(store.dailyActiveEnergyBurnes) {
+            Chart(store.dailyActiveEnergyBurnes) { item in
                 BarMark(
-                    x: .value("Weekly", $0.day),
-                    y: .value("Profit", $0.profit)
+                    x: .value("Weekly", item.day),
+                    y: .value("Profit", item.profit)
                 )
                 .foregroundStyle(Color.personal)
+                .annotation(position: .top, overflowResolution: .init(x: .fit, y: .disabled)) {
+                    // 선택된 요일(String)과 현재 item의 요일이 같으면 표시
+                    if let selectedDay, selectedDay == item.day {
+                        VStack {
+                            Text("\(Int(item.profit)) kcal") // 소수점 제거 및 단위 추가
+                                .font(.caption.bold())
+                            Text(item.day)
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(8)
+                        .background(Color(uiColor: .systemBackground).opacity(0.9))
+                        .cornerRadius(8)
+                        .shadow(radius: 2)
+                    }
+                }
             }
+            .chartXSelection(value: $selectedDay)
         }
         .frame(minWidth: 0,
                maxWidth: .infinity,

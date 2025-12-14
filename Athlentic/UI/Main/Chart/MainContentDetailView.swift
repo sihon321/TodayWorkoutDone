@@ -133,6 +133,13 @@ struct MainContentDetailViewReducer {
 
 struct MainContentDetailView: View {
     @Bindable var store: StoreOf<MainContentDetailViewReducer>
+    @State private var selectedTime: Date?
+    
+    var selectedRecord: MainContentDetailViewReducer.ChartRecord? {
+        guard let selectedTime else { return nil }
+        // chartRecords 배열 중에서 selectedTime과의 시간 차이가 가장 적은 항목을 반환
+        return store.chartRecords.min { abs($0.time.timeIntervalSince(selectedTime)) < abs($1.time.timeIntervalSince(selectedTime)) }
+    }
     
     init(store: StoreOf<MainContentDetailViewReducer>) {
         self.store = store
@@ -237,16 +244,33 @@ struct MainContentDetailView: View {
 
 extension MainContentDetailView {
     func chartView() -> some View {
-        Chart(store.chartRecords) {
+        Chart(store.chartRecords) { record in
             BarMark(
-                x: .value("시간", $0.time),
-                y: .value("값", $0.value)
+                x: .value("시간", record.time),
+                y: .value("값", record.value)
             )
             .foregroundStyle(Color.personal)
+            .annotation(position: .top, overflowResolution: .init(x: .fit, y: .disabled)) {
+                // 선택된 시간과 이 Bar의 시간이 같으면 뷰를 표시
+                if let selectedRecord, selectedRecord == record {
+                    VStack {
+                        Text("\(record.value)") // 값 표시
+                            .font(.caption.bold())
+                        Text(record.time, format: .dateTime.hour().minute()) // 시간 표시
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(8)
+                    .background(Color(uiColor: .systemBackground).opacity(0.9))
+                    .cornerRadius(8)
+                    .shadow(radius: 2)
+                }
+            }
         }
         .frame(minWidth: 0,
                maxWidth: .infinity,
                minHeight: 165)
+        .chartXSelection(value: $selectedTime)
         .chartXAxis {
             AxisMarks(values: .stride(by: .hour, count: 3)) { value in
                 if let date = value.as(Date.self) {
