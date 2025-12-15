@@ -163,7 +163,7 @@ struct MainContentDetailView: View {
                 .onAppear {
                     store.send(.requestAuthorization(listData))
                 }
-                Spacer()
+                Spacer(minLength: 150)
             }
         }
         .padding(.horizontal, 15)
