@@ -140,6 +140,13 @@ struct SettingsReducer {
 struct SettingsView: View {
     @Bindable var store: StoreOf<SettingsReducer>
     
+    @FocusState private var focusedField: FocusField?
+
+    private enum FocusField: Hashable {
+        case height
+        case weight
+    }
+    
     init(store: StoreOf<SettingsReducer>) {
         self.store = store
     }
@@ -157,12 +164,14 @@ struct SettingsView: View {
                         TextField("(\(store.distanceUnit.unit))", text: $store.manualHeight)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($focusedField, equals: .height)
                     }
                     HStack {
                         Text("몸무게")
                         TextField("(\(store.weightUnit.unit))", text: $store.manualWeight)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($focusedField, equals: .weight)
                     }
                 }
                 
@@ -199,6 +208,11 @@ struct SettingsView: View {
             .navigationTitle("설정")
             .scrollContentBackground(.hidden)
             .background(Color.background)
+            .scrollDismissesKeyboard(.interactively)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField = nil
+            }
         }
         .onAppear {
             store.send(.loadProfile)

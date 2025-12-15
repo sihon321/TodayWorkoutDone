@@ -314,7 +314,8 @@ struct EditWorkoutRoutineView: View {
                                         action: \.workingOutSection)) { rowStore in
                         WorkingOutSection(store: rowStore)
                     }
-                    .padding([.bottom], 30)
+                    .padding(.bottom, 30)
+                    
                     
                     Button("워크아웃 추가") {
                         store.send(.tappedAdd)

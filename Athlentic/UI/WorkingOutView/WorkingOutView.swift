@@ -19,6 +19,7 @@ struct WorkingOutReducer {
         
         var isTimerActive = false
         var isEdit = false
+        var isFocused: Bool = false
         
         var runningTimerSectionId: UUID?
         var runningTimerRowId: UUID?
@@ -39,6 +40,9 @@ struct WorkingOutReducer {
         case applyBackgroundTimeToRunningTimer(Int)
         
         case presentedSaveRoutineAlert(MyRoutineState?)
+        
+        case setFocusKeyboard(Bool)
+        case dismissKeyboard
         
         indirect case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
     }
@@ -133,6 +137,14 @@ struct WorkingOutReducer {
                         routines: state.myRoutine!.routines
                     )
                 )
+                return .none
+                
+            case let .setFocusKeyboard(focus):
+                state.isFocused = focus
+                return .none
+
+            case .dismissKeyboard:
+                state.isFocused = false
                 return .none
                 
             case .destination(.presented(.alert(.tappedWorkoutAlertClose))):
@@ -406,7 +418,6 @@ struct WorkingOutView: View {
                                     action: \.workingOutSection)
                     ) { rowStore in
                         WorkingOutSection(store: rowStore)
-                            .padding(.bottom, 15)
                     }
                     .padding(.bottom, 30)
                     
@@ -423,6 +434,22 @@ struct WorkingOutView: View {
                         }
                     }
                     Spacer().frame(height: 100)
+                }
+            }
+        }
+        .onTapGesture {
+            store.send(.dismissKeyboard)
+            store.workingOutSection.elements.forEach { section in
+                section.workingOutRow.elements.forEach { row in
+                    store.send(
+                        .workingOutSection(
+                            .element(id: section.id,
+                                     action: .workingOutRow(
+                                        .element(id: row.id,
+                                                 action: .dismissKeyboard))
+                                    )
+                        )
+                    )
                 }
             }
         }

@@ -44,7 +44,7 @@ struct MakeWorkoutReducer {
         case tappedDone(MyRoutineState)
         case save(MyRoutineState)
         case didUpdateText(String)
-        case setFocus(Bool)
+        case setFocusKeyboard(Bool)
         case dismissKeyboard
         case tappedAdd
         
@@ -98,7 +98,7 @@ struct MakeWorkoutReducer {
             case .didUpdateText(let text):
                 state.myRoutine.name = text
                 return .none
-            case let .setFocus(focus):
+            case let .setFocusKeyboard(focus):
                 state.isFocused = focus
                 return .none
 
@@ -499,7 +499,7 @@ struct MakeWorkoutView: View {
             .background(Color.background)
         }
         .onChange(of: isTextFieldFocused) { _, newValue in
-            store.send(.setFocus(newValue))
+            store.send(.setFocusKeyboard(newValue))
         }
         .onChange(of: store.isFocused) { _, newValue in
             isTextFieldFocused = newValue

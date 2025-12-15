@@ -125,6 +125,7 @@ struct WorkingOutSection: View {
                 }) {
                     WorkingOutFooter()
                 }
+                Spacer().frame(height: 15)
             } else {
                 Spacer()
             }
