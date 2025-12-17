@@ -130,6 +130,7 @@ struct HomeReducer {
                                 myRoutine.routines[i].sets[j].isChecked = false
                             }
                         }
+                        myRoutine.secondsElapsed = 0
                         try myRoutineContext.add(myRoutine.toModel())
                         try myRoutineContext.save()
                     } else {
