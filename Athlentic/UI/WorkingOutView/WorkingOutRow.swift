@@ -95,7 +95,9 @@ struct WorkingOutRowReducer {
                 }
                 return .none
             case let .typeRestTime(restTime):
-                if !restTime.isEmpty {
+                if let restTimeInteger = Int(restTime) {
+                    state.workoutSet.restTime = restTimeInteger
+                    state.timerView.totalTime = restTimeInteger
                     state.restTimeText = restTime.formattedTime()
                 }
                 
