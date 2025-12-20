@@ -67,7 +67,7 @@ struct MakeWorkoutReducer {
                 state.myRoutine.isRunning = true
 
                 return .send(.dismissMakeWorkout)
-            case .save(let myRoutine):
+            case .save(var myRoutine):
                 @Dependency(\.myRoutineData.fetch) var fetch
                 @Dependency(\.myRoutineData.save) var save
                 
@@ -77,6 +77,7 @@ struct MakeWorkoutReducer {
                     )
                     do {
                         if let updateToMyRoutine = try fetch(descriptor).first {
+                            myRoutine.secondsElapsed = 0
                             updateToMyRoutine.update(from: myRoutine)
                             try save()
                         }
