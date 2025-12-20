@@ -238,12 +238,17 @@ struct WorkingOutRow: View {
                 "",
                 isOn: Binding(
                     get: { store.isChecked },
-                    set: { store.send(.toggleCheck(isChecked: $0)) }
+                    set: { value in
+                        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
+                            _ = store.send(.toggleCheck(isChecked: value))
+                        }
+                    }
                 )
             )
             .toggleStyle(CheckboxToggleStyle(style: .square))
             .padding(.leading, 7)
             .foregroundStyle(Color.personal)
+            .sensoryFeedback(.selection, trigger: store.isChecked)
         }
     }
     

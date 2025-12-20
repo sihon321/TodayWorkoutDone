@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import UIKit
 
 @Reducer
 struct CountdownTimerReducer {
@@ -63,7 +64,13 @@ struct CountdownTimerReducer {
                     state.timeRemaining -= 1
                 } else {
                     state.isRunning = false
-                    return .cancel(id: CancelID.restTimer)
+                    return .merge(
+                        .cancel(id: CancelID.restTimer),
+                        .run { _ in
+                            let generator = await UINotificationFeedbackGenerator()
+                            await generator.notificationOccurred(.success)
+                        }
+                    )
                 }
                 return .none
                 
