@@ -24,12 +24,11 @@ struct HomeReducer {
         var routineName = ""
         var isHideTabBar = false
         var tabBarOffset: CGFloat = 0.0
-        var bottomEdge: CGFloat = 35
         
         var workingOut = WorkingOutReducer.State()
-        var tabBar: CustomTabBarReducer.State
-        var calendar: CalendarReducer.State = CalendarReducer.State()
-        var setting: SettingsReducer.State = SettingsReducer.State()
+        var tabBar = CustomTabBarReducer.State()
+        var calendar = CalendarReducer.State()
+        var setting = SettingsReducer.State()
     }
     
     enum Action {
@@ -79,6 +78,9 @@ struct HomeReducer {
         }
         Scope(state: \.setting, action: \.setting) {
             SettingsReducer()
+        }
+        Scope(state: \.tabBar, action: \.tabBar) {
+            CustomTabBarReducer()
         }
         Reduce { state, action in
             switch action {
@@ -177,12 +179,7 @@ struct HomeReducer {
                         )
                     } ?? []
                 )
-                return .none
-                
-            case .destination(.presented(.workoutView(.dismiss))):
-                return .none
-                
-            case .destination(.presented(.workoutView(.destination(.presented(.makeWorkoutView(.dismissMakeWorkout)))))):
+                state.isHideTabBar = false
                 return .none
                 
             case .destination:
@@ -215,9 +212,7 @@ struct HomeReducer {
                     await send(.setTabBarOffset(offset: 0.0))
                 }
                 
-            case .workingOut:
-                return .none
-            case .calendar, .setting:
+            case .workingOut, .calendar, .setting:
                 return .none
             }
         }
@@ -248,7 +243,7 @@ struct HomeView: View {
                 ).index
             ) {
                 ZStack {
-                    MainView(bottomEdge: store.bottomEdge)
+                    MainView(bottomEdge: store.tabBar.bottomEdge)
                     if store.workingOut.myRoutine == nil {
                         startButton()
                     }

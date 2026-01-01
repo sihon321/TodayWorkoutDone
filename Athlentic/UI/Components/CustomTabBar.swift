@@ -12,8 +12,11 @@ import ComposableArchitecture
 struct CustomTabBarReducer {
     @ObservableState
     struct State: Equatable {
-        var bottomEdge: CGFloat
-        var tabButton: TabButtonReducer.State
+        var bottomEdge: CGFloat = 35
+        var tabButton = TabButtonReducer.State(
+            info: TabButtonReducer.TabInfo(imageName: "dumbbell.fill",
+                                           index: 0)
+        )
     }
     
     enum Action {
@@ -21,6 +24,9 @@ struct CustomTabBarReducer {
     }
     
     var body: some Reducer<State, Action> {
+        Scope(state: \.tabButton, action: \.tabButton) {
+            TabButtonReducer()
+        }
         Reduce { state, action in
             switch action {
             case .tabButton(_):
