@@ -34,6 +34,32 @@ struct WorkingOutRowReducer {
         var timerView: CountdownTimerReducer.State
         @Presents var stopwatch: StopWatchFeature.State?
         
+        var setStateText: String {
+            switch workoutSet.setState {
+            case .set:
+                return "\(workoutSet.order)"
+            case .warmup:
+                return "W"
+            case .drop:
+                return "D"
+            case .fail:
+                return "F"
+            }
+        }
+        
+        var setStateBGColor: Color {
+            switch workoutSet.setState {
+            case .set:
+                return Color.personal.opacity(0.6)
+            case .warmup:
+                return .yellow
+            case .drop:
+                return .gray
+            case .fail:
+                return .red
+            }
+        }
+        
         init(categoryType: WorkoutCategoryState.WorkoutCategoryType,
              workoutSet: WorkoutSetState,
              editMode: EditMode = .inactive) {
@@ -59,6 +85,7 @@ struct WorkingOutRowReducer {
         case setFocus(Field?)
         case dismissKeyboard
         case timerView(CountdownTimerReducer.Action)
+        case touchState(WorkoutSetState.SetState)
         
         case presentStopWatch
         case stopwatch(PresentationAction<StopWatchFeature.Action>)
@@ -131,7 +158,9 @@ struct WorkingOutRowReducer {
                 return .none
             case .timerView:
                 return .none
-                
+            case .touchState(let setState):
+                state.workoutSet.setState = setState
+                return .none
             case .presentStopWatch:
                 state.stopwatch = StopWatchFeature.State()
                 return .none
@@ -211,28 +240,33 @@ struct WorkingOutRow: View {
         if store.editMode == .active {
             Menu {
                 Button(action: {
-
+                    store.send(.touchState(.warmup))
                 }) {
-                    Label("워밍업", systemImage: "pencil")
+                    Label("워밍업", systemImage: "w.square.fill")
                 }
                 Button(action: {
-
+                    store.send(.touchState(.set))
                 }) {
-                    Label("드롭", systemImage: "pencil")
+                    Label("세트", systemImage: "s.square.fill")
                 }
                 Button(action: {
-
+                    store.send(.touchState(.drop))
                 }) {
-                    Label("실패", systemImage: "pencil")
+                    Label("드롭", systemImage: "d.square.fill")
+                }
+                Button(action: {
+                    store.send(.touchState(.fail))
+                }) {
+                    Label("실패", systemImage: "f.square.fill")
                 }
             } label: {
-                Text("\(store.workoutSet.order)")
+                Text(store.setStateText)
                     .padding([.leading, .trailing], 5)
                     .padding([.top, .bottom], 3)
                     .font(.system(size: 17))
                     .frame(minWidth: 30)
                     .foregroundStyle(.white)
-                    .background(Color.personal.opacity(0.6))
+                    .background(store.setStateBGColor)
                     .cornerRadius(3.0)
             }
         } else {

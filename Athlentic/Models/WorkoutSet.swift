@@ -20,6 +20,13 @@ protocol WorkoutSetData {
 }
 
 struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
+    enum SetState {
+        case warmup
+        case set
+        case drop
+        case fail
+    }
+    
     var id: UUID
     var order: Int
     
@@ -35,6 +42,7 @@ struct WorkoutSetState: WorkoutSetData, Codable, Identifiable, Equatable {
     var endDate: Date?
     var restTime: Int = 0
     var persistentModelID: PersistentIdentifier?
+    var setState: SetState = .set
     
     enum CodingKeys: String, CodingKey {
         case id, order,
