@@ -14,6 +14,7 @@ struct WorkingOutReducer {
     struct State: Equatable {
         @Shared(.appStorage("weight")) var weight: Double?
         @Presents var destination: Destination.State?
+        @Presents var addWorkoutCategory: AddWorkoutCategoryReducer.State?
         var myRoutine: MyRoutineState?
         var workingOutSection: IdentifiedArrayOf<WorkingOutSectionReducer.State> = []
         
@@ -44,12 +45,12 @@ struct WorkingOutReducer {
         case setFocusKeyboard(Bool)
         case dismissKeyboard
         
-        indirect case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
+        case workingOutSection(IdentifiedActionOf<WorkingOutSectionReducer>)
+        case addWorkoutCategory(PresentationAction<AddWorkoutCategoryReducer.Action>)
     }
     
     @Reducer(state: .equatable)
     enum Destination {
-        case addWorkoutCategory(AddWorkoutCategoryReducer)
         case alert(AlertState<Alert>)
         
         enum Alert: Equatable {
@@ -132,11 +133,65 @@ struct WorkingOutReducer {
                 return .none
                 
             case .tappedAdd:
-                state.destination = .addWorkoutCategory(
-                    AddWorkoutCategoryReducer.State(
-                        routines: state.myRoutine!.routines
-                    )
+                state.addWorkoutCategory = AddWorkoutCategoryReducer.State(
+                    routines: state.myRoutine!.routines
                 )
+
+                return .none
+                
+            case let .addWorkoutCategory(.presented(.workoutList(.element(_, .dismiss(routines))))):
+                state.myRoutine!.routines = routines
+                state.workingOutSection = IdentifiedArrayOf(
+                    uniqueElements: routines.map {
+                        WorkingOutSectionReducer.State(
+                            routine: $0,
+                            editMode: .active
+                        )
+                    }
+                )
+                return .none
+            case let .addWorkoutCategory(.presented(.workoutList(.element(categoryId, action: .sortedWorkoutSection(.element(sectionId, action: .workoutListSubview(.element(rowId, action: .didTapped)))))))):
+
+                if let categoryIndex = state.addWorkoutCategory?
+                    .workoutList
+                    .firstIndex(where: { $0.id == categoryId }) {
+                    if let addWorkoutCategory = state.addWorkoutCategory,
+                        let sectionIndex = addWorkoutCategory
+                        .workoutList[categoryIndex]
+                        .soretedWorkoutSection
+                        .firstIndex(where: { $0.id == sectionId }) {
+                        if let rowIndex = addWorkoutCategory
+                            .workoutList[categoryIndex]
+                            .soretedWorkoutSection[sectionIndex]
+                            .workoutListSubview
+                            .firstIndex(where: { $0.id == rowId }) {
+                            let workout = addWorkoutCategory.workoutList[categoryIndex]
+                                .soretedWorkoutSection[sectionIndex]
+                                .workoutListSubview[rowIndex]
+                                .workout
+                            if workout.isSelected {
+                                let equipmentType = EquipmentType(rawValue: workout.equipment.first ?? "") ?? .none
+                                state.myRoutine!.routines.append(
+                                    RoutineState(workout: workout,
+                                                 equipmentType: equipmentType)
+                                )
+                                for index in 0..<addWorkoutCategory.workoutList.count {
+                                    state.addWorkoutCategory?.workoutList[index].routines.append(
+                                        RoutineState(workout: workout,
+                                                     equipmentType: equipmentType)
+                                    )
+                                }
+                            } else {
+                                state.myRoutine!.routines.removeAll { $0.workout.name == workout.name }
+                                for index in 0..<addWorkoutCategory.workoutList.count {
+                                    state.addWorkoutCategory?.workoutList[index].routines.removeAll { $0.workout.name == workout.name }
+                                }
+                            }
+                        }
+                    }
+                }
+                return .none
+            case .addWorkoutCategory:
                 return .none
                 
             case let .setFocusKeyboard(focus):
@@ -204,7 +259,6 @@ struct WorkingOutReducer {
                 state.destination = .none
                 
                 return .send(.presentedSaveRoutineAlert(state.myRoutine))
-
             case .destination:
                 return .none
                 
@@ -341,6 +395,9 @@ struct WorkingOutReducer {
         .forEach(\.workingOutSection, action: \.workingOutSection) {
             WorkingOutSectionReducer()
         }
+        .ifLet(\.$addWorkoutCategory, action: \.addWorkoutCategory) {
+            AddWorkoutCategoryReducer()
+        }
     }
     
     private func insertWorkoutRoutine(workout routine: WorkoutRoutineState) {
@@ -427,8 +484,7 @@ struct WorkingOutView: View {
                         }
                         .buttonStyle(AddWorkoutButtonStyle())
                         .fullScreenCover(
-                            item: $store.scope(state: \.destination?.addWorkoutCategory,
-                                               action: \.destination.addWorkoutCategory)
+                            item: $store.scope(state: \.addWorkoutCategory, action: \.addWorkoutCategory)
                         ) { store in
                             AddWorkoutCategoryView(store: store)
                         }
