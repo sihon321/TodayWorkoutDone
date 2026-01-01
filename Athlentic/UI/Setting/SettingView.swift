@@ -205,6 +205,7 @@ struct SettingsView: View {
                     .tint(Color.personal)
                 }
             }
+            .contentMargins(.bottom, 150, for: .scrollContent)
             .navigationTitle("설정")
             .scrollContentBackground(.hidden)
             .background(Color.background)
