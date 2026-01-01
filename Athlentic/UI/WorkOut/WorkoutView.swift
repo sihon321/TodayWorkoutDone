@@ -160,6 +160,9 @@ struct WorkoutReducer {
             case .destination(.presented(.makeWorkoutView(.save))):
                 return .send(.getMyRoutines)
                 
+            case .destination(.presented(.makeWorkoutView(.dismissMakeWorkout))):
+                return .send(.dismiss)
+                
             case .destination:
                 return .none
 
@@ -249,7 +252,7 @@ struct WorkoutReducer {
             }
         }
         .ifLet(\.$destination, action: \.destination) {
-          Destination.body
+            Destination.body
         }
     }
 }

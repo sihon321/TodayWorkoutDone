@@ -177,7 +177,7 @@ struct HomeReducer {
                         )
                     } ?? []
                 )
-                return .send(.destination(.presented(.workoutView(.dismiss))))
+                return .none
                 
             case .destination(.presented(.workoutView(.dismiss))):
                 return .none
