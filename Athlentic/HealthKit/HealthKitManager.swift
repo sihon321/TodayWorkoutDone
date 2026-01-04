@@ -302,10 +302,3 @@ class LiveHealthKitManager: HealthKitManager {
         }
     }
 }
-
-enum HealthDataError: Error {
-    case unavailableOnDevice
-    case authorizationRequestError
-    case dataSaveError
-    case invalidType
-}

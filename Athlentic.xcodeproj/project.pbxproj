@@ -60,6 +60,7 @@
 		926B74AF2D4A3AD60006E8CB /* pilates.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74A92D4A3AD60006E8CB /* pilates.json */; };
 		926B74B02D4A3AD60006E8CB /* stretching.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AB2D4A3AD60006E8CB /* stretching.json */; };
 		926B74B12D4A3AD60006E8CB /* yoga.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AC2D4A3AD60006E8CB /* yoga.json */; };
+		CEB4290F2F0A3D68004F65D2 /* HealthDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4290E2F0A3D5F004F65D2 /* HealthDataError.swift */; };
 		F2007DA72A8A8AC300833AF0 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */; };
 		F2007DAA2A8AA27E00833AF0 /* HealthKit+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */; };
 		F201082A2B6FE03100265F17 /* MainContentEnergyBurn.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20108292B6FE03100265F17 /* MainContentEnergyBurn.swift */; };
@@ -184,6 +185,7 @@
 		926B74AA2D4A3AD60006E8CB /* weight.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = weight.json; sourceTree = "<group>"; };
 		926B74AB2D4A3AD60006E8CB /* stretching.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = stretching.json; sourceTree = "<group>"; };
 		926B74AC2D4A3AD60006E8CB /* yoga.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = yoga.json; sourceTree = "<group>"; };
+		CEB4290E2F0A3D5F004F65D2 /* HealthDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataError.swift; sourceTree = "<group>"; };
 		F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthKit+Combine.swift"; sourceTree = "<group>"; };
 		F20108292B6FE03100265F17 /* MainContentEnergyBurn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentEnergyBurn.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 		F2007DA82A8AA25700833AF0 /* HealthKit */ = {
 			isa = PBXGroup;
 			children = (
+				CEB4290E2F0A3D5F004F65D2 /* HealthDataError.swift */,
 				8E0C49682DC06A1300DDBF6A /* HealthKitDummyManager.swift */,
 				8E0C49662DC0695500DDBF6A /* HealthKitDummyView.swift */,
 				F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */,
@@ -794,6 +797,7 @@
 				8E0C49672DC0695F00DDBF6A /* HealthKitDummyView.swift in Sources */,
 				8EB5396F2C98138A00F56034 /* WorkoutAPIRepository.swift in Sources */,
 				F296FD722AB5EDF000BCF890 /* CalendarViewComponent.swift in Sources */,
+				CEB4290F2F0A3D68004F65D2 /* HealthDataError.swift in Sources */,
 				F2AEA40F2A66E31E0023871D /* Routine.swift in Sources */,
 				8E2073B82E1B4D2200FA5D21 /* LoopingPlayerManager.swift in Sources */,
 				8ED37AF32AC87E0700B4F206 /* MyRoutine.swift in Sources */,

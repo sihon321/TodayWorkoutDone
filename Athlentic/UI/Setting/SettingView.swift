@@ -141,6 +141,10 @@ struct SettingsView: View {
     @Bindable var store: StoreOf<SettingsReducer>
     
     @FocusState private var focusedField: FocusField?
+    
+    #if DEBUG
+    @State private var showHealthKitDummy = false
+    #endif
 
     private enum FocusField: Hashable {
         case height
@@ -204,6 +208,19 @@ struct SettingsView: View {
                     Toggle("알림 설정", isOn: $store.isNotificationEnabled.sending(\.notificationToggled))
                     .tint(Color.personal)
                 }
+                
+                #if DEBUG
+                Section(header: Text("헬스 데이터")) {
+                    Button {
+                        showHealthKitDummy = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "heart.text.square")
+                            Text("HealthKit 더미 보기")
+                        }
+                    }
+                }
+                #endif
             }
             .contentMargins(.bottom, 150, for: .scrollContent)
             .navigationTitle("설정")
@@ -211,8 +228,8 @@ struct SettingsView: View {
             .background(Color.background)
             .scrollDismissesKeyboard(.interactively)
             .contentShape(Rectangle())
-            .onTapGesture {
-                focusedField = nil
+            .sheet(isPresented: $showHealthKitDummy) {
+                HealthKitDummyView()
             }
         }
         .onAppear {

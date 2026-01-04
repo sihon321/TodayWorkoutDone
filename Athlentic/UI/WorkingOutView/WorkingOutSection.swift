@@ -74,7 +74,7 @@ struct WorkingOutSectionReducer {
                 return .none
             case .workingOutRow(let action):
                 switch action {
-                case let .element(rowId, action):
+                case let .element(_, action):
                     switch action {
                     case .touchState(_):
                         var order = 0
