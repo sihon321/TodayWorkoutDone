@@ -176,7 +176,8 @@ struct MakeWorkoutReducer {
                         if let sectionIndex = state.workingOutSection
                             .index(id: sectionId) {
                             let index = state.workingOutSection[sectionIndex]
-                                .workingOutRow.count
+                                .workingOutRow.filter { $0.workoutSet.setState == .set }
+                                .last?.workoutSet.order ?? 0
                             let name = state.myRoutine.routines[sectionIndex].workout.name
                             var descriptor = FetchDescriptor<Routine>(
                                 predicate: #Predicate {

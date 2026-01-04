@@ -72,16 +72,37 @@ struct WorkingOutSectionReducer {
             switch action {
             case .tappedAddFooter:
                 return .none
-            case .workingOutRow:
-                return .none
+            case .workingOutRow(let action):
+                switch action {
+                case let .element(rowId, action):
+                    switch action {
+                    case .touchState(_):
+                        var order = 0
+                        for (index, _) in state.workingOutRow.enumerated() {
+                            if state.workingOutRow[index].workoutSet.setState == .set {
+                                order += 1
+                                state.workingOutRow[index].workoutSet.order = order
+                            } else {
+                                state.workingOutRow[index].workoutSet.order = 0
+                            }
+                        }
+                        return .none
+                    default:
+                        return .none
+                    }
+                }
             case .setEditMode:
                 return .none
             case .workingOutHeader:
                 return .none
             case let .deleteWorkoutSet(indexSet):
                 state.workingOutRow.remove(atOffsets: indexSet)
+                var order = 0
                 for (index, _) in state.workingOutRow.enumerated() {
-                    state.workingOutRow[index].workoutSet.order = index + 1
+                    if state.workingOutRow[index].workoutSet.setState == .set {
+                        order += 1
+                        state.workingOutRow[index].workoutSet.order = order
+                    }
                 }
                 return .none
             }

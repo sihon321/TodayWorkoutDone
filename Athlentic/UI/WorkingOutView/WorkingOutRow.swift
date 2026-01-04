@@ -50,7 +50,7 @@ struct WorkingOutRowReducer {
         var setStateBGColor: Color {
             switch workoutSet.setState {
             case .set:
-                return Color.personal.opacity(0.6)
+                return isChecked ? Color.personal.opacity(0.6) : Color.clear
             case .warmup:
                 return .yellow
             case .drop:

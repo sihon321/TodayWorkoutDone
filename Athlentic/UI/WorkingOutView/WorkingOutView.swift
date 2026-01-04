@@ -265,7 +265,8 @@ struct WorkingOutReducer {
             case let .workingOutSection(.element(sectionId, .tappedAddFooter)):
                 if let sectionIndex = state.workingOutSection.index(id: sectionId) {
                     let index = state.workingOutSection[sectionIndex]
-                        .workingOutRow.count
+                        .workingOutRow.filter { $0.workoutSet.setState == .set }
+                        .last?.workoutSet.order ?? 0
                     let workoutSet = WorkoutSetState(order: index + 1)
                     let categoryName = state.workingOutSection[sectionIndex].routine.workout.categoryName
                     let categoryType = WorkoutCategoryState.WorkoutCategoryType(rawValue: categoryName) ?? .strength
