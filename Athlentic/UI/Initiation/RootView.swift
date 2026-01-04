@@ -15,9 +15,9 @@ struct RootFeature {
     struct State: Equatable {
         @Shared(.appStorage("theme")) var theme: SettingsReducer.AppTheme = .system
         @Shared(.appStorage("isOnBoarding")) var isOnBoarding: Bool = false
+        @Shared(.appStorage("isLoggedIn")) var isLogin: Bool = false
         
         var isActive: Bool = false
-        var isLogin: Bool = false
         var onBoarding = OnBoardingFeature.State()
         var login = LoginFeature.State()
         var content = ContentReducer.State()
@@ -34,6 +34,9 @@ struct RootFeature {
         Scope(state: \.onBoarding, action: \.onBoarding) {
             OnBoardingFeature()
         }
+        Scope(state: \.login, action: \.login) {
+            LoginFeature()
+        }
         Reduce { state, action in
             switch action {
             case let .toggleActive(isActive):
@@ -44,10 +47,11 @@ struct RootFeature {
                 return .none
             case .onBoarding:
                 return .none
-            case .login(.login):
-                state.isLogin = true
+            case .login(.delegate(.didLoginSuccessfully)),
+                    .login(.notLogin):
+                state.$isLogin.withLock { $0 = true }
                 return .none
-            case .content:
+            case .login, .content:
                 return .none
             }
         }
