@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import AuthenticationServices
+import GoogleSignIn
 
 @Reducer
 struct LoginFeature {
@@ -23,13 +24,11 @@ struct LoginFeature {
         case binding(BindingAction<State>)
         case notLogin
         // Apple Sign-In
-        case appleSignInButtonTapped
-        case appleAuthorizationRequested(ASAuthorizationAppleIDRequest)
+        case appleSignInStarted
         case appleAuthorizationResponse(Result<ASAuthorization, Error>)
         // Google Sign-In
         case googleSignInButtonTapped
-        case googleAuthorizationRequested
-        case googleAuthorizationResponse(Result<Void, Error>)
+        case googleAuthorizationResponse(Result<GIDGoogleUser, Error>)
         
         case delegate(DelegateAction)
         enum DelegateAction {
@@ -47,14 +46,10 @@ struct LoginFeature {
                 
             case .notLogin:
                 UserDefaults.standard.set(true, forKey: "isLoggedIn")
-                return .none
+                return .send(.delegate(.didLoginSuccessfully))
                 
-            case .appleSignInButtonTapped:
+            case .appleSignInStarted:
                 state.isAuthorizingAppleID = true
-                return .none
-                
-            case .appleAuthorizationRequested:
-                // No state change here; request is configured in the view.
                 return .none
                 
             case let .appleAuthorizationResponse(result):
@@ -63,29 +58,61 @@ struct LoginFeature {
                 case .success(let authorization):
                     if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
                         UserDefaults.standard.set(appleIDCredential.user, forKey: "appleUserId")
+                        if let email = appleIDCredential.email {
+                            UserDefaults.standard.set(email, forKey: "appleUserEmail")
+                        }
+                        if let fullName = appleIDCredential.fullName {
+                            let name = [fullName.givenName, fullName.familyName]
+                                .compactMap { $0 }
+                                .joined(separator: " ")
+                            if !name.isEmpty {
+                                UserDefaults.standard.set(name, forKey: "appleUserName")
+                            }
+                        }
                         UserDefaults.standard.set(true, forKey: "isLoggedIn")
                         return .send(.delegate(.didLoginSuccessfully))
                     }
                     return .none
                 case .failure(let error):
+                    // 사용자가 취소한 경우는 에러 메시지를 표시하지 않음
+                    if (error as NSError).code == ASAuthorizationError.canceled.rawValue {
+                        return .none
+                    }
                     state.errorMessage = error.localizedDescription
                     return .none
                 }
                 
             case .googleSignInButtonTapped:
                 state.isAuthorizingGoogle = true
-                return .none
-
-            case .googleAuthorizationRequested:
-                // Trigger your Google Sign-In flow from the View/Coordinator and report back via googleAuthorizationResponse
-                return .none
-
+                return .run { send in
+                    do {
+                        guard let windowScene = await UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                              let rootViewController = await windowScene.windows.first?.rootViewController else {
+                            await send(.googleAuthorizationResponse(.failure(GoogleSignInError.noRootViewController)))
+                            return
+                        }
+                        
+                        let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
+                        await send(.googleAuthorizationResponse(.success(result.user)))
+                    } catch {
+                        await send(.googleAuthorizationResponse(.failure(error)))
+                    }
+                }
+                
             case let .googleAuthorizationResponse(result):
                 state.isAuthorizingGoogle = false
                 switch result {
-                case .success:
-                    return .none
+                case .success(let user):
+                    UserDefaults.standard.set(user.userID, forKey: "googleUserId")
+                    UserDefaults.standard.set(user.profile?.email, forKey: "googleUserEmail")
+                    UserDefaults.standard.set(user.profile?.name, forKey: "googleUserName")
+                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                    return .send(.delegate(.didLoginSuccessfully))
                 case .failure(let error):
+                    // 사용자가 취소한 경우는 에러 메시지를 표시하지 않음
+                    if (error as NSError).code == GIDSignInError.canceled.rawValue {
+                        return .none
+                    }
                     state.googleErrorMessage = error.localizedDescription
                     return .none
                 }
@@ -93,6 +120,17 @@ struct LoginFeature {
             case .delegate:
                 return .none
             }
+        }
+    }
+}
+
+enum GoogleSignInError: LocalizedError {
+    case noRootViewController
+    
+    var errorDescription: String? {
+        switch self {
+        case .noRootViewController:
+            return "화면을 찾을 수 없습니다. 다시 시도해주세요."
         }
     }
 }
@@ -122,24 +160,23 @@ struct LoginView: View {
                     GoogleSignInButton(
                         onTap: {
                             store.send(.googleSignInButtonTapped)
-                            // Start Google sign-in here (presenting UI via SDK), then report request/action
-                            store.send(.googleAuthorizationRequested)
-                            // When your SDK completes, call store.send(.googleAuthorizationResponse(.success(()))) or failure accordingly.
                         }
                     )
-                    .frame(width: 330, height: 55)
+                    .frame(height: 50)
+                    .frame(maxWidth: .infinity)
+                    .cornerRadius(10)
+                    .padding(.horizontal, 30)
                     
                     AppleSignInButton(
                         onRequest: { request in
-                            store.send(.appleSignInButtonTapped)
+                            store.send(.appleSignInStarted)
                             request.requestedScopes = [.fullName, .email]
-                            store.send(.appleAuthorizationRequested(request))
                         },
                         onCompletion: { result in
                             store.send(.appleAuthorizationResponse(result))
                         }
                     )
-                    .frame(width: 330, height: 55)
+                    .padding(.horizontal, 30)
                     
                     Button("로그인 없이 바로 시작") {
                         store.send(.notLogin)
@@ -179,7 +216,7 @@ struct LoginView: View {
 private struct AppleSignInButton: View {
     let onRequest: (ASAuthorizationAppleIDRequest) -> Void
     let onCompletion: (Result<ASAuthorization, Error>) -> Void
-
+    
     var body: some View {
         SignInWithAppleButton(.signIn, onRequest: { request in
             onRequest(request)
@@ -187,31 +224,40 @@ private struct AppleSignInButton: View {
             onCompletion(result)
         })
         .signInWithAppleButtonStyle(.black)
+        .frame(height: 50)
+        .frame(maxWidth: .infinity)
+        .cornerRadius(10)
     }
 }
 
 private struct GoogleSignInButton: View {
     let onTap: () -> Void
-
+    
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         Button(action: onTap) {
-            HStack(spacing: 8) {
-                // Simple G icon placeholder; replace with your asset if available
-                Image(systemName: "g.circle")
-                    .imageScale(.large)
+            HStack(spacing: 6) {
+                Image("GoogleLogo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 20)
+                
                 Text("Sign in with Google")
-                    .font(.headline)
+                    .font(.system(size: 19, weight: .semibold))
+                // 2. 글자색: 다크모드면 흰색, 라이트모드면 검은색
+                    .foregroundStyle(colorScheme == .dark ? .white : .black)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .foregroundStyle(Color.black)
-            .padding(.horizontal)
+            .frame(maxWidth: .infinity)
+            .frame(height: 50)
+            // 3. 배경색: 다크모드면 검은색(혹은 다크그레이), 라이트모드면 흰색
+            .background(colorScheme == .dark ? .black : .white)
+            .cornerRadius(10)
+            // 4. 테두리: 다크모드일 때는 흰색 테두리가 살짝 있어야 버튼 구분이 잘 됨
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(colorScheme == .dark ? .white.opacity(0.2) : .gray.opacity(0.3), lineWidth: 1)
+            )
         }
-        .background(Color.white)
-        .cornerRadius(10)
-        .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-        )
-        .frame(height: 55)
     }
 }

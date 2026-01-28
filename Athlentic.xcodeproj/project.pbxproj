@@ -60,6 +60,8 @@
 		926B74AF2D4A3AD60006E8CB /* pilates.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74A92D4A3AD60006E8CB /* pilates.json */; };
 		926B74B02D4A3AD60006E8CB /* stretching.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AB2D4A3AD60006E8CB /* stretching.json */; };
 		926B74B12D4A3AD60006E8CB /* yoga.json in Resources */ = {isa = PBXBuildFile; fileRef = 926B74AC2D4A3AD60006E8CB /* yoga.json */; };
+		CE9045A62F0AAC740085A3B8 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = CE9045A52F0AAC740085A3B8 /* GoogleSignIn */; };
+		CE9045A82F0AAC740085A3B8 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CE9045A72F0AAC740085A3B8 /* GoogleSignInSwift */; };
 		CEB4290F2F0A3D68004F65D2 /* HealthDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4290E2F0A3D5F004F65D2 /* HealthDataError.swift */; };
 		F2007DA72A8A8AC300833AF0 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */; };
 		F2007DAA2A8AA27E00833AF0 /* HealthKit+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */; };
@@ -185,6 +187,7 @@
 		926B74AA2D4A3AD60006E8CB /* weight.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = weight.json; sourceTree = "<group>"; };
 		926B74AB2D4A3AD60006E8CB /* stretching.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = stretching.json; sourceTree = "<group>"; };
 		926B74AC2D4A3AD60006E8CB /* yoga.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = yoga.json; sourceTree = "<group>"; };
+		CE9045A32F0AAA750085A3B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CEB4290E2F0A3D5F004F65D2 /* HealthDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataError.swift; sourceTree = "<group>"; };
 		F2007DA62A8A8AC300833AF0 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		F2007DA92A8AA27E00833AF0 /* HealthKit+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthKit+Combine.swift"; sourceTree = "<group>"; };
@@ -248,7 +251,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE9045A82F0AAC740085A3B8 /* GoogleSignInSwift in Frameworks */,
 				8E0742F92DF532DB00F2DD7F /* PopupView in Frameworks */,
+				CE9045A62F0AAC740085A3B8 /* GoogleSignIn in Frameworks */,
 				F29B88402CCAB1C500BBE377 /* ComposableArchitecture in Frameworks */,
 				8E0742FC2DF5334E00F2DD7F /* Lottie in Frameworks */,
 			);
@@ -546,6 +551,7 @@
 		F2E74CE42921F73500BD35F6 /* Athlentic */ = {
 			isa = PBXGroup;
 			children = (
+				CE9045A32F0AAA750085A3B8 /* Info.plist */,
 				F2E74CE52921F73500BD35F6 /* AthlenticApp.swift */,
 				F2007DA82A8AA25700833AF0 /* HealthKit */,
 				8EB5396D2C98136900F56034 /* API */,
@@ -629,6 +635,8 @@
 				F29B883F2CCAB1C500BBE377 /* ComposableArchitecture */,
 				8E0742F82DF532DB00F2DD7F /* PopupView */,
 				8E0742FB2DF5334E00F2DD7F /* Lottie */,
+				CE9045A52F0AAC740085A3B8 /* GoogleSignIn */,
+				CE9045A72F0AAC740085A3B8 /* GoogleSignInSwift */,
 			);
 			productName = TodayworkoutDone;
 			productReference = F2E74CE22921F73500BD35F6 /* Athlentic.app */;
@@ -706,6 +714,7 @@
 				F29B883E2CCAB1C500BBE377 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				8E0742F72DF532DB00F2DD7F /* XCRemoteSwiftPackageReference "PopupView" */,
 				8E0742FA2DF5334E00F2DD7F /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				CE9045A42F0AAC740085A3B8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = F2E74CE32921F73500BD35F6 /* Products */;
 			projectDirPath = "";
@@ -1010,6 +1019,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Athlentic/Info.plist;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We will sync your data with the Apple Health app to give you better insights";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We will sync your data with the Apple Health app to give you better insights";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -1055,6 +1065,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Athlentic/Info.plist;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We will sync your data with the Apple Health app to give you better insights";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We will sync your data with the Apple Health app to give you better insights";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -1236,6 +1247,14 @@
 				minimumVersion = 4.5.2;
 			};
 		};
+		CE9045A42F0AAC740085A3B8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		F29B883E2CCAB1C500BBE377 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -1256,6 +1275,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8E0742FA2DF5334E00F2DD7F /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		CE9045A52F0AAC740085A3B8 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE9045A42F0AAC740085A3B8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		CE9045A72F0AAC740085A3B8 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE9045A42F0AAC740085A3B8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		F29B883F2CCAB1C500BBE377 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
